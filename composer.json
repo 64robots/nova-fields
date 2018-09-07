@@ -1,0 +1,29 @@
+{
+  "name": "64robots/nova-fields",
+  "description": "A Laravel Nova field.",
+  "keywords": [
+    "laravel",
+    "nova"
+  ],
+  "license": "MIT",
+  "require": {
+    "php": ">=7.1.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "R64\\NovaFields\\": "src/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "R64\\NovaFields\\FieldServiceProvider"
+      ]
+    }
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
