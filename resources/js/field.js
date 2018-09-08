@@ -17,6 +17,20 @@ Nova.booting((Vue, router) => {
     require('./components/text/FormField')
   );
 
+  /** Textarea */
+  Vue.component(
+    'index-nova-fields-textarea',
+    require('./components/text/IndexField')
+  );
+  Vue.component(
+    'detail-nova-fields-textarea',
+    require('./components/textarea/DetailField')
+  );
+  Vue.component(
+    'form-nova-fields-textarea',
+    require('./components/textarea/FormField')
+  );
+
   /** Boolean */
   Vue.component(
     'index-nova-fields-boolean',
@@ -34,7 +48,7 @@ Nova.booting((Vue, router) => {
   /** Select */
   Vue.component(
     'index-nova-fields-select',
-    require('./components/select/IndexField')
+    require('./components/text/IndexField')
   );
   Vue.component(
     'detail-nova-fields-select',
@@ -42,6 +56,6 @@ Nova.booting((Vue, router) => {
   );
   Vue.component(
     'form-nova-fields-select',
-    require('./components/text/FormField')
+    require('./components/select/FormField')
   );
 });
