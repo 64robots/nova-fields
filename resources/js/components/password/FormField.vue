@@ -7,14 +7,17 @@
     :label-classes="field.labelClasses"
   >
     <template slot="field">
-      <textarea
-        :data-testid="field.attribute"
+      <input
+        :id="field.name"
         :dusk="field.attribute"
-        type="text"
+        type="password"
         v-model="value"
         :class="[errorClasses, inputClasses]"
         :placeholder="placeholder"
+
+        @input="$emit('input', $event.target.value)"
       />
+
       <p v-if="hasError" class="my-2 text-danger">
         {{ firstError }}
       </p>
@@ -44,14 +47,8 @@ export default {
     inputClasses() {
       return (
         this.field.inputClasses ||
-        'w-full form-control form-input form-input-bordered py-3 min-h-textarea'
+        'w-full form-control form-input form-input-bordered'
       );
-    }
-  },
-
-  watch: {
-    value(value) {
-      this.$emit('input', value);
     }
   }
 };

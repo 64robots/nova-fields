@@ -31,6 +31,20 @@ Nova.booting((Vue, router) => {
     require('./components/textarea/FormField')
   );
 
+  /** Password */
+  Vue.component(
+    'index-nova-fields-password',
+    require('./components/password/IndexField')
+  );
+  Vue.component(
+    'detail-nova-fields-password',
+    require('./components/password/DetailField')
+  );
+  Vue.component(
+    'form-nova-fields-password',
+    require('./components/password/FormField')
+  );
+
   /** Boolean */
   Vue.component(
     'index-nova-fields-boolean',
