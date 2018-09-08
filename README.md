@@ -2,7 +2,7 @@
 
 ## WIP
 
-We are working in a rewrite of every "native" fields that come with Nova.
+We are working on a rewrite of every "native" field that comes with Nova.
 
 The idea is make them more configurable and reusable in package development. We have done Text, Number and Boolean so far. If you like the idea you can collaborate with us with your awesome PRs!
 
