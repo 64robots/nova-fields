@@ -13,21 +13,14 @@
 </template>
 
 <script>
+import Classes from './Classes';
+
 export default {
+  mixins: [Classes],
+
   props: ['resource', 'resourceName', 'resourceId', 'field'],
 
   computed: {
-    dotClasses() {
-      return this.field.dotClasses || 'inline-block rounded-full w-2 h-2 mr-1';
-    },
-
-    statusClass() {
-      if (this.field.value) {
-        return this.field.successClass || 'bg-success';
-      }
-      return this.field.dangerClass || 'bg-danger';
-    },
-
     label() {
       return this.field.value == true
         ? this.field.yesLabel || this.__('Yes')

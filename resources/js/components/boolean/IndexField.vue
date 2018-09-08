@@ -1,9 +1,17 @@
 <template>
-    <span>{{ field.value }}</span>
+  <div class="text-center">
+    <span
+      :class="[dotClasses, statusClass]"
+    />
+  </div>
 </template>
 
 <script>
+import Classes from './Classes';
+
 export default {
-    props: ['resourceName', 'field'],
-}
+  mixins: [Classes],
+
+  props: ['resourceName', 'field']
+};
 </script>

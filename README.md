@@ -20,3 +20,8 @@ Boolean::make('Activo', 'active')
 We are also adding events in vue components that propagates up to the chain so the parent notices when something has happened
 
 Looking forward to see your feedback.
+
+### Install
+
+Run this command in your nova project:
+`composer require 64robots/nova-fields`
