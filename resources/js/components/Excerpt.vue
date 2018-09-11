@@ -1,6 +1,11 @@
 <template>
   <div>
-    <div v-if="expanded" class="markdown" v-html="content" />
+    <slot
+      v-if="expanded"
+      name="content"
+    >
+      <div class="markdown" v-html="content" />
+    </slot>
 
     <a
       @click="toggle"

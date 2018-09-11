@@ -10828,6 +10828,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -10874,24 +10879,30 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _vm.expanded
-      ? _c("div", {
-          staticClass: "markdown",
-          domProps: { innerHTML: _vm._s(_vm.content) }
-        })
-      : _vm._e(),
-    _vm._v(" "),
-    _c(
-      "a",
-      {
-        class: [{ "mt-6": _vm.expanded }, _vm.excerptClasses],
-        attrs: { "aria-role": "button" },
-        on: { click: _vm.toggle }
-      },
-      [_vm._v("\n    " + _vm._s(_vm.showHideLabel) + "\n  ")]
-    )
-  ])
+  return _c(
+    "div",
+    [
+      _vm.expanded
+        ? _vm._t("content", [
+            _c("div", {
+              staticClass: "markdown",
+              domProps: { innerHTML: _vm._s(_vm.content) }
+            })
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _c(
+        "a",
+        {
+          class: [{ "mt-6": _vm.expanded }, _vm.excerptClasses],
+          attrs: { "aria-role": "button" },
+          on: { click: _vm.toggle }
+        },
+        [_vm._v("\n    " + _vm._s(_vm.showHideLabel) + "\n  ")]
+      )
+    ],
+    2
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
