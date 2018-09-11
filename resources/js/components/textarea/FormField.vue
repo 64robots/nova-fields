@@ -10,6 +10,7 @@
       <textarea
         :data-testid="field.attribute"
         :dusk="field.attribute"
+        :disabled="field.readOnly"
         type="text"
         v-model="value"
         :class="[errorClasses, inputClasses]"

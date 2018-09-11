@@ -14,6 +14,7 @@
         v-model="value"
         :class="[errorClasses, inputClasses]"
         :placeholder="placeholder"
+        :disabled="field.readOnly"
 
         @input="$emit('input', $event.target.value)"
       />

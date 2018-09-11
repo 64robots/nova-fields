@@ -11,6 +11,7 @@
         :id="field.name"
         v-model="value"
         :class="[inputClasses, errorClasses]"
+        :disabled="field.readOnly"
       >
         <option value="" selected disabled>
           {{ placeholder }}

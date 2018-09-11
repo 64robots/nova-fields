@@ -89,4 +89,14 @@ trait Configurable
     {
         return $this->withMeta(['excerptClasses' => $classes]);
     }
+
+  /**
+     * Set the input as disabled.
+     *
+     * @return $this
+     */
+    public function readOnly()
+    {
+        return $this->withMeta(['readOnly' => true]);
+    }
 }
