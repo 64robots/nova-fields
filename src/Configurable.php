@@ -78,4 +78,15 @@ trait Configurable
   {
       return $this->withMeta(['placeholder' => $placeholder]);
   }
+
+  /**
+     * Set the excerpt classes that should be applied instead of default ones.
+     *
+     * @param  string  $classes
+     * @return $this
+     */
+    public function excerptClasses($classes)
+    {
+        return $this->withMeta(['excerptClasses' => $classes]);
+    }
 }

@@ -2,6 +2,7 @@ Nova.booting((Vue, router) => {
   /** Shared */
   Vue.component('r64-default-field', require('./components/DefaultField'));
   Vue.component('r64-panel-item', require('./components/PanelItem'));
+  Vue.component('r64-excerpt', require('./components/Excerpt'));
 
   /** Text & Number */
   Vue.component(

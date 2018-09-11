@@ -3,7 +3,7 @@
     :field="field"
     :hide-label="field.hideLabelInDetail"
   >
-    <excerpt
+    <r64-excerpt
       slot="value"
       :content="field.value"
       :excerpt-classes="field.excerptClasses"
@@ -14,11 +14,7 @@
 </template>
 
 <script>
-import Excerpt from '../Excerpt';
-
 export default {
-  props: ['resource', 'resourceName', 'resourceId', 'field'],
-
-  components: { Excerpt }
+  props: ['resource', 'resourceName', 'resourceId', 'field']
 };
 </script>

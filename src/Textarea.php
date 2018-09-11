@@ -16,17 +16,6 @@ class Textarea extends NovaTextarea
     public $component = 'nova-fields-textarea';
 
     /**
-     * Set the excerpt classes that should be applied instead of default ones.
-     *
-     * @param  string  $classes
-     * @return $this
-     */
-    public function excerptClasses($classes)
-    {
-        return $this->withMeta(['excerptClasses' => $classes]);
-    }
-
-    /**
      * Set the Show Content label
      *
      * @param  string  $label
