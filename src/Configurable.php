@@ -38,6 +38,17 @@ trait Configurable
   }
 
   /**
+   * Set the field wrapper classes in detail panel that should be applied instead of default ones.
+   *
+   * @param  string  $classes
+   * @return $this
+   */
+  public function panelFieldClasses($classes)
+  {
+      return $this->withMeta(['panelFieldClasses' => $classes]);
+  }
+
+  /**
    * Set the label wrapper classes that should be applied instead of default ones.
    *
    * @param  string  $classes
@@ -46,6 +57,17 @@ trait Configurable
   public function labelClasses($classes)
   {
       return $this->withMeta(['labelClasses' => $classes]);
+  }
+
+  /**
+   * Set the label wrapper classes in detail panel that should be applied instead of default ones.
+   *
+   * @param  string  $classes
+   * @return $this
+   */
+  public function panelLabelClasses($classes)
+  {
+      return $this->withMeta(['panelLabelClasses' => $classes]);
   }
 
   /**

@@ -2,7 +2,7 @@
   <div class="flex border-b border-40">
     <div
       v-if="!hideLabel"
-      class="w-1/4 py-4"
+      :class="labelClasses"
     >
       <slot>
         <h4 class="font-normal text-80">
@@ -10,7 +10,7 @@
         </h4>
       </slot>
     </div>
-    <div class="w-3/4 py-4">
+    <div :class="fieldClasses">
       <slot name="value">
         <p v-if="field.value" class="text-90">{{ field.value }}</p>
         <p v-else>&mdash;</p>
@@ -29,6 +29,14 @@ export default {
     fieldName: {
       type: String,
       default: ''
+    },
+    labelClasses: {
+      type: String,
+      default: 'w-1/4 py-4'
+    },
+    fieldClasses: {
+      type: String,
+      default: 'w-3/4 py-4'
     },
     hideLabel: {
       type: Boolean,

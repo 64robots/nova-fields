@@ -2,6 +2,8 @@
   <r64-panel-item
     :field="field"
     :hide-label="field.hideLabelInDetail"
+    :label-classes="field.panelLabelClasses"
+    :field-classes="field.panelFieldClasses"
   >
   <p
     slot="value"
