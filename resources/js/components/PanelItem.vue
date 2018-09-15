@@ -12,7 +12,8 @@
     </div>
     <div :class="fieldClasses">
       <slot name="value">
-        <p v-if="field.value" class="text-90">{{ field.value }}</p>
+        <p v-if="field.value && !field.asHtml" class="text-90">{{ field.value }}</p>
+        <div v-else-if="field.value && field.asHtml" v-html="field.value"></div>
         <p v-else>&mdash;</p>
       </slot>
     </div>
