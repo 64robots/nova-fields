@@ -7,11 +7,11 @@ trait HasChilds
     /**
      * Set the config that should be applied to the child fields.
      *
-     * @param  string  $classes
+     * @param  string  $childConfig
      * @return $this
      */
-    public function childConfig($classes)
+    public function childConfig($childConfig)
     {
-        return $this->withMeta(['childConfig' => $classes]);
+        return $this->withMeta(['childConfig' => $childConfig]);
     }
 }
