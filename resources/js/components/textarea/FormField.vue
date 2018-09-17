@@ -1,16 +1,16 @@
 <template>
   <r64-default-field
     :field="field"
-    :hide-label="field.hideLabelInForms"
-    :field-classes="field.fieldClasses"
-    :wrapper-classes="field.wrapperClasses"
-    :label-classes="field.labelClasses"
+    :hide-label="hideLabelInForms"
+    :field-classes="fieldClasses"
+    :wrapper-classes="wrapperClasses"
+    :label-classes="labelClasses"
   >
     <template slot="field">
       <textarea
         :data-testid="field.attribute"
         :dusk="field.attribute"
-        :disabled="field.readOnly"
+        :disabled="readOnly"
         type="text"
         v-model="value"
         :class="[errorClasses, inputClasses]"
@@ -25,9 +25,10 @@
 
 <script>
 import { FormField, HandlesValidationErrors } from 'laravel-nova';
+import R64Field from '../../mixins/R64Field';
 
 export default {
-  mixins: [HandlesValidationErrors, FormField],
+  mixins: [HandlesValidationErrors, FormField, R64Field],
 
   computed: {
     /**
@@ -44,6 +45,7 @@ export default {
      */
     inputClasses() {
       return (
+        this.baseClasses.inputClasses ||
         this.field.inputClasses ||
         'w-full form-control form-input form-input-bordered py-3 min-h-textarea'
       );
