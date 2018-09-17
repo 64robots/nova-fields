@@ -1,17 +1,17 @@
 <template>
   <r64-default-field
     :field="field"
-    :hide-label="field.hideLabelInForms"
-    :field-classes="field.fieldClasses"
-    :wrapper-classes="field.wrapperClasses"
-    :label-classes="field.labelClasses"
+    :hide-label="hideLabelInForms"
+    :field-classes="fieldClasses"
+    :wrapper-classes="wrapperClasses"
+    :label-classes="labelClasses"
   >
     <template slot="field">
       <select
         :id="field.name"
         v-model="value"
         :class="[inputClasses, errorClasses]"
-        :disabled="field.readOnly"
+        :disabled="readOnly"
       >
         <option value="" selected disabled>
           {{ placeholder }}
@@ -36,9 +36,10 @@
 
 <script>
 import { FormField, HandlesValidationErrors } from 'laravel-nova';
+import R64Field from '../../mixins/R64Field';
 
 export default {
-  mixins: [HandlesValidationErrors, FormField],
+  mixins: [HandlesValidationErrors, FormField, R64Field],
 
   computed: {
     /**
@@ -54,7 +55,11 @@ export default {
      * Get the input classes.
      */
     inputClasses() {
-      return this.field.inputClasses || 'w-full form-control form-select';
+      return (
+        this.baseClasses.inputClasses ||
+        this.field.inputClasses ||
+        'w-full form-control form-select'
+      );
     }
   },
 

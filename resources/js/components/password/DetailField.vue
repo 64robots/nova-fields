@@ -1,9 +1,9 @@
 <template>
   <r64-panel-item
     :field="field"
-    :hide-label="field.hideLabelInDetail"
-    :label-classes="field.panelLabelClasses"
-    :field-classes="field.panelFieldClasses"
+    :hide-label="hideLabelInDetail"
+    :label-classes="panelLabelClasses"
+    :field-classes="panelFieldClasses"
   >
   <p
     slot="value"
@@ -14,7 +14,11 @@
 </template>
 
 <script>
+import R64Field from '../../mixins/R64Field';
+
 export default {
+  mixins: [R64Field],
+
   props: ['resource', 'resourceName', 'resourceId', 'field'],
 
   computed: {

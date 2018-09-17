@@ -20,47 +20,47 @@ export default {
 
   computed: {
     hideLabelInForms() {
-      return this.baseClasses.hideLabelInForms || this.field.hideLabelInForms;
+      return this.field.hideLabelInForms || this.baseClasses.hideLabelInForms;
     },
 
     hideLabelInDetail() {
-      return this.baseClasses.hideLabelInDetail || this.field.hideLabelInDetail;
+      return this.field.hideLabelInDetail || this.baseClasses.hideLabelInDetail;
     },
 
     fieldClasses() {
-      return this.baseClasses.fieldClasses || this.field.fieldClasses;
+      return this.field.fieldClasses || this.baseClasses.fieldClasses;
     },
 
     panelFieldClasses() {
-      return this.baseClasses.panelFieldClasses || this.field.panelFieldClasses;
+      return this.field.panelFieldClasses || this.baseClasses.panelFieldClasses;
     },
 
     wrapperClasses() {
-      return this.baseClasses.wrapperClasses || this.field.wrapperClasses;
+      return this.field.wrapperClasses || this.baseClasses.wrapperClasses;
     },
 
     labelClasses() {
-      return this.baseClasses.labelClasses || this.field.labelClasses;
+      return this.field.labelClasses || this.baseClasses.labelClasses;
     },
 
     panelLabelClasses() {
-      return this.baseClasses.panelLabelClasses || this.field.panelLabelClasses;
+      return this.field.panelLabelClasses || this.baseClasses.panelLabelClasses;
     },
 
     excerptClasses() {
-      return this.baseClasses.excerptClasses || this.field.excerptClasses;
+      return this.field.excerptClasses || this.baseClasses.excerptClasses;
     },
 
     readOnly() {
-      return this.baseClasses.readOnly || this.field.readOnly;
+      return this.field.readOnly || this.baseClasses.readOnly;
     },
 
     showContentLabel() {
-      return this.baseClasses.showContentLabel || this.field.showContentLabel;
+      return this.field.showContentLabel || this.baseClasses.showContentLabel;
     },
 
     hideContentLabel() {
-      return this.baseClasses.hideContentLabel || this.field.hideContentLabel;
+      return this.field.hideContentLabel || this.baseClasses.hideContentLabel;
     }
   }
 };
