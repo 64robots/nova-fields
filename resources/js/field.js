@@ -73,4 +73,14 @@ Nova.booting((Vue, router) => {
     'form-nova-fields-select',
     require('./components/select/FormField')
   );
+
+  /** Trix */
+  Vue.component(
+    'detail-nova-fields-trix',
+    require('./components/textarea/DetailField')
+  );
+  Vue.component(
+    'form-nova-fields-trix',
+    require('./components/trix/FormField')
+  );
 });

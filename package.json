@@ -12,7 +12,8 @@
     "devDependencies": {
         "cross-env": "^5.0.0",
         "laravel-mix": "^1.0",
-        "laravel-nova": "^1.0"
+        "laravel-nova": "^1.0",
+        "trix": "^0.12.1"
     },
     "dependencies": {
         "vue": "^2.5.0"
