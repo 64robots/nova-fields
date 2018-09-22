@@ -18,10 +18,11 @@
         </option>
 
         <option
-          v-for="option in field.options"
+          v-for="option in options"
           :key="option.value"
           :value="option.value"
           :selected="option.value == value"
+          :disabled="option.group"
         >
           {{ option.label }}
         </option>
@@ -42,6 +43,37 @@ export default {
   mixins: [HandlesValidationErrors, FormField, R64Field],
 
   computed: {
+    options() {
+      const withoutGroup = this.field.options.filter(
+        option => typeof option.label !== 'object'
+      );
+
+      if (withoutGroup.length === this.field.options.length) {
+        return this.field.options;
+      }
+
+      const grouped = this.field.options.filter(
+        option => typeof option.label === 'object'
+      );
+
+      const options = [...withoutGroup];
+
+      grouped.forEach(option => {
+        if (typeof option.label === 'object') {
+          options.push({ label: option.value, value: '', group: true });
+          Object.keys(option.label).map(key =>
+            options.push({
+              value: key,
+              label: option.label[key]
+            })
+          );
+        } else {
+          options.push(option);
+        }
+      });
+
+      return options;
+    },
     /**
      * Get the placeholder.
      */
