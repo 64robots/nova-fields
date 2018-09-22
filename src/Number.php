@@ -14,4 +14,15 @@ class Number extends NovaNumber
      * @var string
      */
     public $component = 'nova-fields-text';
+
+
+    /**
+     * Indicate that value should be displayed as danger when < 0 .
+     *
+     * @return $this
+     */
+    public function colors()
+    {
+        return $this->withMeta(['colors' => true]);
+    }
 }
