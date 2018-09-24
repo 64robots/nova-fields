@@ -83,4 +83,18 @@ Nova.booting((Vue, router) => {
     'form-nova-fields-trix',
     require('./components/trix/FormField')
   );
+
+  /** BelongsTo */
+  Vue.component(
+    'index-nova-fields-belongs-to',
+    require('./components/belongs-to/IndexField')
+  );
+  Vue.component(
+    'detail-nova-fields-belongs-to',
+    require('./components/belongs-to/DetailField')
+  );
+  Vue.component(
+    'form-nova-fields-belongs-to',
+    require('./components/belongs-to/FormField')
+  );
 });
