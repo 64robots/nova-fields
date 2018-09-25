@@ -41,6 +41,12 @@ class BelongsTo extends NovaBelongsTo
         ]);
     }
 
+    /**
+     * Set the field that should be used to group the resources.
+     *
+     * @param  string  $field
+     * @return $this
+     */
     public function groupedBy($field)
     {
         $this->groupedBy = $field;
@@ -48,6 +54,17 @@ class BelongsTo extends NovaBelongsTo
         return $this;
     }
 
+    /**
+     * Determine if a new related model can be created.
+     *
+     * @return $this
+     */
+    public function quickCreate()
+    {
+        $this->withMeta(['quickCreate' => true]);
+
+        return $this;
+    }
 
     /**
      * Get additional meta information to merge with the field payload.

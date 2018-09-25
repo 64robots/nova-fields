@@ -7,80 +7,99 @@
     :label-classes="labelClasses"
   >
     <template slot="field">
-      <search-input
-        v-if="isSearchable && !isLocked"
-        :data-testid="`${field.resourceName}-search-input`"
-        @input="performSearch"
-        @clear="clearSelection"
-        @selected="selectResource"
-        :error="hasError"
-        :value='selectedResource'
-        :data='availableResources'
-        trackBy='value'
-        searchBy='display'
-        class="mb-3"
-      >
-        <div
-          slot="default"
-          v-if="selectedResource"
-          class="flex items-center"
-        >
-          <div
-            v-if="selectedResource.avatar"
-            class="mr-3"
+      <loading-view :loading="loading">
+        <div class="flex items-center">
+          <search-input
+            v-if="isSearchable && !isLocked"
+            :data-testid="`${field.resourceName}-search-input`"
+            @input="performSearch"
+            @clear="clearSelection"
+            @selected="selectResource"
+            :error="hasError"
+            :value='selectedResource'
+            :data='availableResources'
+            trackBy='value'
+            searchBy='display'
+            class="mb-3"
           >
-            <img
-              :src="selectedResource.avatar"
-              class="w-8 h-8 rounded-full block" />
-          </div>
+            <div
+              slot="default"
+              v-if="selectedResource"
+              class="flex items-center"
+            >
+              <div
+                v-if="selectedResource.avatar"
+                class="mr-3"
+              >
+                <img
+                  :src="selectedResource.avatar"
+                  class="w-8 h-8 rounded-full block" />
+              </div>
 
-          {{ selectedResource.display }}
-        </div>
+              {{ selectedResource.display }}
+            </div>
 
-        <div
-          slot="option"
-          slot-scope="{option, selected}"
-          class="flex items-center"
-        >
-          <div
-            v-if="option.avatar"
-            class="mr-3"
+            <div
+              slot="option"
+              slot-scope="{option, selected}"
+              class="flex items-center"
+            >
+              <div
+                v-if="option.avatar"
+                class="mr-3"
+              >
+                <img
+                  :src="option.avatar"
+                  class="w-8 h-8 rounded-full block" />
+              </div>
+
+              {{ option.display }}
+            </div>
+          </search-input>
+
+          <select
+            v-if="!isSearchable || isLocked"
+            class="form-control form-select mb-3 w-full"
+            :class="{ 'border-danger': hasError }"
+            :data-testid="`${field.resourceName}-select`"
+            :dusk="field.attribute"
+            @change="selectResourceFromSelectControl"
+            :disabled="isLocked"
           >
-            <img
-              :src="option.avatar"
-              class="w-8 h-8 rounded-full block" />
-          </div>
+            <option
+              value=""
+              disabled
+              selected
+            >{{ placeholder }}</option>
 
-          {{ option.display }}
+            <option
+              v-for="resource in options"
+              :key="resource.value"
+              :value="resource.value"
+              :selected="selectedResourceId == resource.value"
+              :disabled="resource.disabled"
+            >
+              {{ resource.display}}
+            </option>
+          </select>
+          <a
+            v-if="field.quickCreate"
+            class="btn btn-primary p-2 rounded mb-3 ml-3 cursor-pointer"
+            @click="openModal = true"
+          >+</a>
         </div>
-      </search-input>
+      </loading-view>
 
-      <select
-        v-if="!isSearchable || isLocked"
-        class="form-control form-select mb-3 w-full"
-        :class="{ 'border-danger': hasError }"
-        :data-testid="`${field.resourceName}-select`"
-        :dusk="field.attribute"
-        @change="selectResourceFromSelectControl"
-        :disabled="isLocked"
-      >
-        <option
-          value=""
-          disabled
-          selected
-        >{{ placeholder }}</option>
-
-        <option
-          v-for="resource in options"
-          :key="resource.value"
-          :value="resource.value"
-          :selected="selectedResourceId == resource.value"
-          :disabled="resource.disabled"
-        >
-          {{ resource.display}}
-        </option>
-      </select>
-
+      <portal to="modals">
+        <transition name="fade">
+          <ModalCreate
+            v-if="openModal"
+            :resourceName="field.resourceName"
+            @confirm="reloadResources"
+            @close="openModal = false"
+          />
+        </transition>
+      </portal>
       <!-- Trashed State -->
       <div v-if="softDeletes && !isLocked">
         <label
@@ -114,9 +133,12 @@ import {
   HandlesValidationErrors
 } from 'laravel-nova';
 import { mixin as clickaway } from 'vue-clickaway';
+import ModalCreate from '../../modals/ModalCreate';
 import R64Field from '../../mixins/R64Field';
 
 export default {
+  components: { ModalCreate },
+
   mixins: [TogglesTrashed, PerformsSearches, HandlesValidationErrors, R64Field],
 
   props: {
@@ -128,6 +150,8 @@ export default {
   },
 
   data: () => ({
+    loading: false,
+    openModal: false,
     availableResources: [],
     initializingWithExistingResource: false,
     selectedResource: null,
@@ -237,6 +261,16 @@ export default {
   },
 
   methods: {
+    async reloadResources(id) {
+      this.loading = true;
+      await this.getAvailableResources();
+      if (id) {
+        this.selectedResourceId = id;
+      }
+      this.openModal = false;
+      this.loading = false;
+    },
+
     initializeComponent() {
       this.withTrashed = false;
 
