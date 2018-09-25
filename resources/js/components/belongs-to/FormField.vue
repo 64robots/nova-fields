@@ -83,14 +83,17 @@
             </option>
           </select>
           <a
-            v-if="field.quickCreate"
+            v-if="field.quickCreate && !isModal"
             class="btn btn-primary p-2 rounded mb-3 ml-3 cursor-pointer"
             @click="openModal = true"
           >+</a>
         </div>
       </loading-view>
 
-      <portal to="modals">
+      <portal
+        v-if="!isModal"
+        to="modals"
+      >
         <transition name="fade">
           <ModalCreate
             v-if="openModal"
@@ -142,6 +145,10 @@ export default {
   mixins: [TogglesTrashed, PerformsSearches, HandlesValidationErrors, R64Field],
 
   props: {
+    isModal: {
+      type: Boolean,
+      default: false
+    },
     resourceName: String,
     field: Object,
     viaResource: {},

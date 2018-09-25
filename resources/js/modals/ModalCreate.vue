@@ -23,6 +23,7 @@
               :errors="validationErrors"
               :resource-name="resourceName"
               :field="field"
+              is-modal
             />
           </div>
 
