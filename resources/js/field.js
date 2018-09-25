@@ -95,9 +95,20 @@ Nova.booting((Vue, router) => {
     'detail-nova-fields-row',
     require('./components/row/DetailField')
   );
+  Vue.component('form-nova-fields-row', require('./components/row/FormField'));
+
+  /** JSON */
   Vue.component(
-    'form-nova-fields-row',
-    require('./components/row/FormField')
+    'index-nova-fields-json',
+    require('./components/json/IndexField')
+  );
+  Vue.component(
+    'detail-nova-fields-json',
+    require('./components/json/DetailField')
+  );
+  Vue.component(
+    'form-nova-fields-json',
+    require('./components/json/FormField')
   );
 
   /** RELATIONS */
