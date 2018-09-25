@@ -84,6 +84,24 @@ Nova.booting((Vue, router) => {
     require('./components/trix/FormField')
   );
 
+  /** R64 Fields */
+
+  /** Row */
+  Vue.component(
+    'index-nova-fields-row',
+    require('./components/row/IndexField')
+  );
+  Vue.component(
+    'detail-nova-fields-row',
+    require('./components/row/DetailField')
+  );
+  Vue.component(
+    'form-nova-fields-row',
+    require('./components/row/FormField')
+  );
+
+  /** RELATIONS */
+
   /** BelongsTo */
   Vue.component(
     'index-nova-fields-belongs-to',
