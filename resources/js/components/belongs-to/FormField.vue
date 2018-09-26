@@ -128,14 +128,12 @@
 </template>
 
 <script>
-import _ from 'lodash';
 import storage from '../../storage/BelongsToFieldStorage';
 import {
   TogglesTrashed,
   PerformsSearches,
   HandlesValidationErrors
 } from 'laravel-nova';
-import { mixin as clickaway } from 'vue-clickaway';
 import ModalCreate from '../../modals/ModalCreate';
 import R64Field from '../../mixins/R64Field';
 
@@ -348,8 +346,7 @@ export default {
           this.field.attribute,
           this.queryParams
         )
-        .then(({ data }) => {
-          const { resources, softDeletes, withTrashed } = data;
+        .then(({ resources, softDeletes, withTrashed }) => {
           if (this.initializingWithExistingResource || !this.isSearchable) {
             this.withTrashed = withTrashed;
           }
