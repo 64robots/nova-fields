@@ -346,7 +346,7 @@ export default {
           this.field.attribute,
           this.queryParams
         )
-        .then(({ resources, softDeletes, withTrashed }) => {
+        .then(({ data: { resources, softDeletes, withTrashed } }) => {
           if (this.initializingWithExistingResource || !this.isSearchable) {
             this.withTrashed = withTrashed;
           }
