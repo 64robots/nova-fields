@@ -23,11 +23,13 @@
           :key="row.row_id"
           class="flex border-40 border"
         >
-          <p
+          <DetailFieldItem
             v-for="f in field.fields"
             :key="`${row.row_id}${f.attribute}`"
-            :class="getFieldClass(field)"
-          >{{ row[f.attribute] }}</p>
+            :base-classes="field.fieldClasses"
+            :field="f"
+            :row="row"
+          />
         </div>
       </template>
     </r64-excerpt>
@@ -38,21 +40,13 @@
 import R64Field from '../../mixins/R64Field';
 import RowHeading from './RowHeading';
 import RowField from './RowField';
+import DetailFieldItem from './DetailFieldItem';
 
 export default {
   mixins: [RowField, R64Field],
 
-  components: { RowHeading },
+  components: { RowHeading, DetailFieldItem },
 
-  props: ['resource', 'resourceName', 'resourceId', 'field'],
-
-  methods: {
-    getFieldClass(field) {
-      if (field.fieldClasses) {
-        return field.fieldClasses;
-      }
-      return this.field.childConfig ? this.field.childConfig.fieldClasses : '';
-    }
-  }
+  props: ['resource', 'resourceName', 'resourceId', 'field']
 };
 </script>

@@ -14,4 +14,20 @@ class Select extends NovaSelect
      * @var string
      */
     public $component = 'nova-fields-select';
+
+    /**
+     * Display values using their corresponding specified labels.
+     *
+     * @return $this
+     */
+    public function displayUsingLabels()
+    {
+        $this->displayUsing(function ($value) {
+            return collect($this->meta['options'])
+                    ->where('value', $value)
+                    ->first()['label'] ?? $value;
+        });
+
+        return $this->withMeta(['displayUsingLabels' => true]);
+    }
 }
