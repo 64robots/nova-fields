@@ -7,17 +7,15 @@
     :label-classes="field.labelClasses"
   >
     <template slot="field">
-      <component
+      <FormFieldItem
         :class="{'remove-bottom-border': index == fields.length - 1}"
         :key="index"
         :ref="f.attribute"
         v-for="(f, index) in fields"
-        :is="`form-${f.component}`"
-        :validationErrors="validationErrors"
-        :resource-name="resourceName"
-        :resource-id="resourceId"
+        v-bind="{ validationErrors, resourceName, resourceId }"
         :field="f"
         :base-classes="field.childConfig"
+        :current-value="value"
       />
     </template>
   </r64-default-field>
@@ -26,9 +24,12 @@
 <script>
 import { FormField, HandlesValidationErrors } from 'laravel-nova';
 import HasChildFields from '../../mixins/HasChildFields';
+import FormFieldItem from './FormFieldItem';
 
 export default {
   mixins: [FormField, HandlesValidationErrors, HasChildFields],
+
+  components: { FormFieldItem },
 
   props: ['resourceName', 'resourceId', 'field'],
 
@@ -36,7 +37,7 @@ export default {
     this.fields.forEach(field => {
       this.$watch(
         () => {
-          return this.$refs[field.attribute][0].value;
+          return this.$refs[field.attribute][0].$children[0].value;
         },
         value => {
           let currentJson = JSON.parse(this.value || '{}');
