@@ -26,7 +26,7 @@
           <p
             v-for="f in field.fields"
             :key="`${row.row_id}${f.attribute}`"
-              :class="f.fieldClasses"
+            :class="getFieldClass(field)"
           >{{ row[f.attribute] }}</p>
         </div>
       </template>
@@ -44,6 +44,15 @@ export default {
 
   components: { RowHeading },
 
-  props: ['resource', 'resourceName', 'resourceId', 'field']
+  props: ['resource', 'resourceName', 'resourceId', 'field'],
+
+  methods: {
+    getFieldClass(field) {
+      if (field.fieldClasses) {
+        return field.fieldClasses;
+      }
+      return this.field.childConfig ? this.field.childConfig.fieldClasses : '';
+    }
+  }
 };
 </script>
