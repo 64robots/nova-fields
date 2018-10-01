@@ -1,7 +1,7 @@
 export default {
   fetchAvailableResources(resourceName, fieldAttribute, params) {
     return Nova.request().get(
-      `/nova-api/${resourceName}/associatable/${fieldAttribute}`,
+      `/nova-r64-api/${resourceName}/associatable/${fieldAttribute}`,
       params
     );
   },

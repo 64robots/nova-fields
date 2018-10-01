@@ -323,6 +323,7 @@ export default {
      */
     selectResourceFromSelectControl(e) {
       this.selectedResourceId = e.target.value;
+      this.$emit('input', this.selectedResourceId);
       this.selectInitialResource();
     },
 
