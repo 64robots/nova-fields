@@ -254,7 +254,7 @@ export default {
     },
 
     isLocked() {
-      return this.viaResource == this.field.resourceName;
+      return this.viaResource == this.field.resourceName || this.readOnly;
     }
   },
 

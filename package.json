@@ -11,6 +11,7 @@
     },
     "devDependencies": {
         "cross-env": "^5.0.0",
+        "form-backend-validation": "^2.3.3",
         "laravel-mix": "^1.0",
         "laravel-nova": "^1.0",
         "trix": "^0.12.1",

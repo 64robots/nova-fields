@@ -53,7 +53,17 @@ export default {
     },
 
     readOnly() {
-      return this.field.readOnly || this.baseClasses.readOnly;
+      const readOnly = this.field.readOnly || this.baseClasses.readOnly;
+
+      if (readOnly) {
+        return true;
+      }
+      if (this.onUpdate) {
+        return this.field.readOnlyOnUpdate || this.baseClasses.readOnlyOnUpdate;
+      }
+      if (this.onCreate) {
+        return this.field.readOnlyOnCreate || this.baseClasses.readOnlyOnCreate;
+      }
     },
 
     showContentLabel() {
@@ -62,6 +72,14 @@ export default {
 
     hideContentLabel() {
       return this.field.hideContentLabel || this.baseClasses.hideContentLabel;
+    },
+
+    onCreate() {
+      return !this.$route.params.resourceId;
+    },
+
+    onUpdate() {
+      return !!this.$route.params.resourceId;
     }
   }
 };

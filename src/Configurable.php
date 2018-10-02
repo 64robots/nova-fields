@@ -123,6 +123,26 @@ trait Configurable
     }
 
     /**
+     * Set the input as disabled on create view.
+     *
+     * @return $this
+     */
+    public function readOnlyOnCreate()
+    {
+        return $this->withMeta(['readOnlyOnCreate' => true]);
+    }
+
+    /**
+     * Set the input as disabled on update view.
+     *
+     * @return $this
+     */
+    public function readOnlyOnUpdate()
+    {
+        return $this->withMeta(['readOnlyOnUpdate' => true]);
+    }
+
+    /**
      * Show or hide the field based on other field value
      *
      * @param  array  $field

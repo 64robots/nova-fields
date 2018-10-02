@@ -1,19 +1,19 @@
 <template>
   <r64-default-field
     :field="field"
-    :hide-label="field.hideLabelInForms"
-    :field-classes="field.fieldClasses"
-    :wrapper-classes="field.wrapperClasses"
-    :label-classes="field.labelClasses"
+    :hide-label="hideLabelInForms"
+    :field-classes="fieldClasses"
+    :wrapper-classes="wrapperClasses"
+    :label-classes="labelClasses"
   >
     <template slot="field">
       <checkbox
-        :class="inputClasses"
+        :class="[inputClasses, {'opacity-50 pointer-events-none': readOnly }]"
         @input="toggle"
         :id="field.name"
         :name="field.name"
         :checked="checked"
-        :disabled="field.readOnly"
+        :disabled="readOnly"
       />
 
       <p v-if="hasError" class="my-2 text-danger" v-html="firstError" />
@@ -22,10 +22,13 @@
 </template>
 
 <script>
-import { FormField, HandlesValidationErrors } from 'laravel-nova';
+// import { FormField, HandlesValidationErrors } from 'laravel-nova';
+import FormField from 'laravel-nova/src/mixins/FormField';
+import HandlesValidationErrors from 'laravel-nova/src/mixins/HandlesValidationErrors';
+import R64Field from '../../mixins/R64Field';
 
 export default {
-  mixins: [HandlesValidationErrors, FormField],
+  mixins: [HandlesValidationErrors, FormField, R64Field],
 
   data: () => ({
     value: false
@@ -44,7 +47,7 @@ export default {
      * Get the input classes.
      */
     inputClasses() {
-      return this.field.inputClasses || 'py-2';
+      return this.baseClasses.inputClasses || this.field.inputClasses || 'py-2';
     }
   },
 
