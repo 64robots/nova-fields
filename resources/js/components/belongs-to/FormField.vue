@@ -20,7 +20,7 @@
             :data='availableResources'
             trackBy='value'
             searchBy='display'
-            class="mb-3"
+            class="mb-3 flex-grow"
           >
             <div
               slot="default"
