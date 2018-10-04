@@ -1,9 +1,8 @@
 <template>
-  <div class="flex">
+  <div class="flex border-40 border">
     <div
       v-for="(field, index) in fields"
       :key="index"
-      class="border-40 border"
       :class="getFieldClasses(field)"
     >{{ field.name }}</div>
   </div>
@@ -27,7 +26,9 @@ export default {
 
   methods: {
     getFieldClasses(field) {
-      return field.fieldClasses || this.baseClasses.fieldClasses;
+      return (
+        field.fieldClasses || this.baseClasses.fieldClasses || 'w-1/2 px-8 py-6'
+      );
     }
   }
 };
