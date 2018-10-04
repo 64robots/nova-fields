@@ -39,30 +39,10 @@ export default {
 
   computed: {
     /**
-     * Get the placeholder.
-     */
-    placeholder() {
-      return this.field.placeholder === undefined
-        ? this.field.name
-        : this.field.placeholder;
-    },
-
-    /**
      * Get the input type.
      */
     inputType() {
       return this.field.type || 'text';
-    },
-
-    /**
-     * Get the input classes.
-     */
-    inputClasses() {
-      return (
-        this.baseClasses.inputClasses ||
-        this.field.inputClasses ||
-        'w-full form-control form-input form-input-bordered'
-      );
     },
 
     /**

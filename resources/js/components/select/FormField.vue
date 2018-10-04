@@ -74,6 +74,7 @@ export default {
 
       return options;
     },
+
     /**
      * Get the placeholder.
      */
@@ -81,17 +82,6 @@ export default {
       return this.field.placeholder === undefined
         ? this.__('Choose an option')
         : this.field.placeholder;
-    },
-
-    /**
-     * Get the input classes.
-     */
-    inputClasses() {
-      return (
-        this.baseClasses.inputClasses ||
-        this.field.inputClasses ||
-        'w-full form-control form-select'
-      );
     }
   },
 

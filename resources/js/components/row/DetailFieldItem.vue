@@ -38,7 +38,7 @@ export default {
     fieldClass() {
       return this.field.fieldClasses
         ? this.field.fieldClasses
-        : this.baseClasses;
+        : this.baseClasses.fieldClasses;
     }
   }
 };

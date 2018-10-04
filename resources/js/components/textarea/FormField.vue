@@ -30,28 +30,6 @@ import R64Field from '../../mixins/R64Field';
 export default {
   mixins: [HandlesValidationErrors, FormField, R64Field],
 
-  computed: {
-    /**
-     * Get the placeholder.
-     */
-    placeholder() {
-      return this.field.placeholder === undefined
-        ? this.field.name
-        : this.field.placeholder;
-    },
-
-    /**
-     * Get the input classes.
-     */
-    inputClasses() {
-      return (
-        this.baseClasses.inputClasses ||
-        this.field.inputClasses ||
-        'w-full form-control form-input form-input-bordered py-3 min-h-textarea'
-      );
-    }
-  },
-
   watch: {
     value(value) {
       this.$emit('input', value);

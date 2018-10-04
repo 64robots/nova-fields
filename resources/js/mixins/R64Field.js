@@ -20,12 +20,22 @@ export default {
   },
 
   computed: {
+    placeholder() {
+      return this.field.placeholder === undefined
+        ? this.field.name
+        : this.field.placeholder;
+    },
+
     hideLabelInForms() {
       return this.field.hideLabelInForms || this.baseClasses.hideLabelInForms;
     },
 
     hideLabelInDetail() {
       return this.field.hideLabelInDetail || this.baseClasses.hideLabelInDetail;
+    },
+
+    inputClasses() {
+      return this.baseClasses.inputClasses || this.field.inputClasses;
     },
 
     fieldClasses() {

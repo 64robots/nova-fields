@@ -23,7 +23,22 @@ trait Configurable
      */
     public function inputClasses($classes)
     {
-        return $this->withMeta(['inputClasses' => $classes]);
+        $this->inputClasses = $classes;
+
+        return $this;
+    }
+
+    /**
+     * Add classes to the base input classes.
+     *
+     * @param  string  $classes
+     * @return $this
+     */
+    public function addInputClasses($classes)
+    {
+        $this->inputClasses = "{$this->inputClasses} {$classes}";
+
+        return $this;
     }
 
     /**
@@ -151,5 +166,17 @@ trait Configurable
     public function onlyWhen($field)
     {
         return $this->withMeta(['onlyWhen' => $field]);
+    }
+
+    /**
+     * Get additional meta information to merge with the element payload.
+     *
+     * @return array
+     */
+    public function meta()
+    {
+        return array_merge([
+            'inputClasses' => $this->inputClasses,
+        ], $this->meta);
     }
 }

@@ -9,6 +9,13 @@ class Boolean extends NovaBoolean
     use Configurable;
 
     /**
+     * The base input classes of the field.
+     *
+     * @var string
+     */
+    public $inputClasses = 'py-2';
+
+    /**
      * The field's component.
      *
      * @var string

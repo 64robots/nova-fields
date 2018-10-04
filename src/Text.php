@@ -9,6 +9,13 @@ class Text extends NovaText
     use Configurable;
 
     /**
+     * The base input classes of the field.
+     *
+     * @var string
+     */
+    public $inputClasses = 'w-full form-control form-input form-input-bordered';
+
+    /**
      * The field's component.
      *
      * @var string

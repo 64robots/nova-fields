@@ -22,7 +22,6 @@
 </template>
 
 <script>
-// import { FormField, HandlesValidationErrors } from 'laravel-nova';
 import FormField from 'laravel-nova/src/mixins/FormField';
 import HandlesValidationErrors from 'laravel-nova/src/mixins/HandlesValidationErrors';
 import R64Field from '../../mixins/R64Field';
@@ -41,13 +40,6 @@ export default {
 
     trueValue() {
       return +this.checked;
-    },
-
-    /**
-     * Get the input classes.
-     */
-    inputClasses() {
-      return this.baseClasses.inputClasses || this.field.inputClasses || 'py-2';
     }
   },
 

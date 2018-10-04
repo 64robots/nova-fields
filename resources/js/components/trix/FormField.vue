@@ -42,15 +42,6 @@ export default {
     this.cleanUp();
   },
 
-  computed: {
-    /**
-     * Get the input classes.
-     */
-    inputClasses() {
-      return this.baseClasses.inputClasses || this.field.inputClasses;
-    }
-  },
-
   methods: {
     /**
      * Update the field's internal value
@@ -92,7 +83,7 @@ export default {
           {
             onUploadProgress: function(progressEvent) {
               attachment.setUploadProgress(
-                Math.round(progressEvent.loaded * 100 / progressEvent.total)
+                Math.round((progressEvent.loaded * 100) / progressEvent.total)
               );
             }
           }

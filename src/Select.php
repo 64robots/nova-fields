@@ -9,6 +9,13 @@ class Select extends NovaSelect
     use Configurable;
 
     /**
+     * The base input classes of the field.
+     *
+     * @var string
+     */
+    public $inputClasses = 'w-full form-control form-select';
+
+    /**
      * The field's component.
      *
      * @var string
