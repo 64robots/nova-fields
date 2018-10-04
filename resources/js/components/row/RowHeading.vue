@@ -26,9 +26,7 @@ export default {
 
   methods: {
     getFieldClasses(field) {
-      return (
-        field.fieldClasses || this.baseClasses.fieldClasses || 'w-1/2 px-8 py-6'
-      );
+      return this.baseClasses.fieldClasses || field.fieldClasses;
     }
   }
 };

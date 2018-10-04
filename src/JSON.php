@@ -11,6 +11,13 @@ class JSON extends Field
     use Configurable, HasChilds;
 
     /**
+     * The base input classes of the field.
+     *
+     * @var string
+     */
+    public $inputClasses = '';
+
+    /**
      * The field's component.
      *
      * @var string

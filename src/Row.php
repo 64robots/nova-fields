@@ -7,6 +7,14 @@ use Laravel\Nova\Fields\Field;
 class Row extends Field
 {
     use Configurable, HasChilds;
+
+    /**
+     * The base input classes of the field.
+     *
+     * @var string
+     */
+    public $inputClasses = '';
+
     /**
      * The field's component.
      *

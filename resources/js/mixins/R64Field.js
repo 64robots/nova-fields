@@ -20,22 +20,12 @@ export default {
   },
 
   computed: {
-    placeholder() {
-      return this.field.placeholder === undefined
-        ? this.field.name
-        : this.field.placeholder;
-    },
-
-    hideLabelInForms() {
-      return this.field.hideLabelInForms || this.baseClasses.hideLabelInForms;
-    },
-
-    hideLabelInDetail() {
-      return this.field.hideLabelInDetail || this.baseClasses.hideLabelInDetail;
+    wrapperClasses() {
+      return this.field.wrapperClasses || this.baseClasses.wrapperClasses;
     },
 
     inputClasses() {
-      return this.baseClasses.inputClasses || this.field.inputClasses;
+      return this.field.inputClasses || this.baseClasses.inputClasses;
     },
 
     fieldClasses() {
@@ -44,10 +34,6 @@ export default {
 
     panelFieldClasses() {
       return this.field.panelFieldClasses || this.baseClasses.panelFieldClasses;
-    },
-
-    wrapperClasses() {
-      return this.field.wrapperClasses || this.baseClasses.wrapperClasses;
     },
 
     labelClasses() {
@@ -60,6 +46,20 @@ export default {
 
     excerptClasses() {
       return this.field.excerptClasses || this.baseClasses.excerptClasses;
+    },
+
+    placeholder() {
+      return this.field.placeholder === undefined
+        ? this.field.name
+        : this.field.placeholder;
+    },
+
+    hideLabelInForms() {
+      return this.field.hideLabelInForms || this.baseClasses.hideLabelInForms;
+    },
+
+    hideLabelInDetail() {
+      return this.field.hideLabelInDetail || this.baseClasses.hideLabelInDetail;
     },
 
     readOnly() {

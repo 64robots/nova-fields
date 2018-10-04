@@ -10,6 +10,13 @@ class BelongsTo extends NovaBelongsTo
     use Configurable;
 
     /**
+     * The base input classes of the field.
+     *
+     * @var string
+     */
+    public $inputClasses = 'w-full form-control form-input form-input-bordered';
+
+    /**
      * The field's component.
      *
      * @var string
@@ -74,6 +81,13 @@ class BelongsTo extends NovaBelongsTo
     public function meta()
     {
         return array_merge([
+            'wrapperClasses' => $this->wrapperClasses,
+            'inputClasses' => $this->inputClasses,
+            'fieldClasses' => $this->fieldClasses,
+            'panelFieldClasses' => $this->panelFieldClasses,
+            'labelClasses' => $this->labelClasses,
+            'panelLabelClasses' => $this->panelLabelClasses,
+            'excerptClasses' => $this->excerptClasses,
             'grouped' => !!$this->groupedBy,
             'resourceName' => $this->resourceName,
             'label' => forward_static_call([$this->resourceClass, 'label']),

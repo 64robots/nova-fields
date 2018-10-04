@@ -59,8 +59,7 @@
 
           <select
             v-if="!isSearchable || isLocked"
-            class="form-control form-select mb-3 w-full"
-            :class="{ 'border-danger': hasError }"
+            :class="[inputClasses, { 'border-danger': hasError }]"
             :data-testid="`${field.resourceName}-select`"
             :dusk="field.attribute"
             @change="selectResourceFromSelectControl"
@@ -196,17 +195,6 @@ export default {
       return this.field.placeholder === undefined
         ? `${this.__('Choose')} ${this.field.name}`
         : this.field.placeholder;
-    },
-
-    /**
-     * Get the input classes.
-     */
-    inputClasses() {
-      return (
-        this.baseClasses.inputClasses ||
-        this.field.inputClasses ||
-        'w-full form-control form-input form-input-bordered'
-      );
     },
 
     /**

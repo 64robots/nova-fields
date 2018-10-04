@@ -5,6 +5,48 @@ namespace R64\NovaFields;
 trait Configurable
 {
     /**
+     * The base container classes of the field.
+     *
+     * @var string
+     */
+    public $wrapperClasses = 'flex border-b border-40';
+
+    /**
+     * The base field classes of the field.
+     *
+     * @var string
+     */
+    public $fieldClasses = 'w-1/2 px-8 py-6';
+
+    /**
+     * The base field classes for the detail view.
+     *
+     * @var string
+     */
+    public $panelFieldClasses = 'w-3/4 py-4';
+
+    /**
+     * The base wrapper classes for label.
+     *
+     * @var string
+     */
+    public $labelClasses = 'w-1/5 px-8 py-6';
+
+    /**
+     * The base label classes for the detail view.
+     *
+     * @var string
+     */
+    public $panelLabelClasses = 'w-1/4 py-4';
+
+    /**
+     * The base excerpt classes.
+     *
+     * @var string
+     */
+    public $excerptClasses = 'cursor-pointer dim inline-block text-primary font-bold';
+
+    /**
      * Set the container classes that should be applied instead of default ones.
      *
      * @param  string  $classes
@@ -12,7 +54,22 @@ trait Configurable
      */
     public function wrapperClasses($classes)
     {
-        return $this->withMeta(['wrapperClasses' => $classes]);
+        $this->wrapperClasses = $classes;
+
+        return $this;
+    }
+
+    /**
+     * Add classes to the base container classes.
+     *
+     * @param  string  $classes
+     * @return $this
+     */
+    public function addWrapperClasses($classes)
+    {
+        $this->wrapperClasses = "{$this->wrapperClasses} {$classes}";
+
+        return $this;
     }
 
     /**
@@ -49,7 +106,22 @@ trait Configurable
      */
     public function fieldClasses($classes)
     {
-        return $this->withMeta(['fieldClasses' => $classes]);
+        $this->fieldClasses = $classes;
+
+        return $this;
+    }
+
+    /**
+     * Add classes to the base field classes.
+     *
+     * @param  string  $classes
+     * @return $this
+     */
+    public function addFieldClasses($classes)
+    {
+        $this->fieldClasses = "{$this->fieldClasses} {$classes}";
+
+        return $this;
     }
 
     /**
@@ -60,7 +132,22 @@ trait Configurable
      */
     public function panelFieldClasses($classes)
     {
-        return $this->withMeta(['panelFieldClasses' => $classes]);
+        $this->panelFieldClasses = $classes;
+
+        return $this;
+    }
+
+    /**
+     * Add classes to the base field classes for detail view.
+     *
+     * @param  string  $classes
+     * @return $this
+     */
+    public function addPanelFieldClasses($classes)
+    {
+        $this->panelFieldClasses = "{$this->panelFieldClasses} {$classes}";
+
+        return $this;
     }
 
     /**
@@ -71,7 +158,22 @@ trait Configurable
      */
     public function labelClasses($classes)
     {
-        return $this->withMeta(['labelClasses' => $classes]);
+        $this->labelClasses = $classes;
+
+        return $this;
+    }
+
+    /**
+     * Add classes to the base label wrapper classes.
+     *
+     * @param  string  $classes
+     * @return $this
+     */
+    public function addLabelClasses($classes)
+    {
+        $this->labelClasses = "{$this->labelClasses} {$classes}";
+
+        return $this;
     }
 
     /**
@@ -82,7 +184,48 @@ trait Configurable
      */
     public function panelLabelClasses($classes)
     {
-        return $this->withMeta(['panelLabelClasses' => $classes]);
+        $this->panelLabelClasses = $classes;
+
+        return $this;
+    }
+
+    /**
+     * Add classes to the base label classes for detail view.
+     *
+     * @param  string  $classes
+     * @return $this
+     */
+    public function addPanelLabelClasses($classes)
+    {
+        $this->panelLabelClasses = "{$this->panelLabelClasses} {$classes}";
+
+        return $this;
+    }
+
+    /**
+     * Set the excerpt classes that should be applied instead of default ones.
+     *
+     * @param  string  $classes
+     * @return $this
+     */
+    public function excerptClasses($classes)
+    {
+        $this->excerptClasses = $classes;
+
+        return $this;
+    }
+
+    /**
+     * Add classes to the base excerpt classes.
+     *
+     * @param  string  $classes
+     * @return $this
+     */
+    public function addExcerptClasses($classes)
+    {
+        $this->excerptClasses = "{$this->excerptClasses} {$classes}";
+
+        return $this;
     }
 
     /**
@@ -114,17 +257,6 @@ trait Configurable
     public function placeholder($placeholder)
     {
         return $this->withMeta(['placeholder' => $placeholder]);
-    }
-
-    /**
-     * Set the excerpt classes that should be applied instead of default ones.
-     *
-     * @param  string  $classes
-     * @return $this
-     */
-    public function excerptClasses($classes)
-    {
-        return $this->withMeta(['excerptClasses' => $classes]);
     }
 
     /**
@@ -176,7 +308,13 @@ trait Configurable
     public function meta()
     {
         return array_merge([
+            'wrapperClasses' => $this->wrapperClasses,
             'inputClasses' => $this->inputClasses,
+            'fieldClasses' => $this->fieldClasses,
+            'panelFieldClasses' => $this->panelFieldClasses,
+            'labelClasses' => $this->labelClasses,
+            'panelLabelClasses' => $this->panelLabelClasses,
+            'excerptClasses' => $this->excerptClasses,
         ], $this->meta);
     }
 }
