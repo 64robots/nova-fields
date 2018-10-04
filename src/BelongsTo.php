@@ -74,6 +74,18 @@ class BelongsTo extends NovaBelongsTo
     }
 
     /**
+     * Determine if a new related model can be created.
+     *
+     * @return $this
+     */
+    public function disableTrashed()
+    {
+        $this->withMeta(['disableTrashed' => true]);
+
+        return $this;
+    }
+
+    /**
      * Get additional meta information to merge with the field payload.
      *
      * @return array

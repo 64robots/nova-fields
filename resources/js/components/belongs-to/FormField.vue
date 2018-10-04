@@ -103,7 +103,7 @@
         </transition>
       </portal>
       <!-- Trashed State -->
-      <div v-if="softDeletes && !isLocked">
+      <div v-if="softDeletes && !isLocked && field.disableTrashed !== true">
         <label
           class="flex items-center"
           @input="toggleWithTrashed"
