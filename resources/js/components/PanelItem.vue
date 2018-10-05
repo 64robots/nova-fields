@@ -1,5 +1,5 @@
 <template>
-  <div class="flex border-b border-40">
+  <div :class="itemClasses">
     <div
       v-if="!hideLabel"
       :class="labelClasses"
@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import Colors from '../mixins/Colors';
+import Colors from '../mixins/Colors'
 
 export default {
   mixins: [Colors],
@@ -50,12 +50,20 @@ export default {
     hideLabel: {
       type: Boolean,
       default: false
+    },
+    hideField: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {
     label() {
-      return this.fieldName || this.field.name;
+      return this.fieldName || this.field.name
+    },
+
+    itemClasses() {
+      return this.hideField ? 'hidden' : 'flex border-b border-40'
     }
   }
-};
+}
 </script>

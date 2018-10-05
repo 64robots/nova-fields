@@ -1,9 +1,10 @@
 <template>
   <r64-panel-item
+    :hide-field="hideField"
     :field="field"
-    :hide-label="field.hideLabelInDetail"
-    :label-classes="field.panelLabelClasses"
-    :field-classes="field.panelFieldClasses"
+    :hide-label="hideLabelInDetail"
+    :label-classes="panelLabelClasses"
+    :field-classes="panelFieldClasses"
   >
     <p slot="value" class="text-90">
       <span
@@ -15,10 +16,11 @@
 </template>
 
 <script>
-import Classes from './Classes';
+import R64Field from '../../mixins/R64Field'
+import Classes from './Classes'
 
 export default {
-  mixins: [Classes],
+  mixins: [Classes, R64Field],
 
   props: ['resource', 'resourceName', 'resourceId', 'field'],
 
@@ -26,8 +28,8 @@ export default {
     label() {
       return this.field.value == true
         ? this.field.yesLabel || this.__('Yes')
-        : this.field.noLabel || this.__('No');
+        : this.field.noLabel || this.__('No')
     }
   }
-};
+}
 </script>

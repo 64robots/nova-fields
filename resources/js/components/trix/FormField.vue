@@ -1,5 +1,6 @@
 <template>
   <r64-default-field
+    :hide-field="hideField"
     :field="field"
     :hide-label="hideLabelInForms"
     :field-classes="fieldClasses"
@@ -27,9 +28,9 @@
 </template>
 
 <script>
-import { FormField, HandlesValidationErrors } from 'laravel-nova';
-import Trix from '../Trix';
-import R64Field from '../../mixins/R64Field';
+import { FormField, HandlesValidationErrors } from 'laravel-nova'
+import Trix from '../Trix'
+import R64Field from '../../mixins/R64Field'
 
 export default {
   mixins: [HandlesValidationErrors, FormField, R64Field],
@@ -39,7 +40,7 @@ export default {
   data: () => ({ draftId: uuidv4() }),
 
   beforeDestroy() {
-    this.cleanUp();
+    this.cleanUp()
   },
 
   methods: {
@@ -47,13 +48,13 @@ export default {
      * Update the field's internal value
      */
     handleChange(value) {
-      this.value = value;
-      this.$emit('input', value);
+      this.value = value
+      this.$emit('input', value)
     },
 
     fill(formData) {
-      formData.append(this.field.attribute, this.value || '');
-      formData.append(this.field.attribute + 'DraftId', this.draftId);
+      formData.append(this.field.attribute, this.value || '')
+      formData.append(this.field.attribute + 'DraftId', this.draftId)
     },
 
     /**
@@ -61,7 +62,7 @@ export default {
      */
     handleFileAdd({ attachment }) {
       if (attachment.file) {
-        this.uploadAttachment(attachment);
+        this.uploadAttachment(attachment)
       }
     },
 
@@ -69,10 +70,10 @@ export default {
      * Upload an attachment
      */
     uploadAttachment(attachment) {
-      const data = new FormData();
-      data.append('Content-Type', attachment.file.type);
-      data.append('attachment', attachment.file);
-      data.append('draftId', this.draftId);
+      const data = new FormData()
+      data.append('Content-Type', attachment.file.type)
+      data.append('attachment', attachment.file)
+      data.append('draftId', this.draftId)
 
       Nova.request()
         .post(
@@ -84,7 +85,7 @@ export default {
             onUploadProgress: function(progressEvent) {
               attachment.setUploadProgress(
                 Math.round((progressEvent.loaded * 100) / progressEvent.total)
-              );
+              )
             }
           }
         )
@@ -92,8 +93,8 @@ export default {
           return attachment.setAttributes({
             url: url,
             href: url
-          });
-        });
+          })
+        })
     },
 
     /**
@@ -110,7 +111,7 @@ export default {
           }
         )
         .then(response => {})
-        .catch(error => {});
+        .catch(error => {})
     },
 
     /**
@@ -125,11 +126,11 @@ export default {
             }/${this.draftId}`
           )
           .then(response => {})
-          .catch(error => {});
+          .catch(error => {})
       }
     }
   }
-};
+}
 
 function uuidv4() {
   return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
@@ -137,6 +138,6 @@ function uuidv4() {
       c ^
       (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))
     ).toString(16)
-  );
+  )
 }
 </script>

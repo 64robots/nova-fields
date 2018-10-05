@@ -1,5 +1,6 @@
 <template>
   <r64-default-field
+    :hide-field="hideField"
     :field="field"
     :hide-label="hideLabelInForms"
     :field-classes="fieldClasses"
@@ -27,10 +28,10 @@
 </template>
 
 <script>
-import { FormField, HandlesValidationErrors } from 'laravel-nova';
-import R64Field from '../../mixins/R64Field';
+import { FormField, HandlesValidationErrors } from 'laravel-nova'
+import R64Field from '../../mixins/R64Field'
 
 export default {
   mixins: [HandlesValidationErrors, FormField, R64Field]
-};
+}
 </script>

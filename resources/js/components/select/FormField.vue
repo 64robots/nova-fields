@@ -1,5 +1,6 @@
 <template>
   <r64-default-field
+    :hide-field="hideField"
     :field="field"
     :hide-label="hideLabelInForms"
     :field-classes="fieldClasses"
@@ -36,8 +37,8 @@
 </template>
 
 <script>
-import { FormField, HandlesValidationErrors } from 'laravel-nova';
-import R64Field from '../../mixins/R64Field';
+import { FormField, HandlesValidationErrors } from 'laravel-nova'
+import R64Field from '../../mixins/R64Field'
 
 export default {
   mixins: [HandlesValidationErrors, FormField, R64Field],
@@ -46,33 +47,33 @@ export default {
     options() {
       const withoutGroup = this.field.options.filter(
         option => typeof option.label !== 'object'
-      );
+      )
 
       if (withoutGroup.length === this.field.options.length) {
-        return this.field.options;
+        return this.field.options
       }
 
       const grouped = this.field.options.filter(
         option => typeof option.label === 'object'
-      );
+      )
 
-      const options = [...withoutGroup];
+      const options = [...withoutGroup]
 
       grouped.forEach(option => {
         if (typeof option.label === 'object') {
-          options.push({ label: option.value, value: '', group: true });
+          options.push({ label: option.value, value: '', group: true })
           Object.keys(option.label).map(key =>
             options.push({
               value: key,
               label: option.label[key]
             })
-          );
+          )
         } else {
-          options.push(option);
+          options.push(option)
         }
-      });
+      })
 
-      return options;
+      return options
     },
 
     /**
@@ -81,13 +82,13 @@ export default {
     placeholder() {
       return this.field.placeholder === undefined
         ? this.__('Choose an option')
-        : this.field.placeholder;
+        : this.field.placeholder
     }
   },
 
   watch: {
     value(value) {
-      this.$emit('value', value);
+      this.$emit('value', value)
     }
   },
 
@@ -100,8 +101,8 @@ export default {
      * are truthy or falsey
      */
     fill(formData) {
-      formData.append(this.field.attribute, this.value);
+      formData.append(this.field.attribute, this.value)
     }
   }
-};
+}
 </script>

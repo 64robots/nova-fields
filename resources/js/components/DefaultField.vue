@@ -1,5 +1,5 @@
 <template>
-  <div :class="wrapperClasses">
+  <div :class="defaultClasses">
     <div
       v-if="!hideLabel"
       :class="labelClasses"
@@ -50,7 +50,20 @@ export default {
     showHelpText: {
       type: Boolean,
       default: true
+    },
+    hideField: {
+      type: Boolean,
+      default: false
+    }
+  },
+
+  computed: {
+    defaultClasses() {
+      if (this.hideField) {
+        return 'hidden'
+      }
+      return this.wrapperClasses
     }
   }
-};
+}
 </script>

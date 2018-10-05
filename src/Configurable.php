@@ -229,6 +229,78 @@ trait Configurable
     }
 
     /**
+     * Specify that the element should be hidden from the creation view.
+     *
+     * @return $this
+     */
+    public function hideWhenCreating()
+    {
+        parent::hideWhenCreating();
+
+        return $this->withMeta(['hideWhenCreating' => true]);
+    }
+
+    /**
+     * Specify that the element should be hidden from the update view.
+     *
+     * @return $this
+     */
+    public function hideWhenUpdating()
+    {
+        parent::hideWhenUpdating();
+
+        return $this->withMeta(['hideWhenUpdating' => true]);
+    }
+
+    /**
+     * Specify that the element should be hidden from the detail view.
+     *
+     * @return $this
+     */
+    public function hideFromDetail()
+    {
+        parent::hideFromDetail();
+
+        return $this->withMeta(['hideFromDetail' => true]);
+    }
+
+    /**
+     * Specify that the element should be shown only on detail view.
+     *
+     * @return $this
+     */
+    public function onlyOnDetail()
+    {
+        parent::onlyOnDetail();
+
+        return $this->withMeta(['hideWhenCreating' => true, 'hideWhenUpdating' => true]);
+    }
+
+    /**
+     * Specify that the element should be shown only on forms.
+     *
+     * @return $this
+     */
+    public function onlyOnForms()
+    {
+        parent::onlyOnForms();
+
+        return $this->withMeta(['hideFromDetail' => true]);
+    }
+
+    /**
+     * Specify that the element should be hidden on forms.
+     *
+     * @return $this
+     */
+    public function exceptOnForms()
+    {
+        parent::exceptOnForms();
+
+        return $this->withMeta(['hideWhenCreating' => true, 'hideWhenUpdating' => true]);
+    }
+
+    /**
      * Indicate that the label should be hidden in forms.
      *
      * @return $this

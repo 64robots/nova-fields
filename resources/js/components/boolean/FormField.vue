@@ -1,5 +1,6 @@
 <template>
   <r64-default-field
+    :hide-field="hideField"
     :field="field"
     :hide-label="hideLabelInForms"
     :field-classes="fieldClasses"
@@ -22,9 +23,9 @@
 </template>
 
 <script>
-import FormField from 'laravel-nova/src/mixins/FormField';
-import HandlesValidationErrors from 'laravel-nova/src/mixins/HandlesValidationErrors';
-import R64Field from '../../mixins/R64Field';
+import FormField from 'laravel-nova/src/mixins/FormField'
+import HandlesValidationErrors from 'laravel-nova/src/mixins/HandlesValidationErrors'
+import R64Field from '../../mixins/R64Field'
 
 export default {
   mixins: [HandlesValidationErrors, FormField, R64Field],
@@ -35,26 +36,26 @@ export default {
 
   computed: {
     checked() {
-      return Boolean(this.value);
+      return Boolean(this.value)
     },
 
     trueValue() {
-      return +this.checked;
+      return +this.checked
     }
   },
 
   mounted() {
-    this.value = this.field.value || false;
+    this.value = this.field.value || false
 
     this.field.fill = formData => {
-      formData.append(this.field.attribute, this.trueValue);
-    };
+      formData.append(this.field.attribute, this.trueValue)
+    }
   },
 
   methods: {
     toggle() {
-      this.value = !this.value;
+      this.value = !this.value
     }
   }
-};
+}
 </script>

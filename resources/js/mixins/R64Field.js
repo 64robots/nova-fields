@@ -20,76 +20,92 @@ export default {
   },
 
   computed: {
+    hideField() {
+      if (this.onCreate) {
+        return this.field.hideWhenCreating
+      }
+      if (this.onUpdate) {
+        return this.field.hideWhenUpdating
+      }
+      if (this.onDetail) {
+        return this.field.hideFromDetail
+      }
+    },
+
     wrapperClasses() {
-      return this.field.wrapperClasses || this.baseClasses.wrapperClasses;
+      return this.field.wrapperClasses || this.baseClasses.wrapperClasses
     },
 
     inputClasses() {
-      return this.field.inputClasses || this.baseClasses.inputClasses;
+      return this.field.inputClasses || this.baseClasses.inputClasses
     },
 
     fieldClasses() {
-      return this.field.fieldClasses || this.baseClasses.fieldClasses;
+      return this.field.fieldClasses || this.baseClasses.fieldClasses
     },
 
     panelFieldClasses() {
-      return this.field.panelFieldClasses || this.baseClasses.panelFieldClasses;
+      return this.field.panelFieldClasses || this.baseClasses.panelFieldClasses
     },
 
     labelClasses() {
-      return this.field.labelClasses || this.baseClasses.labelClasses;
+      return this.field.labelClasses || this.baseClasses.labelClasses
     },
 
     panelLabelClasses() {
-      return this.field.panelLabelClasses || this.baseClasses.panelLabelClasses;
+      return this.field.panelLabelClasses || this.baseClasses.panelLabelClasses
     },
 
     excerptClasses() {
-      return this.field.excerptClasses || this.baseClasses.excerptClasses;
+      return this.field.excerptClasses || this.baseClasses.excerptClasses
     },
 
     placeholder() {
       return this.field.placeholder === undefined
         ? this.field.name
-        : this.field.placeholder;
+        : this.field.placeholder
     },
 
     hideLabelInForms() {
-      return this.field.hideLabelInForms || this.baseClasses.hideLabelInForms;
+      return this.field.hideLabelInForms || this.baseClasses.hideLabelInForms
     },
 
     hideLabelInDetail() {
-      return this.field.hideLabelInDetail || this.baseClasses.hideLabelInDetail;
+      return this.field.hideLabelInDetail || this.baseClasses.hideLabelInDetail
     },
 
     readOnly() {
-      const readOnly = this.field.readOnly || this.baseClasses.readOnly;
+      const readOnly = this.field.readOnly || this.baseClasses.readOnly
 
       if (readOnly) {
-        return true;
+        return true
       }
       if (this.onUpdate) {
-        return this.field.readOnlyOnUpdate || this.baseClasses.readOnlyOnUpdate;
+        return this.field.readOnlyOnUpdate || this.baseClasses.readOnlyOnUpdate
       }
       if (this.onCreate) {
-        return this.field.readOnlyOnCreate || this.baseClasses.readOnlyOnCreate;
+        return this.field.readOnlyOnCreate || this.baseClasses.readOnlyOnCreate
       }
     },
 
     showContentLabel() {
-      return this.field.showContentLabel || this.baseClasses.showContentLabel;
+      return this.field.showContentLabel || this.baseClasses.showContentLabel
     },
 
     hideContentLabel() {
-      return this.field.hideContentLabel || this.baseClasses.hideContentLabel;
+      return this.field.hideContentLabel || this.baseClasses.hideContentLabel
     },
 
     onCreate() {
-      return !this.$route.params.resourceId;
+      return this.$route.name === 'create'
     },
 
     onUpdate() {
-      return !!this.$route.params.resourceId;
+      return this.$route.name === 'edit'
+    },
+
+    onDetail() {
+      return this.$route.name === 'detail'
     }
   }
-};
+}
