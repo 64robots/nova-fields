@@ -74,7 +74,7 @@ class BelongsTo extends NovaBelongsTo
     }
 
     /**
-     * Determine if a new related model can be created.
+     * Determine if a without trashed option should be hidden.
      *
      * @return $this
      */
