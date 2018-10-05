@@ -103,7 +103,7 @@
         </transition>
       </portal>
       <!-- Trashed State -->
-      <div v-if="softDeletes && !isLocked">
+      <div v-if="softDeletes && !isLocked && !field.disableTrashed">
         <label
           class="flex items-center"
           @input="toggleWithTrashed"
@@ -127,14 +127,14 @@
 </template>
 
 <script>
-import storage from '../../storage/BelongsToFieldStorage';
+import storage from '../../storage/BelongsToFieldStorage'
 import {
   TogglesTrashed,
   PerformsSearches,
   HandlesValidationErrors
-} from 'laravel-nova';
-import ModalCreate from '../../modals/ModalCreate';
-import R64Field from '../../mixins/R64Field';
+} from 'laravel-nova'
+import ModalCreate from '../../modals/ModalCreate'
+import R64Field from '../../mixins/R64Field'
 
 export default {
   components: { ModalCreate },
@@ -168,24 +168,24 @@ export default {
   computed: {
     options() {
       if (!this.field.grouped) {
-        return this.availableResources;
+        return this.availableResources
       }
 
-      const options = [];
-      let lastGroup = '';
+      const options = []
+      let lastGroup = ''
       _.sortBy(this.availableResources, 'groupedBy').forEach(resource => {
         if (resource.groupedBy !== lastGroup) {
           options.push({
             disabled: true,
             value: '',
             display: resource.groupedBy
-          });
-          lastGroup = resource.groupedBy;
+          })
+          lastGroup = resource.groupedBy
         }
 
-        options.push(resource);
-      });
-      return options;
+        options.push(resource)
+      })
+      return options
     },
 
     /**
@@ -194,21 +194,21 @@ export default {
     placeholder() {
       return this.field.placeholder === undefined
         ? `${this.__('Choose')} ${this.field.name}`
-        : this.field.placeholder;
+        : this.field.placeholder
     },
 
     /**
      * Determine if we are editing and existing resource
      */
     editingExistingResource() {
-      return Boolean(this.field.belongsToId);
+      return Boolean(this.field.belongsToId)
     },
 
     /**
      * Determine if we are creating a new resource via a parent relation
      */
     creatingViaRelatedResource() {
-      return this.viaResource == this.field.resourceName && this.viaResourceId;
+      return this.viaResource == this.field.resourceName && this.viaResourceId
     },
 
     /**
@@ -217,14 +217,14 @@ export default {
     shouldSelectInitialResource() {
       return Boolean(
         this.editingExistingResource || this.creatingViaRelatedResource
-      );
+      )
     },
 
     /**
      * Determine if the related resources is searchable
      */
     isSearchable() {
-      return this.field.searchable;
+      return this.field.searchable
     },
 
     /**
@@ -238,11 +238,11 @@ export default {
           search: this.search,
           withTrashed: this.withTrashed
         }
-      };
+      }
     },
 
     isLocked() {
-      return this.viaResource == this.field.resourceName || this.readOnly;
+      return this.viaResource == this.field.resourceName || this.readOnly
     }
   },
 
@@ -250,69 +250,69 @@ export default {
    * Mount the component.
    */
   mounted() {
-    this.initializeComponent();
+    this.initializeComponent()
   },
 
   methods: {
     async reloadResources(id) {
-      this.loading = true;
-      await this.getAvailableResources();
+      this.loading = true
+      await this.getAvailableResources()
       if (id) {
-        this.selectedResourceId = id;
+        this.selectedResourceId = id
       }
-      this.openModal = false;
-      this.loading = false;
+      this.openModal = false
+      this.loading = false
     },
 
     initializeComponent() {
-      this.withTrashed = false;
+      this.withTrashed = false
 
       // If a user is editing an existing resource with this relation
       // we'll have a belongsToId on the field, and we should prefill
       // that resource in this field
       if (this.editingExistingResource) {
-        this.initializingWithExistingResource = true;
-        this.selectedResourceId = this.field.belongsToId;
+        this.initializingWithExistingResource = true
+        this.selectedResourceId = this.field.belongsToId
       }
 
       // If the user is creating this resource via a related resource's index
       // page we'll have a viaResource and viaResourceId in the params and
       // should prefill the resource in this field with that information
       if (this.creatingViaRelatedResource) {
-        this.initializingWithExistingResource = true;
-        this.selectedResourceId = this.viaResourceId;
+        this.initializingWithExistingResource = true
+        this.selectedResourceId = this.viaResourceId
       }
 
       if (this.shouldSelectInitialResource && !this.isSearchable) {
         // If we should select the initial resource but the field is not
         // searchable we should load all of the available resources into the
         // field first and select the initial option
-        this.initializingWithExistingResource = false;
-        this.getAvailableResources().then(() => this.selectInitialResource());
+        this.initializingWithExistingResource = false
+        this.getAvailableResources().then(() => this.selectInitialResource())
       } else if (this.shouldSelectInitialResource && this.isSearchable) {
         // If we should select the initial resource and the field is
         // searchable, we won't load all the resources but we will select
         // the initial option
-        this.getAvailableResources().then(() => this.selectInitialResource());
+        this.getAvailableResources().then(() => this.selectInitialResource())
       } else if (!this.shouldSelectInitialResource && !this.isSearchable) {
         // If we don't need to select an initial resource because the user
         // came to create a resource directly and there's no parent resource,
         // and the field is searchable we'll just load all of the resources
-        this.getAvailableResources();
+        this.getAvailableResources()
       }
 
-      this.determineIfSoftDeletes();
+      this.determineIfSoftDeletes()
 
-      this.field.fill = this.fill;
+      this.field.fill = this.fill
     },
 
     /**
      * Select a resource using the <select> control
      */
     selectResourceFromSelectControl(e) {
-      this.selectedResourceId = e.target.value;
-      this.$emit('input', this.selectedResourceId);
-      this.selectInitialResource();
+      this.selectedResourceId = e.target.value
+      this.$emit('input', this.selectedResourceId)
+      this.selectInitialResource()
     },
 
     /**
@@ -320,8 +320,8 @@ export default {
      */
     fill(formData) {
       if (this.selectedResource) {
-        formData.append(this.field.attribute, this.selectedResource.value);
-        formData.append(this.field.attribute + '_trashed', this.withTrashed);
+        formData.append(this.field.attribute, this.selectedResource.value)
+        formData.append(this.field.attribute + '_trashed', this.withTrashed)
       }
     },
 
@@ -337,14 +337,14 @@ export default {
         )
         .then(({ data: { resources, softDeletes, withTrashed } }) => {
           if (this.initializingWithExistingResource || !this.isSearchable) {
-            this.withTrashed = withTrashed;
+            this.withTrashed = withTrashed
           }
 
           // Turn off initializing the existing resource after the first time
-          this.initializingWithExistingResource = false;
-          this.availableResources = resources;
-          this.softDeletes = softDeletes;
-        });
+          this.initializingWithExistingResource = false
+          this.availableResources = resources
+          this.softDeletes = softDeletes
+        })
     },
 
     /**
@@ -354,15 +354,15 @@ export default {
       return storage
         .determineIfSoftDeletes(this.field.resourceName)
         .then(response => {
-          this.softDeletes = response.data.softDeletes;
-        });
+          this.softDeletes = response.data.softDeletes
+        })
     },
 
     /**
      * Determine if the given value is numeric.
      */
     isNumeric(value) {
-      return !isNaN(parseFloat(value)) && isFinite(value);
+      return !isNaN(parseFloat(value)) && isFinite(value)
     },
 
     /**
@@ -372,20 +372,20 @@ export default {
       this.selectedResource = _.find(
         this.availableResources,
         r => r.value == this.selectedResourceId
-      );
+      )
     },
 
     /**
      * Toggle the trashed state of the search
      */
     toggleWithTrashed() {
-      this.withTrashed = !this.withTrashed;
+      this.withTrashed = !this.withTrashed
 
       // Reload the data if the component doesn't support searching
       if (!this.isSearchable) {
-        this.getAvailableResources();
+        this.getAvailableResources()
       }
     }
   }
-};
+}
 </script>
