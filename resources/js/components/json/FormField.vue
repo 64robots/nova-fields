@@ -17,14 +17,17 @@
         :base-classes="field.childConfig"
         :current-value="value"
       />
+      <p v-if="hasError" class="my-2 text-danger">
+        {{ firstError }}
+      </p>
     </template>
   </r64-default-field>
 </template>
 
 <script>
-import { FormField, HandlesValidationErrors } from 'laravel-nova';
-import HasChildFields from '../../mixins/HasChildFields';
-import FormFieldItem from './FormFieldItem';
+import { FormField, HandlesValidationErrors } from 'laravel-nova'
+import HasChildFields from '../../mixins/HasChildFields'
+import FormFieldItem from './FormFieldItem'
 
 export default {
   mixins: [FormField, HandlesValidationErrors, HasChildFields],
@@ -37,21 +40,21 @@ export default {
     this.fields.forEach(field => {
       this.$watch(
         () => {
-          return this.$refs[field.attribute][0].$children[0].value;
+          return this.$refs[field.attribute][0].$children[0].value
         },
         value => {
-          let currentJson = JSON.parse(this.value || '{}');
+          let currentJson = JSON.parse(this.value || '{}')
           if (field.attribute in currentJson) {
-            currentJson[field.attribute] = value;
+            currentJson[field.attribute] = value
           } else {
             currentJson = Object.assign(currentJson, {
               [field.attribute]: value
-            });
+            })
           }
-          this.value = JSON.stringify(currentJson);
+          this.value = JSON.stringify(currentJson)
         }
-      );
-    });
+      )
+    })
   },
 
   methods: {
@@ -59,11 +62,11 @@ export default {
      * Set the initial, internal value for the field.
      */
     setInitialValue() {
-      this.value = this.field.value || '{}';
+      this.value = this.field.value || '{}'
       if (typeof this.value === 'object') {
-        this.value = JSON.stringify(this.value) || '{}';
-        this.value = Object.assign({}, JSON.parse(this.value)) || {};
-        this.value = JSON.stringify(this.value) || '{}';
+        this.value = JSON.stringify(this.value) || '{}'
+        this.value = Object.assign({}, JSON.parse(this.value)) || {}
+        this.value = JSON.stringify(this.value) || '{}'
       }
     },
 
@@ -73,30 +76,30 @@ export default {
     fill(formData) {
       // fake formdata object that we can more easily consume
       function JsonObject(obj) {
-        this.obj = {};
+        this.obj = {}
       }
       JsonObject.prototype.append = function(attr, value) {
-        this.obj[attr] = value;
-      };
+        this.obj[attr] = value
+      }
       JsonObject.prototype.toJSON = function() {
-        return this.obj;
-      };
+        return this.obj
+      }
 
       let data = _.tap(new JsonObject(), data => {
         _(this.fields).each(field => {
-          field.fill(data);
-        });
-      });
+          field.fill(data)
+        })
+      })
 
-      formData.append(this.field.attribute, JSON.stringify(data));
+      formData.append(this.field.attribute, JSON.stringify(data))
     },
 
     /**
      * Update the field's internal value.
      */
     handleChange(value) {
-      this.value = value;
+      this.value = value
     }
   }
-};
+}
 </script>
