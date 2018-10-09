@@ -19,17 +19,17 @@ Available fields:
 - [x] File
 - [x] Image
 - [x] BelongsTo
-- [] Status
-- [] Avatar
-- [] Gravatar
-- [] Currency
-- [] Code
-- [] Country
-- [] Date
-- [] DateTime
-- [] Markdown
-- [] Place
-- [] Timezone
+- [ ] Status
+- [ ] Avatar
+- [ ] Gravatar
+- [ ] Currency
+- [ ] Code
+- [ ] Country
+- [ ] Date
+- [ ] DateTime
+- [ ] Markdown
+- [ ] Place
+- [ ] Timezone
 
 - Row
 - JSON
