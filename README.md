@@ -8,17 +8,17 @@ The idea is make them more configurable and reusable in package development. If 
 
 Available fields:
 
-- ID
-- Text
-- Number
-- Textarea
-- Select
-- Password
-- Boolean
-- Trix
-- File
-- Image
-- BelongsTo
+- [x] ID
+- [x] Text
+- [x] Number
+- [x] Textarea
+- [x] Select
+- [x] Password
+- [x] Boolean
+- [x] Trix
+- [x] File
+- [x] Image
+- [x] BelongsTo
 
 - Row
 - JSON
