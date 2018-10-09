@@ -33,8 +33,8 @@ The idea is make them more configurable and reusable in package development. If 
 
 ### Custom Fields
 
-- Row
-- JSON
+- [x] Row
+- [x] JSON
 
 Some examples:
 
