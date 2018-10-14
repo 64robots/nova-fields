@@ -85,7 +85,7 @@ export default {
         })
       }
 
-      let data = _.tap(new MergeObject(), data => {
+      let data = _.tap(new MergeObject(this.field.attribute), data => {
         _(this.fields).each(field => {
           field.fill(data)
         })
