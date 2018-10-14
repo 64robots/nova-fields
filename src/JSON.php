@@ -153,7 +153,7 @@ class JSON extends Field
         $result = [];
 
         foreach ($this->fields as $field) {
-            $rules = $this->generateRules($field->getCreationRules($request));
+            $rules = $this->generateRules($field->getUpdateRules($request));
 
             $result = array_merge_recursive($result, $rules);
         }
