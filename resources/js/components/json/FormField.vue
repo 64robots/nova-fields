@@ -12,14 +12,12 @@
         :key="index"
         :ref="f.attribute"
         v-for="(f, index) in fields"
-        v-bind="{ validationErrors, resourceName, resourceId }"
+        v-bind="{ errors, resourceName, resourceId }"
+        :parent="field"
         :field="f"
         :base-classes="field.childConfig"
         :current-value="value"
       />
-      <p v-if="hasError" class="my-2 text-danger">
-        {{ firstError }}
-      </p>
     </template>
   </r64-default-field>
 </template>
@@ -74,24 +72,26 @@ export default {
      * Fill the given FormData object with the field's internal value.
      */
     fill(formData) {
-      // fake formdata object that we can more easily consume
-      function JsonObject(obj) {
+      function MergeObject(attribute) {
         this.obj = {}
+        this.attribute = attribute
       }
-      JsonObject.prototype.append = function(attr, value) {
-        this.obj[attr] = value
+      MergeObject.prototype.append = function(attr, value) {
+        this.obj[`${this.attribute}[${attr}]`] = value
       }
-      JsonObject.prototype.toJSON = function() {
-        return this.obj
+      MergeObject.prototype.fill = function(data) {
+        _.forEach(this.obj, (val, key) => {
+          formData.append(key, val)
+        })
       }
 
-      let data = _.tap(new JsonObject(), data => {
+      let data = _.tap(new MergeObject(), data => {
         _(this.fields).each(field => {
           field.fill(data)
         })
       })
 
-      formData.append(this.field.attribute, JSON.stringify(data))
+      data.fill(formData)
     },
 
     /**

@@ -2,7 +2,7 @@
   <component
     v-show="shouldBeShown"
     :is="`form-${field.component}`"
-    :validationErrors="validationErrors"
+    :errors="itemErrors"
     :resource-name="resourceName"
     :resource-id="resourceId"
     :field="field"
@@ -10,14 +10,19 @@
   />
 </template>
 <script>
+import { HandlesValidationErrors } from 'laravel-nova'
+import { Errors } from 'form-backend-validation'
+
 export default {
+  mixins: [HandlesValidationErrors],
+
   props: [
     'field',
-    'validationErrors',
     'resourceName',
     'resourceId',
     'baseClasses',
-    'currentValue'
+    'currentValue',
+    'parent',
   ],
 
   computed: {
@@ -37,7 +42,22 @@ export default {
       const values = JSON.parse(this.currentValue || '{}');
 
       return validValues.includes(values[lookThisField]);
-    }
+    },
+
+    fieldAttribute() {
+      return `${this.parent.attribute}.${this.field.attribute}`;
+    },
+
+    itemErrors() {
+      const errors = new Errors();
+      if (this.errors.has(this.fieldAttribute)) {
+        errors.record({
+          [this.field.attribute]: this.errors.get(this.fieldAttribute),
+        })
+      }
+
+      return errors;
+    },
   }
 };
 </script>
