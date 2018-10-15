@@ -86,13 +86,80 @@ class JSON extends Field
      */
     protected function fillAttributeFromRequest(NovaRequest $request, $requestAttribute, $model, $attribute)
     {
-        $request->merge([
-            $requestAttribute => json_decode($request[$requestAttribute], true)
-        ]);
-
         $this->fields->each(function ($field) use ($request, $model, $attribute) {
             $field->fillInto($request, $model, $attribute.'->'.$field->attribute, $attribute.'.'.$field->attribute);
         });
+    }
+
+    /**
+     * Generate field-specific validation rules.
+     * 
+     * @param  array  $rules
+     * @return array
+     */
+    protected function generateRules($rules)
+    {
+        return collect($rules)->mapWithKeys(function ($rules, $key) {
+            return [$this->attribute . '.' . $key => $rules];
+        })->toArray();
+    }
+
+    /**
+     * Get the validation rules for this field.
+     * 
+     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
+     * @return array
+     */
+    public function getRules(NovaRequest $request)
+    {
+        $result = [];
+
+        foreach ($this->fields as $field) {
+            $rules = $this->generateRules($field->getRules($request));
+
+            $result = array_merge_recursive($result, $rules);
+        }
+
+        return $result;
+    }
+
+    /**
+     * Get the creation rules for this field.
+     * 
+     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
+     * @return array|string
+     */
+    public function getCreationRules(NovaRequest $request)
+    {
+        $result = [];
+
+        foreach ($this->fields as $field) {
+            $rules = $this->generateRules($field->getCreationRules($request));
+
+            $result = array_merge_recursive($result, $rules);
+        }
+
+        return $result;
+    }
+
+    /**
+     * Get the update rules for this field.
+     * 
+     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
+     * @return array
+     */
+    public function getUpdateRules(NovaRequest $request)
+    {
+        $result = [];
+
+        foreach ($this->fields as $field) {
+            $rules = $this->generateRules($field->getUpdateRules($request));
+
+            $result = array_merge_recursive($result, $rules);
+        }
+
+        return $result;
+
     }
 
     /**
