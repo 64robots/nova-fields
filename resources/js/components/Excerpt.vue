@@ -1,5 +1,8 @@
 <template>
-  <div>
+  <div v-if="shouldShow && hasContent">
+    <div class="markdown leading-normal" v-html="content" />
+  </div>
+  <div v-else-if="hasContent">
     <slot
       v-if="expanded"
       name="content"
@@ -8,12 +11,16 @@
     </slot>
 
     <a
+      v-if="!shouldShow"
       @click="toggle"
       :class="[{ 'mt-6': expanded }, excerptClasses]"
       aria-role="button"
     >
       {{ showHideLabel }}
     </a>
+  </div>
+  <div v-else>
+    &mdash;
   </div>
 </template>
 
@@ -35,6 +42,10 @@ export default {
     excerptClasses: {
       type: String,
       default: 'cursor-pointer dim inline-block text-primary font-bold'
+    },
+    shouldShow: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -42,16 +53,20 @@ export default {
 
   methods: {
     toggle() {
-      this.expanded = !this.expanded;
+      this.expanded = !this.expanded
     }
   },
 
   computed: {
+    hasContent() {
+      return this.content !== '' && this.content !== null
+    },
+
     showHideLabel() {
       return !this.expanded
         ? this.showLabel || this.__('Show Content')
-        : this.hideLabel || this.__('Hide Content');
+        : this.hideLabel || this.__('Hide Content')
     }
   }
-};
+}
 </script>
