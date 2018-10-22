@@ -7,7 +7,7 @@ trait HasChilds
     /**
      * Set the config that should be applied to the child fields.
      *
-     * @param  string  $childConfig
+     * @param  array  $childConfig
      * @return $this
      */
     public function childConfig($childConfig)
