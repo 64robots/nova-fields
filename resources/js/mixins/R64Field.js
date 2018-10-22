@@ -33,31 +33,31 @@ export default {
     },
 
     wrapperClasses() {
-      return this.field.wrapperClasses || this.baseClasses.wrapperClasses
+      return this.baseClasses.wrapperClasses || this.field.wrapperClasses
     },
 
     inputClasses() {
-      return this.field.inputClasses || this.baseClasses.inputClasses
+      return this.baseClasses.inputClasses || this.field.inputClasses
     },
 
     fieldClasses() {
-      return this.field.fieldClasses || this.baseClasses.fieldClasses
+      return this.baseClasses.fieldClasses || this.field.fieldClasses
     },
 
     panelFieldClasses() {
-      return this.field.panelFieldClasses || this.baseClasses.panelFieldClasses
+      return this.baseClasses.panelFieldClasses || this.field.panelFieldClasses
     },
 
     labelClasses() {
-      return this.field.labelClasses || this.baseClasses.labelClasses
+      return this.baseClasses.labelClasses || this.field.labelClasses
     },
 
     panelLabelClasses() {
-      return this.field.panelLabelClasses || this.baseClasses.panelLabelClasses
+      return this.baseClasses.panelLabelClasses || this.field.panelLabelClasses
     },
 
     excerptClasses() {
-      return this.field.excerptClasses || this.baseClasses.excerptClasses
+      return this.baseClasses.excerptClasses || this.field.excerptClasses
     },
 
     placeholder() {
