@@ -5,13 +5,6 @@ export default {
       default: () => ({
         hideLabelInForms: false,
         hideLabelInDetail: false,
-        fieldClasses: 'w-1/2 px-8 py-6',
-        panelFieldClasses: 'w-3/4 py-4',
-        wrapperClasses: 'flex border-b border-40',
-        labelClasses: 'w-1/5 px-8 py-6',
-        panelLabelClasses: 'w-1/4 py-4',
-        excerptClasses:
-          'cursor-pointer dim inline-block text-primary font-bold',
         readOnly: false,
         showContentLabel: 'Show Content',
         hideContentLabel: 'Hide Content'
