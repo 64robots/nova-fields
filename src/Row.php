@@ -97,11 +97,13 @@ class Row extends Field
         $result = [];
 
         foreach ($this->meta['fields'] as $field) {
-            $rules = $this->generateRules($field->getRules($request));
-            $result = array_merge_recursive($result, $rules);
+            $fieldRules = $this->generateRules($field->getRules($request));
+            $result = array_merge_recursive($result, $fieldRules);
         }
 
-        return $result;
+        return array_merge_recursive(
+            parent::getRules($request), $result
+        );
     }
 
     /**
@@ -119,7 +121,9 @@ class Row extends Field
             $result = array_merge_recursive($result, $rules);
         }
 
-        return $result;
+        return array_merge_recursive(
+            parent::getCreationRules($request), $result
+        );
     }
 
     /**
@@ -137,7 +141,8 @@ class Row extends Field
             $result = array_merge_recursive($result, $rules);
         }
 
-        return $result;
-
+        return array_merge_recursive(
+            parent::getUpdateRules($request), $result
+        );
     }
 }

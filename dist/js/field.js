@@ -19413,7 +19413,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
     /**
-     * Get errors with correct fieldname
+     * Get errors with correct fieldname.
      */
     itemErrors: function itemErrors() {
       var _this = this;
