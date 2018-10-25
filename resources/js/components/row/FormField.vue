@@ -163,12 +163,11 @@ export default {
       const a = Object.keys(this.errors.errors).reduce((acc, curr) => {
         acc[curr] = this.errors.errors[curr].map((error) => {
           const split = curr.split('.');
-          const index = split[split.length - 2];
           const field = split[split.length - 1];
 
           return error.replace(curr, this.field.fields.reduce((a, c) => {
             return (c.attribute == field) ? c.name : a;
-          }, "") + " (" + this.values[index][field] + ")");
+          }, ""));
         });
         return acc;
       }, {});

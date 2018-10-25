@@ -19481,12 +19481,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var a = Object.keys(this.errors.errors).reduce(function (acc, curr) {
         acc[curr] = _this4.errors.errors[curr].map(function (error) {
           var split = curr.split('.');
-          var index = split[split.length - 2];
           var field = split[split.length - 1];
 
           return error.replace(curr, _this4.field.fields.reduce(function (a, c) {
             return c.attribute == field ? c.name : a;
-          }, "") + " (" + _this4.values[index][field] + ")");
+          }, ""));
         });
         return acc;
       }, {});
