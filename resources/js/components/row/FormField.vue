@@ -13,7 +13,7 @@
         :base-classes="field.childConfig"
       />
       <div
-        v-for="row in values"
+        v-for="(row, index) in values"
         :key="row.row_id"
         class="flex items-center border-40 border relative"
       >
@@ -96,6 +96,11 @@ export default {
   computed: {
     addRowText() {
       return this.field.addRowText || this.__('Add Row');
+    },
+
+    firstError() {
+      const errors = this.itemErrors();
+      return errors[Object.keys(errors)[0]].shift();
     }
   },
 
@@ -140,7 +145,11 @@ export default {
      * Fill the given FormData object with the field's internal value.
      */
     fill(formData) {
-      formData.append(this.field.attribute, this.value || []);
+      this.values.forEach((row, index) => {
+        Object.keys(row).forEach((key) => {
+          formData.append(`${this.field.attribute}[${index}][${key}]`, row[key]);
+        })
+      })
     },
 
     /**
@@ -148,6 +157,23 @@ export default {
      */
     handleChange(value) {
       this.value = value;
+    },
+
+    itemErrors() {
+      const a = Object.keys(this.errors.errors).reduce((acc, curr) => {
+        acc[curr] = this.errors.errors[curr].map((error) => {
+          const split = curr.split('.');
+          const index = split[split.length - 2];
+          const field = split[split.length - 1];
+
+          return error.replace(curr, this.field.fields.reduce((a, c) => {
+            return (c.attribute == field) ? c.name : a;
+          }, "") + " (" + this.values[index][field] + ")");
+        });
+        return acc;
+      }, {});
+
+      return a;
     }
   }
 };
