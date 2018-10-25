@@ -9,7 +9,7 @@
   >
     <template slot="field">
       <loading-view :loading="loading">
-        <div class="flex items-center">
+        <div class="flex items-center mb-3">
           <search-input
             v-if="isSearchable && !isLocked"
             :data-testid="`${field.resourceName}-search-input`"
@@ -84,7 +84,7 @@
           </select>
           <a
             v-if="field.quickCreate && !isModal"
-            class="btn btn-primary p-2 rounded mb-3 ml-3 cursor-pointer"
+            class="btn btn-primary p-2 rounded ml-3 cursor-pointer"
             @click="openModal = true"
           >+</a>
         </div>
