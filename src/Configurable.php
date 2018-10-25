@@ -2,6 +2,8 @@
 
 namespace R64\NovaFields;
 
+use Config;
+
 trait Configurable
 {
     /**
@@ -38,6 +40,13 @@ trait Configurable
      * @var string
      */
     public $panelLabelClasses = 'w-1/4 py-4';
+
+    /**
+     * The base label classes for the detail view.
+     *
+     * @var string
+     */
+    public $indexLinkClasses = 'no-underline dim text-primary font-bold';
 
     /**
      * The base excerpt classes.
@@ -190,6 +199,19 @@ trait Configurable
     }
 
     /**
+     * Set the link classes in index view that should be applied instead of the default.
+     *
+     * @param  string  $classes
+     * @return $this
+     */
+    public function indexLinkClasses($classes)
+    {
+        $this->indexLinkClasses = $classes;
+
+        return $this;
+    }
+
+    /**
      * Add classes to the base label classes for detail view.
      *
      * @param  string  $classes
@@ -264,6 +286,16 @@ trait Configurable
         return $this->withMeta(['hideFromDetail' => true]);
     }
 
+    /**
+     * Specify that the index view should show as a link to the resource
+     *
+     * @return $this
+     */
+    public function showLinkInIndex()
+    {
+        return $this->withMeta(['showLinkInIndex' => true]);
+    }
+    
     /**
      * Specify that the element should be shown only on detail view.
      *
@@ -372,6 +404,36 @@ trait Configurable
         return $this->withMeta(['onlyWhen' => $field]);
     }
 
+        /**
+     * Overriding the base method in order to grab the model ID.
+     *
+     * @param mixed  $resource  The resource class
+     * @param string $attribute The attribute of the resource
+     *
+     * @return mixed
+     */
+    protected function resolveAttribute($resource, $attribute)
+    {
+        $this->setResourceId(data_get($resource, 'id'));
+        return parent::resolveAttribute($resource, $attribute);
+    }
+    /**
+     * Sets the
+     *
+     * @param mixed $id The ID of the resource model. Also sets the base URL based on the Nova config
+     *
+     * @return void
+     */
+    protected function setResourceId($id)
+    {
+        $path = Config::get('nova.path');
+        // If the path is the site route, prevent a double-slash
+        if ('/' === $path) {
+            $path = '';
+        }
+        return $this->withMeta(['id' => $id, 'nova_path' => $path]);
+    }
+    
     /**
      * Get additional meta information to merge with the element payload.
      *
@@ -386,7 +448,9 @@ trait Configurable
             'panelFieldClasses' => $this->panelFieldClasses,
             'labelClasses' => $this->labelClasses,
             'panelLabelClasses' => $this->panelLabelClasses,
+            'indexLinkClasses' => $this->indexLinkClasses,
             'excerptClasses' => $this->excerptClasses,
         ], $this->meta);
     }
+    
 }
