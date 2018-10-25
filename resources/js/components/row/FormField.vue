@@ -104,7 +104,7 @@ export default {
     },
 
     /**
-     * Get errors with correct fieldname
+     * Get errors with correct fieldname.
      */
     itemErrors() {
       return Object.keys(this.errors.errors).reduce((acc, curr) => {
