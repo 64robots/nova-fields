@@ -19407,17 +19407,39 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       return this.field.addRowText || this.__('Add Row');
     },
     firstError: function firstError() {
-      var errors = this.itemErrors();
+      var errors = this.itemErrors;
       return errors[Object.keys(errors)[0]].shift();
+    },
+
+
+    /**
+     * Get errors with correct fieldname
+     */
+    itemErrors: function itemErrors() {
+      var _this = this;
+
+      return Object.keys(this.errors.errors).reduce(function (acc, curr) {
+        // replace fieldname in error messages
+        acc[curr] = _this.errors.errors[curr].map(function (error) {
+          var split = curr.split('.');
+          var fieldAttribute = split[split.length - 1];
+
+          // find fieldname
+          return error.replace(curr, _this.field.fields.reduce(function (fieldname, field) {
+            return field.attribute == fieldAttribute ? field.name : fieldname;
+          }, ""));
+        });
+        return acc;
+      }, {});
     }
   },
 
   mounted: function mounted() {
-    var _this = this;
+    var _this2 = this;
 
     this.values.forEach(function (value) {
       Object.keys(value).forEach(function (key) {
-        var ref = _this.$refs['' + value.row_id + key];
+        var ref = _this2.$refs['' + value.row_id + key];
         if (!ref) return;
 
         var element = ref[0];
@@ -19437,10 +19459,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.addItemToRow(obj);
     },
     removeRow: function removeRow() {
-      var _this2 = this;
+      var _this3 = this;
 
       var index = this.values.findIndex(function (row) {
-        return row.row_id === _this2.rowToRemove;
+        return row.row_id === _this3.rowToRemove;
       });
       this.values.splice(index, 1);
       this.rowToRemove = null;
@@ -19459,11 +19481,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
      * Fill the given FormData object with the field's internal value.
      */
     fill: function fill(formData) {
-      var _this3 = this;
+      var _this4 = this;
 
       this.values.forEach(function (row, index) {
         Object.keys(row).forEach(function (key) {
-          formData.append(_this3.field.attribute + '[' + index + '][' + key + ']', row[key]);
+          formData.append(_this4.field.attribute + '[' + index + '][' + key + ']', row[key]);
         });
       });
     },
@@ -19474,23 +19496,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
      */
     handleChange: function handleChange(value) {
       this.value = value;
-    },
-    itemErrors: function itemErrors() {
-      var _this4 = this;
-
-      var a = Object.keys(this.errors.errors).reduce(function (acc, curr) {
-        acc[curr] = _this4.errors.errors[curr].map(function (error) {
-          var split = curr.split('.');
-          var field = split[split.length - 1];
-
-          return error.replace(curr, _this4.field.fields.reduce(function (a, c) {
-            return c.attribute == field ? c.name : a;
-          }, ""));
-        });
-        return acc;
-      }, {});
-
-      return a;
     }
   }
 });

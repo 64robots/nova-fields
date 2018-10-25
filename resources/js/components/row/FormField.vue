@@ -99,8 +99,27 @@ export default {
     },
 
     firstError() {
-      const errors = this.itemErrors();
+      const errors = this.itemErrors;
       return errors[Object.keys(errors)[0]].shift();
+    },
+
+    /**
+     * Get errors with correct fieldname
+     */
+    itemErrors() {
+      return Object.keys(this.errors.errors).reduce((acc, curr) => {
+        // replace fieldname in error messages
+        acc[curr] = this.errors.errors[curr].map((error) => {
+          const split = curr.split('.');
+          const fieldAttribute = split[split.length - 1];
+
+          // find fieldname
+          return error.replace(curr, this.field.fields.reduce((fieldname, field) => {
+            return (field.attribute == fieldAttribute) ? field.name : fieldname;
+          }, ""));
+        });
+        return acc;
+      }, {});
     }
   },
 
@@ -157,22 +176,6 @@ export default {
      */
     handleChange(value) {
       this.value = value;
-    },
-
-    itemErrors() {
-      const a = Object.keys(this.errors.errors).reduce((acc, curr) => {
-        acc[curr] = this.errors.errors[curr].map((error) => {
-          const split = curr.split('.');
-          const field = split[split.length - 1];
-
-          return error.replace(curr, this.field.fields.reduce((a, c) => {
-            return (c.attribute == field) ? c.name : a;
-          }, ""));
-        });
-        return acc;
-      }, {});
-
-      return a;
     }
   }
 };
