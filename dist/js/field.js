@@ -19419,9 +19419,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var _this = this;
 
       return Object.keys(this.errors.errors).reduce(function (acc, curr) {
+        var split = curr.split('.');
+
+        if (split[0] !== _this.field.attribute) {
+          return acc;
+        }
+
         // replace fieldname in error messages
         acc[curr] = _this.errors.errors[curr].map(function (error) {
-          var split = curr.split('.');
           var fieldAttribute = split[split.length - 1];
 
           // find fieldname
@@ -19429,6 +19434,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             return field.attribute == fieldAttribute ? field.name : fieldname;
           }, ""));
         });
+
         return acc;
       }, {});
     }
