@@ -1,9 +1,28 @@
 <template>
-    <span>{{ field.value }}</span>
+  <div class="flex">
+    <div
+        v-for="(value, index) in values"
+        :key="index"
+        class="mr-1"
+    >
+    <span class="font-bold">{{ index }}: </span><span>{{ value }}</span>
+    </div>
+  </div>
 </template>
 
 <script>
 export default {
-    props: ['resourceName', 'field'],
+  props: ['resourceName', 'field'],
+
+  data() {
+    return {
+      values: []
+    }
+  },
+
+  created() {
+    const values = this.field.value || '{}'
+    this.values = JSON.parse(values)
+  }
 }
 </script>

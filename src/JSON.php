@@ -53,6 +53,13 @@ class JSON extends Field
         $this->fields = collect($fields);
     }
 
+    public function showOnIndex()
+    {
+        $this->showOnIndex = true;
+
+        return $this;
+    }
+
     /**
      * Resolve the field's value.
      *
@@ -93,7 +100,7 @@ class JSON extends Field
 
     /**
      * Generate field-specific validation rules.
-     * 
+     *
      * @param  array  $rules
      * @return array
      */
@@ -106,7 +113,7 @@ class JSON extends Field
 
     /**
      * Get the validation rules for this field.
-     * 
+     *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
      * @return array
      */
@@ -125,7 +132,7 @@ class JSON extends Field
 
     /**
      * Get the creation rules for this field.
-     * 
+     *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
      * @return array|string
      */
@@ -144,7 +151,7 @@ class JSON extends Field
 
     /**
      * Get the update rules for this field.
-     * 
+     *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
      * @return array
      */
@@ -159,7 +166,6 @@ class JSON extends Field
         }
 
         return $result;
-
     }
 
     /**
