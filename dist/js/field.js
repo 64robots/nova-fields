@@ -19418,7 +19418,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     itemErrors: function itemErrors() {
       var _this = this;
 
-      console.log(this.errors.errors);
       return Object.keys(this.errors.errors).reduce(function (acc, curr) {
         var split = curr.split('.');
 

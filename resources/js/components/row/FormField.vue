@@ -107,7 +107,6 @@ export default {
      * Get errors with correct fieldname.
      */
     itemErrors() {
-      console.log(this.errors.errors);
       return Object.keys(this.errors.errors).reduce((acc, curr) => {
         const split = curr.split('.');
 
