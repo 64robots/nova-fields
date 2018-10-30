@@ -22,7 +22,11 @@ export default {
 
   created() {
     const values = this.field.value || '{}'
-    this.values = JSON.parse(values)
+    try {
+      this.values = JSON.parse(values)
+    } catch (e) {
+      this.values = values
+    }
   }
 }
 </script>
