@@ -108,9 +108,14 @@ export default {
      */
     itemErrors() {
       return Object.keys(this.errors.errors).reduce((acc, curr) => {
+        const split = curr.split('.');
+
+        if (split[0] !== this.field.attribute) {
+          return acc;          
+        }
+
         // replace fieldname in error messages
         acc[curr] = this.errors.errors[curr].map((error) => {
-          const split = curr.split('.');
           const fieldAttribute = split[split.length - 1];
 
           // find fieldname
@@ -118,6 +123,7 @@ export default {
             return (field.attribute == fieldAttribute) ? field.name : fieldname;
           }, ""));
         });
+
         return acc;
       }, {});
     }
