@@ -1,6 +1,8 @@
 <template>
   <div v-if="shouldShow && hasContent">
-    <div class="markdown leading-normal" v-html="content" />
+    <slot name="content">
+      <div class="markdown leading-normal" v-html="content" />
+    </slot>
   </div>
   <div v-else-if="hasContent">
     <slot

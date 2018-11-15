@@ -3,12 +3,13 @@
 namespace R64\NovaFields;
 
 use Laravel\Nova\Fields\Field;
+use Laravel\Nova\Fields\Expandable;
 use Laravel\Nova\Contracts\Resolvable;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Row extends Field
 {
-    use Configurable, HasChilds;
+    use Configurable, HasChilds, Expandable;
 
     /**
      * The base input classes of the field.
@@ -144,5 +145,17 @@ class Row extends Field
         return array_merge_recursive(
             parent::getUpdateRules($request), $result
         );
+    }
+
+    /**
+     * Prepare the element for JSON serialization.
+     *
+     * @return array
+     */
+    public function jsonSerialize()
+    {
+        return array_merge(parent::jsonSerialize(), [
+            'shouldShow' => $this->shouldBeExpanded(),
+        ]);
     }
 }

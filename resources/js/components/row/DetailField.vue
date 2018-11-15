@@ -11,6 +11,7 @@
       :excerpt-classes="excerptClasses"
       :show-label="showContentLabel"
       :hide-label="hideContentLabel"
+      :should-show="field.shouldShow"
     >
       <template slot="content">
         <RowHeading
