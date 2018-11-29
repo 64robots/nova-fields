@@ -2,6 +2,7 @@
   <div
     v-if="isBoolean"
     class="text-center"
+    :class="fieldClass"
   >
     <span
       class="inline-block rounded-full w-2 h-2 mr-1"
@@ -43,7 +44,9 @@ export default {
     },
 
     statusClass() {
-      return Boolean(this.field.value) ? 'bg-success' : 'bg-danger'
+      return Boolean(this.row[this.field.attribute])
+        ? 'bg-success'
+        : 'bg-danger'
     },
 
     display() {
