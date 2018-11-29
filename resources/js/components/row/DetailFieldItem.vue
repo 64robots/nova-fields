@@ -1,8 +1,13 @@
 <template>
-  <BooleanDetailField
+  <div
     v-if="isBoolean"
-    :field="field"
-  />
+    class="text-center"
+  >
+    <span
+      class="inline-block rounded-full w-2 h-2 mr-1"
+      :class="statusClass"
+    />
+  </div>
   <p
     v-else
     :class="fieldClass"
@@ -35,6 +40,10 @@ export default {
         this.field.component === 'boolean-field' ||
         this.field.component === 'nova-fields-boolean'
       )
+    },
+
+    statusClass() {
+      return Boolean(this.field.value) ? 'bg-success' : 'bg-danger'
     },
 
     display() {
