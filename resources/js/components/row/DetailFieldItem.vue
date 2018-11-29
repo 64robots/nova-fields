@@ -1,8 +1,19 @@
 <template>
-  <p :class="fieldClass">{{ display }}</p>
+  <BooleanDetailField
+    v-if="isBoolean"
+    :field="field"
+  />
+  <p
+    v-else
+    :class="fieldClass"
+  >{{ display }}</p>
 </template>
 <script>
+import BooleanDetailField from '../boolean/DetailField'
+
 export default {
+  components: { BooleanDetailField },
+
   props: {
     field: {
       type: Object,
@@ -19,27 +30,34 @@ export default {
   },
 
   computed: {
+    isBoolean() {
+      return (
+        this.field.component === 'boolean-field' ||
+        this.field.component === 'nova-fields-boolean'
+      )
+    },
+
     display() {
-      const display = this.row[this.field.attribute];
+      const display = this.row[this.field.attribute]
       if (this.field.displayUsingLabels && this.field.options) {
         const option = this.field.options.find(
           opt => Number(opt.value) === Number(display)
-        );
+        )
         if (!option) {
-          return '';
+          return ''
         }
 
-        return option.label;
+        return option.label
       }
 
-      return display;
+      return display
     },
 
     fieldClass() {
       return this.field.fieldClasses
         ? this.field.fieldClasses
-        : this.baseClasses.fieldClasses;
+        : this.baseClasses.fieldClasses
     }
   }
-};
+}
 </script>
