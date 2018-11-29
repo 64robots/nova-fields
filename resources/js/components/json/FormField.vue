@@ -77,7 +77,11 @@ export default {
         this.attribute = attribute
       }
       MergeObject.prototype.append = function(attr, value) {
-        this.obj[`${this.attribute}[${attr}]`] = value
+        const parts = attr.split('[')
+        const key = parts[0]
+        const rest = parts.slice(1).length ? '[' + parts.slice(1).join('[') : ''
+
+        this.obj[`${this.attribute}[${key}]${rest}`] = value
       }
       MergeObject.prototype.fill = function(data) {
         _.forEach(this.obj, (val, key) => {
