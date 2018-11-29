@@ -1,0 +1,7 @@
+{
+  "vetur.format.defaultFormatterOptions": {
+    "prettyhtml": {
+      "wrapAttributes": true
+    }
+  }
+}

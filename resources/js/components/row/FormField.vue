@@ -13,7 +13,7 @@
         :base-classes="field.childConfig"
       />
       <div
-        v-for="(row, index) in values"
+        v-for="row in values"
         :key="row.row_id"
         class="flex items-center border-40 border relative"
       >
@@ -50,19 +50,20 @@
           />
         </transition>
       </portal>
-      <p v-if="hasError" class="my-2 text-danger">
-        {{ firstError }}
-      </p>
+      <p
+        v-if="hasError"
+        class="my-2 text-danger"
+      >{{ firstError }}</p>
     </template>
   </r64-default-field>
 </template>
 
 <script>
-import { FormField, HandlesValidationErrors } from 'laravel-nova';
-import RowField from './RowField';
-import R64Field from '../../mixins/R64Field';
-import RowHeading from './RowHeading';
-import RowDeleteModal from './RowDeleteModal';
+import { FormField, HandlesValidationErrors } from 'laravel-nova'
+import RowField from './RowField'
+import R64Field from '../../mixins/R64Field'
+import RowHeading from './RowHeading'
+import RowDeleteModal from './RowDeleteModal'
 
 export default {
   mixins: [FormField, HandlesValidationErrors, RowField, R64Field],
@@ -75,7 +76,7 @@ export default {
     return {
       rowToRemove: null,
       fields: this.field.fields
-    };
+    }
   },
 
   watch: {
@@ -83,24 +84,24 @@ export default {
       deep: true,
       handler(values) {
         const value = values.map(value => {
-          const copy = Object.assign({}, value);
-          delete copy.row_id;
-          return copy;
-        });
-        this.value = JSON.stringify(value);
-        this.$emit('input', value);
+          const copy = Object.assign({}, value)
+          delete copy.row_id
+          return copy
+        })
+        this.value = JSON.stringify(value)
+        this.$emit('input', this.value)
       }
     }
   },
 
   computed: {
     addRowText() {
-      return this.field.addRowText || this.__('Add Row');
+      return this.field.addRowText || this.__('Add Row')
     },
 
     firstError() {
-      const errors = this.itemErrors;
-      return errors[Object.keys(errors)[0]].shift();
+      const errors = this.itemErrors
+      return errors[Object.keys(errors)[0]].shift()
     },
 
     /**
@@ -108,62 +109,65 @@ export default {
      */
     itemErrors() {
       return Object.keys(this.errors.errors).reduce((acc, curr) => {
-        const split = curr.split('.');
+        const split = curr.split('.')
 
         if (split[0] !== this.field.attribute) {
-          return acc;          
+          return acc
         }
 
         // replace fieldname in error messages
-        acc[curr] = this.errors.errors[curr].map((error) => {
-          const fieldAttribute = split[split.length - 1];
+        acc[curr] = this.errors.errors[curr].map(error => {
+          const fieldAttribute = split[split.length - 1]
 
           // find fieldname
-          return error.replace(curr, this.field.fields.reduce((fieldname, field) => {
-            return (field.attribute == fieldAttribute) ? field.name : fieldname;
-          }, ""));
-        });
+          return error.replace(
+            curr,
+            this.field.fields.reduce((fieldname, field) => {
+              return field.attribute == fieldAttribute ? field.name : fieldname
+            }, '')
+          )
+        })
 
-        return acc;
-      }, {});
+        return acc
+      }, {})
     }
   },
 
   mounted() {
     this.values.forEach(value => {
       Object.keys(value).forEach(key => {
-        const ref = this.$refs[`${value.row_id}${key}`];
-        if (!ref) return;
+        const ref = this.$refs[`${value.row_id}${key}`]
+        if (!ref) return
 
-        const element = ref[0];
-        element.handleChange(value[key]);
-      });
-    });
+        const element = ref[0]
+        element.handleChange(value[key])
+      })
+    })
   },
 
   methods: {
     addRow() {
       const obj = this.fields.reduce(function(result, field) {
-        result[field.attribute] = '';
-        return result;
-      }, {});
+        result[field.attribute] = ''
+        return result
+      }, {})
 
-      this.addItemToRow(obj);
+      this.addItemToRow(obj)
     },
 
     removeRow() {
       const index = this.values.findIndex(
         row => row.row_id === this.rowToRemove
-      );
-      this.values.splice(index, 1);
-      this.rowToRemove = null;
+      )
+      this.values.splice(index, 1)
+      this.rowToRemove = null
     },
 
     /*
-    * Set the initial, internal value for the field.
-    */
+     * Set the initial, internal value for the field.
+     */
     setInitialValue() {
-      this.value = this.field.value || [];
+      this.value = this.field.value || []
     },
 
     /**
@@ -171,8 +175,8 @@ export default {
      */
     fill(formData) {
       this.values.forEach((row, index) => {
-        Object.keys(row).forEach((key) => {
-          formData.append(`${this.field.attribute}[${index}][${key}]`, row[key]);
+        Object.keys(row).forEach(key => {
+          formData.append(`${this.field.attribute}[${index}][${key}]`, row[key])
         })
       })
     },
@@ -181,8 +185,8 @@ export default {
      * Update the field's internal value.
      */
     handleChange(value) {
-      this.value = value;
+      this.value = value
     }
   }
-};
+}
 </script>
