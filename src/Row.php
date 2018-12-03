@@ -19,6 +19,13 @@ class Row extends Field
     public $inputClasses = '';
 
     /**
+     * The base index classes of the field.
+     *
+     * @var string
+     */
+    public $indexClasses = '';
+
+    /**
      * The field's component.
      *
      * @var string
@@ -76,7 +83,7 @@ class Row extends Field
 
     /**
      * Generate field-specific validation rules.
-     * 
+     *
      * @param  array  $rules
      * @return array
      */
@@ -89,7 +96,7 @@ class Row extends Field
 
     /**
      * Get the validation rules for this field.
-     * 
+     *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
      * @return array
      */
@@ -103,13 +110,14 @@ class Row extends Field
         }
 
         return array_merge_recursive(
-            parent::getRules($request), $result
+            parent::getRules($request),
+            $result
         );
     }
 
     /**
      * Get the creation rules for this field.
-     * 
+     *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
      * @return array|string
      */
@@ -123,13 +131,14 @@ class Row extends Field
         }
 
         return array_merge_recursive(
-            parent::getCreationRules($request), $result
+            parent::getCreationRules($request),
+            $result
         );
     }
 
     /**
      * Get the update rules for this field.
-     * 
+     *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
      * @return array
      */
@@ -143,7 +152,8 @@ class Row extends Field
         }
 
         return array_merge_recursive(
-            parent::getUpdateRules($request), $result
+            parent::getUpdateRules($request),
+            $result
         );
     }
 

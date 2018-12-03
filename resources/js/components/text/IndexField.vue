@@ -5,30 +5,26 @@
   />
   <span
     v-else
-    class="whitespace-no-wrap"
-    :class="applyColor"
+    :class="[field.indexClasses, applyColor]"
   >
-    <template v-if="!field.showLinkInIndex">
-      {{ field.value }}
-    </template>
+    <template v-if="!field.showLinkInIndex">{{ field.value }}</template>
     <router-link
       v-else
       :class="linkClasses"
-      :to="{ 
-        name: 'detail', 
+      :to="{
+        name: 'detail',
         params: {
           resourceName: resourceName,
           resourceId: field.id
         }
       }"
-      :title="field.value">
-      {{ field.value }}
-    </router-link>
+      :title="field.value"
+    >{{ field.value }}</router-link>
   </span>
 </template>
 
 <script>
-import Colors from '../../mixins/Colors';
+import Colors from '../../mixins/Colors'
 
 export default {
   mixins: [Colors],
@@ -40,5 +36,5 @@ export default {
       return this.field.indexLinkClasses
     }
   }
-};
+}
 </script>

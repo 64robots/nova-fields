@@ -17,6 +17,13 @@ class BelongsTo extends NovaBelongsTo
     public $inputClasses = 'w-full form-control form-input form-input-bordered';
 
     /**
+     * The base index classes of the field.
+     *
+     * @var string
+     */
+    public $indexClasses = 'no-underline dim text-primary font-bold';
+
+    /**
      * The field's component.
      *
      * @var string
@@ -94,6 +101,7 @@ class BelongsTo extends NovaBelongsTo
     {
         return array_merge([
             'wrapperClasses' => $this->wrapperClasses,
+            'indexClasses' => $this->indexClasses,
             'inputClasses' => $this->inputClasses,
             'fieldClasses' => $this->fieldClasses,
             'panelFieldClasses' => $this->panelFieldClasses,

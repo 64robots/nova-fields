@@ -16,6 +16,13 @@ class Textarea extends NovaTextarea
     public $inputClasses = 'w-full form-control form-input form-input-bordered py-3 min-h-textarea';
 
     /**
+     * The base index classes of the field.
+     *
+     * @var string
+     */
+    public $indexClasses = 'whitespace-no-wrap';
+
+    /**
      * The field's component.
      *
      * @var string

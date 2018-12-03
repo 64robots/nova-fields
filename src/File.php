@@ -16,6 +16,13 @@ class File extends NovaFile
     public $inputClasses = 'form-file-input';
 
     /**
+     * The base index classes of the field.
+     *
+     * @var string
+     */
+    public $indexClasses = 'rounded-full w-8 h-8';
+
+    /**
      * The field's component.
      *
      * @var string
@@ -31,6 +38,7 @@ class File extends NovaFile
     {
         return array_merge([
             'wrapperClasses' => $this->wrapperClasses,
+            'indexClasses' => $this->indexClasses,
             'inputClasses' => $this->inputClasses,
             'fieldClasses' => $this->fieldClasses,
             'panelFieldClasses' => $this->panelFieldClasses,

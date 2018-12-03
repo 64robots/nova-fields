@@ -16,6 +16,13 @@ class Password extends NovaPassword
     public $inputClasses = 'w-full form-control form-input form-input-bordered';
 
     /**
+     * The base index classes of the field.
+     *
+     * @var string
+     */
+    public $indexClasses = 'font-bold';
+
+    /**
      * The field's component.
      *
      * @var string

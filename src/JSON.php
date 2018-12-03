@@ -18,6 +18,13 @@ class JSON extends Field
     public $inputClasses = '';
 
     /**
+     * The base index classes of the field.
+     *
+     * @var string
+     */
+    public $indexClasses = 'flex';
+
+    /**
      * The field's component.
      *
      * @var string
@@ -74,7 +81,7 @@ class JSON extends Field
         $value = $resource->{$attribute};
 
         $this->value = is_object($value) || is_array($value) ? $value : json_decode($value);
-        
+
         $this->fields->whereInstanceOf(Resolvable::class)->each->resolve($this->value);
 
         $this->withMeta(['fields' => $this->fields]);

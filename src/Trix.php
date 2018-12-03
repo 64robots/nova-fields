@@ -17,6 +17,13 @@ class Trix extends NovaTrix
     public $inputClasses = '';
 
     /**
+     * The base index classes of the field.
+     *
+     * @var string
+     */
+    public $indexClasses = '';
+
+    /**
      * The field's component.
      *
      * @var string

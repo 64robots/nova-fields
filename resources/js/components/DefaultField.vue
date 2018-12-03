@@ -5,17 +5,12 @@
       :class="labelClasses"
     >
       <slot>
-        <form-label :for="field.name">
-          {{ field.name || fieldName }}
-        </form-label>
-
-        <help-text :show-help-text="showHelpText">
-          {{ field.helpText }}
-        </help-text>
+        <form-label :for="field.name">{{ field.name || fieldName }}</form-label>
       </slot>
     </div>
     <div :class="fieldClasses">
       <slot name="field"/>
+      <help-text :show-help-text="showHelpText">{{ field.helpText }}</help-text>
     </div>
   </div>
 </template>

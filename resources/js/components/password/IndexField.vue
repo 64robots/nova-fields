@@ -1,6 +1,6 @@
 <template>
   <span
-    class="font-bold"
+    :class="field.indexClasses"
     v-html="maskLabel"
   />
 </template>
@@ -14,8 +14,8 @@ export default {
       return (
         this.field.maskLabel ||
         '&middot;&middot;&middot;&middot;&middot;&middot;&middot;&middot;&middot;'
-      );
+      )
     }
   }
-};
+}
 </script>

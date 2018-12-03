@@ -82,6 +82,32 @@ trait Configurable
     }
 
     /**
+     * Set the index classes that should be applied instead of default ones.
+     *
+     * @param  string  $classes
+     * @return $this
+     */
+    public function indexClasses($classes)
+    {
+        $this->indexClasses = $classes;
+
+        return $this;
+    }
+
+    /**
+     * Add classes to the base index classes.
+     *
+     * @param  string  $classes
+     * @return $this
+     */
+    public function addIndexClasses($classes)
+    {
+        $this->indexClasses = "{$this->indexClasses} {$classes}";
+
+        return $this;
+    }
+
+    /**
      * Set the input classes that should be applied instead of default ones.
      *
      * @param  string  $classes
@@ -295,7 +321,7 @@ trait Configurable
     {
         return $this->withMeta(['showLinkInIndex' => true]);
     }
-    
+
     /**
      * Specify that the element should be shown only on detail view.
      *
@@ -404,7 +430,7 @@ trait Configurable
         return $this->withMeta(['onlyWhen' => $field]);
     }
 
-        /**
+    /**
      * Overriding the base method in order to grab the model ID.
      *
      * @param mixed  $resource  The resource class
@@ -433,7 +459,7 @@ trait Configurable
         }
         return $this->withMeta(['id' => $id, 'nova_path' => $path]);
     }
-    
+
     /**
      * Get additional meta information to merge with the element payload.
      *
@@ -443,6 +469,7 @@ trait Configurable
     {
         return array_merge([
             'wrapperClasses' => $this->wrapperClasses,
+            'indexClasses' => $this->indexClasses,
             'inputClasses' => $this->inputClasses,
             'fieldClasses' => $this->fieldClasses,
             'panelFieldClasses' => $this->panelFieldClasses,
@@ -452,5 +479,4 @@ trait Configurable
             'excerptClasses' => $this->excerptClasses,
         ], $this->meta);
     }
-    
 }

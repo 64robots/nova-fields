@@ -16,6 +16,13 @@ class Boolean extends NovaBoolean
     public $inputClasses = 'py-2';
 
     /**
+     * The base index classes of the field.
+     *
+     * @var string
+     */
+    public $indexClasses = 'text-center';
+
+    /**
      * The field's component.
      *
      * @var string

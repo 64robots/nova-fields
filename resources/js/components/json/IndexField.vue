@@ -1,11 +1,12 @@
 <template>
-  <div class="flex">
+  <div :class="field.indexClasses">
     <div
-        v-for="(value, index) in values"
-        :key="index"
-        class="mr-1"
+      v-for="(value, index) in values"
+      :key="index"
+      class="mr-1"
     >
-    <span class="font-bold">{{ index }}: </span><span>{{ value }}</span>
+      <span class="font-bold">{{ index }}:</span>
+      <span>{{ value }}</span>
     </div>
   </div>
 </template>

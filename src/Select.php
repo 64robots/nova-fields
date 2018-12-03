@@ -16,6 +16,13 @@ class Select extends NovaSelect
     public $inputClasses = 'w-full form-control form-select';
 
     /**
+     * The base index classes of the field.
+     *
+     * @var string
+     */
+    public $indexClasses = 'whitespace-no-wrap';
+
+    /**
      * The field's component.
      *
      * @var string
