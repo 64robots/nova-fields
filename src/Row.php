@@ -72,6 +72,16 @@ class Row extends Field
     }
 
     /**
+     * Set the maximum of rows that can be added.
+     *
+     * @return $this
+     */
+    public function maxRows($rows)
+    {
+        return $this->withMeta(['maxRows' => $rows]);
+    }
+
+    /**
      * Set text for Add Row button.
      * @param  string  $name
      * @return $this

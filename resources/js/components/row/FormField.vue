@@ -37,6 +37,7 @@
       </div>
       <div class="flex justify-end">
         <a
+          :class="{ 'pointer-events-none opacity-50': shouldDisableButton }"
           class="btn btn-primary p-3 rounded cursor-pointer mt-3"
           @click="addRow"
         >{{ addRowText }}</a>
@@ -95,6 +96,14 @@ export default {
   },
 
   computed: {
+    shouldDisableButton() {
+      if (this.field.maxRows === undefined) {
+        return false
+      }
+
+      return Number(this.field.maxRows) <= this.values.length
+    },
+
     addRowText() {
       return this.field.addRowText || this.__('Add Row')
     },
