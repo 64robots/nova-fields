@@ -47,7 +47,7 @@ class Row extends Field
     public $fields = [];
 
     /**
-     * Create a new JSON field.
+     * Create a new Row field.
      *
      * @param  string  $name
      * @param  string|null  $attribute
@@ -58,7 +58,7 @@ class Row extends Field
     {
         parent::__construct($name, $attribute, $resolveCallback);
 
-        $this->withMeta(['fields' => $fields]);
+        $this->fields = collect($fields);
     }
 
     /**
@@ -79,6 +79,43 @@ class Row extends Field
     public function addRowText($text)
     {
         return $this->withMeta(['addRowText' => $text]);
+    }
+
+    /**
+     * Resolve the field's value.
+     *
+     * @param  mixed  $resource
+     * @param  string|null  $attribute
+     * @return void
+     */
+    public function resolve($resource, $attribute = null)
+    {
+        $attribute = $attribute ?? $this->attribute;
+
+        $value = $resource->{$attribute};
+
+        $value = is_object($value) || is_array($value) ? $value : json_decode($value);
+
+
+        $fields = $this->fields->whereInstanceOf(Resolvable::class)->reduce(function ($values, $field) {
+            $key = $field->attribute;
+            $cb = $field->resolveCallback;
+
+            return $values->map(function ($row) use ($key, $cb) {
+                if (isset($row->{$key})) {
+                    $row->{$key} = $cb ? call_user_func($cb, $row->{$key}) : $row->{$key};
+                }
+                return $row;
+            });
+        }, collect($value));
+
+        $this->resolveUsing(function () use ($fields) {
+            return $fields->toArray();
+        });
+
+        $this->withMeta(['fields' => $this->fields]);
+
+        parent::resolve($resource, $attribute);
     }
 
     /**
