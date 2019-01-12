@@ -24,7 +24,7 @@
           v-for="f in fields"
           v-model="row[f.attribute]"
           :is="`form-${f.component}`"
-          :resource-name="resourceName"
+          :resource-name="resourceForField(f)"
           :resource-id="resourceId"
           :field="f"
           :base-classes="field.childConfig"
@@ -195,6 +195,21 @@ export default {
      */
     handleChange(value) {
       this.value = value
+    },
+
+    /**
+     * Get the resource name diferent between relationships and others fields.
+     */
+    resourceForField(field) {
+      switch (field.component) {
+        case 'nova-fields-belongs-to':
+          return this.field.attribute
+          break
+
+        default:
+          return this.resourceName
+          break
+      }
     }
   }
 }
