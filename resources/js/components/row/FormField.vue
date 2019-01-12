@@ -42,13 +42,30 @@
           @click="addRow"
         >{{ addRowText }}</a>
       </div>
+
       <portal to="modals">
         <transition name="fade">
-          <RowDeleteModal
+          <delete-resource-modal
             v-if="rowToRemove"
             @confirm="removeRow"
-            @close="rowToRemove = null"
-          />
+            @close="rowToRemove = false"
+          >
+            <div
+              slot-scope
+              class="p-8"
+            >
+              <heading
+                :level="2"
+                class="mb-6"
+                v-text="__('Delete Row')"
+              />
+
+              <p
+                class="text-80 leading-normal"
+                v-text="__('Are you sure you want to delete this row?')"
+              />
+            </div>
+          </delete-resource-modal>
         </transition>
       </portal>
       <p
@@ -64,12 +81,11 @@ import { FormField, HandlesValidationErrors } from 'laravel-nova'
 import RowField from './RowField'
 import R64Field from '../../mixins/R64Field'
 import RowHeading from './RowHeading'
-import RowDeleteModal from './RowDeleteModal'
 
 export default {
   mixins: [FormField, HandlesValidationErrors, RowField, R64Field],
 
-  components: { RowHeading, RowDeleteModal },
+  components: { RowHeading },
 
   props: ['resourceName', 'resourceId', 'field'],
 
@@ -168,8 +184,8 @@ export default {
       const index = this.values.findIndex(
         row => row.row_id === this.rowToRemove
       )
-      this.values.splice(index, 1)
-      this.rowToRemove = null
+      this.rowToRemove = false
+      this.$nextTick(() => this.$delete(this.values, index))
     },
 
     /*
@@ -204,11 +220,9 @@ export default {
       switch (field.component) {
         case 'nova-fields-belongs-to':
           return this.field.attribute
-          break
 
         default:
           return this.resourceName
-          break
       }
     }
   }
