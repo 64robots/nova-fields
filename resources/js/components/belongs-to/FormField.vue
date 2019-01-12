@@ -34,7 +34,8 @@
               >
                 <img
                   :src="selectedResource.avatar"
-                  class="w-8 h-8 rounded-full block" />
+                  class="w-8 h-8 rounded-full block"
+                />
               </div>
 
               {{ selectedResource.display }}
@@ -51,7 +52,8 @@
               >
                 <img
                   :src="option.avatar"
-                  class="w-8 h-8 rounded-full block" />
+                  class="w-8 h-8 rounded-full block"
+                />
               </div>
 
               {{ option.display }}
@@ -112,7 +114,8 @@
         >
           <checkbox
             :dusk="field.resourceName + '-with-trashed-checkbox'"
-            :checked="withTrashed" />
+            :checked="withTrashed"
+          />
 
           <span class="ml-2">
             {{__('With Trashed')}}
@@ -120,7 +123,10 @@
         </label>
       </div>
 
-      <p v-if="hasError" class="my-2 text-danger">
+      <p
+        v-if="hasError"
+        class="my-2 text-danger"
+      >
         {{ firstError }}
       </p>
     </template>
@@ -387,6 +393,15 @@ export default {
       if (!this.isSearchable) {
         this.getAvailableResources()
       }
+    },
+
+    /**
+     * Update the field's internal value.
+     */
+    handleChange(item) {
+      this.selectedResourceId = item.id
+
+      this.$nextTick(this.selectInitialResource)
     }
   }
 }
