@@ -31,7 +31,7 @@
           :errors="errors"
           :with-data-set="indexV"
           :data-set="dataSets[indexF + '-' + f.component]"
-          @data-set:available="data => dataSets[indexF + '-' + f.component] = data"
+          @data-set-available="data => dataSets[indexF + '-' + f.component] = data"
         />
         <span
           class="flex items-center justify-center bg-danger text-white p-2 m-2 w-6 h-6 rounded-full cursor-pointer font-bold"
@@ -164,13 +164,8 @@ export default {
 
   created() {
     this.fields.forEach((value, key) => {
-      switch (value.component) {
-        case 'nova-fields-belongs-to':
-          this.$set(this.dataSets, key + '-' + value.component, [])
-          break
-
-        default:
-          break
+      if (value.component === 'nova-fields-belongs-to') {
+        this.$set(this.dataSets, key + '-' + value.component, [])
       }
     })
   },

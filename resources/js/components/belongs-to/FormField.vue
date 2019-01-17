@@ -378,7 +378,7 @@ export default {
 
           // Set dataSet for others nova-field's BelongsTo into nova-field's Row
           if (!this.withDataSet) {
-            this.$emit('data-set:available', resources)
+            this.$emit('data-set-available', resources)
           }
         })
     },
