@@ -32,6 +32,7 @@
           :with-data-set="indexV"
           :data-set="dataSets[indexF + '-' + f.component]"
           @data-set-available="data => dataSets[indexF + '-' + f.component] = data"
+          @input="forceInputEvent"
         />
         <span
           class="flex items-center justify-center bg-danger text-white p-2 m-2 w-6 h-6 rounded-full cursor-pointer font-bold"
@@ -183,6 +184,12 @@ export default {
   },
 
   methods: {
+    forceInputEvent(event) {
+      this.$nextTick(() => {
+        this.$emit('input', event)
+      })
+    },
+
     addRow() {
       const obj = this.fields.reduce(function(result, field) {
         result[field.attribute] = ''

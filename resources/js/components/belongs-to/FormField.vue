@@ -17,10 +17,10 @@
             @clear="clearSelection"
             @selected="selectResource"
             :error="hasError"
-            :value='selectedResource'
-            :data='availableResources'
-            trackBy='value'
-            searchBy='display'
+            :value="selectedResource"
+            :data="availableResources"
+            trackBy="value"
+            searchBy="display"
             class="mb-3 flex-grow"
           >
             <div
@@ -35,9 +35,8 @@
                 <img
                   :src="selectedResource.avatar"
                   class="w-8 h-8 rounded-full block"
-                />
+                >
               </div>
-
               {{ selectedResource.display }}
             </div>
 
@@ -53,9 +52,8 @@
                 <img
                   :src="option.avatar"
                   class="w-8 h-8 rounded-full block"
-                />
+                >
               </div>
-
               {{ option.display }}
             </div>
           </search-input>
@@ -69,7 +67,7 @@
             :disabled="isLocked"
           >
             <option
-              value=""
+              value
               disabled
               selected
             >{{ placeholder }}</option>
@@ -80,9 +78,7 @@
               :value="resource.value"
               :selected="selectedResourceId == resource.value"
               :disabled="resource.disabled"
-            >
-              {{ resource.display}}
-            </option>
+            >{{ resource.display}}</option>
           </select>
           <a
             v-if="field.quickCreate && !isModal"
@@ -117,18 +113,14 @@
             :checked="withTrashed"
           />
 
-          <span class="ml-2">
-            {{__('With Trashed')}}
-          </span>
+          <span class="ml-2">{{__('With Trashed')}}</span>
         </label>
       </div>
 
       <p
         v-if="hasError"
         class="my-2 text-danger"
-      >
-        {{ firstError }}
-      </p>
+      >{{ firstError }}</p>
     </template>
   </r64-default-field>
 </template>
@@ -409,6 +401,7 @@ export default {
         this.availableResources,
         r => r.value == this.selectedResourceId
       )
+      this.$emit('input', this.selectedResourceId)
     },
 
     /**
