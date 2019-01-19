@@ -2,6 +2,7 @@
 
 namespace R64\NovaFields;
 
+use Laravel\Nova\Rules\Relatable;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Fields\BelongsTo as NovaBelongsTo;
 
@@ -37,6 +38,13 @@ class BelongsTo extends NovaBelongsTo
      */
     public $displayName = 'name';
 
+    /**
+     * Determine if this field should skip Relatable rule if used in Row / JSON
+     *
+     * @var string
+     */
+    public $disableRelatableRule = false;
+
     protected $groupedBy = null;
 
     /**
@@ -63,6 +71,26 @@ class BelongsTo extends NovaBelongsTo
     }
 
     /**
+     * Get the validation rules for this field.
+     *
+     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
+     * @return array
+     */
+    public function getRules(NovaRequest $request)
+    {
+        $rules = parent::getRules($request);
+
+        return [
+            $this->attribute => array_filter($rules[$this->attribute], function ($rule) {
+                if ($rule instanceof Relatable) {
+                    return !$this->disableRelatableRule;
+                }
+                return true;
+            })
+        ];
+    }
+
+    /**
      * Set the field that should be used to group the resources.
      *
      * @param  string  $field
@@ -84,6 +112,18 @@ class BelongsTo extends NovaBelongsTo
     public function displayName($name)
     {
         $this->displayName = $name;
+
+        return $this;
+    }
+
+    /**
+     * Determine if this field should skip Relatable rule if used in Row / JSON
+     *
+     * @return $this
+     */
+    public function disableRelatableRule()
+    {
+        $this->disableRelatableRule = true;
 
         return $this;
     }
