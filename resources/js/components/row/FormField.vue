@@ -238,7 +238,7 @@ export default {
     resourceForField(field) {
       switch (field.component) {
         case 'nova-fields-belongs-to':
-          return this.field.attribute
+          return this.field.sanitizedAttribute
 
         default:
           return this.resourceName
