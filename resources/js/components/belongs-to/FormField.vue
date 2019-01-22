@@ -9,7 +9,7 @@
   >
     <template slot="field">
       <loading-view :loading="loading">
-        <div class="flex items-center mb-3">
+        <div class="flex items-center">
           <search-input
             v-if="isSearchable && !isLocked"
             :data-testid="`${field.resourceName}-search-input`"
@@ -17,10 +17,10 @@
             @clear="clearSelection"
             @selected="selectResource"
             :error="hasError"
-            :value='selectedResource'
-            :data='availableResources'
-            trackBy='value'
-            searchBy='display'
+            :value="selectedResource"
+            :data="availableResources"
+            trackBy="value"
+            searchBy="display"
             class="mb-3 flex-grow"
           >
             <div
@@ -35,9 +35,8 @@
                 <img
                   :src="selectedResource.avatar"
                   class="w-8 h-8 rounded-full block"
-                />
+                >
               </div>
-
               {{ selectedResource.display }}
             </div>
 
@@ -53,9 +52,8 @@
                 <img
                   :src="option.avatar"
                   class="w-8 h-8 rounded-full block"
-                />
+                >
               </div>
-
               {{ option.display }}
             </div>
           </search-input>
@@ -69,7 +67,7 @@
             :disabled="isLocked"
           >
             <option
-              value=""
+              value
               disabled
               selected
             >{{ placeholder }}</option>
@@ -80,9 +78,7 @@
               :value="resource.value"
               :selected="selectedResourceId == resource.value"
               :disabled="resource.disabled"
-            >
-              {{ resource.display}}
-            </option>
+            >{{ resource.display}}</option>
           </select>
           <a
             v-if="field.quickCreate && !isModal"
@@ -117,18 +113,14 @@
             :checked="withTrashed"
           />
 
-          <span class="ml-2">
-            {{__('With Trashed')}}
-          </span>
+          <span class="ml-2">{{__('With Trashed')}}</span>
         </label>
       </div>
 
       <p
         v-if="hasError"
         class="my-2 text-danger"
-      >
-        {{ firstError }}
-      </p>
+      >{{ firstError }}</p>
     </template>
   </r64-default-field>
 </template>
@@ -157,7 +149,10 @@ export default {
     field: Object,
     viaResource: {},
     viaResourceId: {},
-    viaRelationship: {}
+    viaRelationship: {},
+
+    dataSet: Array,
+    withDataSet: false
   },
 
   data: () => ({
@@ -253,6 +248,15 @@ export default {
     }
   },
 
+  watch: {
+    /**
+     * Setting the dataSet within row component
+     */
+    dataSet(data) {
+      this.availableResources = data
+    }
+  },
+
   /**
    * Mount the component.
    */
@@ -302,14 +306,25 @@ export default {
         // searchable, we won't load all the resources but we will select
         // the initial option
         this.getAvailableResources().then(() => this.selectInitialResource())
-      } else if (!this.shouldSelectInitialResource && !this.isSearchable) {
+      } else if (
+        !this.shouldSelectInitialResource &&
+        !this.isSearchable &&
+        !this.withDataSet
+      ) {
         // If we don't need to select an initial resource because the user
         // came to create a resource directly and there's no parent resource,
         // and the field is searchable we'll just load all of the resources
         this.getAvailableResources()
+      } else if (this.withDataSet && this.dataSet.length) {
+        // If it is within a row component and exists previous dataSet
+        // it will populate the availableResources with dataSet
+        this.availableResources = this.dataSet
       }
 
-      this.determineIfSoftDeletes()
+      if (!this.withDataSet) {
+        // If it is within a row component and it is the 0 index this will be called
+        this.determineIfSoftDeletes()
+      }
 
       this.field.fill = this.fill
     },
@@ -352,6 +367,11 @@ export default {
           this.initializingWithExistingResource = false
           this.availableResources = resources
           this.softDeletes = softDeletes
+
+          // Set dataSet for others nova-field's BelongsTo into nova-field's Row
+          if (!this.withDataSet) {
+            this.$emit('data-set-available', resources)
+          }
         })
     },
 
@@ -381,6 +401,7 @@ export default {
         this.availableResources,
         r => r.value == this.selectedResourceId
       )
+      this.$emit('input', this.selectedResourceId)
     },
 
     /**

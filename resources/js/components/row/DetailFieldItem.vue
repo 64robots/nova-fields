@@ -51,6 +51,11 @@ export default {
 
     display() {
       const display = this.row[this.field.attribute]
+
+      if (this.field.component === 'nova-fields-belongs-to') {
+        return display[this.field.displayName]
+      }
+
       if (this.field.displayUsingLabels && this.field.options) {
         const option = this.field.options.find(
           opt => Number(opt.value) === Number(display)

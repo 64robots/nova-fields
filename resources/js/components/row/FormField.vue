@@ -13,7 +13,7 @@
         :base-classes="field.childConfig"
       />
       <div
-        v-for="row in values"
+        v-for="(row, indexV) in values"
         :key="row.row_id"
         class="flex items-center border-40 border relative"
       >
@@ -21,7 +21,7 @@
           class="remove-bottom-border w-full"
           :key="`${row.row_id}${f.attribute}`"
           :ref="`${row.row_id}${f.attribute}`"
-          v-for="f in fields"
+          v-for="(f, indexF) in fields"
           v-model="row[f.attribute]"
           :is="`form-${f.component}`"
           :resource-name="resourceForField(f)"
@@ -29,6 +29,10 @@
           :field="f"
           :base-classes="field.childConfig"
           :errors="errors"
+          :with-data-set="indexV"
+          :data-set="dataSets[indexF + '-' + f.component]"
+          @data-set-available="data => dataSets[indexF + '-' + f.component] = data"
+          @input="forceInputEvent"
         />
         <span
           class="flex items-center justify-center bg-danger text-white p-2 m-2 w-6 h-6 rounded-full cursor-pointer font-bold"
@@ -92,7 +96,8 @@ export default {
   data() {
     return {
       rowToRemove: null,
-      fields: this.field.fields
+      fields: this.field.fields,
+      dataSets: {}
     }
   },
 
@@ -158,6 +163,14 @@ export default {
     }
   },
 
+  created() {
+    this.fields.forEach((value, key) => {
+      if (value.component === 'nova-fields-belongs-to') {
+        this.$set(this.dataSets, key + '-' + value.component, [])
+      }
+    })
+  },
+
   mounted() {
     this.values.forEach(value => {
       Object.keys(value).forEach(key => {
@@ -171,6 +184,12 @@ export default {
   },
 
   methods: {
+    forceInputEvent(event) {
+      this.$nextTick(() => {
+        this.$emit('input', event)
+      })
+    },
+
     addRow() {
       const obj = this.fields.reduce(function(result, field) {
         result[field.attribute] = ''
