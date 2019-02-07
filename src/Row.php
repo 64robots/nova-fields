@@ -2,9 +2,9 @@
 
 namespace R64\NovaFields;
 
-use Laravel\Nova\Fields\Field;
-use Laravel\Nova\Fields\Expandable;
 use Laravel\Nova\Contracts\Resolvable;
+use Laravel\Nova\Fields\Expandable;
+use Laravel\Nova\Fields\Field;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Row extends Field
@@ -105,7 +105,6 @@ class Row extends Field
         $value = $resource->{$attribute};
 
         $value = is_object($value) || is_array($value) ? $value : json_decode($value);
-
 
         $fields = $this->fields->whereInstanceOf(Resolvable::class)->reduce(function ($values, $field) {
             $key = $field->attribute;
@@ -212,6 +211,7 @@ class Row extends Field
     public function jsonSerialize()
     {
         return array_merge(parent::jsonSerialize(), [
+            'sanitizedAttribute' => str_plural(kebab_case($this->attribute)),
             'shouldShow' => $this->shouldBeExpanded(),
         ]);
     }
