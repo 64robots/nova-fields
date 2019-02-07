@@ -270,7 +270,7 @@ export default {
       await this.getAvailableResources()
       if (id) {
         this.selectedResourceId = id
-        this.selectedResource = { value: id }
+        this.selectInitialResource()
       }
       this.openModal = false
       this.loading = false
