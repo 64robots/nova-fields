@@ -40,4 +40,4 @@ This converts to
 
 and is stored in the `content_json` field.
 
-In this example ensure that the `content_json` field is being set to cast to `object` on the underlying model instance.
+In this example ensure that the `content_json` field is being set to cast either to `object` or `collection` on the underlying model instance.
