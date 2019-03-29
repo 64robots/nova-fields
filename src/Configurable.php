@@ -394,9 +394,12 @@ trait Configurable
      *
      * @return $this
      */
-    public function readOnly()
+    public function readOnly($callback = null)
     {
-        return $this->withMeta(['readOnly' => true]);
+        if (!$callback || (is_callable($callback) && call_user_func($callback))) {
+            return $this->withMeta(['readOnly' => true]);
+        }
+        return $this;
     }
 
     /**
