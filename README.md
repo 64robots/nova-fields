@@ -19,10 +19,10 @@ The idea is make them more configurable and reusable in package development. If 
 - [x] File
 - [x] Image
 - [x] BelongsTo
+- [x] Currency
 - [ ] Status
 - [ ] Avatar
 - [ ] Gravatar
-- [ ] Currency
 - [ ] Code
 - [ ] Country
 - [ ] Date
