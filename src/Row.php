@@ -118,9 +118,11 @@ class Row extends Field
             });
         }, collect($value));
 
-        $this->resolveUsing(function () use ($fields) {
-            return $fields->toArray();
-        });
+        if (!$this->resolveCallback) {
+            $this->resolveCallback = function () use ($fields) {
+                return $fields->toArray();
+            };
+        }
 
         $this->withMeta(['fields' => $this->fields]);
 

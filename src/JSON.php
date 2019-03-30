@@ -3,6 +3,7 @@
 namespace R64\NovaFields;
 
 use Laravel\Nova\Fields\Field;
+use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Contracts\Resolvable;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
@@ -49,6 +50,7 @@ class JSON extends Field
      * Create a new JSON field.
      *
      * @param  string  $name
+     * @param  string  $fields
      * @param  string|null  $attribute
      * @param  mixed|null  $resolveCallback
      * @return void
@@ -60,6 +62,11 @@ class JSON extends Field
         $this->fields = collect($fields);
     }
 
+    /**
+     * Whether the field should be shown on the index.
+     *
+     * @return $this
+     */
     public function showOnIndex()
     {
         $this->showOnIndex = true;
@@ -81,6 +88,12 @@ class JSON extends Field
         $value = $resource->{$attribute};
 
         $this->value = is_object($value) || is_array($value) ? $value : json_decode($value);
+
+        $this->fields->whereInstanceOf(Date::class)->each(function ($dateField) {
+            $dateField->resolveCallback = function ($value) {
+                return \Carbon\Carbon::parse($value)->format('Y-m-d');
+            };
+        });
 
         $this->fields->whereInstanceOf(Resolvable::class)->each->resolve($this->value);
 
@@ -193,5 +206,19 @@ class JSON extends Field
         $this->fields->whereInstanceOf(Resolvable::class)->each->resolveForDisplay($this->value);
 
         parent::resolve($resource, $attribute);
+    }
+
+    /**
+     * Whether the fields within the JSON should be 'flattened'.
+     *
+     * @param bool $value
+     *
+     * @return $this
+     */
+    public function flatten($value = true)
+    {
+        return $this->withMeta([
+            'flatten' => $value
+        ]);
     }
 }
