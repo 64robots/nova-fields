@@ -56,6 +56,13 @@ trait Configurable
     public $excerptClasses = 'cursor-pointer dim inline-block text-primary font-bold';
 
     /**
+     * The callback used to determine if the field is readonly.
+     *
+     * @var Closure
+     */
+    public $readonlyCallback;
+
+    /**
      * Set the container classes that should be applied instead of default ones.
      *
      * @param  string  $classes
@@ -394,8 +401,10 @@ trait Configurable
      *
      * @return $this
      */
-    public function readOnly()
+    public function readOnly($callback)
     {
+        $this->readonlyCallback = $callback;
+
         return $this->withMeta(['readOnly' => true]);
     }
 
