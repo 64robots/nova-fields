@@ -1,9 +1,14 @@
 export default {
   computed: {
     applyColor() {
-      if (!this.field.colors) return '';
-      const value = this.field.value.replace(/[^\d.-]/g, ''); // remove non numeric chars
-      return value < 0 ? 'text-danger' : 'text-success';
+      if (!this.field.colors) return ''
+      let value = String(this.field.value)
+      const isNegativeMoneyFormat = value.includes('(') && value.includes('(')
+      value = value.replace(/[^\d.-]/g, '') // remove non numeric chars
+      const isNegative = value < 0
+      return isNegativeMoneyFormat || isNegative
+        ? 'text-danger'
+        : 'text-success'
     }
   }
-};
+}
