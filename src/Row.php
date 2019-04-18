@@ -102,7 +102,7 @@ class Row extends Field
     {
         $attribute = $attribute ?? $this->attribute;
 
-        $value = $resource->{$attribute};
+        $value = $resource->{$attribute} ?? null;
 
         $value = is_object($value) || is_array($value) ? $value : json_decode($value);
 
