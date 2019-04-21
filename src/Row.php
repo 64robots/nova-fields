@@ -107,13 +107,18 @@ class Row extends Field
         $value = is_object($value) || is_array($value) ? $value : json_decode($value);
 
         $fields = $this->fields->whereInstanceOf(Resolvable::class)->reduce(function ($values, $field) {
-            $key = $field->attribute;
-            $cb = $field->resolveCallback;
+            return $values->map(function ($row) use ($field) {
+                $key = $field->attribute;
+                $cb = $field->resolveCallback;
 
-            return $values->map(function ($row) use ($key, $cb) {
                 if (isset($row->{$key})) {
                     $row->{$key} = $cb ? call_user_func($cb, $row->{$key}) : $row->{$key};
                 }
+
+                if (property_exists($field, 'computeCallback') && $field->computeCallback) {
+                    $row->{$key} = call_user_func($field->computeCallback, $row);
+                }
+
                 return $row;
             });
         }, collect($value));

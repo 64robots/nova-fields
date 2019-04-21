@@ -31,6 +31,7 @@
           :errors="errors"
           :with-data-set="indexV"
           :data-set="dataSets[indexF + '-' + f.component]"
+          :row-values="row"
           @data-set-available="data => dataSets[indexF + '-' + f.component] = data"
           @input="forceInputEvent"
         />

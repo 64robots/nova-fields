@@ -15,6 +15,20 @@ Nova.booting((Vue, router) => {
   )
   Vue.component('form-nova-fields-text', require('./components/text/FormField'))
 
+  /** Computed */
+  Vue.component(
+    'index-nova-fields-computed',
+    require('./components/text/IndexField')
+  )
+  Vue.component(
+    'detail-nova-fields-computed',
+    require('./components/text/DetailField')
+  )
+  Vue.component(
+    'form-nova-fields-computed',
+    require('./components/computed/FormField')
+  )
+
   /** Textarea */
   Vue.component(
     'index-nova-fields-textarea',
