@@ -21,7 +21,7 @@
             :data="availableResources"
             trackBy="value"
             searchBy="display"
-            class="mb-3 flex-grow"
+            class="flex-grow mb-2"
           >
             <div
               slot="default"
@@ -82,7 +82,7 @@
           </select>
           <a
             v-if="field.quickCreate && !isModal"
-            class="btn btn-primary p-2 rounded ml-3 cursor-pointer"
+            class="btn btn-primary p-2 rounded ml-3 mb-2 cursor-pointer"
             @click="openModal = true"
           >+</a>
         </div>
