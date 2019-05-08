@@ -35,16 +35,10 @@
 <script>
 import { FormField, HandlesValidationErrors } from 'laravel-nova'
 import R64Field from '../../mixins/R64Field'
+import Computable from '../../mixins/Computable'
 
 export default {
-  mixins: [HandlesValidationErrors, FormField, R64Field],
-
-  props: {
-    rowValues: {
-      type: Array,
-      default: () => []
-    }
-  },
+  mixins: [HandlesValidationErrors, FormField, R64Field, Computable],
 
   computed: {
     /**
@@ -83,28 +77,9 @@ export default {
     }
   },
 
-  watch: {
-    rowValues: {
-      immediate: true,
-      deep: true,
-      handler() {
-        this.fetchComputedValue()
-      }
-    }
-  },
-
   methods: {
-    fetchComputedValue() {
-      Nova.request()
-        .post(
-          `/nova-r64-api/${this.resourceName}/computed/${this.field.attribute}`,
-          {
-            values: this.rowValues
-          }
-        )
-        .then(({ data }) => {
-          this.value = data
-        })
+    computedValueReceived(data) {
+      this.value = data
     }
   }
 }

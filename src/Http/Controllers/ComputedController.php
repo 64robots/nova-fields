@@ -28,6 +28,14 @@ class ComputedController
             return '';
         }
 
-        return call_user_func($field->computeCallback, (object) $request->input('values'));
+        $value = call_user_func($field->computeCallback, (object) $request->input('values'));
+
+        if ($field->computeOptions) {
+            return collect($value ?? [])->map(function ($label, $value) {
+                return is_array($label) ? $label + ['value' => $value] : ['label' => $label, 'value' => $value];
+            })->values()->all();
+        }
+
+        return $value;
     }
 }

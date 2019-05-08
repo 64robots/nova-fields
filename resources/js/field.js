@@ -85,6 +85,20 @@ Nova.booting((Vue, router) => {
     require('./components/select/FormField')
   )
 
+  /** Autocomplete */
+  Vue.component(
+    'index-nova-fields-autocomplete',
+    require('./components/text/IndexField')
+  )
+  Vue.component(
+    'detail-nova-fields-autocomplete',
+    require('./components/text/DetailField')
+  )
+  Vue.component(
+    'form-nova-fields-autocomplete',
+    require('./components/autocomplete/FormField')
+  )
+
   /** File & Image */
   Vue.component(
     'index-nova-fields-file',

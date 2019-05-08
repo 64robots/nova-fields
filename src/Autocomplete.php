@@ -2,7 +2,7 @@
 
 namespace R64\NovaFields;
 
-class Computed extends Text
+class Autocomplete extends Select
 {
     use Computable;
 
@@ -11,5 +11,5 @@ class Computed extends Text
      *
      * @var string
      */
-    public $component = 'nova-fields-computed';
+    public $component = 'nova-fields-autocomplete';
 }
