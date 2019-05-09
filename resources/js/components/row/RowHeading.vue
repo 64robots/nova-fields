@@ -1,5 +1,5 @@
 <template>
-  <div class="flex border-40 border">
+  <div :class="headingClasses">
     <div
       v-for="(field, index) in fields"
       :key="index"
@@ -17,6 +17,10 @@ export default {
     fields: {
       type: Array,
       default: () => []
+    },
+    headingClasses: {
+      type: String,
+      default: 'flex text-80 pt-2'
     },
     baseClasses: {
       type: Object,

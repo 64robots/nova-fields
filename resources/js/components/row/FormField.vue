@@ -8,14 +8,15 @@
   >
     <template slot="field">
       <RowHeading
-        v-if="!field.hideHeading"
+        v-if="shouldShowHeading"
         :fields="fields"
+        :heading-classes="field.headingClasses"
         :base-classes="field.childConfig"
       />
       <div
         v-for="(row, indexV) in values"
         :key="row.row_id"
-        class="flex items-center border-40 border relative"
+        :class="field.rowWrapperClasses"
       >
         <component
           class="remove-bottom-border w-full"
@@ -36,14 +37,13 @@
           @input="forceInputEvent"
         />
         <span
-          class="flex items-center justify-center bg-danger text-white p-2 m-2 w-6 h-6 rounded-full cursor-pointer font-bold"
+          :class="field.deleteButtonClasses"
           @click="rowToRemove = row.row_id"
         >x</span>
       </div>
       <div class="flex justify-end">
         <a
-          :class="{ 'pointer-events-none opacity-50': shouldDisableButton }"
-          class="btn btn-primary p-3 rounded cursor-pointer mt-3"
+          :class="[field.addRowButtonClasses, { 'pointer-events-none opacity-50': shouldDisableButton }]"
           @click="addRow"
         >{{ addRowText }}</a>
       </div>

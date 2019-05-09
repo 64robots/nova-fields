@@ -26,6 +26,34 @@ class Row extends Field
     public $indexClasses = '';
 
     /**
+     * The base heading classes of the field.
+     *
+     * @var string
+     */
+    public $headingClasses = 'flex text-80 py-2';
+
+    /**
+     * The base heading classes of the field.
+     *
+     * @var string
+     */
+    public $deleteButtonClasses = 'flex items-center justify-center bg-danger text-white p-2 m-2 w-6 h-6 rounded-full cursor-pointer font-bold';
+
+    /**
+     * The base classes for the Add Row button.
+     *
+     * @var string
+     */
+    public $addRowButtonClasses = 'btn btn-primary p-3 rounded cursor-pointer mt-3';
+
+    /**
+     * The base classes for the Row wrapper.
+     *
+     * @var string
+     */
+    public $rowWrapperClasses = 'flex items-center border-40 border relative';
+
+    /**
      * The field's component.
      *
      * @var string
@@ -72,6 +100,42 @@ class Row extends Field
     }
 
     /**
+     * Determine if the row heading should be hidden when empty rows.
+     *
+     * @return $this
+     */
+    public function hideHeadingWhenEmpty()
+    {
+        return $this->withMeta(['hideHeadingWhenEmpty' => true]);
+    }
+
+    /**
+     * Sets the classes to be displayed in row heading
+     *
+     * @param  string  $classes
+     * @return $this
+     */
+    public function headingClasses($classes)
+    {
+        $this->headingClasses = $classes;
+
+        return $this;
+    }
+
+    /**
+     * Sets the classes to be displayed in delete row button
+     *
+     * @param  string  $classes
+     * @return $this
+     */
+    public function deleteButtonClasses($classes)
+    {
+        $this->deleteButtonClasses = $classes;
+
+        return $this;
+    }
+
+    /**
      * Set the maximum of rows that can be added.
      *
      * @return $this
@@ -89,6 +153,32 @@ class Row extends Field
     public function addRowText($text)
     {
         return $this->withMeta(['addRowText' => $text]);
+    }
+
+    /**
+     * Sets the classes to be displayed in Add Row button
+     *
+     * @param  string  $classes
+     * @return $this
+     */
+    public function addRowButtonClasses($classes)
+    {
+        $this->addRowButtonClasses = $classes;
+
+        return $this;
+    }
+
+    /**
+     * Sets the classes to be displayed in Row wrapper
+     *
+     * @param  string  $classes
+     * @return $this
+     */
+    public function rowWrapperClasses($classes)
+    {
+        $this->rowWrapperClasses = $classes;
+
+        return $this;
     }
 
     /**
@@ -220,6 +310,10 @@ class Row extends Field
         return array_merge(parent::jsonSerialize(), [
             'sanitizedAttribute' => str_plural(kebab_case($this->attribute)),
             'shouldShow' => $this->shouldBeExpanded(),
+            'headingClasses' => $this->headingClasses,
+            'deleteButtonClasses' => $this->deleteButtonClasses,
+            'addRowButtonClasses' => $this->addRowButtonClasses,
+            'rowWrapperClasses' => $this->rowWrapperClasses,
         ]);
     }
 }

@@ -5,6 +5,20 @@ export default {
     };
   },
 
+  computed: {
+    shouldShowHeading() {
+      if (this.field.hideHeading) {
+        return false
+      }
+
+      if (this.field.hideHeadingWhenEmpty) {
+        return !!this.values.length
+      }
+
+      return true;
+    },
+  },
+
   created() {
     if (!this.field.value) return;
 

@@ -73,11 +73,18 @@ export default {
       this.$emit('input', this.value)
     },
 
-    computedValueReceived(data) {
+    computedOptionsReceived(data) {
       if (data && JSON.stringify(data) !== JSON.stringify(this.field.options)) {
         this.selectedOption = null
         this.$emit('input', null)
         this.field.options = data
+      }
+    },
+
+    computedValueReceived(data) {
+      const option = this.field.options.find(option => option.value === data)
+      if (option) {
+        this.selectedOption = option
       }
     }
   }

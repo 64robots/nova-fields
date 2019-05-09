@@ -3,6 +3,7 @@
 namespace R64\NovaFields;
 
 use Config;
+use Illuminate\Support\Str;
 
 trait Configurable
 {
@@ -69,19 +70,6 @@ trait Configurable
     }
 
     /**
-     * Add classes to the base container classes.
-     *
-     * @param  string  $classes
-     * @return $this
-     */
-    public function addWrapperClasses($classes)
-    {
-        $this->wrapperClasses = "{$this->wrapperClasses} {$classes}";
-
-        return $this;
-    }
-
-    /**
      * Set the index classes that should be applied instead of default ones.
      *
      * @param  string  $classes
@@ -90,19 +78,6 @@ trait Configurable
     public function indexClasses($classes)
     {
         $this->indexClasses = $classes;
-
-        return $this;
-    }
-
-    /**
-     * Add classes to the base index classes.
-     *
-     * @param  string  $classes
-     * @return $this
-     */
-    public function addIndexClasses($classes)
-    {
-        $this->indexClasses = "{$this->indexClasses} {$classes}";
 
         return $this;
     }
@@ -121,19 +96,6 @@ trait Configurable
     }
 
     /**
-     * Add classes to the base input classes.
-     *
-     * @param  string  $classes
-     * @return $this
-     */
-    public function addInputClasses($classes)
-    {
-        $this->inputClasses = "{$this->inputClasses} {$classes}";
-
-        return $this;
-    }
-
-    /**
      * Set the field wrapper classes that should be applied instead of default ones.
      *
      * @param  string  $classes
@@ -142,19 +104,6 @@ trait Configurable
     public function fieldClasses($classes)
     {
         $this->fieldClasses = $classes;
-
-        return $this;
-    }
-
-    /**
-     * Add classes to the base field classes.
-     *
-     * @param  string  $classes
-     * @return $this
-     */
-    public function addFieldClasses($classes)
-    {
-        $this->fieldClasses = "{$this->fieldClasses} {$classes}";
 
         return $this;
     }
@@ -173,19 +122,6 @@ trait Configurable
     }
 
     /**
-     * Add classes to the base field classes for detail view.
-     *
-     * @param  string  $classes
-     * @return $this
-     */
-    public function addPanelFieldClasses($classes)
-    {
-        $this->panelFieldClasses = "{$this->panelFieldClasses} {$classes}";
-
-        return $this;
-    }
-
-    /**
      * Set the label wrapper classes that should be applied instead of default ones.
      *
      * @param  string  $classes
@@ -194,19 +130,6 @@ trait Configurable
     public function labelClasses($classes)
     {
         $this->labelClasses = $classes;
-
-        return $this;
-    }
-
-    /**
-     * Add classes to the base label wrapper classes.
-     *
-     * @param  string  $classes
-     * @return $this
-     */
-    public function addLabelClasses($classes)
-    {
-        $this->labelClasses = "{$this->labelClasses} {$classes}";
 
         return $this;
     }
@@ -238,19 +161,6 @@ trait Configurable
     }
 
     /**
-     * Add classes to the base label classes for detail view.
-     *
-     * @param  string  $classes
-     * @return $this
-     */
-    public function addPanelLabelClasses($classes)
-    {
-        $this->panelLabelClasses = "{$this->panelLabelClasses} {$classes}";
-
-        return $this;
-    }
-
-    /**
      * Set the excerpt classes that should be applied instead of default ones.
      *
      * @param  string  $classes
@@ -259,19 +169,6 @@ trait Configurable
     public function excerptClasses($classes)
     {
         $this->excerptClasses = $classes;
-
-        return $this;
-    }
-
-    /**
-     * Add classes to the base excerpt classes.
-     *
-     * @param  string  $classes
-     * @return $this
-     */
-    public function addExcerptClasses($classes)
-    {
-        $this->excerptClasses = "{$this->excerptClasses} {$classes}";
 
         return $this;
     }
@@ -461,6 +358,40 @@ trait Configurable
             $path = '';
         }
         return $this->withMeta(['id' => $id, 'nova_path' => $path]);
+    }
+
+    /**
+     * Dynamically add or remove classes.
+     *
+     * @param  string  $method
+     * @param  array  $parameters
+     * @return $this
+     */
+    public function __call($method, $parameters)
+    {
+        preg_match('/(add|remove)(.+)/', $method, $matches);
+
+        if (count($matches) != 3) {
+            return $this;
+        }
+
+        $action = $matches[1];
+        $property =  Str::camel($matches[2]);
+        $classes = $parameters[0];
+
+        if(!property_exists($this, $property)) {
+            return $this;
+        }
+
+        if ($action === 'add') {
+            $this->$property = "{$this->$property} {$classes}";
+        }
+
+        if ($action === 'remove') {
+            $this->$property = str_replace(preg_split('/[\s,]+/', $classes), '', $this->$property);
+        }
+
+        return $this;
     }
 
     /**

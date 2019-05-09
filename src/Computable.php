@@ -12,11 +12,11 @@ trait Computable
     public $computeCallback;
 
     /**
-     * Determines if return a collection of options for a select field.
+     * The callback that computes the select options.
      *
-     * @var boolean
+     * @var string
      */
-    public $computeOptions = false;
+    public $computeOptionsCallback;
 
     /**
      * Set the compute callback.
@@ -27,7 +27,7 @@ trait Computable
     {
         $this->computeCallback = $callback;
 
-        return $this;
+        return $this->withMeta(['compute' => true]);
     }
 
     /**
@@ -37,9 +37,8 @@ trait Computable
      */
     public function computeOptionsUsing($callback)
     {
-        $this->computeOptions = true;
-        $this->computeCallback = $callback;
+        $this->computeOptionsCallback = $callback;
 
-        return $this;
+        return $this->withMeta(['computeOptions' => true]);
     }
 }

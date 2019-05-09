@@ -24,13 +24,15 @@ class ComputedController
         $fields = collect($rowField->fields);
         $field = $fields->firstWhere('attribute', $request->field);
 
-        if (!property_exists($field, 'computeCallback') || !$field->computeCallback) {
-            return '';
+        $cb = $request->input('computeOptions') ? $field->computeOptionsCallback : $field->computeCallback;
+
+        if (!is_callable($cb)) {
+            return;
         }
 
-        $value = call_user_func($field->computeCallback, (object) $request->input('values'));
+        $value = call_user_func($cb, (object) $request->input('values'));
 
-        if ($field->computeOptions) {
+        if ($request->input('computeOptions')) {
             return collect($value ?? [])->map(function ($label, $value) {
                 return is_array($label) ? $label + ['value' => $value] : ['label' => $label, 'value' => $value];
             })->values()->all();

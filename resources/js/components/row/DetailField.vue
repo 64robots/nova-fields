@@ -15,7 +15,7 @@
     >
       <template slot="content">
         <RowHeading
-          v-if="!field.hideHeading"
+          v-if="shouldShowHeading"
           :fields="field.fields"
           :base-classes="field.childConfig"
         />
@@ -48,6 +48,6 @@ export default {
 
   components: { RowHeading, DetailFieldItem },
 
-  props: ['resource', 'resourceName', 'resourceId', 'field']
+  props: ['resource', 'resourceName', 'resourceId', 'field'],
 };
 </script>
