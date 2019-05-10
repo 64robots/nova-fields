@@ -25,6 +25,7 @@
           v-for="(f, indexF) in fields"
           v-model="row[f.attribute]"
           :is="`form-${f.component}`"
+          :parent-attribute="field.attribute"
           :resource-name="resourceForField(f)"
           :resource-id="resourceId"
           :field="f"

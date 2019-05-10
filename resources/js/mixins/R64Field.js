@@ -1,5 +1,10 @@
 export default {
   props: {
+    parentAttribute: {
+      type: String,
+      default: ''
+    },
+
     baseClasses: {
       type: Object,
       default: () => ({

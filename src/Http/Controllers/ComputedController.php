@@ -15,9 +15,10 @@ class ComputedController
     public function index(NovaRequest $request)
     {
         $fields = $request->newResource()->availableFields($request);
-        $rowField = $fields->first(function($field) {
-            return $field->component === 'nova-fields-row' ||
-                   $field->component === 'nova-fields-json';
+
+        $rowField = $fields->first(function($field) use ($request) {
+            return ($field->component === 'nova-fields-row' || $field->component === 'nova-fields-json' ) &&
+                    $field->attribute === $request->input('parentAttribute');
         });
 
         if (!$rowField) {

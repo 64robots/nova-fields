@@ -40,6 +40,7 @@ export default {
         .post(
           `/nova-r64-api/${this.resourceName}/computed/${this.field.attribute}`,
           {
+            parentAttribute: this.parentAttribute,
             values: this.rowValues,
             computeOptions
           }

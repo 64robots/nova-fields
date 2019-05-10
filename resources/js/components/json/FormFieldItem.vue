@@ -6,6 +6,7 @@
     :resource-name="resourceName"
     :resource-id="resourceId"
     :field="field"
+    :parent-attribute="parent.attribute"
     :base-classes="baseClasses"
     :row-values="values"
   />
