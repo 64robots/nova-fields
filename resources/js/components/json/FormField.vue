@@ -1,38 +1,38 @@
 <template>
   <div>
     <r64-default-field
-            v-if="! field.flatten"
-            :field="field"
-            :hide-label="field.hideLabelInForms"
-            :field-classes="field.fieldClasses"
-            :wrapper-classes="field.wrapperClasses"
-            :label-classes="field.labelClasses"
+      v-if="!field.flatten"
+      :field="field"
+      :hide-label="field.hideLabelInForms"
+      :field-classes="field.fieldClasses"
+      :wrapper-classes="field.wrapperClasses"
+      :label-classes="field.labelClasses"
     >
       <template slot="field">
         <FormFieldItem
-                :class="{'remove-bottom-border': index === fields.length - 1}"
-                :key="index"
-                :ref="f.attribute"
-                v-for="(f, index) in fields"
-                v-bind="{ errors, resourceName, resourceId }"
-                :parent="field"
-                :field="f"
-                :base-classes="field.childConfig"
-                :current-value="value"
+          :class="{'remove-bottom-border': index === fields.length - 1}"
+          :key="index"
+          :ref="f.attribute"
+          v-for="(f, index) in fields"
+          v-bind="{ errors, resourceName, resourceId }"
+          :parent="field"
+          :field="f"
+          :base-classes="field.childConfig"
+          :current-value="value"
         />
       </template>
     </r64-default-field>
     <template v-else>
       <FormFieldItem
-              :class="{'remove-bottom-border': index === fields.length - 1}"
-              :key="index"
-              :ref="f.attribute"
-              v-for="(f, index) in fields"
-              v-bind="{ errors, resourceName, resourceId }"
-              :parent="field"
-              :field="f"
-              :base-classes="field.childConfig"
-              :current-value="value"
+        :class="{'remove-bottom-border': index === fields.length - 1}"
+        :key="index"
+        :ref="f.attribute"
+        v-for="(f, index) in fields"
+        v-bind="{ errors, resourceName, resourceId }"
+        :parent="field"
+        :field="f"
+        :base-classes="field.childConfig"
+        :current-value="value"
       />
     </template>
   </div>

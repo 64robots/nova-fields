@@ -11,27 +11,47 @@ export default {
       immediate: true,
       deep: true,
       handler() {
-        this.fetchComputedValue()
+        this.fetchComputedValues()
       }
     }
   },
 
   methods: {
-    fetchComputedValue() {
-      Nova.request()
+    fetchComputedValues() {
+      if (this.field.compute) {
+        this.getComputedValue()
+          .then(({ data }) => {
+            this.computedValueReceived(data)
+          })
+      }
+
+      if (this.field.computeOptions) {
+        const computeOptions = true
+        this.getComputedValue(computeOptions)
+          .then(({ data }) => {
+            this.computedOptionsReceived(data)
+          })
+      }
+
+    },
+
+    getComputedValue(computeOptions = false) {
+      return Nova.request()
         .post(
           `/nova-r64-api/${this.resourceName}/computed/${this.field.attribute}`,
           {
-            values: this.rowValues
+            values: this.rowValues,
+            computeOptions
           }
         )
-        .then(({ data }) => {
-          this.computedValueReceived(data)
-        })
     },
 
     computedValueReceived(data) {
       console.warn('You should implement "computedValueReceived" method in your Computable component', data)
+    },
+
+    computedOptionsReceived(data) {
+      console.warn('You should implement "computedOptionsReceived" method in your Computable component', data)
     }
   }
 }

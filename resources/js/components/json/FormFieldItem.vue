@@ -7,6 +7,7 @@
     :resource-id="resourceId"
     :field="field"
     :base-classes="baseClasses"
+    :row-values="values"
   />
 </template>
 <script>
@@ -26,26 +27,29 @@ export default {
   ],
 
   computed: {
+    values() {
+      return JSON.parse(this.currentValue || '{}')
+    },
+
     shouldBeShown() {
-      const { onlyWhen } = this.field;
+      const { onlyWhen } = this.field
       if (!onlyWhen) {
-        return true;
+        return true
       }
 
-      const keys = Object.keys(onlyWhen);
+      const keys = Object.keys(onlyWhen)
       if (!keys.length) {
-        return true;
+        return true
       }
 
-      const lookThisField = keys[0];
-      const validValues = onlyWhen[lookThisField];
-      const values = JSON.parse(this.currentValue || '{}');
+      const lookThisField = keys[0]
+      const validValues = onlyWhen[lookThisField]
 
-      return validValues.includes(values[lookThisField]);
+      return validValues.includes(this.values[lookThisField])
     },
 
     fieldAttribute() {
-      return `${this.parent.attribute}.${this.field.attribute}`;
+      return `${this.parent.attribute}.${this.field.attribute}`
     },
 
     itemErrors() {
@@ -56,8 +60,8 @@ export default {
         })
       }
 
-      return errors;
+      return errors
     },
-  }
+  },
 };
 </script>
