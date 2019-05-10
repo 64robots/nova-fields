@@ -121,6 +121,10 @@ export default {
       let fileName = path.match(/[^\\/]*$/)[0]
       this.fileName = fileName
       this.file = this.$refs.fileField.files[0]
+      this.$emit('input', {
+        file: this.file,
+        name: this.fileName,
+      })
     },
 
     /**

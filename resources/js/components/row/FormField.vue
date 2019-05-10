@@ -221,7 +221,15 @@ export default {
     fill(formData) {
       this.values.forEach((row, index) => {
         Object.keys(row).forEach(key => {
-          formData.append(`${this.field.attribute}[${index}][${key}]`, row[key])
+          const value = row[key]
+          const formDataName = `${this.field.attribute}[${index}][${key}]`
+          const formDataValue = typeof  value === 'object' ? value.file : value
+          const formDataFilename = typeof value === 'object' ? value.name : null
+          if (formDataFilename) {
+            formData.append(formDataName, formDataValue, formDataFilename)
+          } else {
+            formData.append(formDataName, formDataValue)
+          }
         })
       })
     },
