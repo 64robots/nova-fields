@@ -15,7 +15,10 @@ class ComputedController
     public function index(NovaRequest $request)
     {
         $fields = $request->newResource()->availableFields($request);
-        $rowField = $fields->firstWhere('component', 'nova-fields-row');
+        $rowField = $fields->first(function($field) {
+            return $field->component === 'nova-fields-row' ||
+                   $field->component === 'nova-fields-json';
+        });
 
         if (!$rowField) {
             return '';
@@ -30,7 +33,7 @@ class ComputedController
             return;
         }
 
-        $value = call_user_func($cb, (object) $request->input('values'));
+        $value = call_user_func($cb, new ComputedValues($request->input('values')));
 
         if ($request->input('computeOptions')) {
             return collect($value ?? [])->map(function ($label, $value) {
