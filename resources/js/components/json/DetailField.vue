@@ -8,37 +8,54 @@
       :field-classes="field.panelFieldClasses"
     >
       <div slot="value">
-        <component
-          :class="{'remove-bottom-border': index == fields.length - 1}"
-          :key="index"
-          :ref="f.attribute"
-          v-for="(f, index) in fields"
-          :is="`detail-${f.component}`"
-          :field="f"
-          :base-classes="f.childConfig"
+        <DetailFieldPanel
+          v-for="panel in panels"
+          :key="panel.name"
+          :panel="panel"
+          :panel-title-class="field.panelTitleClasses"
         />
       </div>
     </r64-panel-item>
     <template v-else>
-      <component
-              :class="{'remove-bottom-border': index == fields.length - 1}"
-              :key="index"
-              :ref="f.attribute"
-              v-for="(f, index) in fields"
-              :is="`detail-${f.component}`"
-              :field="f"
-              :base-classes="f.childConfig"
+      <DetailFieldPanel
+        v-for="panel in panels"
+        :key="panel.name"
+        :panel="panel"
+        :panel-title-class="field.panelTitleClasses"
       />
     </template>
   </div>
 </template>
 
 <script>
+import DetailFieldPanel from './DetailFieldPanel'
 import HasChildFields from '../../mixins/HasChildFields';
 
 export default {
+  components: { DetailFieldPanel },
+
   mixins: [HasChildFields],
 
-  props: ['resource', 'resourceName', 'resourceId', 'field']
+  props: ['resource', 'resourceName', 'resourceId', 'field'],
+
+  computed: {
+    panels() {
+      const panels = []
+      this.fields.forEach(field => {
+        const panel = panels.find(p => p.name === field.panel)
+
+        if (panel) {
+          panel.fields.push(field)
+        } else {
+          panels.push({
+            name: field.panel,
+            fields: [field]
+          })
+        }
+      })
+
+      return panels
+    }
+  }
 };
 </script>

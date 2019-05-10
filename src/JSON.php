@@ -2,6 +2,7 @@
 
 namespace R64\NovaFields;
 
+use Laravel\Nova\Panel;
 use Laravel\Nova\Fields\Field;
 use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Contracts\Resolvable;
@@ -24,6 +25,13 @@ class JSON extends Field
      * @var string
      */
     public $indexClasses = 'flex';
+
+    /**
+     * The base index classes of the panels title.
+     *
+     * @var string
+     */
+    public $panelTitleClasses = 'text-90 font-normal text-2xl flex-no-shrink py-4';
 
     /**
      * The field's component.
@@ -59,7 +67,31 @@ class JSON extends Field
     {
         parent::__construct($name, $attribute, $resolveCallback);
 
-        $this->fields = collect($fields);
+        $this->fields = collect();
+
+        foreach($fields as $field) {
+            if($field instanceOf Panel){
+                collect($field->data)->each(function($f) {
+                    $this->fields->push($f);
+                });
+            } else {
+                $this->fields->push($field);
+            }
+        }
+    }
+
+
+    /**
+     * Set the panel title classes that should be applied instead of default ones.
+     *
+     * @param  string  $classes
+     * @return $this
+     */
+    public function panelTitleClasses($classes)
+    {
+        $this->panelTitleClasses = $classes;
+
+        return $this;
     }
 
     /**
@@ -219,6 +251,18 @@ class JSON extends Field
     {
         return $this->withMeta([
             'flatten' => $value
+        ]);
+    }
+
+    /**
+     * Prepare the element for JSON serialization.
+     *
+     * @return array
+     */
+    public function jsonSerialize()
+    {
+        return array_merge(parent::jsonSerialize(), [
+            'panelTitleClasses' => $this->panelTitleClasses,
         ]);
     }
 }
