@@ -1,0 +1,4 @@
+- excerptClasses only in textarea and row
+- indexLinkClasses and showLinkInIndex only available in text currently
+- only when support for Row and Container
+- Review if every shared method can be applied with childConfig

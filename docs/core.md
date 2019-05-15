@@ -1,0 +1,24 @@
+# Nova Core Fields
+
+- [x] ID
+- [x] Text
+- [x] Number
+- [x] Textarea
+- [x] Select
+- [x] Password
+- [x] Boolean
+- [x] Trix
+- [x] File
+- [x] Image
+- [x] BelongsTo
+- [x] Currency
+- [ ] Status
+- [ ] Avatar
+- [ ] Gravatar
+- [ ] Code
+- [ ] Country
+- [ ] Date
+- [ ] DateTime
+- [ ] Markdown
+- [ ] Place
+- [ ] Timezone
