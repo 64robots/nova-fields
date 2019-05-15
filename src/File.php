@@ -30,6 +30,16 @@ class File extends NovaFile
     public $component = 'nova-fields-file';
 
     /**
+     * Whether the file can be dropped on the input.
+     *
+     * @return $this
+     */
+    public function draggable()
+    {
+        return $this->withMeta(['draggable' => true]);
+    }
+
+    /**
      * Get additional meta information to merge with the element payload.
      *
      * @return array

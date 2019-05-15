@@ -60,21 +60,48 @@
       </div>
 
       <span class="form-file mr-4">
-        <input
-          ref="fileField"
-          :dusk="field.attribute"
-          :class="inputClasses"
-          type="file"
-          :id="idAttr"
-          name="name"
-          @change="fileChange"
-        />
-        <label :for="labelFor" class="form-file-btn btn btn-default btn-primary">
-          {{__('Choose File')}}
-        </label>
+        <el-upload
+          v-if="field.draggable"
+          drag
+          action
+          :auto-upload="false"
+          :on-change="fileChange"
+          :show-file-list="false"
+        >
+          <div class="p-8 text-80">
+            <div v-if="fileName">
+              <span>{{ fileName }}</span>
+              <button
+                class="appearance-none cursor-pointer text-70 hover:text-primary mt-2 ml-3 outline-none"
+                title="Delete"
+                @click.stop.prevent="removeFile"
+              >
+                  <icon />
+              </button>
+            </div>
+            <div v-else>{{__('Click here or drop the file to upload')}}</div>
+          </div>
+        </el-upload>
+        <template v-else>
+          <input
+            ref="fileField"
+            :dusk="field.attribute"
+            :class="inputClasses"
+            type="file"
+            :id="idAttr"
+            name="name"
+            @change="fileChange"
+          />
+          <label :for="labelFor" class="form-file-btn btn btn-default btn-primary">
+            {{__('Choose File')}}
+          </label>
+        </template>
       </span>
 
-      <span class="text-gray-50">
+      <span
+        v-if="!field.draggable"
+        class="text-gray-50"
+      >
         {{ currentLabel }}
       </span>
 
@@ -87,6 +114,7 @@
 
 <script>
 import { FormField, HandlesValidationErrors, Errors } from 'laravel-nova'
+import { Upload } from 'element-ui'
 import ImageLoader from '../../nova/ImageLoader'
 import DeleteButton from '../../nova/DeleteButton'
 import R64Field from '../../mixins/R64Field'
@@ -94,7 +122,7 @@ import R64Field from '../../mixins/R64Field'
 export default {
   mixins: [HandlesValidationErrors, FormField, R64Field],
 
-  components: { DeleteButton, ImageLoader },
+  components: { DeleteButton, ImageLoader, 'el-upload': Upload },
 
   data: () => ({
     file: null,
@@ -117,10 +145,22 @@ export default {
      * Responsd to the file change
      */
     fileChange(event) {
-      let path = event.target.value
-      let fileName = path.match(/[^\\/]*$/)[0]
-      this.fileName = fileName
-      this.file = this.$refs.fileField.files[0]
+
+      // If is a el-upload event
+      if (event.raw) {
+        this.fileName = event.name
+        this.file = event.raw
+      } else {
+        let path = event.target.value
+        let fileName = path.match(/[^\\/]*$/)[0]
+        this.fileName = fileName
+        this.file = this.$refs.fileField.files[0]
+      }
+
+      this.emitInputEvent()
+    },
+
+    emitInputEvent() {
       this.$emit('input', {
         file: this.file,
         name: this.fileName,
@@ -145,6 +185,13 @@ export default {
      * Remove the linked file from storage
      */
     async removeFile() {
+      if (this.parentAttribute) {
+        // this field is a subfield of Row or Json
+        this.fileName = ''
+        this.file = null
+        return this.emitInputEvent()
+      }
+
       this.uploadErrors = new Errors()
 
       const {
@@ -205,7 +252,8 @@ export default {
      * @return {[type]} [description]
      */
     labelFor() {
-      return `file-${this.field.attribute}`
+      const hash = Math.random().toString(36).substring(7);
+      return `file-${this.field.attribute}-${hash}`
     },
 
     /**

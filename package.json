@@ -10,9 +10,11 @@
         "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
     },
     "devDependencies": {
+        "babel-plugin-component": "^1.1.1",
         "cross-env": "^5.0.0",
+        "element-ui": "^2.8.2",
         "form-backend-validation": "^2.3.3",
-        "laravel-mix": "^1.0",
+        "laravel-mix": "^2.1.14",
         "laravel-nova": "^1.0",
         "trix": "^0.12.1",
         "vue-clickaway": "^2.2.2",
