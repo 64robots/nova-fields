@@ -40,6 +40,16 @@ class File extends NovaFile
     }
 
     /**
+     * Whether the file can be previewed before upload.
+     *
+     * @return $this
+     */
+    public function previewBeforeUpload()
+    {
+        return $this->withMeta(['previewBeforeUpload' => true]);
+    }
+
+    /**
      * Get additional meta information to merge with the element payload.
      *
      * @return array

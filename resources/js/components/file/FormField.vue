@@ -69,14 +69,27 @@
           :show-file-list="false"
         >
           <div class="p-8 text-80">
-            <div v-if="fileName">
+            <div
+              v-if="fileName"
+              class="flex items-center"
+            >
               <span>{{ fileName }}</span>
+
               <button
-                class="appearance-none cursor-pointer text-70 hover:text-primary mt-2 ml-3 outline-none"
+                v-if="field.previewBeforeUpload"
+                class="appearance-none cursor-pointer text-70 hover:text-primary ml-3 pt-2"
+                title="Preview"
+                @click.stop.prevent="onPreviewFile"
+              >
+                  <icon type="view" class="w-8" />
+              </button>
+
+              <button
+                class="appearance-none cursor-pointer text-70 hover:text-primary ml-3"
                 title="Delete"
                 @click.stop.prevent="removeFile"
               >
-                  <icon />
+                <icon type="delete" />
               </button>
             </div>
             <div v-else>{{__('Click here or drop the file to upload')}}</div>
@@ -108,6 +121,17 @@
       <p v-if="hasError" class="text-xs mt-2 text-danger">
         {{ firstError }}
       </p>
+
+      <portal to="modals">
+        <transition name="fade">
+          <modal
+            v-if="showPreview"
+            @modal-close="showPreview = false"
+          >
+            <img :src="previewFile">
+          </modal>
+        </transition>
+      </portal>
     </template>
   </r64-default-field>
 </template>
@@ -131,7 +155,9 @@ export default {
     removeModalOpen: false,
     missing: false,
     deleted: false,
-    uploadErrors: new Errors()
+    uploadErrors: new Errors(),
+    showPreview: false,
+    previewFile: null
   }),
 
   mounted() {
@@ -141,11 +167,17 @@ export default {
   },
 
   methods: {
+    onPreviewFile() {
+      if (this.isImage) {
+        this.showPreview = true
+        return
+      }
+      window.open(this.previewFile, '_blank')
+    },
     /**
      * Responsd to the file change
      */
     fileChange(event) {
-
       // If is a el-upload event
       if (event.raw) {
         this.fileName = event.name
@@ -156,6 +188,8 @@ export default {
         this.fileName = fileName
         this.file = this.$refs.fileField.files[0]
       }
+
+      this.previewFile = URL.createObjectURL(this.file)
 
       this.emitInputEvent()
     },
@@ -223,6 +257,18 @@ export default {
   },
 
   computed: {
+    isImage() {
+      if (!this.file) {
+        return false
+      }
+
+      if (this.file.type.startsWith('image/')) {
+        return true
+      }
+
+      return false
+    },
+
     hasError() {
       return this.uploadErrors.has(this.fieldAttribute)
     },
