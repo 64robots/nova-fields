@@ -41,6 +41,7 @@ export default {
           `/nova-r64-api/${this.resourceName}/computed/${this.field.attribute}`,
           {
             parentAttribute: this.parentAttribute,
+            resourceId: this.resourceId,
             values: this.rowValues,
             computeOptions
           }

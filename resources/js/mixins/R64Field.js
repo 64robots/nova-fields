@@ -1,5 +1,10 @@
 export default {
   props: {
+    resourceId: {
+      type: [String, Number],
+      default: null
+    },
+
     parentAttribute: {
       type: String,
       default: ''
