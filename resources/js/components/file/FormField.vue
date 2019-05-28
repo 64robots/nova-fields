@@ -20,9 +20,9 @@
           />
         </template>
 
-        <template v-if="field.value && !field.thumbnailUrl">
+        <template v-if="fileValue && !field.thumbnailUrl">
           <card class="flex item-center relative border border-lg border-50 overflow-hidden p-4">
-            {{ field.value }}
+            {{ fileValue }}
 
             <DeleteButton
               :dusk="field.attribute + '-internal-delete-link'"
@@ -160,6 +160,12 @@ export default {
     previewFile: null
   }),
 
+  watch: {
+    value(value) {
+      console.log(value)
+    }
+  },
+
   mounted() {
     this.field.fill = formData => {
       formData.append(this.field.attribute, this.file, this.fileName)
@@ -174,6 +180,7 @@ export default {
       }
       window.open(this.previewFile, '_blank')
     },
+
     /**
      * Responsd to the file change
      */
@@ -223,6 +230,8 @@ export default {
         // this field is a subfield of Row or Json
         this.fileName = ''
         this.file = null
+        this.value = null
+        this.closeRemoveModal()
         return this.emitInputEvent()
       }
 
@@ -257,6 +266,10 @@ export default {
   },
 
   computed: {
+    fileValue() {
+      return this.field.value || this.value
+    },
+
     isImage() {
       if (!this.file) {
         return false
@@ -307,7 +320,7 @@ export default {
      */
     hasValue() {
       return (
-        Boolean(this.field.value || this.field.thumbnailUrl) &&
+        Boolean(this.fileValue || this.field.thumbnailUrl) &&
         !Boolean(this.deleted) &&
         !Boolean(this.missing)
       )
