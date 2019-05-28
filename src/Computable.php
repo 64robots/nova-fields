@@ -41,4 +41,14 @@ trait Computable
 
         return $this->withMeta(['computeOptions' => true]);
     }
+
+    /**
+     * Whether disable computation on created hook.
+     *
+     * @var $this
+     */
+    public function disableComputeOnCreated()
+    {
+        return $this->withMeta(['disableComputeOnCreated' => true]);
+    }
 }

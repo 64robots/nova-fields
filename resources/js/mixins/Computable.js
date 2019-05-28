@@ -2,15 +2,18 @@ export default {
   props: {
     rowValues: {
       type: Array,
-      default: () => []
+      default: () => ({})
     }
   },
 
   watch: {
     rowValues: {
-      immediate: true,
       deep: true,
-      handler() {
+      handler(newValue, oldValue) {
+        const isFirstRender = Object.entries(oldValue).length === 0 && oldValue.constructor === Object
+        if (this.field.disableComputeOnCreated && isFirstRender) {
+          return
+        }
         this.fetchComputedValues()
       }
     }
