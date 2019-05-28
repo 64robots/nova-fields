@@ -9,7 +9,7 @@
   >
     <template slot="field">
       <Multiselect
-        v-model="selectedOption"
+        :value="selectedValue"
         track-by="value"
         label="label"
         :group-select="false"
@@ -38,12 +38,6 @@ export default {
 
   mixins: [HandlesValidationErrors, FormField, R64Field, Computable],
 
-  data() {
-    return {
-      selectedOption: null
-    }
-  },
-
   computed: {
 
     /**
@@ -53,6 +47,20 @@ export default {
       return this.field.placeholder === undefined
         ? this.__('Choose an option')
         : this.field.placeholder
+    },
+
+    selectedValue() {
+      if (!this.field.options) {
+        return null
+      }
+
+      return this.field.options.find(o => o.value == this.value)
+    },
+  },
+
+  watch: {
+    value(value) {
+      this.$emit('input', this.value)
     }
   },
 
@@ -70,22 +78,17 @@ export default {
 
     selectValue(obj) {
       this.value = obj ? obj.value : null
-      this.$emit('input', this.value)
     },
 
     computedOptionsReceived(data) {
       if (data && JSON.stringify(data) !== JSON.stringify(this.field.options)) {
-        this.selectedOption = null
-        this.$emit('input', null)
+        this.value = null
         this.field.options = data
       }
     },
 
     computedValueReceived(data) {
-      const option = this.field.options.find(option => option.value === data)
-      if (option) {
-        this.selectedOption = option
-      }
+      this.value = data
     }
   }
 }
