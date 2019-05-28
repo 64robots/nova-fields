@@ -160,12 +160,6 @@ export default {
     previewFile: null
   }),
 
-  watch: {
-    value(value) {
-      console.log(value)
-    }
-  },
-
   mounted() {
     this.field.fill = formData => {
       formData.append(this.field.attribute, this.file, this.fileName)
