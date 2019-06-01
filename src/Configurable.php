@@ -428,6 +428,7 @@ trait Configurable
             'fieldClasses' => $this->fieldClasses,
             'labelClasses' => $this->labelClasses,
             'panelLabelClasses' => $this->panelLabelClasses,
+            'panelFieldClasses' => $this->panelFieldClasses,
             'panelWrapperClasses' => $this->panelWrapperClasses,
             'indexLinkClasses' => $this->indexLinkClasses,
             'excerptClasses' => $this->excerptClasses,
