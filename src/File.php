@@ -64,6 +64,7 @@ class File extends NovaFile
             'panelFieldClasses' => $this->panelFieldClasses,
             'labelClasses' => $this->labelClasses,
             'panelLabelClasses' => $this->panelLabelClasses,
+            'panelWrapperClasses' => $this->panelWrapperClasses,
             'excerptClasses' => $this->excerptClasses,
             'thumbnailUrl' => $this->resolveThumbnailUrl(),
             'previewUrl' => call_user_func($this->previewUrlCallback),

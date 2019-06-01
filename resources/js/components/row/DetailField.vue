@@ -4,6 +4,7 @@
     :hide-label="hideLabelInDetail"
     :label-classes="panelLabelClasses"
     :field-classes="panelFieldClasses"
+    :wrapper-classes="panelWrapperClasses"
   >
     <r64-excerpt
       slot="value"
@@ -22,7 +23,7 @@
         <div
           v-for="row in values"
           :key="row.row_id"
-          class="flex border-40 border"
+          :class="field.itemWrapperClasses"
         >
           <DetailFieldItem
             v-for="f in field.fields"
