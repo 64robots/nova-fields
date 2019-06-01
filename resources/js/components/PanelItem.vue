@@ -35,22 +35,32 @@ export default {
       type: Object,
       required: true
     },
+
     fieldName: {
       type: String,
       default: ''
     },
+
     labelClasses: {
       type: String,
       default: 'w-1/4 py-4'
     },
+
     fieldClasses: {
       type: String,
       default: 'w-3/4 py-4'
     },
+
+    wrapperClasses: {
+      type: String,
+      default: 'flex border-b border-40'
+    },
+
     hideLabel: {
       type: Boolean,
       default: false
     },
+
     hideField: {
       type: Boolean,
       default: false
@@ -62,7 +72,7 @@ export default {
     },
 
     itemClasses() {
-      return this.hideField ? 'hidden' : 'flex border-b border-40'
+      return this.hideField ? 'hidden' : this.wrapperClasses
     }
   }
 }

@@ -47,16 +47,20 @@ export default {
       return this.baseClasses.fieldClasses || this.field.fieldClasses
     },
 
-    panelFieldClasses() {
-      return this.baseClasses.panelFieldClasses || this.field.panelFieldClasses
-    },
-
     labelClasses() {
       return this.baseClasses.labelClasses || this.field.labelClasses
     },
 
     panelLabelClasses() {
       return this.baseClasses.panelLabelClasses || this.field.panelLabelClasses
+    },
+
+    panelFieldClasses() {
+      return this.baseClasses.panelFieldClasses || this.field.panelFieldClasses
+    },
+
+    panelWrapperClasses() {
+      return this.baseClasses.panelWrapperClasses || this.field.panelWrapperClasses
     },
 
     excerptClasses() {

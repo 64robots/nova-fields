@@ -22,13 +22,6 @@ trait Configurable
     public $fieldClasses = 'w-1/2 px-8 py-6';
 
     /**
-     * The base field classes for the detail view.
-     *
-     * @var string
-     */
-    public $panelFieldClasses = 'w-3/4 py-4';
-
-    /**
      * The base wrapper classes for label.
      *
      * @var string
@@ -41,6 +34,20 @@ trait Configurable
      * @var string
      */
     public $panelLabelClasses = 'w-1/4 py-4';
+
+    /**
+     * The base field classes for the detail view.
+     *
+     * @var string
+     */
+    public $panelFieldClasses = 'w-3/4 py-4';
+
+    /**
+     * The base wrapper classes for the detail view.
+     *
+     * @var string
+     */
+    public $panelWrapperClasses = 'flex border-b border-40';
 
     /**
      * The base label classes for the detail view.
@@ -109,19 +116,6 @@ trait Configurable
     }
 
     /**
-     * Set the field wrapper classes in detail panel that should be applied instead of default ones.
-     *
-     * @param  string  $classes
-     * @return $this
-     */
-    public function panelFieldClasses($classes)
-    {
-        $this->panelFieldClasses = $classes;
-
-        return $this;
-    }
-
-    /**
      * Set the label wrapper classes that should be applied instead of default ones.
      *
      * @param  string  $classes
@@ -143,6 +137,32 @@ trait Configurable
     public function panelLabelClasses($classes)
     {
         $this->panelLabelClasses = $classes;
+
+        return $this;
+    }
+
+    /**
+     * Set the field classes in detail panel that should be applied instead of default ones.
+     *
+     * @param  string  $classes
+     * @return $this
+     */
+    public function panelFieldClasses($classes)
+    {
+        $this->panelFieldClasses = $classes;
+
+        return $this;
+    }
+
+    /**
+     * Set the wrapper in detail panel that should be applied instead of default ones.
+     *
+     * @param  string  $classes
+     * @return $this
+     */
+    public function panelWrapperClasses($classes)
+    {
+        $this->panelWrapperClasses = $classes;
 
         return $this;
     }
@@ -406,9 +426,10 @@ trait Configurable
             'indexClasses' => $this->indexClasses,
             'inputClasses' => $this->inputClasses,
             'fieldClasses' => $this->fieldClasses,
-            'panelFieldClasses' => $this->panelFieldClasses,
             'labelClasses' => $this->labelClasses,
             'panelLabelClasses' => $this->panelLabelClasses,
+            'panelFieldClasses' => $this->panelFieldClasses,
+            'panelWrapperClasses' => $this->panelWrapperClasses,
             'indexLinkClasses' => $this->indexLinkClasses,
             'excerptClasses' => $this->excerptClasses,
         ], $this->meta);

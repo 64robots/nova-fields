@@ -167,6 +167,7 @@ class BelongsTo extends NovaBelongsTo
             'panelFieldClasses' => $this->panelFieldClasses,
             'labelClasses' => $this->labelClasses,
             'panelLabelClasses' => $this->panelLabelClasses,
+            'panelWrapperClasses' => $this->panelWrapperClasses,
             'excerptClasses' => $this->excerptClasses,
             'grouped' => !!$this->groupedBy,
             'resourceName' => $this->resourceName,
