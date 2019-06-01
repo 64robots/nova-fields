@@ -9,27 +9,50 @@
       :class="statusClass"
     />
   </div>
+  <detail-nova-fields-file
+    v-else-if="isFile"
+    :value="display"
+    v-bind="{ ...$props }"
+  />
   <p
     v-else
     :class="fieldClass"
   >{{ display }}</p>
 </template>
 <script>
-import BooleanDetailField from '../boolean/DetailField'
-
 export default {
-  components: { BooleanDetailField },
-
   props: {
     field: {
       type: Object,
       default: () => ({})
     },
+
     row: {
       type: Object,
       default: () => ({})
     },
+
     baseClasses: {
+      type: String,
+      default: ''
+    },
+
+    resource: {
+      type: Object,
+      default: () => ({})
+    },
+
+    resourceId: {
+      type: [String, Number],
+      default: null
+    },
+
+    resourceName: {
+      type: [String, Number],
+      default: null
+    },
+
+    parentAttribute: {
       type: String,
       default: ''
     }
@@ -40,6 +63,13 @@ export default {
       return (
         this.field.component === 'boolean-field' ||
         this.field.component === 'nova-fields-boolean'
+      )
+    },
+
+    isFile() {
+      return (
+        this.field.component === 'file-field' ||
+        this.field.component === 'nova-fields-file'
       )
     },
 

@@ -26,10 +26,11 @@
         >
           <DetailFieldItem
             v-for="f in field.fields"
+            v-bind="{ row, resource, resourceId, resourceName }"
             :key="`${row.row_id}${f.attribute}`"
             :base-classes="field.fieldClasses"
             :field="f"
-            :row="row"
+            :parent-attribute="field.attribute"
           />
         </div>
       </template>
@@ -38,16 +39,16 @@
 </template>
 
 <script>
-import R64Field from '../../mixins/R64Field';
-import RowHeading from './RowHeading';
-import RowField from './RowField';
-import DetailFieldItem from './DetailFieldItem';
+import R64Field from '../../mixins/R64Field'
+import RowHeading from './RowHeading'
+import RowField from './RowField'
+import DetailFieldItem from './DetailFieldItem'
 
 export default {
   mixins: [RowField, R64Field],
 
   components: { RowHeading, DetailFieldItem },
 
-  props: ['resource', 'resourceName', 'resourceId', 'field'],
-};
+  props: ['resource', 'resourceName', 'resourceId', 'field']
+}
 </script>

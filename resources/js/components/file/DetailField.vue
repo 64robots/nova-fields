@@ -15,11 +15,11 @@
         />
       </template>
 
-      <template v-if="field.value && !field.thumbnailUrl">
-        {{ field.value }}
+      <template v-if="displayValue && !field.thumbnailUrl">
+        {{ displayValue }}
       </template>
 
-      <span v-if="!field.value && !field.thumbnailUrl">&mdash;</span>
+      <span v-if="!value && !field.value && !field.thumbnailUrl">&mdash;</span>
       <span v-if="deleted">&mdash;</span>
 
       <portal to="modals">
@@ -37,7 +37,7 @@
         class="flex items-center text-sm mt-3"
       >
         <a
-          v-if="field.downloadable"
+          v-if="isDownloadable"
           :dusk="field.attribute + '-download-link'"
           @keydown.enter.prevent="download"
           @click.prevent="download"
@@ -61,7 +61,7 @@ import R64Field from '../../mixins/R64Field'
 export default {
   mixins: [R64Field],
 
-  props: ['resource', 'resourceName', 'resourceId', 'field'],
+  props: ['resource', 'resourceName', 'resourceId', 'field', 'value'],
 
   components: { ImageLoader },
 
@@ -75,8 +75,12 @@ export default {
       const { resourceName, resourceId } = this
       const attribute = this.field.attribute
 
+      const href = this.parentAttribute ?
+                  `/nova-r64-api/${resourceName}/${resourceId}/download/${attribute}?row=${this.parentAttribute}&value=${this.displayValue}` :
+                  `/nova-api/${resourceName}/${resourceId}/download/${attribute}`
+
       let link = document.createElement('a')
-      link.href = `/nova-api/${resourceName}/${resourceId}/download/${attribute}`
+      link.href = href
       link.download = 'download'
       link.click()
     },
@@ -117,7 +121,7 @@ export default {
   computed: {
     hasValue() {
       return (
-        Boolean(this.field.value || this.field.thumbnailUrl) &&
+        Boolean(this.value || this.field.value || this.field.thumbnailUrl) &&
         !Boolean(this.deleted) &&
         !Boolean(this.missing)
       )
@@ -129,9 +133,17 @@ export default {
 
     shouldShowToolbar() {
       return (
-        Boolean(this.field.downloadable || this.field.deletable) &&
+        Boolean(this.isDownloadable || this.field.deletable) &&
         this.hasValue
       )
+    },
+
+    isDownloadable() {
+      return this.parentAttribute ? true : this.field.downloadable
+    },
+
+    displayValue() {
+      return this.value || this.field.value
     }
   }
 }
