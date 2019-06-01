@@ -7,3 +7,6 @@ Route::get('/{resource}/associatable/{field}', 'AssociatableController@index');
 
 // Computed field
 Route::post('/{resource}/computed/{field}', 'ComputedController@index');
+
+// Download file inside of Row field
+Route::get('/{resource}/{resourceId}/download/{field}', 'FieldDownloadController@show');

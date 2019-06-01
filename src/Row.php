@@ -33,6 +33,13 @@ class Row extends Field
     public $headingClasses = 'flex text-80 py-2';
 
     /**
+     * The base item wrapper classes of the field.
+     *
+     * @var string
+     */
+    public $itemWrapperClasses = 'flex border-40 border';
+
+    /**
      * The base heading classes of the field.
      *
      * @var string
@@ -118,6 +125,19 @@ class Row extends Field
     public function headingClasses($classes)
     {
         $this->headingClasses = $classes;
+
+        return $this;
+    }
+
+    /**
+     * Sets the classes to be displayed wrapping the item
+     *
+     * @param  string  $classes
+     * @return $this
+     */
+    public function itemWrapperClasses($classes)
+    {
+        $this->itemWrapperClasses = $classes;
 
         return $this;
     }
@@ -311,6 +331,7 @@ class Row extends Field
             'sanitizedAttribute' => str_plural(kebab_case($this->attribute)),
             'shouldShow' => $this->shouldBeExpanded(),
             'headingClasses' => $this->headingClasses,
+            'itemWrapperClasses' => $this->itemWrapperClasses,
             'deleteButtonClasses' => $this->deleteButtonClasses,
             'addRowButtonClasses' => $this->addRowButtonClasses,
             'rowWrapperClasses' => $this->rowWrapperClasses,

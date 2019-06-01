@@ -5,6 +5,7 @@
     :hide-label="hideLabelInDetail"
     :label-classes="panelLabelClasses"
     :field-classes="panelFieldClasses"
+    :wrapper-classes="panelWrapperClasses"
   />
 </template>
 
