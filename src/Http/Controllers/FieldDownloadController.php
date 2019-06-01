@@ -4,7 +4,6 @@ namespace R64\NovaFields\Http\Controllers;
 
 use Laravel\Nova\Fields\File;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Storage;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class FieldDownloadController extends Controller
@@ -34,6 +33,8 @@ class FieldDownloadController extends Controller
             abort(404);
         }
 
-        return Storage::disk($field->disk)->download($request->query()['value']);
+        return call_user_func(
+            $field->downloadResponseCallback, $request, $request->query()['value']
+        );
     }
 }
