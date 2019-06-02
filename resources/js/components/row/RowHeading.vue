@@ -5,6 +5,10 @@
       :key="index"
       :class="getFieldClasses(field)"
     >{{ field.name }}</div>
+    <span
+      class="spacer"
+      :class="spacerClasses"
+    >x</span>
   </div>
 </template>
 <script>
@@ -18,10 +22,17 @@ export default {
       type: Array,
       default: () => []
     },
+
     headingClasses: {
       type: String,
       default: 'flex text-80 pt-2'
     },
+
+    spacerClasses: {
+      type: String,
+      default: ''
+    },
+
     baseClasses: {
       type: Object,
       default: () => ({})
@@ -30,8 +41,14 @@ export default {
 
   methods: {
     getFieldClasses(field) {
-      return this.baseClasses.fieldClasses || field.fieldClasses;
+      return this.baseClasses.wrapperClasses || field.wrapperClasses;
     }
   }
 };
 </script>
+<style scoped>
+.spacer {
+  opacity: 0 !important;
+  cursor: default !important;
+}
+</style>

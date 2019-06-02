@@ -12,6 +12,7 @@
         :fields="fields"
         :heading-classes="field.headingClasses"
         :base-classes="field.childConfig"
+        :spacer-classes="field.deleteButtonClasses"
       />
       <div
         v-for="(row, indexV) in values"
@@ -19,7 +20,6 @@
         :class="field.rowWrapperClasses"
       >
         <component
-          class="remove-bottom-border w-full"
           :key="`${row.row_id}${f.attribute}`"
           :ref="`${row.row_id}${f.attribute}`"
           v-for="(f, indexF) in fields"
