@@ -96,6 +96,7 @@
           <ModalCreate
             v-if="openModal"
             :resourceName="field.resourceName"
+            :fillValues="field.fillValues"
             @confirm="reloadResources"
             @close="openModal = false"
           />
@@ -150,6 +151,10 @@ export default {
     viaResource: {},
     viaResourceId: {},
     viaRelationship: {},
+    fillValues: {
+      type: Object,
+      default: {}
+    },
 
     dataSet: Array,
     withDataSet: false
