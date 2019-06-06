@@ -156,6 +156,16 @@ class Row extends Field
     }
 
     /**
+     * Prepopulate one row when the collection is empty.
+     *
+     * @return $this
+     */
+    public function prepopulateRowWhenEmpty()
+    {
+        return $this->withMeta(['prepopulateRowWhenEmpty' => true]);
+    }
+
+    /**
      * Set the maximum of rows that can be added.
      *
      * @return $this

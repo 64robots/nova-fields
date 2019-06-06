@@ -183,6 +183,10 @@ export default {
         element.handleChange(value[key])
       })
     })
+
+    if (this.field.prepopulateRowWhenEmpty && !this.values.length) {
+      this.addRow()
+    }
   },
 
   methods: {
@@ -224,7 +228,7 @@ export default {
         Object.keys(row).forEach(key => {
           const value = row[key]
           const formDataName = `${this.field.attribute}[${index}][${key}]`
-          const formDataValue = typeof  value === 'object' ? value.file : value
+          const formDataValue = typeof value === 'object' ? value.file : value
           const formDataFilename = typeof value === 'object' ? value.name : null
           if (formDataFilename) {
             formData.append(formDataName, formDataValue, formDataFilename)
