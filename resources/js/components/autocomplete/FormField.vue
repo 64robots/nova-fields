@@ -16,12 +16,15 @@
         :searchable="true"
         :placeholder="placeholder"
         :disabled="readOnly"
-        :options="field.options"
+        :options="options"
         @input="selectValue"
       />
 
-      <p v-if="hasError" class="my-2 text-danger">
-          {{ firstError }}
+      <p
+        v-if="hasError"
+        class="my-2 text-danger"
+      >
+        {{ firstError }}
       </p>
     </template>
   </r64-default-field>
@@ -38,8 +41,13 @@ export default {
 
   mixins: [HandlesValidationErrors, FormField, R64Field, Computable],
 
-  computed: {
+  data() {
+    return {
+      options: this.field.options
+    }
+  },
 
+  computed: {
     /**
      * Get the placeholder.
      */
@@ -50,12 +58,12 @@ export default {
     },
 
     selectedValue() {
-      if (!this.field.options) {
+      if (!this.options) {
         return null
       }
 
-      return this.field.options.find(o => o.value == this.value)
-    },
+      return this.options.find(o => o.value == this.value)
+    }
   },
 
   watch: {
@@ -81,9 +89,9 @@ export default {
     },
 
     computedOptionsReceived(data) {
-      if (data && JSON.stringify(data) !== JSON.stringify(this.field.options)) {
+      if (data && JSON.stringify(data) !== JSON.stringify(this.options)) {
         this.value = null
-        this.field.options = data
+        this.options = data
       }
     },
 
