@@ -156,6 +156,16 @@ class Row extends Field
     }
 
     /**
+     * Prepopulate one row when the collection is empty.
+     *
+     * @return $this
+     */
+    public function prepopulateRowWhenEmpty()
+    {
+        return $this->withMeta(['prepopulateRowWhenEmpty' => true]);
+    }
+
+    /**
      * Set the maximum of rows that can be added.
      *
      * @return $this
@@ -267,9 +277,11 @@ class Row extends Field
     {
         $result = [];
 
-        foreach ($this->meta['fields'] as $field) {
-            $fieldRules = $this->generateRules($field->getRules($request));
-            $result = array_merge_recursive($result, $fieldRules);
+        if (array_key_exists('fields', $this->meta)) {
+            foreach ($this->meta['fields'] as $field) {
+                $fieldRules = $this->generateRules($field->getRules($request));
+                $result = array_merge_recursive($result, $fieldRules);
+            }
         }
 
         return array_merge_recursive(
@@ -288,9 +300,11 @@ class Row extends Field
     {
         $result = [];
 
-        foreach ($this->meta['fields'] as $field) {
-            $rules = $this->generateRules($field->getCreationRules($request));
-            $result = array_merge_recursive($result, $rules);
+        if (array_key_exists('fields', $this->meta)) {
+            foreach ($this->meta['fields'] as $field) {
+                $rules = $this->generateRules($field->getCreationRules($request));
+                $result = array_merge_recursive($result, $rules);
+            }
         }
 
         return array_merge_recursive(
@@ -309,9 +323,11 @@ class Row extends Field
     {
         $result = [];
 
-        foreach ($this->meta['fields'] as $field) {
-            $rules = $this->generateRules($field->getUpdateRules($request));
-            $result = array_merge_recursive($result, $rules);
+        if (array_key_exists('fields', $this->meta)) {
+            foreach ($this->meta['fields'] as $field) {
+                $rules = $this->generateRules($field->getUpdateRules($request));
+                $result = array_merge_recursive($result, $rules);
+            }
         }
 
         return array_merge_recursive(
