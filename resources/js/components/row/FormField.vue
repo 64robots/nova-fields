@@ -227,9 +227,10 @@ export default {
       this.values.forEach((row, index) => {
         Object.keys(row).forEach(key => {
           const value = row[key]
+          const isObject = typeof value === 'object' && value !== null
           const formDataName = `${this.field.attribute}[${index}][${key}]`
-          const formDataValue = typeof value === 'object' ? value.file : value
-          const formDataFilename = typeof value === 'object' ? value.name : null
+          const formDataValue = isObject ? value.file : value || ''
+          const formDataFilename = isObject ? value.name : null
           if (formDataFilename) {
             formData.append(formDataName, formDataValue, formDataFilename)
           } else {
