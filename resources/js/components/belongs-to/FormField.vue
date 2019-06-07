@@ -19,6 +19,7 @@
             :error="hasError"
             :value="selectedResource"
             :data="availableResources"
+            :clearable="field.nullable"
             trackBy="value"
             searchBy="display"
             class="flex-grow mb-2"
@@ -68,8 +69,8 @@
           >
             <option
               value
-              disabled
-              selected
+              :disabled="!field.nullable"
+              :selected="selectedResourceId == null"
             >{{ placeholder }}</option>
 
             <option
@@ -227,6 +228,11 @@ export default {
       )
     },
 
+    shouldPrepopulate() {
+      return Boolean(
+        this.field.prepopulate
+      )
+    },
     /**
      * Determine if the related resources is searchable
      */
@@ -243,7 +249,10 @@ export default {
           current: this.selectedResourceId,
           first: this.initializingWithExistingResource,
           search: this.search,
-          withTrashed: this.withTrashed
+          withTrashed: this.withTrashed,
+          prepopulate: this.shouldPrepopulate,
+          prepopulateParams: this.field.prepopulateParams,
+          relatableParams: this.field.relatableParams
         }
       }
     },
@@ -282,6 +291,7 @@ export default {
     },
 
     initializeComponent() {
+
       this.withTrashed = false
 
       // If a user is editing an existing resource with this relation
@@ -332,13 +342,47 @@ export default {
       }
 
       this.field.fill = this.fill
+
+      if (this.shouldPrepopulate) {
+        // Need prepopulate options? just do it!
+        this.getAvailableResources().then(() => this.selectInitialResource())
+      }
+      this.setDepend()
+    },
+
+    
+    setDepend() {
+      if (this.field.dependsOn) {
+          this.field.dependsOn.forEach((dependencyField) => {
+            // Create event listeners for dependent fields updating
+            // Of cause, updating events only triggered by fields with 
+            // the same class as this field
+            Nova.$off("belongsto-depend-" + dependencyField)
+            Nova.$on("belongsto-depend-" + dependencyField, async dependsOnValue => {
+              this.field.relatableParams[dependencyField] = dependsOnValue.value
+              // set fillValues for quickCreate() if needed
+              if (this.field.fillValues[dependencyField]) {
+                if (this.field.fillValues[dependencyField].belongsToId != dependsOnValue.value) {
+                  this.field.fillValues[dependencyField].belongsToId = dependsOnValue.value
+                }
+              }
+
+              if (this.isSearchable && !this.shouldPrepopulate) {
+                this.selectInitialResource()
+                this.availableResources = []
+              } else {
+                this.getAvailableResources().then(() => this.selectInitialResource())
+              }
+            });
+          })
+      }
     },
 
     /**
      * Select a resource using the <select> control
      */
     selectResourceFromSelectControl(e) {
-      this.selectedResourceId = e.target.value
+      this.selectedResourceId = (e.target.value) ? e.target.value : null
       this.$emit('input', this.selectedResourceId)
       this.selectInitialResource()
     },
@@ -350,6 +394,8 @@ export default {
       if (this.selectedResource) {
         formData.append(this.field.attribute, this.selectedResource.value)
         formData.append(this.field.attribute + '_trashed', this.withTrashed)
+      } else if (this.field.nullable) {
+        formData.append(this.field.attribute, null)
       }
     },
 
@@ -357,6 +403,7 @@ export default {
      * Get the resources that may be related to this resource.
      */
     getAvailableResources() {
+
       return storage
         .fetchAvailableResources(
           this.resourceName,
@@ -406,6 +453,15 @@ export default {
         this.availableResources,
         r => r.value == this.selectedResourceId
       )
+      if (this.selectedResource === undefined) {
+        this.selectedResource = null
+        this.selectedResourceId = null
+      }
+
+      Nova.$emit("belongsto-depend-" + this.field.attribute.toLowerCase(), {
+          value: this.selectedResourceId,
+      });
+
       this.$emit('input', this.selectedResourceId)
     },
 

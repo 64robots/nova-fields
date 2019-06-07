@@ -30,8 +30,22 @@ class AssociatableController extends Controller
             $request, $associatedResource = $field->resourceClass
         );
 
+        $query = $field->buildAssociatableQuery($request, $withTrashed);
+
+        if ($request->input('prepopulate') == 'true') {
+            $prepopulateParams = json_decode($request->input('prepopulateParams'),true);
+            if ($prepopulateParams) {
+                $query = $query->take($prepopulateParams['take'] ?? 10);
+                if (array_key_exists('orderBy',$prepopulateParams)) {
+                    foreach ($prepopulateParams['orderBy'] as $fld => $val) {
+                        $query = (is_string($fld)) ? $query->orderBy($fld,$val) : $query->orderBy($val);
+                    }
+                }
+            }
+        }
+
         return [
-            'resources' => $field->buildAssociatableQuery($request, $withTrashed)->get()
+            'resources' => $query->get()
                         ->mapInto($field->resourceClass)
                         ->filter->authorizedToAdd($request, $request->model())
                         ->map(function ($resource) use ($request, $field) {

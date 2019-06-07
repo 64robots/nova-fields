@@ -15,7 +15,7 @@ class BelongsTo extends NovaBelongsTo
      *
      * @var string
      */
-    public $inputClasses = 'w-full form-control form-input form-input-bordered';
+    public $inputClasses = 'w-full form-control form-select form-input form-input-bordered';
 
     /**
      * The base index classes of the field.
@@ -46,6 +46,10 @@ class BelongsTo extends NovaBelongsTo
     public $disableRelatableRule = false;
 
     protected $groupedBy = null;
+
+    protected $prepopulate = false;
+    protected $prepopulateParams = null;
+    protected $relatableParams = null;
 
     /**
      * Format the given associatable resource.
@@ -153,6 +157,51 @@ class BelongsTo extends NovaBelongsTo
     }
 
     /**
+     * Enable preloading options when using searchable()
+     *
+     * @return $this
+     */
+    public function prepopulate($params = null)
+    {
+        $this->prepopulate = true;
+        if ($params) {
+            $this->prepopulateParams = array_merge([
+                'take' => 10,
+            ], $params);
+        } else {
+            $this->prepopulateParams = [
+                'take' => 10,
+            ];
+        }
+
+        return $this;
+    }
+
+    /**
+     * Determine a relatableQuery() params
+     *
+     * @return $this
+     */
+    public function setRelatableParams($params)
+    {
+        $this->relatableParams = $params;
+
+        return $this;
+    }
+
+    /**
+     * Determine a dependency fields
+     *
+     * @return $this
+     */
+    public function dependsOn($fields)
+    {
+        $this->withMeta(['dependsOn' => $fields]);
+
+        return $this;
+    }
+
+    /**
      * Get additional meta information to merge with the field payload.
      *
      * @return array
@@ -177,6 +226,9 @@ class BelongsTo extends NovaBelongsTo
             'belongsToId' => $this->belongsToId,
             'searchable' => $this->searchable,
             'displayName' => $this->displayName,
+            'prepopulate' => $this->prepopulate,
+            'prepopulateParams' => (object) $this->prepopulateParams,
+            'relatableParams' => (object) $this->relatableParams,
         ], $this->meta);
     }
 }
