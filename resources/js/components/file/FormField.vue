@@ -59,7 +59,10 @@
         </portal>
       </div>
 
-      <span class="form-file mr-4">
+      <span
+        class="form-file mr-4"
+        v-if="!isFilledRowSubfield"
+      >
         <el-upload
           v-if="field.draggable"
           drag
@@ -81,7 +84,10 @@
                 title="Preview"
                 @click.stop.prevent="onPreviewFile"
               >
-                  <icon type="view" class="w-8" />
+                <icon
+                  type="view"
+                  class="w-8"
+                />
               </button>
 
               <button
@@ -105,20 +111,26 @@
             name="name"
             @change="fileChange"
           />
-          <label :for="labelFor" class="form-file-btn btn btn-default btn-primary">
+          <label
+            :for="labelFor"
+            class="form-file-btn btn btn-default btn-primary"
+          >
             {{__('Choose File')}}
           </label>
         </template>
       </span>
 
       <span
-        v-if="!field.draggable"
+        v-if="!field.draggable && !isFilledRowSubfield"
         class="text-gray-50"
       >
         {{ currentLabel }}
       </span>
 
-      <p v-if="hasError" class="text-xs mt-2 text-danger">
+      <p
+        v-if="hasError"
+        class="text-xs mt-2 text-danger"
+      >
         {{ firstError }}
       </p>
 
@@ -198,7 +210,7 @@ export default {
     emitInputEvent() {
       this.$emit('input', {
         file: this.file,
-        name: this.fileName,
+        name: this.fileName
       })
     },
 
@@ -220,8 +232,7 @@ export default {
      * Remove the linked file from storage
      */
     async removeFile() {
-      if (this.parentAttribute) {
-        // this field is a subfield of Row or Json
+      if (this.isRowSubfield) {
         this.fileName = ''
         this.file = null
         this.value = null
@@ -260,6 +271,14 @@ export default {
   },
 
   computed: {
+    isFilledRowSubfield() {
+      return this.fileValue && this.isRowSubfield
+    },
+
+    isRowSubfield() {
+      return !!this.parentAttribute
+    },
+
     fileValue() {
       return this.field.value || this.value
     },
@@ -305,7 +324,9 @@ export default {
      * @return {[type]} [description]
      */
     labelFor() {
-      const hash = Math.random().toString(36).substring(7);
+      const hash = Math.random()
+        .toString(36)
+        .substring(7)
       return `file-${this.field.attribute}-${hash}`
     },
 
@@ -331,7 +352,7 @@ export default {
      * Determine whether the field should show the remove button
      */
     shouldShowRemoveButton() {
-      return Boolean(this.field.deletable)
+      return Boolean(this.field.deletable) && !this.isRowSubfield
     }
   }
 }
