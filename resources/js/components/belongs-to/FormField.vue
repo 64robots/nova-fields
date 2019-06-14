@@ -336,7 +336,7 @@ export default {
         this.availableResources = this.dataSet
       }
 
-      if (!this.withDataSet) {
+      if (!this.withDataSet && !this.field.disableTrashed) {
         // If it is within a row component and it is the 0 index this will be called
         this.determineIfSoftDeletes()
       }
