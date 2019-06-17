@@ -23,6 +23,7 @@
           :key="`${row.row_id}${f.attribute}`"
           :ref="`${row.row_id}${f.attribute}`"
           v-for="(f, indexF) in fields"
+          v-if="shouldShowField(f)"
           v-model="row[f.attribute]"
           :is="`form-${f.component}`"
           :parent-attribute="field.attribute"

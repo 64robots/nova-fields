@@ -2,6 +2,7 @@
   <div :class="headingClasses">
     <div
       v-for="(field, index) in fields"
+      v-if="shouldShowField(field)"
       :key="index"
       :class="getFieldClasses(field)"
     >{{ field.name }}</div>
@@ -12,7 +13,7 @@
   </div>
 </template>
 <script>
-import R64Field from '../../mixins/R64Field';
+import R64Field from '../../mixins/R64Field'
 
 export default {
   mixins: [R64Field],
@@ -41,10 +42,10 @@ export default {
 
   methods: {
     getFieldClasses(field) {
-      return this.baseClasses.wrapperClasses || field.wrapperClasses;
+      return this.baseClasses.wrapperClasses || field.wrapperClasses
     }
   }
-};
+}
 </script>
 <style scoped>
 .spacer {

@@ -60,7 +60,9 @@ export default {
     },
 
     panelWrapperClasses() {
-      return this.baseClasses.panelWrapperClasses || this.field.panelWrapperClasses
+      return (
+        this.baseClasses.panelWrapperClasses || this.field.panelWrapperClasses
+      )
     },
 
     excerptClasses() {
@@ -113,6 +115,24 @@ export default {
 
     onDetail() {
       return this.$route.name === 'detail'
+    }
+  },
+
+  methods: {
+    shouldShowField(f) {
+      const field = f ? f : this.field
+
+      if (this.onCreate) {
+        return !field.hideWhenCreating
+      }
+      if (this.onUpdate) {
+        return !field.hideWhenUpdating
+      }
+      if (this.onDetail) {
+        return !field.hideFromDetail
+      }
+
+      return true
     }
   }
 }

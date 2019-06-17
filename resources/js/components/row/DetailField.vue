@@ -27,6 +27,7 @@
         >
           <DetailFieldItem
             v-for="f in field.fields"
+            v-if="!f.hideFromDetail"
             v-bind="{ row, resource, resourceId, resourceName }"
             :key="`${row.row_id}${f.attribute}`"
             :base-classes="field.fieldClasses"
