@@ -385,21 +385,21 @@ trait Configurable
      *
      * @param  string  $method
      * @param  array  $parameters
-     * @return $this
+     * @return mixed
      */
     public function __call($method, $parameters)
     {
         preg_match('/(add|remove)(.+)/', $method, $matches);
 
         if (count($matches) != 3) {
-            return $this;
+            return parent::__call($method, $parameters);
         }
 
         $action = $matches[1];
         $property =  Str::camel($matches[2]);
         $classes = $parameters[0];
 
-        if(!property_exists($this, $property)) {
+        if (!property_exists($this, $property)) {
             return $this;
         }
 
