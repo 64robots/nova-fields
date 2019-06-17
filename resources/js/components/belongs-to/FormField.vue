@@ -289,7 +289,13 @@ export default {
       this.openModal = false
       this.loading = false
     },
-
+    clearSelection() {
+      this.selectedResource = null
+      this.selectedResourceId = null
+      if (this.isSearchable && !this.shouldPrepopulate) {
+        this.availableResources = []
+      }
+    },
     initializeComponent() {
 
       this.withTrashed = false
@@ -347,35 +353,46 @@ export default {
         // Need prepopulate options? just do it!
         this.getAvailableResources().then(() => this.selectInitialResource())
       }
-      this.setDepend()
+      this.registerDependencyWatchers(this.$root)
     },
 
-    
-    setDepend() {
-      if (this.field.dependsOn) {
-          this.field.dependsOn.forEach((dependencyField) => {
-            // Create event listeners for dependent fields updating
-            // Of cause, updating events only triggered by fields with 
-            // the same class as this field
-            Nova.$off("belongsto-depend-" + dependencyField)
-            Nova.$on("belongsto-depend-" + dependencyField, async dependsOnValue => {
-              this.field.relatableParams[dependencyField] = dependsOnValue.value
-              // set fillValues for quickCreate() if needed
-              if (this.field.fillValues[dependencyField]) {
-                if (this.field.fillValues[dependencyField].belongsToId != dependsOnValue.value) {
-                  this.field.fillValues[dependencyField].belongsToId = dependsOnValue.value
-                }
-              }
-
-              if (this.isSearchable && !this.shouldPrepopulate) {
-                this.selectInitialResource()
-                this.availableResources = []
-              } else {
-                this.getAvailableResources().then(() => this.selectInitialResource())
-              }
-            });
-          })
+    registerDependencyWatchers(root) {
+      if(this.field.dependsOn === undefined) {
+        return;
       }
+      root.$children.forEach(component => {
+        if (this.componentIsDependency(component)) {
+          component.$watch('selectedResourceId', (value) => {
+            let dependencyField = component.field.attribute
+            this.field.relatableParams[dependencyField] = value
+            // set fillValues for quickCreate() if needed
+            if (this.field.fillValues && this.field.fillValues[dependencyField]) {
+              if (this.field.fillValues[dependencyField].belongsToId != value) {
+                this.field.fillValues[dependencyField].belongsToId = value
+              }
+            }
+
+            if (this.isSearchable && !this.shouldPrepopulate) {
+              this.selectInitialResource()
+              this.availableResources = []
+            } else {
+              this.getAvailableResources().then(() => this.selectInitialResource())
+            }
+          }, {immediate: false})
+        }
+        this.registerDependencyWatchers(component)
+      })
+    },
+    componentIsDependency(component) {
+      if(component.field === undefined) {
+        return false;
+      }
+      for (let dependencyField of this.field.dependsOn) {
+        if(component.field.attribute === dependencyField) {
+          return true;
+        }
+      }
+      return false;
     },
 
     /**
@@ -457,11 +474,6 @@ export default {
         this.selectedResource = null
         this.selectedResourceId = null
       }
-
-      Nova.$emit("belongsto-depend-" + this.field.attribute.toLowerCase(), {
-          value: this.selectedResourceId,
-      });
-
       this.$emit('input', this.selectedResourceId)
     },
 
