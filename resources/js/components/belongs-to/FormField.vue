@@ -342,6 +342,8 @@ export default {
         // If it is within a row component and exists previous dataSet
         // it will populate the availableResources with dataSet
         this.availableResources = this.dataSet
+      } else if (this.isSearchable && this.shouldPrepopulate) {
+        this.getAvailableResources()
       }
 
       if (!this.withDataSet && !this.field.disableTrashed) {
@@ -351,10 +353,6 @@ export default {
 
       this.field.fill = this.fill
 
-      if (this.shouldPrepopulate) {
-        // Need prepopulate options? just do it!
-        this.getAvailableResources().then(() => this.selectInitialResource())
-      }
       this.registerDependencyWatchers(this.$root)
     },
 
@@ -422,7 +420,6 @@ export default {
      * Get the resources that may be related to this resource.
      */
     getAvailableResources() {
-
       return storage
         .fetchAvailableResources(
           this.resourceName,
