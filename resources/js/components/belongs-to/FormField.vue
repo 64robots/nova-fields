@@ -153,7 +153,6 @@ export default {
     viaResourceId: {},
     viaRelationship: {},
     fillValues: {},
-
     dataSet: Array,
     withDataSet: false
   },
@@ -287,11 +286,17 @@ export default {
       this.loading = false
     },
     clearSelection() {
+      // local extension of default laravel-nova/src/mixins/PerformsSearches.js
       this.selectedResource = null
       this.selectedResourceId = null
       if (this.isSearchable && !this.shouldPrepopulate) {
         this.availableResources = []
       }
+    },
+    selectResource(resource) {
+      // local extension of default laravel-nova/src/mixins/PerformsSearches.js
+      this.selectedResource = resource
+      this.selectedResourceId = resource.value
     },
     initializeComponent() {
 
@@ -467,6 +472,7 @@ export default {
         this.availableResources,
         r => r.value == this.selectedResourceId
       )
+
       if (this.selectedResource === undefined) {
         this.selectedResource = null
         this.selectedResourceId = null
