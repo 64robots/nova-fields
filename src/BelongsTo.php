@@ -139,7 +139,7 @@ class BelongsTo extends NovaBelongsTo
      */
     public function quickCreate($fillValues = [])
     {
-        $this->withMeta(['quickCreate' => true, 'fillValues' => $fillValues]);
+        $this->withMeta(['quickCreate' => true, 'fillValues' => (object) $fillValues]);
 
         return $this;
     }

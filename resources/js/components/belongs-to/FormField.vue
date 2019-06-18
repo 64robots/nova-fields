@@ -152,10 +152,7 @@ export default {
     viaResource: {},
     viaResourceId: {},
     viaRelationship: {},
-    fillValues: {
-      type: Object,
-      default: {}
-    },
+    fillValues: {},
 
     dataSet: Array,
     withDataSet: false
