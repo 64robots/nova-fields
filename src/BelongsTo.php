@@ -145,6 +145,17 @@ class BelongsTo extends NovaBelongsTo
     }
 
     /**
+     * Determine if a related model can be edited.
+     *
+     * @return $this
+     */
+    public function quickEdit()
+    {
+        $this->withMeta(['quickEdit' => true]);
+
+        return $this;
+    }
+    /**
      * Determine if a without trashed option should be hidden.
      *
      * @return $this

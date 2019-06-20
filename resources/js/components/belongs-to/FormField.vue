@@ -82,9 +82,14 @@
             >{{ resource.display}}</option>
           </select>
           <a
+            v-if="field.quickEdit && !isModal && selectedResourceId"
+            class="btn btn-white p-2 rounded ml-3 mb-2 cursor-pointer"
+            @click="openModalEdit = true"
+          >❐</a>
+          <a
             v-if="field.quickCreate && !isModal"
             class="btn btn-primary p-2 rounded ml-3 mb-2 cursor-pointer"
-            @click="openModal = true"
+            @click="openModalCreate = true"
           >+</a>
         </div>
       </loading-view>
@@ -95,11 +100,19 @@
       >
         <transition name="fade">
           <ModalCreate
-            v-if="openModal"
+            v-if="openModalCreate"
             :resourceName="field.resourceName"
             :fillValues="field.fillValues"
             @confirm="reloadResources"
-            @close="openModal = false"
+            @close="openModalCreate = false"
+          />
+          <ModalEdit
+            v-if="openModalEdit"
+            :resourceId="selectedResourceId"
+            :resourceName="field.resourceName"
+            :fillValues="field.fillValues"
+            @confirm="reloadResources"
+            @close="openModalEdit = false"
           />
         </transition>
       </portal>
@@ -135,10 +148,11 @@ import {
   HandlesValidationErrors
 } from 'laravel-nova'
 import ModalCreate from '../../modals/ModalCreate'
+import ModalEdit from '../../modals/ModalEdit'
 import R64Field from '../../mixins/R64Field'
 
 export default {
-  components: { ModalCreate },
+  components: { ModalCreate, ModalEdit },
 
   mixins: [TogglesTrashed, PerformsSearches, HandlesValidationErrors, R64Field],
 
@@ -159,7 +173,8 @@ export default {
 
   data: () => ({
     loading: false,
-    openModal: false,
+    openModalCreate: false,
+    openModalEdit: false,
     availableResources: [],
     initializingWithExistingResource: false,
     selectedResource: null,
@@ -282,7 +297,8 @@ export default {
         this.selectedResourceId = id
         this.selectInitialResource()
       }
-      this.openModal = false
+      this.openModalCreate = false
+      this.openModalEdit = false
       this.loading = false
     },
     clearSelection() {
@@ -412,7 +428,7 @@ export default {
         formData.append(this.field.attribute, this.selectedResource.value)
         formData.append(this.field.attribute + '_trashed', this.withTrashed)
       } else if (this.field.nullable) {
-        formData.append(this.field.attribute, null)
+        formData.append(this.field.attribute, '')
       }
     },
 
