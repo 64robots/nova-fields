@@ -43,6 +43,12 @@
           @click="rowToRemove = row.row_id"
         >x</span>
       </div>
+      <SumField
+        v-if="shouldShowSum"
+        :values="values"
+        :field="field"
+        :fields="fields"
+      />
       <div class="flex justify-end">
         <a
           :class="[field.addRowButtonClasses, { 'pointer-events-none opacity-50': shouldDisableButton }]"
@@ -88,11 +94,12 @@ import { FormField, HandlesValidationErrors } from 'laravel-nova'
 import RowField from './RowField'
 import R64Field from '../../mixins/R64Field'
 import RowHeading from './RowHeading'
+import SumField from './SumField'
 
 export default {
   mixins: [FormField, HandlesValidationErrors, RowField, R64Field],
 
-  components: { RowHeading },
+  components: { RowHeading, SumField },
 
   props: ['resourceName', 'resourceId', 'field'],
 

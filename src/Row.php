@@ -61,6 +61,20 @@ class Row extends Field
     public $rowWrapperClasses = 'flex items-center border-40 border relative';
 
     /**
+     * The base classes for the Sum wrapper.
+     *
+     * @var string
+     */
+    public $sumWrapperClasses = 'flex items-center justify-end w-full p-2';
+
+    /**
+     * The base classes for the Sum field.
+     *
+     * @var string
+     */
+    public $sumFieldClasses = 'text-80';
+
+    /**
      * The field's component.
      *
      * @var string
@@ -117,6 +131,16 @@ class Row extends Field
     }
 
     /**
+     * Determine if the sum field should be hidden when empty rows.
+     *
+     * @return $this
+     */
+    public function hideSumWhenEmpty()
+    {
+        return $this->withMeta(['hideSumWhenEmpty' => true]);
+    }
+
+    /**
      * Sets the classes to be displayed in row heading
      *
      * @param  string  $classes
@@ -156,6 +180,32 @@ class Row extends Field
     }
 
     /**
+     * Sets the classes to be displayed in sum wrapper
+     *
+     * @param  string  $classes
+     * @return $this
+     */
+    public function sumWrapperClasses($classes)
+    {
+        $this->sumWrapperClasses = $classes;
+
+        return $this;
+    }
+
+    /**
+     * Sets the classes to be displayed in sum field
+     *
+     * @param  string  $classes
+     * @return $this
+     */
+    public function sumFieldClasses($classes)
+    {
+        $this->sumFieldClasses = $classes;
+
+        return $this;
+    }
+
+    /**
      * Prepopulate one row when the collection is empty.
      *
      * @return $this
@@ -163,6 +213,16 @@ class Row extends Field
     public function prepopulateRowWhenEmpty()
     {
         return $this->withMeta(['prepopulateRowWhenEmpty' => true]);
+    }
+
+    /**
+     * Shows a sum of the value of the field.
+     *
+     * @return $this
+     */
+    public function sum($field)
+    {
+        return $this->withMeta(['sum' => $field]);
     }
 
     /**
@@ -351,6 +411,8 @@ class Row extends Field
             'deleteButtonClasses' => $this->deleteButtonClasses,
             'addRowButtonClasses' => $this->addRowButtonClasses,
             'rowWrapperClasses' => $this->rowWrapperClasses,
+            'sumWrapperClasses' => $this->sumWrapperClasses,
+            'sumFieldClasses' => $this->sumFieldClasses,
         ]);
     }
 }
