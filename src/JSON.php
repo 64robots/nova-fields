@@ -5,6 +5,7 @@ namespace R64\NovaFields;
 use Laravel\Nova\Panel;
 use Laravel\Nova\Fields\Field;
 use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Contracts\Resolvable;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
@@ -124,6 +125,12 @@ class JSON extends Field
         $this->fields->whereInstanceOf(Date::class)->each(function ($dateField) {
             $dateField->resolveCallback = function ($value) {
                 return \Carbon\Carbon::parse($value)->format('Y-m-d');
+            };
+        });
+
+        $this->fields->whereInstanceOf(DateTime::class)->each(function ($dateField) {
+            $dateField->resolveCallback = function ($value) {
+                return \Carbon\Carbon::parse($value)->format('Y-m-d H:i:s');
             };
         });
 
