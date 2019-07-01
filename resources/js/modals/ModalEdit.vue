@@ -6,7 +6,7 @@
     @modal-close="handleClose"
   >
     <loading-view :loading="loading">
-      <heading class="m-3">{{__('Edit')}} {{ singularName }} #{{}}</heading>
+      <heading class="m-3">{{__('Edit')}} {{ singularName }} #{{ resourceId }}</heading>
 
       <card class="overflow-hidden">
         <form v-if="fields" @submit.prevent="updateResource">
