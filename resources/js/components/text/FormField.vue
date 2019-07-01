@@ -108,7 +108,6 @@ export default {
       formData.append(this.field.attribute, rawValue);
     },
     onMaskInput(value) {
-      console.log('onMaskInput',value)
       this.$emit('input', value)
     },
   }
