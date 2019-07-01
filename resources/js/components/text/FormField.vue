@@ -8,7 +8,23 @@
     :label-classes="labelClasses"
   >
     <template slot="field">
-      <input
+      <the-mask v-if="this.field.mask"
+        :id="field.name"
+        :dusk="field.attribute"
+        :type="inputType"
+        :min="inputMin"
+        :max="inputMax"
+        :step="inputStep"
+        :pattern="inputPattern"
+        :disabled="readOnly"
+        v-model="value"
+        :mask="this.field.mask"
+        :class="[errorClasses, inputClasses]"
+        :placeholder="placeholder"
+
+        @input="onMaskInput"
+      />
+      <input v-else
         :id="field.name"
         :dusk="field.attribute"
         :type="inputType"
@@ -34,10 +50,13 @@
 <script>
 import { FormField, HandlesValidationErrors } from 'laravel-nova'
 import R64Field from '../../mixins/R64Field'
+import {TheMask} from 'vue-the-mask'
 
 export default {
   mixins: [HandlesValidationErrors, FormField, R64Field],
 
+  components: {TheMask},
+  
   computed: {
     /**
      * Get the input type.
@@ -72,7 +91,26 @@ export default {
      */
     inputPattern() {
       return this.field.pattern
-    }
+    },
+
+  },
+  
+  methods: {
+    fill(formData) {
+      // if set to use raw value (no mask), remove mask chars from value
+      let rawValue = this.value || "";
+      if (this.field.raw) {
+        for (let i = 0; i < this.field.mask.length; i++) {
+          rawValue = rawValue.replace(this.field.mask[i], "");
+        }
+      }
+
+      formData.append(this.field.attribute, rawValue);
+    },
+    onMaskInput(value) {
+      console.log('onMaskInput',value)
+      this.$emit('input', value)
+    },
   }
 }
 </script>

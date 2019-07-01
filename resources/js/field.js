@@ -153,4 +153,17 @@ Nova.booting((Vue, router) => {
     'form-nova-fields-belongs-to',
     require('./components/belongs-to/FormField')
   )
+
+  /** DependencyContainer */
+  Vue.component(
+    'detail-nova-fields-dependency-container',
+    require('./components/dependency-container/DetailField')
+  )
+  Vue.component(
+    'form-nova-fields-dependency-container',
+    require('./components/dependency-container/FormField')
+  )
+
+
+
 })

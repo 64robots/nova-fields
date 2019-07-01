@@ -31,7 +31,9 @@ class AssociatableController extends Controller
         );
 
         $query = $field->buildAssociatableQuery($request, $withTrashed);
-        
+        $prepopulateCollection = null;
+        $sorted = false;
+
         if ($request->input('prepopulate') == 'true') {
             $prepopulateParams = json_decode($request->input('prepopulateParams'),true);
             if ($prepopulateParams) {
@@ -41,27 +43,32 @@ class AssociatableController extends Controller
                         'current' => null
                     ]), $withTrashed);
                     $prepopulateQuery = static::modifyQueryToPrepopulate($prepopulateQuery, $prepopulateParams);
-                    
-                    $collection = $query->get()->merge($prepopulateQuery->get());
+                    $prepopulateCollection = $prepopulateQuery->get();
                 } else {
-                    $query = static::modifyQueryToPrepopulate($query, $prepopulateParams);
-                    
-                    $collection = $query->get();
+                    $query = static::modifyQueryToPrepopulate($query, $prepopulateParams);   
                 }
-            } else {
-                $collection = $query->get();
+                $sorted = array_key_exists('orderBy',$prepopulateParams);
             }
-        } else {
-           $collection = $query->get();
+        }
+
+        $collection = $query->get();
+        if ($prepopulateCollection) {
+            $collection = $collection->merge($prepopulateCollection);
+        }
+
+        $resources = $collection
+            ->mapInto($field->resourceClass)
+            ->filter->authorizedToAdd($request, $request->model())
+            ->map(function ($resource) use ($request, $field) {
+                return $field->formatAssociatableResource($request, $resource);
+            })
+        ;
+        if (!$sorted) {
+            $resources = $resources->sortBy('display');
         }
 
         return [
-            'resources' => $collection
-                ->mapInto($field->resourceClass)
-                ->filter->authorizedToAdd($request, $request->model())
-                ->map(function ($resource) use ($request, $field) {
-                    return $field->formatAssociatableResource($request, $resource);
-                })->values(),
+            'resources' => $resources->values(),
             'softDeletes' => $associatedResource::softDeletes(),
             'withTrashed' => $withTrashed,
         ];
