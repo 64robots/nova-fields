@@ -15,6 +15,17 @@ Nova.booting((Vue, router) => {
   )
   Vue.component('form-nova-fields-text', require('./components/text/FormField'))
 
+  /** Date */
+  Vue.component(
+    'index-nova-fields-date',
+    require('./components/date/IndexField')
+  )
+  Vue.component(
+    'detail-nova-fields-date',
+    require('./components/date/DetailField')
+  )
+  Vue.component('form-nova-fields-date', require('./components/date/FormField'))
+
   /** Computed */
   Vue.component(
     'index-nova-fields-computed',

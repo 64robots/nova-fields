@@ -82,8 +82,13 @@ export default {
     display() {
       const display = this.row[this.field.attribute]
 
+      console.log(this.field.component)
       if (this.field.component === 'nova-fields-belongs-to') {
         return display[this.field.displayName]
+      }
+
+      if (this.field.component === 'nova-fields-date' && this.field.format) {
+        return moment(display).format(this.field.format)
       }
 
       if (this.field.displayUsingLabels && this.field.options) {
