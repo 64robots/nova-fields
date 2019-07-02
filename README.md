@@ -25,7 +25,7 @@ The idea is make them more configurable and reusable in package development. If 
 - [ ] Gravatar
 - [ ] Code
 - [ ] Country
-- [ ] Date
+- [x] Date
 - [ ] DateTime
 - [ ] Markdown
 - [ ] Place

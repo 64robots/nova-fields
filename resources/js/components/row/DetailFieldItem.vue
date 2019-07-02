@@ -86,6 +86,10 @@ export default {
         return display[this.field.displayName]
       }
 
+      if (this.field.component === 'nova-fields-date' && this.field.format) {
+        return moment(display).format(this.field.format)
+      }
+
       if (this.field.displayUsingLabels && this.field.options) {
         const option = this.field.options.find(
           opt => Number(opt.value) === Number(display)

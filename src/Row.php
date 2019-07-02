@@ -2,9 +2,9 @@
 
 namespace R64\NovaFields;
 
-use Laravel\Nova\Contracts\Resolvable;
-use Laravel\Nova\Fields\Expandable;
 use Laravel\Nova\Fields\Field;
+use Laravel\Nova\Fields\Expandable;
+use Laravel\Nova\Contracts\Resolvable;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Row extends Field
@@ -290,6 +290,12 @@ class Row extends Field
             return $values->map(function ($row) use ($field) {
                 $key = $field->attribute;
                 $cb = $field->resolveCallback;
+
+                if ($field instanceof Date) {
+                    $cb = function ($value) {
+                        return \Carbon\Carbon::parse($value)->format('Y-m-d');
+                    };
+                };
 
                 if (isset($row->{$key})) {
                     $row->{$key} = $cb ? call_user_func($cb, $row->{$key}) : $row->{$key};
