@@ -102,7 +102,7 @@ export default {
             }
         }
       )
-      fieldsArr = (fields.hasOwnProperty('fields')) ? fields.fields : fields;
+      let fieldsArr = (fields.hasOwnProperty('fields')) ? fields.fields : fields;
         
       this.fields = fieldsArr;
       this.loading = false;
