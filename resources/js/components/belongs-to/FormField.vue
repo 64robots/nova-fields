@@ -22,7 +22,7 @@
             :clearable="isClearable"
             trackBy="value"
             searchBy="display"
-            class="flex-grow mb-2"
+            class="flex-grow"
           >
             <div
               slot="default"
@@ -83,12 +83,12 @@
           </select>
           <a
             v-if="field.quickEdit && !isModal && selectedResourceId"
-            class="btn btn-white p-2 rounded ml-3 mb-2 cursor-pointer"
+            class="btn btn-white p-2 rounded ml-3 cursor-pointer"
             @click="openModalEdit = true"
           >❐</a>
           <a
             v-if="field.quickCreate && !isModal"
-            class="btn btn-primary p-2 rounded ml-3 mb-2 cursor-pointer"
+            class="btn btn-primary p-2 rounded ml-3 cursor-pointer"
             @click="openModalCreate = true"
           >+</a>
         </div>
