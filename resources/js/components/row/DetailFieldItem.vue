@@ -91,9 +91,7 @@ export default {
       }
 
       if (this.field.displayUsingLabels && this.field.options) {
-        const option = this.field.options.find(
-          opt => Number(opt.value) === Number(display)
-        )
+        const option = this.field.options.find(opt => opt.value == display)
         if (!option) {
           return ''
         }
