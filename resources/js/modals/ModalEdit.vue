@@ -102,10 +102,9 @@ export default {
             }
         }
       )
-      if (fields.hasOwnProperty('fields')) {
-          fields = fields.fields
-      }
-      this.fields = fields;
+      fieldsArr = (fields.hasOwnProperty('fields')) ? fields.fields : fields;
+        
+      this.fields = fieldsArr;
       this.loading = false;
     },
 

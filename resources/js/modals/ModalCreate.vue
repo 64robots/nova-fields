@@ -105,15 +105,14 @@ export default {
         `/nova-api/${this.resourceName}/creation-fields`
       );
 
-      if (fields.hasOwnProperty('fields')) {
-          fields = fields.fields
-      }
-      fields.forEach((field, key) => {
+      fieldsArr = (fields.hasOwnProperty('fields')) ? fields.fields : fields;
+          
+      fieldsArr.forEach((field, key) => {
         if (this.fillValues[field.attribute]) {
-          fields[key] = {...field, ...this.fillValues[field.attribute] }
+          fieldsArr[key] = {...field, ...this.fillValues[field.attribute] }
         }
       })
-      this.fields = fields;
+      this.fields = fieldsArr;
       this.loading = false;
     },
 
