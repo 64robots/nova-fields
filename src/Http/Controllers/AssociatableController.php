@@ -78,11 +78,11 @@ class AssociatableController extends Controller
     {
         $query = $query->take($prepopulateParams['take'] ?? 10);
         if (array_key_exists('orderBy',$prepopulateParams)) {
+            $query->getQuery()->orders = null;
             foreach ($prepopulateParams['orderBy'] as $fld => $val) {
-                $query = (is_string($fld)) ? $query->orderBy($fld,$val) : $query->orderBy($val);
+                $query = (is_string($fld)) ? $query->orderBy($fld,$val) : $query->orderBy($val,'asc');
             }
         }
-
         return $query;
     }
 }
