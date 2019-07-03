@@ -15,8 +15,8 @@
 
           <!-- Fields -->
           <div
-            v-for="field in fields"
-            :key="field.component"
+            v-for="(field, index) in fields"
+            :key="index"
           >
             <component
               :is="'form-' + field.component"
