@@ -38,10 +38,18 @@ class BelongsTo extends NovaBelongsTo
      */
     public $displayName = 'name';
 
+    
+    /**
+     * Determine if this field can be cleared (if it is also nullable)
+     *
+     * @var bool
+     */
+    public $clearable = true;
+
     /**
      * Determine if this field should skip Relatable rule if used in Row / JSON
      *
-     * @var string
+     * @var bool
      */
     public $disableRelatableRule = false;
 
@@ -116,6 +124,19 @@ class BelongsTo extends NovaBelongsTo
     public function displayName($name)
     {
         $this->displayName = $name;
+
+        return $this;
+    }
+
+    /**
+     * Indicate that the field should be clearable.
+     *
+     * @param  bool $clearable
+     * @return $this
+     */
+    public function clearable($clearable = true)
+    {
+        $this->clearable = $clearable;
 
         return $this;
     }
@@ -236,6 +257,7 @@ class BelongsTo extends NovaBelongsTo
             'belongsToRelationship' => $this->belongsToRelationship,
             'belongsToId' => $this->belongsToId,
             'searchable' => $this->searchable,
+            'clearable' => $this->clearable,
             'displayName' => $this->displayName,
             'prepopulate' => $this->prepopulate,
             'prepopulateParams' => (object) $this->prepopulateParams,

@@ -19,7 +19,7 @@
             :error="hasError"
             :value="selectedResource"
             :data="availableResources"
-            :clearable="field.nullable"
+            :clearable="isClearable"
             trackBy="value"
             searchBy="display"
             class="flex-grow mb-2"
@@ -69,7 +69,7 @@
           >
             <option
               value
-              :disabled="!field.nullable"
+              :disabled="!isClearable"
               :selected="selectedResourceId == null"
             >{{ placeholder }}</option>
 
@@ -249,6 +249,12 @@ export default {
      */
     isSearchable() {
       return this.field.searchable
+    },
+    /**
+     * Determine if the field is clearable
+     */
+    isClearable () {
+      return this.field.nullable && this.field.clearable
     },
 
     /**
