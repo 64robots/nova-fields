@@ -18,7 +18,6 @@ class DependencyContainer extends Field
      * @var bool
      */
     public $showOnIndex = false;
-
     /**
      * DependencyContainer constructor.
      *
@@ -74,9 +73,13 @@ class DependencyContainer extends Field
             if(array_key_exists('notEmpty', $dependency) && ! empty($resource->{$dependency['field']})) {
                 $this->meta['dependencies'][$index]['satisfied'] = true;
             }
-
-            if(array_key_exists('value', $dependency) && $dependency['value'] == $resource->{$dependency['field']}) {
-                $this->meta['dependencies'][$index]['satisfied'] = true;
+            
+            if(array_key_exists('value', $dependency)) {
+                $field = $resource->{$dependency['field']};
+                $value = (is_object($field)) ? $field->{$field->getKeyName()} : $field;
+                if ($dependency['value'] == $value) {
+                    $this->meta['dependencies'][$index]['satisfied'] = true;
+                }
             }
         }
     }
