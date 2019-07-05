@@ -14,7 +14,10 @@
         :class="[inputClasses, errorClasses]"
         :disabled="readOnly"
       >
-        <option value="" selected disabled>
+        <option value="" 
+          :selected="!value"
+          :disabled="!field.nullable"
+        >
           {{ placeholder }}
         </option>
 
