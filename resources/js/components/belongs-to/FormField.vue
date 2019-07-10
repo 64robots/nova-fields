@@ -181,6 +181,7 @@ export default {
     selectedResourceId: null,
     softDeletes: false,
     withTrashed: false,
+    resourceUriKey: '',
     search: ''
   }),
 
@@ -292,6 +293,7 @@ export default {
    * Mount the component.
    */
   mounted() {
+    this.resourceUriKey = (this.field.resourceUriKey) ? this.field.resourceUriKey : this.resourceName
     this.initializeComponent()
   },
 
@@ -444,7 +446,7 @@ export default {
     getAvailableResources() {
       return storage
         .fetchAvailableResources(
-          this.resourceName,
+          this.resourceUriKey,
           this.field.attribute,
           this.queryParams
         )

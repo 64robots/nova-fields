@@ -160,7 +160,7 @@ class BelongsTo extends NovaBelongsTo
      */
     public function quickCreate($fillValues = [])
     {
-        $this->withMeta(['quickCreate' => true, 'fillValues' => (object) $fillValues]);
+        $this->withMeta([__FUNCTION__ => true, 'fillValues' => (object) $fillValues]);
 
         return $this;
     }
@@ -172,7 +172,7 @@ class BelongsTo extends NovaBelongsTo
      */
     public function quickEdit()
     {
-        $this->withMeta(['quickEdit' => true]);
+        $this->withMeta([__FUNCTION__ => true]);
 
         return $this;
     }
@@ -183,7 +183,7 @@ class BelongsTo extends NovaBelongsTo
      */
     public function disableTrashed()
     {
-        $this->withMeta(['disableTrashed' => true]);
+        $this->withMeta([__FUNCTION__ => true]);
 
         return $this;
     }
@@ -221,6 +221,7 @@ class BelongsTo extends NovaBelongsTo
         return $this;
     }
 
+
     /**
      * Determine a dependency fields
      *
@@ -228,7 +229,7 @@ class BelongsTo extends NovaBelongsTo
      */
     public function dependsOn($fields)
     {
-        $this->withMeta(['dependsOn' => $fields]);
+        $this->withMeta([__FUNCTION__ => $fields]);
 
         return $this;
     }
