@@ -322,6 +322,26 @@ export default {
       this.selectedResource = resource
       this.selectedResourceId = resource.value
     },
+    performSearch(search) {
+      // local extension of default laravel-nova/src/mixins/PerformsSearches.js
+      this.search = search
+
+      const trimmedSearch = search.trim()
+      // If the user performs an empty search, it will load all the results
+      // so let's just set the availableResources to an empty array to avoid
+      // loading a huge result set
+      if (trimmedSearch == '') {
+        this.clearSelection()
+        
+        if (!this.shouldPrepopulate) return
+      }
+
+      this.debouncer(() => {
+        this.selectedResource = ''
+        this.getAvailableResources(trimmedSearch)
+      }, 500)
+    },
+
     initializeComponent() {
 
       this.withTrashed = false

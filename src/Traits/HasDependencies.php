@@ -1,10 +1,11 @@
 <?php
 
-namespace R64\NovaFields;
+namespace R64\NovaFields\Traits;
 
 use Illuminate\Support\Facades\Route;
 use Laravel\Nova\Fields\FieldCollection;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use R64\NovaFields\DependencyContainer;
 
 trait HasDependencies
 {
@@ -19,7 +20,7 @@ trait HasDependencies
         // Needs to be filtered once to resolve Panels
         $fields = $this->filter($this->fields($request));
         $availableFields = [];
-
+        
         foreach ($fields as $field) {
             if ($field instanceof DependencyContainer) {
                 $availableFields[] = $field;

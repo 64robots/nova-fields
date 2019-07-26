@@ -22,8 +22,13 @@ class AssociatableController extends Controller
 
         if(!$field) {
             $rowField = $fields->firstWhere('component', 'nova-fields-row');
-            $fields = collect($rowField->meta['fields']);
-            $field = $fields->firstWhere('attribute', $request->field);
+            foreach($fields as $_field) {
+                if (in_array($_field->component,['nova-fields-row','nova-fields-dependency-container'])) {
+                    $_fields = collect($_field->meta['fields']);
+                    $field = $_fields->firstWhere('attribute', $request->field);
+                }
+                if ($field) break;
+            }
         }
 
         $withTrashed = $this->shouldIncludeTrashed(

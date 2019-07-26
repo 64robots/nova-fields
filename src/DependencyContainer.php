@@ -18,6 +18,7 @@ class DependencyContainer extends Field
      * @var bool
      */
     public $showOnIndex = false;
+    
     /**
      * DependencyContainer constructor.
      *
@@ -28,10 +29,9 @@ class DependencyContainer extends Field
     public function __construct($fields, $attribute = null, $resolveCallback = null)
     {
         parent::__construct('', $attribute, $resolveCallback);
-
+        
         $this->withMeta(['fields' => $fields]);
         $this->withMeta(['dependencies' => []]);
-        $this->withMeta(['watchable' => (object) ['name' => 'value', 'path' => null]]);
     }
 
     /**
@@ -52,7 +52,7 @@ class DependencyContainer extends Field
      *
      *
      * @param $field
-     * @return DependencyContainer
+     * @return $this
      */
     public function dependsOnNotEmpty($field)
     {
@@ -91,7 +91,7 @@ class DependencyContainer extends Field
      * @param string $attribute
      * @return array|mixed
      */
-    protected function resolveAttribute($resource, $attribute)
+    public function resolve($resource, $attribute = null)
     {
         foreach ($this->meta['fields'] as $field) {
             $field->resolve($resource);

@@ -38,9 +38,15 @@
 			registerDependencyWatchers(root) {
 				root.$children.forEach(component => {
 					if (this.componentIsDependency(component)) {
-						let attrname = this.field.watchable.name,
+						let attrname = 'value',
+							attrpath = null;
+						if (this.field.watchable) {
+							attrname = this.field.watchable.name;
 							attrpath = this.field.watchable.path;
-
+						} else if (component.hasOwnProperty('selectedResource')) {
+							attrname = 'selectedResource';
+							attrpath = 'value';
+						}
 						component.$watch(attrname, (value) => {
 							let result = null
 							if (attrpath) {
