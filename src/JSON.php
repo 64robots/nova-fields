@@ -70,9 +70,9 @@ class JSON extends Field
 
         $this->fields = collect();
 
-        foreach($fields as $field) {
-            if($field instanceOf Panel){
-                collect($field->data)->each(function($f) {
+        foreach ($fields as $field) {
+            if ($field instanceof Panel) {
+                collect($field->data)->each(function ($f) {
                     $this->fields->push($f);
                 });
             } else {
@@ -91,18 +91,6 @@ class JSON extends Field
     public function panelTitleClasses($classes)
     {
         $this->panelTitleClasses = $classes;
-
-        return $this;
-    }
-
-    /**
-     * Whether the field should be shown on the index.
-     *
-     * @return $this
-     */
-    public function showOnIndex()
-    {
-        $this->showOnIndex = true;
 
         return $this;
     }
@@ -153,7 +141,7 @@ class JSON extends Field
     protected function fillAttributeFromRequest(NovaRequest $request, $requestAttribute, $model, $attribute)
     {
         $this->fields->each(function ($field) use ($request, $model, $attribute) {
-            $field->fillInto($request, $model, $attribute.'->'.$field->attribute, $attribute.'.'.$field->attribute);
+            $field->fillInto($request, $model, $attribute . '->' . $field->attribute, $attribute . '.' . $field->attribute);
         });
     }
 
