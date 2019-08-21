@@ -198,11 +198,16 @@ trait Configurable
      *
      * @return $this
      */
-    public function hideWhenCreating()
+    public function hideWhenCreating($callback = true)
     {
-        parent::hideWhenCreating();
+        parent::hideWhenCreating($callback);
 
-        return $this->withMeta(['hideWhenCreating' => true]);
+        $hideOnCreation = is_callable($callback) ? function () use ($callback) {
+            return call_user_func_array($callback, func_get_args());
+        }
+            : $callback;
+
+        return $this->withMeta(['hideWhenCreating' => $hideOnCreation]);
     }
 
     /**
@@ -210,11 +215,16 @@ trait Configurable
      *
      * @return $this
      */
-    public function hideWhenUpdating()
+    public function hideWhenUpdating($callback = true)
     {
-        parent::hideWhenUpdating();
+        parent::hideWhenUpdating($callback);
 
-        return $this->withMeta(['hideWhenUpdating' => true]);
+        $hideOnUpdate = is_callable($callback) ? function () use ($callback) {
+            return call_user_func_array($callback, func_get_args());
+        }
+            : $callback;
+
+        return $this->withMeta(['hideWhenUpdating' => $hideOnUpdate]);
     }
 
     /**
@@ -222,11 +232,16 @@ trait Configurable
      *
      * @return $this
      */
-    public function hideFromDetail()
+    public function hideFromDetail($callback = true)
     {
-        parent::hideFromDetail();
+        parent::hideFromDetail($callback);
 
-        return $this->withMeta(['hideFromDetail' => true]);
+        $hideOnDetail = is_callable($callback) ? function () use ($callback) {
+            return call_user_func_array($callback, func_get_args());
+        }
+            : $callback;
+
+        return $this->withMeta(['hideFromDetail' => $hideOnDetail]);
     }
 
     /**
