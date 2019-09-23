@@ -1,7 +1,5 @@
 # Getting Started
 
-[Documentation](https://nova-fields.netlify.com/)
-
 Nova Fields is a collection of rewriten "native" fields that comes with Nova. We are also adding new fields and utilities as we find the need.
 
 The idea here is making them more configurable and reusable in package development. These components have a lot of new methods to customize the look and feel, behavior, etc...
