@@ -133,9 +133,9 @@ class BelongsTo extends NovaBelongsTo
      *
      * @return $this
      */
-    public function quickCreate()
+    public function quickCreate($fillValues = [])
     {
-        $this->withMeta(['quickCreate' => true]);
+        $this->withMeta(['quickCreate' => true, 'fillValues' => $fillValues]);
 
         return $this;
     }
@@ -167,6 +167,7 @@ class BelongsTo extends NovaBelongsTo
             'panelFieldClasses' => $this->panelFieldClasses,
             'labelClasses' => $this->labelClasses,
             'panelLabelClasses' => $this->panelLabelClasses,
+            'panelWrapperClasses' => $this->panelWrapperClasses,
             'excerptClasses' => $this->excerptClasses,
             'grouped' => !!$this->groupedBy,
             'resourceName' => $this->resourceName,

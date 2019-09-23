@@ -9,9 +9,12 @@
       <heading class="m-3">{{__('New')}} {{ singularName }}</heading>
 
       <card class="overflow-hidden">
-        <form v-if="fields" @submit.prevent="createResource">
+        <form
+          v-if="fields"
+          @submit.prevent="createResource"
+        >
           <!-- Validation Errors -->
-          <validation-errors :errors="validationErrors"/>
+          <validation-errors :errors="validationErrors" />
 
           <!-- Fields -->
           <div
@@ -57,11 +60,7 @@
 </template>
 
 <script>
-import {
-  Errors,
-  Minimum,
-  InteractsWithResourceInformation
-} from 'laravel-nova';
+import { Errors, Minimum, InteractsWithResourceInformation } from 'laravel-nova'
 
 export default {
   mixins: [InteractsWithResourceInformation],
@@ -70,6 +69,10 @@ export default {
     resourceName: {
       type: String,
       required: true
+    },
+    fillValues: {
+      type: Object,
+      required: false
     }
   },
 
@@ -81,27 +84,34 @@ export default {
   }),
 
   created() {
-    this.getFields();
+    this.getFields()
   },
 
   methods: {
     handleClose() {
-      const event = this.addedItem ? 'confirm' : 'close';
-      this.$emit(event);
+      const event = this.addedItem ? 'confirm' : 'close'
+      this.$emit(event)
     },
 
     /**
      * Get the available fields for the resource.
      */
     async getFields() {
-      this.fields = [];
+      this.fields = []
 
-      const { data: fields } = await Nova.request().get(
+      const { data } = await Nova.request().get(
         `/nova-api/${this.resourceName}/creation-fields`
-      );
+      )
 
-      this.fields = fields;
-      this.loading = false;
+      const fields = data.fields ? data.fields : data
+
+      fields.forEach((field, key) => {
+        if (this.fillValues[field.attribute]) {
+          fields[key] = { ...field, ...this.fillValues[field.attribute] }
+        }
+      })
+      this.fields = fields
+      this.loading = false
     },
 
     /**
@@ -109,20 +119,20 @@ export default {
      */
     async createResource() {
       try {
-        const response = await this.createRequest();
+        const response = await this.createRequest()
 
         this.$toasted.show(
           this.__('The :resource was created!', {
             resource: this.resourceInformation.singularLabel.toLowerCase()
           }),
           { type: 'success' }
-        );
+        )
 
-        const { id } = response.data;
-        this.$emit('confirm', id);
+        const { id } = response.data
+        this.$emit('confirm', id)
       } catch (error) {
         if (error.response.status == 422) {
-          this.validationErrors = new Errors(error.response.data.errors);
+          this.validationErrors = new Errors(error.response.data.errors)
         }
       }
     },
@@ -132,24 +142,24 @@ export default {
      */
     async createAndAddAnother() {
       try {
-        const response = await this.createRequest();
+        const response = await this.createRequest()
 
         this.$toasted.show(
           this.__('The :resource was created!', {
             resource: this.resourceInformation.singularLabel.toLowerCase()
           }),
           { type: 'success' }
-        );
+        )
 
-        this.addedItem = true;
+        this.addedItem = true
 
         // Reset the form by refetching the fields
-        this.getFields();
+        this.getFields()
 
-        this.validationErrors = new Errors();
+        this.validationErrors = new Errors()
       } catch (error) {
         if (error.response.status == 422) {
-          this.validationErrors = new Errors(error.response.data.errors);
+          this.validationErrors = new Errors(error.response.data.errors)
         }
       }
     },
@@ -161,7 +171,7 @@ export default {
       return Nova.request().post(
         `/nova-api/${this.resourceName}`,
         this.createResourceFormData()
-      );
+      )
     },
 
     /**
@@ -170,16 +180,16 @@ export default {
     createResourceFormData() {
       return _.tap(new FormData(), formData => {
         _.each(this.fields, field => {
-          field.fill(formData);
-        });
-      });
+          field.fill(formData)
+        })
+      })
     }
   },
 
   computed: {
     singularName() {
-      return this.resourceInformation.singularLabel;
+      return this.resourceInformation.singularLabel
     }
   }
-};
+}
 </script>

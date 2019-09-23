@@ -12,6 +12,7 @@
         :fields="fields"
         :heading-classes="field.headingClasses"
         :base-classes="field.childConfig"
+        :spacer-classes="field.deleteButtonClasses"
       />
       <div
         v-for="(row, indexV) in values"
@@ -19,10 +20,10 @@
         :class="field.rowWrapperClasses"
       >
         <component
-          class="remove-bottom-border w-full"
           :key="`${row.row_id}${f.attribute}`"
           :ref="`${row.row_id}${f.attribute}`"
           v-for="(f, indexF) in fields"
+          v-if="shouldShowField(f)"
           v-model="row[f.attribute]"
           :is="`form-${f.component}`"
           :parent-attribute="field.attribute"
@@ -42,6 +43,12 @@
           @click="rowToRemove = row.row_id"
         >x</span>
       </div>
+      <SumField
+        v-if="shouldShowSum"
+        :values="values"
+        :field="field"
+        :fields="fields"
+      />
       <div class="flex justify-end">
         <a
           :class="[field.addRowButtonClasses, { 'pointer-events-none opacity-50': shouldDisableButton }]"
@@ -87,11 +94,12 @@ import { FormField, HandlesValidationErrors } from 'laravel-nova'
 import RowField from './RowField'
 import R64Field from '../../mixins/R64Field'
 import RowHeading from './RowHeading'
+import SumField from './SumField'
 
 export default {
   mixins: [FormField, HandlesValidationErrors, RowField, R64Field],
 
-  components: { RowHeading },
+  components: { RowHeading, SumField },
 
   props: ['resourceName', 'resourceId', 'field'],
 
@@ -183,6 +191,10 @@ export default {
         element.handleChange(value[key])
       })
     })
+
+    if (this.field.prepopulateRowWhenEmpty && !this.values.length) {
+      this.addRow()
+    }
   },
 
   methods: {
@@ -223,9 +235,10 @@ export default {
       this.values.forEach((row, index) => {
         Object.keys(row).forEach(key => {
           const value = row[key]
+          const isObject = typeof value === 'object' && value !== null
           const formDataName = `${this.field.attribute}[${index}][${key}]`
-          const formDataValue = typeof  value === 'object' ? value.file : value
-          const formDataFilename = typeof value === 'object' ? value.name : null
+          const formDataValue = isObject ? value.file : value || ''
+          const formDataFilename = isObject ? value.name : null
           if (formDataFilename) {
             formData.append(formDataName, formDataValue, formDataFilename)
           } else {

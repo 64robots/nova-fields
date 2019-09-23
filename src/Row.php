@@ -2,9 +2,9 @@
 
 namespace R64\NovaFields;
 
-use Laravel\Nova\Contracts\Resolvable;
-use Laravel\Nova\Fields\Expandable;
 use Laravel\Nova\Fields\Field;
+use Laravel\Nova\Fields\Expandable;
+use Laravel\Nova\Contracts\Resolvable;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Row extends Field
@@ -33,6 +33,13 @@ class Row extends Field
     public $headingClasses = 'flex text-80 py-2';
 
     /**
+     * The base item wrapper classes of the field.
+     *
+     * @var string
+     */
+    public $itemWrapperClasses = 'flex border-40 border';
+
+    /**
      * The base heading classes of the field.
      *
      * @var string
@@ -52,6 +59,20 @@ class Row extends Field
      * @var string
      */
     public $rowWrapperClasses = 'flex items-center border-40 border relative';
+
+    /**
+     * The base classes for the Sum wrapper.
+     *
+     * @var string
+     */
+    public $sumWrapperClasses = 'flex items-center justify-end w-full p-2';
+
+    /**
+     * The base classes for the Sum field.
+     *
+     * @var string
+     */
+    public $sumFieldClasses = 'text-80';
 
     /**
      * The field's component.
@@ -110,6 +131,16 @@ class Row extends Field
     }
 
     /**
+     * Determine if the sum field should be hidden when empty rows.
+     *
+     * @return $this
+     */
+    public function hideSumWhenEmpty()
+    {
+        return $this->withMeta(['hideSumWhenEmpty' => true]);
+    }
+
+    /**
      * Sets the classes to be displayed in row heading
      *
      * @param  string  $classes
@@ -118,6 +149,19 @@ class Row extends Field
     public function headingClasses($classes)
     {
         $this->headingClasses = $classes;
+
+        return $this;
+    }
+
+    /**
+     * Sets the classes to be displayed wrapping the item
+     *
+     * @param  string  $classes
+     * @return $this
+     */
+    public function itemWrapperClasses($classes)
+    {
+        $this->itemWrapperClasses = $classes;
 
         return $this;
     }
@@ -133,6 +177,52 @@ class Row extends Field
         $this->deleteButtonClasses = $classes;
 
         return $this;
+    }
+
+    /**
+     * Sets the classes to be displayed in sum wrapper
+     *
+     * @param  string  $classes
+     * @return $this
+     */
+    public function sumWrapperClasses($classes)
+    {
+        $this->sumWrapperClasses = $classes;
+
+        return $this;
+    }
+
+    /**
+     * Sets the classes to be displayed in sum field
+     *
+     * @param  string  $classes
+     * @return $this
+     */
+    public function sumFieldClasses($classes)
+    {
+        $this->sumFieldClasses = $classes;
+
+        return $this;
+    }
+
+    /**
+     * Prepopulate one row when the collection is empty.
+     *
+     * @return $this
+     */
+    public function prepopulateRowWhenEmpty()
+    {
+        return $this->withMeta(['prepopulateRowWhenEmpty' => true]);
+    }
+
+    /**
+     * Shows a sum of the value of the field.
+     *
+     * @return $this
+     */
+    public function sum($field)
+    {
+        return $this->withMeta(['sum' => $field]);
     }
 
     /**
@@ -201,6 +291,12 @@ class Row extends Field
                 $key = $field->attribute;
                 $cb = $field->resolveCallback;
 
+                if ($field instanceof Date) {
+                    $cb = function ($value) {
+                        return \Carbon\Carbon::parse($value)->format('Y-m-d');
+                    };
+                };
+
                 if (isset($row->{$key})) {
                     $row->{$key} = $cb ? call_user_func($cb, $row->{$key}) : $row->{$key};
                 }
@@ -247,9 +343,11 @@ class Row extends Field
     {
         $result = [];
 
-        foreach ($this->meta['fields'] as $field) {
-            $fieldRules = $this->generateRules($field->getRules($request));
-            $result = array_merge_recursive($result, $fieldRules);
+        if (array_key_exists('fields', $this->meta)) {
+            foreach ($this->meta['fields'] as $field) {
+                $fieldRules = $this->generateRules($field->getRules($request));
+                $result = array_merge_recursive($result, $fieldRules);
+            }
         }
 
         return array_merge_recursive(
@@ -268,9 +366,11 @@ class Row extends Field
     {
         $result = [];
 
-        foreach ($this->meta['fields'] as $field) {
-            $rules = $this->generateRules($field->getCreationRules($request));
-            $result = array_merge_recursive($result, $rules);
+        if (array_key_exists('fields', $this->meta)) {
+            foreach ($this->meta['fields'] as $field) {
+                $rules = $this->generateRules($field->getCreationRules($request));
+                $result = array_merge_recursive($result, $rules);
+            }
         }
 
         return array_merge_recursive(
@@ -289,9 +389,11 @@ class Row extends Field
     {
         $result = [];
 
-        foreach ($this->meta['fields'] as $field) {
-            $rules = $this->generateRules($field->getUpdateRules($request));
-            $result = array_merge_recursive($result, $rules);
+        if (array_key_exists('fields', $this->meta)) {
+            foreach ($this->meta['fields'] as $field) {
+                $rules = $this->generateRules($field->getUpdateRules($request));
+                $result = array_merge_recursive($result, $rules);
+            }
         }
 
         return array_merge_recursive(
@@ -311,9 +413,12 @@ class Row extends Field
             'sanitizedAttribute' => str_plural(kebab_case($this->attribute)),
             'shouldShow' => $this->shouldBeExpanded(),
             'headingClasses' => $this->headingClasses,
+            'itemWrapperClasses' => $this->itemWrapperClasses,
             'deleteButtonClasses' => $this->deleteButtonClasses,
             'addRowButtonClasses' => $this->addRowButtonClasses,
             'rowWrapperClasses' => $this->rowWrapperClasses,
+            'sumWrapperClasses' => $this->sumWrapperClasses,
+            'sumFieldClasses' => $this->sumFieldClasses,
         ]);
     }
 }

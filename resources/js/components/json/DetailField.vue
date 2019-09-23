@@ -6,6 +6,7 @@
       :hide-label="field.hideLabelInDetail"
       :label-classes="field.panelLabelClasses"
       :field-classes="field.panelFieldClasses"
+      :wrapper-classes="field.panelWrapperClasses"
     >
       <div slot="value">
         <DetailFieldPanel

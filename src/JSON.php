@@ -5,6 +5,7 @@ namespace R64\NovaFields;
 use Laravel\Nova\Panel;
 use Laravel\Nova\Fields\Field;
 use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Contracts\Resolvable;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
@@ -69,9 +70,9 @@ class JSON extends Field
 
         $this->fields = collect();
 
-        foreach($fields as $field) {
-            if($field instanceOf Panel){
-                collect($field->data)->each(function($f) {
+        foreach ($fields as $field) {
+            if ($field instanceof Panel) {
+                collect($field->data)->each(function ($f) {
                     $this->fields->push($f);
                 });
             } else {
@@ -89,18 +90,6 @@ class JSON extends Field
     public function panelTitleClasses($classes)
     {
         $this->panelTitleClasses = $classes;
-
-        return $this;
-    }
-
-    /**
-     * Whether the field should be shown on the index.
-     *
-     * @return $this
-     */
-    public function showOnIndex()
-    {
-        $this->showOnIndex = true;
 
         return $this;
     }
@@ -140,6 +129,12 @@ class JSON extends Field
             };
         });
 
+        $this->fields->whereInstanceOf(DateTime::class)->each(function ($dateField) {
+            $dateField->resolveCallback = function ($value) {
+                return \Carbon\Carbon::parse($value)->format('Y-m-d H:i:s');
+            };
+        });
+
         $this->fields->whereInstanceOf(Resolvable::class)->each->resolve($this->value);
 
         $this->withMeta(['fields' => $this->fields]);
@@ -159,7 +154,7 @@ class JSON extends Field
     protected function fillAttributeFromRequest(NovaRequest $request, $requestAttribute, $model, $attribute)
     {
         $this->fields->each(function ($field) use ($request, $model, $attribute) {
-            $field->fillInto($request, $model, $attribute.'->'.$field->attribute, $attribute.'.'.$field->attribute);
+            $field->fillInto($request, $model, $attribute . '->' . $field->attribute, $attribute . '.' . $field->attribute);
         });
     }
 

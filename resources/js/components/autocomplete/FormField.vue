@@ -9,19 +9,22 @@
   >
     <template slot="field">
       <Multiselect
-        v-model="selectedOption"
+        :value="selectedValue"
         track-by="value"
         label="label"
         :group-select="false"
         :searchable="true"
         :placeholder="placeholder"
         :disabled="readOnly"
-        :options="field.options"
+        :options="options"
         @input="selectValue"
       />
 
-      <p v-if="hasError" class="my-2 text-danger">
-          {{ firstError }}
+      <p
+        v-if="hasError"
+        class="my-2 text-danger"
+      >
+        {{ firstError }}
       </p>
     </template>
   </r64-default-field>
@@ -40,12 +43,11 @@ export default {
 
   data() {
     return {
-      selectedOption: null
+      options: this.field.options
     }
   },
 
   computed: {
-
     /**
      * Get the placeholder.
      */
@@ -53,6 +55,20 @@ export default {
       return this.field.placeholder === undefined
         ? this.__('Choose an option')
         : this.field.placeholder
+    },
+
+    selectedValue() {
+      if (!this.options) {
+        return null
+      }
+
+      return this.options.find(o => o.value == this.value)
+    }
+  },
+
+  watch: {
+    value(value) {
+      this.$emit('input', this.value)
     }
   },
 
@@ -70,22 +86,17 @@ export default {
 
     selectValue(obj) {
       this.value = obj ? obj.value : null
-      this.$emit('input', this.value)
     },
 
     computedOptionsReceived(data) {
-      if (data && JSON.stringify(data) !== JSON.stringify(this.field.options)) {
-        this.selectedOption = null
-        this.$emit('input', null)
-        this.field.options = data
+      if (data && JSON.stringify(data) !== JSON.stringify(this.options)) {
+        this.value = null
+        this.options = data
       }
     },
 
     computedValueReceived(data) {
-      const option = this.field.options.find(option => option.value === data)
-      if (option) {
-        this.selectedOption = option
-      }
+      this.value = data
     }
   }
 }

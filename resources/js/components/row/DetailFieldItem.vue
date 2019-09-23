@@ -9,27 +9,50 @@
       :class="statusClass"
     />
   </div>
+  <detail-nova-fields-file
+    v-else-if="isFile"
+    :value="display"
+    v-bind="{ ...$props }"
+  />
   <p
     v-else
     :class="fieldClass"
   >{{ display }}</p>
 </template>
 <script>
-import BooleanDetailField from '../boolean/DetailField'
-
 export default {
-  components: { BooleanDetailField },
-
   props: {
     field: {
       type: Object,
       default: () => ({})
     },
+
     row: {
       type: Object,
       default: () => ({})
     },
+
     baseClasses: {
+      type: String,
+      default: ''
+    },
+
+    resource: {
+      type: Object,
+      default: () => ({})
+    },
+
+    resourceId: {
+      type: [String, Number],
+      default: null
+    },
+
+    resourceName: {
+      type: [String, Number],
+      default: null
+    },
+
+    parentAttribute: {
       type: String,
       default: ''
     }
@@ -40,6 +63,13 @@ export default {
       return (
         this.field.component === 'boolean-field' ||
         this.field.component === 'nova-fields-boolean'
+      )
+    },
+
+    isFile() {
+      return (
+        this.field.component === 'file-field' ||
+        this.field.component === 'nova-fields-file'
       )
     },
 
@@ -56,10 +86,12 @@ export default {
         return display[this.field.displayName]
       }
 
+      if (this.field.component === 'nova-fields-date' && this.field.format) {
+        return moment(display).format(this.field.format)
+      }
+
       if (this.field.displayUsingLabels && this.field.options) {
-        const option = this.field.options.find(
-          opt => Number(opt.value) === Number(display)
-        )
+        const option = this.field.options.find(opt => opt.value == display)
         if (!option) {
           return ''
         }

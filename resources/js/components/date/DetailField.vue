@@ -5,22 +5,12 @@
     :hide-label="hideLabelInDetail"
     :label-classes="panelLabelClasses"
     :field-classes="panelFieldClasses"
-    :wrapper-classes="panelWrapperClasses"
   >
     <template slot="value">
-      <router-link
+      <p
         v-if="field.value"
-        :to="{
-          name: 'detail',
-          params: {
-            resourceName: field.resourceName,
-            resourceId: field.belongsToId
-          }
-        }"
-        class="no-underline font-bold dim text-primary"
-      >
-        {{ field.value }}
-      </router-link>
+        class="text-90"
+      >{{ formattedDate }}</p>
       <p v-else>&mdash;</p>
     </template>
   </r64-panel-item>
@@ -32,6 +22,14 @@ import R64Field from '../../mixins/R64Field'
 export default {
   mixins: [R64Field],
 
-  props: ['resource', 'resourceName', 'resourceId', 'field']
+  props: ['resource', 'resourceName', 'resourceId', 'field'],
+
+  computed: {
+    formattedDate() {
+      return this.field.format
+        ? moment(this.field.value).format(this.field.format)
+        : this.field.value
+    }
+  }
 }
 </script>

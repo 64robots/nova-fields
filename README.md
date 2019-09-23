@@ -8,13 +8,43 @@ Vue components also emit events that propagates up to the chain so are ideal to 
 
 Looking forward to see your feedback.
 
+### Available fields:
+
+- [x] ID
+- [x] Text
+- [x] Number
+- [x] Textarea
+- [x] Select
+- [x] Password
+- [x] Boolean
+- [x] Trix
+- [x] File
+- [x] Image
+- [x] BelongsTo
+- [x] Currency
+- [ ] Status
+- [ ] Avatar
+- [ ] Gravatar
+- [ ] Code
+- [ ] Country
+- [x] Date
+- [ ] DateTime
+- [ ] Markdown
+- [ ] Place
+- [ ] Timezone
+
+### Custom Fields
+
+- [x] JSON ([Documentation](docs/json.md))
+- [x] Row ([Documentation](docs/row.md))
+
 ## Install
 
 Run this command in your nova project:
 `composer require 64robots/nova-fields`
 
-
 Usage:
+
 ```php
 // use R64\NovaFields\<NAME OF THE FIELD>;
 use R64\NovaFields\Boolean;

@@ -2,6 +2,7 @@
 
 namespace R64\NovaFields\Http\Controllers;
 
+use Laravel\Nova\Nova;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class ComputedController
@@ -14,7 +15,12 @@ class ComputedController
      */
     public function index(NovaRequest $request)
     {
-        $fields = $request->newResource()->availableFields($request);
+        $resourceId = $request->input('resourceId');
+        $resourceClass = Nova::resourceForKey($request->resource);
+        $modelClass = $resourceClass::$model;
+        $model = $resourceId ? $modelClass::find($resourceId) : $resourceClass::newModel();
+
+        $fields = $request->newResourceWith($model)->availableFields($request);
 
         $rowField = $fields->first(function($field) use ($request) {
             return ($field->component === 'nova-fields-row' || $field->component === 'nova-fields-json' ) &&

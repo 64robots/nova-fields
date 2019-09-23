@@ -5,6 +5,7 @@
     :hide-label="hideLabelInDetail"
     :label-classes="panelLabelClasses"
     :field-classes="panelFieldClasses"
+    :wrapper-classes="panelWrapperClasses"
   >
     <p slot="value" class="text-90">
       <span

@@ -20,9 +20,9 @@
           />
         </template>
 
-        <template v-if="field.value && !field.thumbnailUrl">
+        <template v-if="fileValue && !field.thumbnailUrl">
           <card class="flex item-center relative border border-lg border-50 overflow-hidden p-4">
-            {{ field.value }}
+            {{ fileValue }}
 
             <DeleteButton
               :dusk="field.attribute + '-internal-delete-link'"
@@ -59,34 +59,98 @@
         </portal>
       </div>
 
-      <span class="form-file mr-4">
-        <input
-          ref="fileField"
-          :dusk="field.attribute"
-          :class="inputClasses"
-          type="file"
-          :id="idAttr"
-          name="name"
-          @change="fileChange"
-        />
-        <label :for="labelFor" class="form-file-btn btn btn-default btn-primary">
-          {{__('Choose File')}}
-        </label>
+      <span
+        class="form-file mr-4"
+        v-if="!isFilledRowSubfield"
+      >
+        <el-upload
+          v-if="field.draggable"
+          drag
+          action
+          :auto-upload="false"
+          :on-change="fileChange"
+          :show-file-list="false"
+        >
+          <div class="p-8 text-80">
+            <div
+              v-if="fileName"
+              class="flex items-center"
+            >
+              <span>{{ fileName }}</span>
+
+              <button
+                v-if="field.previewBeforeUpload"
+                class="appearance-none cursor-pointer text-70 hover:text-primary ml-3 pt-2"
+                title="Preview"
+                @click.stop.prevent="onPreviewFile"
+              >
+                <icon
+                  type="view"
+                  class="w-8"
+                />
+              </button>
+
+              <button
+                class="appearance-none cursor-pointer text-70 hover:text-primary ml-3"
+                title="Delete"
+                @click.stop.prevent="removeFile"
+              >
+                <icon type="delete" />
+              </button>
+            </div>
+            <div v-else>{{__('Click here or drop the file to upload')}}</div>
+          </div>
+        </el-upload>
+        <template v-else>
+          <input
+            ref="fileField"
+            :dusk="field.attribute"
+            :class="inputClasses"
+            type="file"
+            :id="idAttr"
+            name="name"
+            @change="fileChange"
+          />
+          <label
+            :for="labelFor"
+            class="form-file-btn btn btn-default btn-primary"
+          >
+            {{__('Choose File')}}
+          </label>
+        </template>
       </span>
 
-      <span class="text-gray-50">
+      <span
+        v-if="!field.draggable && !isFilledRowSubfield"
+        class="text-gray-50"
+      >
         {{ currentLabel }}
       </span>
 
-      <p v-if="hasError" class="text-xs mt-2 text-danger">
+      <p
+        v-if="hasError"
+        class="text-xs mt-2 text-danger"
+      >
         {{ firstError }}
       </p>
+
+      <portal to="modals">
+        <transition name="fade">
+          <modal
+            v-if="showPreview"
+            @modal-close="showPreview = false"
+          >
+            <img :src="previewFile">
+          </modal>
+        </transition>
+      </portal>
     </template>
   </r64-default-field>
 </template>
 
 <script>
 import { FormField, HandlesValidationErrors, Errors } from 'laravel-nova'
+import { Upload } from 'element-ui'
 import ImageLoader from '../../nova/ImageLoader'
 import DeleteButton from '../../nova/DeleteButton'
 import R64Field from '../../mixins/R64Field'
@@ -94,7 +158,7 @@ import R64Field from '../../mixins/R64Field'
 export default {
   mixins: [HandlesValidationErrors, FormField, R64Field],
 
-  components: { DeleteButton, ImageLoader },
+  components: { DeleteButton, ImageLoader, 'el-upload': Upload },
 
   data: () => ({
     file: null,
@@ -103,27 +167,52 @@ export default {
     removeModalOpen: false,
     missing: false,
     deleted: false,
-    uploadErrors: new Errors()
+    uploadErrors: new Errors(),
+    showPreview: false,
+    previewFile: null
   }),
 
   mounted() {
     this.field.fill = formData => {
-      formData.append(this.field.attribute, this.file, this.fileName)
+      if (this.file) {
+        formData.append(this.field.attribute, this.file, this.fileName)
+      }
     }
   },
 
   methods: {
+    onPreviewFile() {
+      if (this.isImage) {
+        this.showPreview = true
+        return
+      }
+      window.open(this.previewFile, '_blank')
+    },
+
     /**
      * Responsd to the file change
      */
     fileChange(event) {
-      let path = event.target.value
-      let fileName = path.match(/[^\\/]*$/)[0]
-      this.fileName = fileName
-      this.file = this.$refs.fileField.files[0]
+      // If is a el-upload event
+      if (event.raw) {
+        this.fileName = event.name
+        this.file = event.raw
+      } else {
+        let path = event.target.value
+        let fileName = path.match(/[^\\/]*$/)[0]
+        this.fileName = fileName
+        this.file = this.$refs.fileField.files[0]
+      }
+
+      this.previewFile = URL.createObjectURL(this.file)
+
+      this.emitInputEvent()
+    },
+
+    emitInputEvent() {
       this.$emit('input', {
         file: this.file,
-        name: this.fileName,
+        name: this.fileName
       })
     },
 
@@ -145,6 +234,14 @@ export default {
      * Remove the linked file from storage
      */
     async removeFile() {
+      if (this.isRowSubfield) {
+        this.fileName = ''
+        this.file = null
+        this.value = null
+        this.closeRemoveModal()
+        return this.emitInputEvent()
+      }
+
       this.uploadErrors = new Errors()
 
       const {
@@ -176,6 +273,30 @@ export default {
   },
 
   computed: {
+    isFilledRowSubfield() {
+      return this.fileValue && this.isRowSubfield
+    },
+
+    isRowSubfield() {
+      return !!this.parentAttribute
+    },
+
+    fileValue() {
+      return this.field.value || this.value
+    },
+
+    isImage() {
+      if (!this.file) {
+        return false
+      }
+
+      if (this.file.type.startsWith('image/')) {
+        return true
+      }
+
+      return false
+    },
+
     hasError() {
       return this.uploadErrors.has(this.fieldAttribute)
     },
@@ -205,7 +326,10 @@ export default {
      * @return {[type]} [description]
      */
     labelFor() {
-      return `file-${this.field.attribute}`
+      const hash = Math.random()
+        .toString(36)
+        .substring(7)
+      return `file-${this.field.attribute}-${hash}`
     },
 
     /**
@@ -213,7 +337,7 @@ export default {
      */
     hasValue() {
       return (
-        Boolean(this.field.value || this.field.thumbnailUrl) &&
+        Boolean(this.fileValue || this.field.thumbnailUrl) &&
         !Boolean(this.deleted) &&
         !Boolean(this.missing)
       )
@@ -230,7 +354,7 @@ export default {
      * Determine whether the field should show the remove button
      */
     shouldShowRemoveButton() {
-      return Boolean(this.field.deletable)
+      return Boolean(this.field.deletable) && !this.isRowSubfield
     }
   }
 }
