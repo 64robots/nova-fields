@@ -81,7 +81,6 @@ class JSON extends Field
         }
     }
 
-
     /**
      * Set the panel title classes that should be applied instead of default ones.
      *
@@ -93,6 +92,20 @@ class JSON extends Field
         $this->panelTitleClasses = $classes;
 
         return $this;
+    }
+
+    /**
+     * Whether the fields within the JSON should be 'flattened'.
+     *
+     * @param bool $value
+     *
+     * @return $this
+     */
+    public function flatten($value = true)
+    {
+        return $this->withMeta([
+            'flatten' => $value
+        ]);
     }
 
     /**
@@ -233,20 +246,6 @@ class JSON extends Field
         $this->fields->whereInstanceOf(Resolvable::class)->each->resolveForDisplay($this->value);
 
         parent::resolve($resource, $attribute);
-    }
-
-    /**
-     * Whether the fields within the JSON should be 'flattened'.
-     *
-     * @param bool $value
-     *
-     * @return $this
-     */
-    public function flatten($value = true)
-    {
-        return $this->withMeta([
-            'flatten' => $value
-        ]);
     }
 
     /**

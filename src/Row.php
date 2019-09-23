@@ -131,6 +131,16 @@ class Row extends Field
     }
 
     /**
+     * Shows a sum of the value of the field.
+     *
+     * @return $this
+     */
+    public function sum($field)
+    {
+        return $this->withMeta(['sum' => $field]);
+    }
+
+    /**
      * Determine if the sum field should be hidden when empty rows.
      *
      * @return $this
@@ -138,6 +148,36 @@ class Row extends Field
     public function hideSumWhenEmpty()
     {
         return $this->withMeta(['hideSumWhenEmpty' => true]);
+    }
+
+    /**
+     * Prepopulate one empty row when the collection is empty.
+     *
+     * @return $this
+     */
+    public function prepopulateRowWhenEmpty()
+    {
+        return $this->withMeta(['prepopulateRowWhenEmpty' => true]);
+    }
+
+    /**
+     * Set the maximum of rows that can be added.
+     *
+     * @return $this
+     */
+    public function maxRows($rows)
+    {
+        return $this->withMeta(['maxRows' => $rows]);
+    }
+
+    /**
+     * Set text for Add Row button.
+     * @param  string  $name
+     * @return $this
+     */
+    public function addRowText($text)
+    {
+        return $this->withMeta(['addRowText' => $text]);
     }
 
     /**
@@ -203,46 +243,6 @@ class Row extends Field
         $this->sumFieldClasses = $classes;
 
         return $this;
-    }
-
-    /**
-     * Prepopulate one row when the collection is empty.
-     *
-     * @return $this
-     */
-    public function prepopulateRowWhenEmpty()
-    {
-        return $this->withMeta(['prepopulateRowWhenEmpty' => true]);
-    }
-
-    /**
-     * Shows a sum of the value of the field.
-     *
-     * @return $this
-     */
-    public function sum($field)
-    {
-        return $this->withMeta(['sum' => $field]);
-    }
-
-    /**
-     * Set the maximum of rows that can be added.
-     *
-     * @return $this
-     */
-    public function maxRows($rows)
-    {
-        return $this->withMeta(['maxRows' => $rows]);
-    }
-
-    /**
-     * Set text for Add Row button.
-     * @param  string  $name
-     * @return $this
-     */
-    public function addRowText($text)
-    {
-        return $this->withMeta(['addRowText' => $text]);
     }
 
     /**

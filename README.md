@@ -1,10 +1,12 @@
-# A collection of customizable Nova Fields
+# Getting Started
 
-## WIP
+Nova Fields is a collection of rewriten "native" fields that comes with Nova. We are also adding new fields and utilities as we find the need.
 
-We are working on a rewrite of every "native" field that comes with Nova.
+The idea here is making them more configurable and reusable in package development. These components have a lot of new methods to customize the look and feel, behavior, etc...
 
-The idea is make them more configurable and reusable in package development. If you like the idea you can collaborate with us with your awesome PRs!
+Vue components also emit events that propagates up to the chain so are ideal to reuse them in other Nova packages.
+
+Looking forward to see your feedback.
 
 ### Available fields:
 
@@ -33,12 +35,21 @@ The idea is make them more configurable and reusable in package development. If 
 
 ### Custom Fields
 
-- [x] JSON ([Documentation](docs/json.md))
-- [x] Row ([Documentation](docs/row.md))
+- [x] Autocomplete
+- [x] JSON
+- [x] Row
 
-Some examples:
+## Install
+
+Run this command in your nova project:
+`composer require 64robots/nova-fields`
+
+Usage:
 
 ```php
+// use R64\NovaFields\<NAME OF THE FIELD>;
+use R64\NovaFields\Boolean;
+
 Boolean::make('Activo', 'active')
                 ->yesLabel('Yeah')
                 ->noLabel('Nope')
@@ -46,12 +57,3 @@ Boolean::make('Activo', 'active')
                 ->dotClasses('some classes')
                 ->successClass('bg-warning')
 ```
-
-We are also adding events in vue components that propagates up to the chain so the parent notices when something has happened
-
-Looking forward to see your feedback.
-
-### Install
-
-Run this command in your nova project:
-`composer require 64robots/nova-fields`
