@@ -35,8 +35,9 @@ Looking forward to see your feedback.
 
 ### Custom Fields
 
-- [x] JSON ([Documentation](docs/json.md))
-- [x] Row ([Documentation](docs/row.md))
+- [x] Autocomplete
+- [x] JSON
+- [x] Row
 
 ## Install
 
