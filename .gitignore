@@ -1,6 +1,7 @@
 /.idea
 /vendor
 /node_modules
+/docs/.vuepress/dist
 package-lock.json
 composer.phar
 composer.lock
