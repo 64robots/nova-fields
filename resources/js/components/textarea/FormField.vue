@@ -9,13 +9,10 @@
   >
     <template slot="field">
       <textarea
-        :data-testid="field.attribute"
-        :dusk="field.attribute"
-        :disabled="readOnly"
         type="text"
         v-model="value"
         :class="[errorClasses, inputClasses]"
-        :placeholder="placeholder"
+        v-bind="extraAttributes"
       />
       <p v-if="hasError" class="my-2 text-danger">
         {{ firstError }}
@@ -34,6 +31,25 @@ export default {
   watch: {
     value(value) {
       this.$emit('input', value)
+    }
+  },
+
+  computed: {
+    defaultAttributes() {
+      return {
+        rows: this.field.rows,
+        disabled: this.readOnly,
+        placeholder: this.placeholder
+      }
+    },
+
+    extraAttributes() {
+      const attrs = this.field.extraAttributes
+
+      return {
+        ...this.defaultAttributes,
+        ...attrs
+      }
     }
   }
 }
