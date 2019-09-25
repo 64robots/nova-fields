@@ -2,6 +2,7 @@
 
 namespace R64\NovaFields;
 
+use Illuminate\Support\Str;
 use Laravel\Nova\Fields\Field;
 use Laravel\Nova\Fields\Expandable;
 use Laravel\Nova\Contracts\Resolvable;
@@ -410,7 +411,7 @@ class Row extends Field
     public function jsonSerialize()
     {
         return array_merge(parent::jsonSerialize(), [
-            'sanitizedAttribute' => str_plural(kebab_case($this->attribute)),
+            'sanitizedAttribute' => Str::plural(Str::kebab($this->attribute)),
             'shouldShow' => $this->shouldBeExpanded(),
             'headingClasses' => $this->headingClasses,
             'itemWrapperClasses' => $this->itemWrapperClasses,
