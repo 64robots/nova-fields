@@ -122,6 +122,16 @@ This converts to an array of objects.
 ]
 ```
 
+If you need to transform the request before storing it in the database you can use `fillUsing` callback
+
+```php
+Row::make('Lines', [
+    // ...
+])->fillUsing(function ($request, $model) {
+    $model->lines = json_encode($request->lines);
+})
+```
+
 ### childConfig
 
 You can apply as many as [Shared Methods](shared-methods.md) you want to all the Row subfields. The following example has the same effect that code in the snippet above
