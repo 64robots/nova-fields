@@ -167,65 +167,8 @@ class JSON extends Field
     protected function generateRules($rules)
     {
         return collect($rules)->mapWithKeys(function ($rules, $key) {
-            return [$this->attribute . '.' . $key => $rules];
+            return [$this->attribute . ($key ? '.' . $key : '') => $rules];
         })->toArray();
-    }
-
-    /**
-     * Get the validation rules for this field.
-     *
-     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
-     * @return array
-     */
-    public function getRules(NovaRequest $request)
-    {
-        $result = [];
-
-        foreach ($this->fields as $field) {
-            $rules = $this->generateRules($field->getRules($request));
-
-            $result = array_merge_recursive($result, $rules);
-        }
-
-        return $result;
-    }
-
-    /**
-     * Get the creation rules for this field.
-     *
-     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
-     * @return array|string
-     */
-    public function getCreationRules(NovaRequest $request)
-    {
-        $result = [];
-
-        foreach ($this->fields as $field) {
-            $rules = $this->generateRules($field->getCreationRules($request));
-
-            $result = array_merge_recursive($result, $rules);
-        }
-
-        return $result;
-    }
-
-    /**
-     * Get the update rules for this field.
-     *
-     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
-     * @return array
-     */
-    public function getUpdateRules(NovaRequest $request)
-    {
-        $result = [];
-
-        foreach ($this->fields as $field) {
-            $rules = $this->generateRules($field->getUpdateRules($request));
-
-            $result = array_merge_recursive($result, $rules);
-        }
-
-        return $result;
     }
 
     /**
