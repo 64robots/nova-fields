@@ -2,6 +2,8 @@
 
 namespace R64\NovaFields;
 
+use Laravel\Nova\Http\Requests\NovaRequest;
+
 trait HasChilds
 {
     /**
