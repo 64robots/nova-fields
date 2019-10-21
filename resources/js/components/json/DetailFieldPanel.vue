@@ -25,8 +25,8 @@
       },
 
       panelTitleClass: {
-        type: Object,
-        default: () => {}
+        type: String,
+        default: ''
       },
     },
   }
