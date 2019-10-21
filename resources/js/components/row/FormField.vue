@@ -56,31 +56,29 @@
         >{{ addRowText }}</a>
       </div>
 
-      <portal to="modals">
-        <transition name="fade">
-          <delete-resource-modal
-            v-if="rowToRemove"
-            @confirm="removeRow"
-            @close="rowToRemove = false"
+      <transition name="fade">
+        <delete-resource-modal
+          v-if="rowToRemove"
+          @confirm="removeRow"
+          @close="rowToRemove = false"
+        >
+          <div
+            slot-scope
+            class="p-8"
           >
-            <div
-              slot-scope
-              class="p-8"
-            >
-              <heading
-                :level="2"
-                class="mb-6"
-                v-text="__('Delete Row')"
-              />
+            <heading
+              :level="2"
+              class="mb-6"
+              v-text="__('Delete Row')"
+            />
 
-              <p
-                class="text-80 leading-normal"
-                v-text="__('Are you sure you want to delete this row?')"
-              />
-            </div>
-          </delete-resource-modal>
-        </transition>
-      </portal>
+            <p
+              class="text-80 leading-normal"
+              v-text="__('Are you sure you want to delete this row?')"
+            />
+          </div>
+        </delete-resource-modal>
+      </transition>
       <p
         v-if="hasError"
         class="my-2 text-danger"
