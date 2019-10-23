@@ -34,6 +34,11 @@ export default {
       default: ''
     },
 
+    useWrapperClasses: {
+      type: Boolean,
+      default: false
+    },
+
     baseClasses: {
       type: Object,
       default: () => ({})
@@ -42,7 +47,8 @@ export default {
 
   methods: {
     getFieldClasses(field) {
-      return this.baseClasses.fieldClasses || field.fieldClasses
+      const classes = this.useWrapperClasses ? 'wrapperClasses' : 'fieldClasses'
+      return this.baseClasses[classes] || field[classes]
     }
   }
 }

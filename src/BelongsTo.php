@@ -177,6 +177,7 @@ class BelongsTo extends NovaBelongsTo
             'belongsToId' => $this->belongsToId,
             'searchable' => $this->searchable,
             'displayName' => $this->displayName,
+            'viewable' => $this->viewable,
         ], $this->meta);
     }
 }

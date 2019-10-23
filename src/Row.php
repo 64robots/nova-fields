@@ -273,6 +273,17 @@ class Row extends Field
     }
 
     /**
+     * Uses wrapper classes in heading instead of field classes
+     *
+     * @param  string  $classes
+     * @return $this
+     */
+    public function useWrapperClassesInHeading()
+    {
+        return $this->withMeta(['useWrapperClassesInHeading' => true]);
+    }
+
+    /**
      * Resolve the field's value.
      *
      * @param  mixed  $resource
