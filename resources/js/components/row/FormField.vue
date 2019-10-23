@@ -13,6 +13,7 @@
         :heading-classes="field.headingClasses"
         :base-classes="field.childConfig"
         :spacer-classes="field.deleteButtonClasses"
+        :use-wrapper-classes="!!field.useWrapperClassesInHeading"
       />
       <div
         v-for="(row, indexV) in values"

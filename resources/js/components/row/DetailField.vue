@@ -20,6 +20,7 @@
           :fields="field.fields"
           :base-classes="field.childConfig"
           :heading-classes="field.headingClasses"
+          :use-wrapper-classes="!!field.useWrapperClassesInHeading"
         />
         <div
           v-for="row in values"
