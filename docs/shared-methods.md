@@ -150,10 +150,10 @@ Text::make('Name')->hideLabelInDetail(),
 Show or hide the field based on other field value. Only available as subfield of [Json](custom.md#json) field.
 
 ```php
-use R64\NovaFields\Json;
+use R64\NovaFields\JSON;
 use R64\NovaFields\Text;
 
-Json::make('Group', [
+JSON::make('Group', [
   Text::make('First Name'),
   Text::make('Last Name')->onlyWhen('first_name'),
 ])
