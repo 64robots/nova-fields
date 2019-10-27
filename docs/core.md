@@ -27,7 +27,7 @@ Number::make('Price')->colors()
 Sets the Show Content label.
 
 ```php
-Textatea::make('Comments')->showContentLabel('Show Comments')
+Textarea::make('Comments')->showContentLabel('Show Comments')
 ```
 
 ### hideContentLabel
@@ -35,7 +35,7 @@ Textatea::make('Comments')->showContentLabel('Show Comments')
 Sets the Hide Content label.
 
 ```php
-Textatea::make('Comments')->hideContentLabel('Hide Comments')
+Textarea::make('Comments')->hideContentLabel('Hide Comments')
 ```
 
 [Shared Methods](shared-methods.md)
