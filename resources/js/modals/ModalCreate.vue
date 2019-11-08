@@ -71,7 +71,7 @@ export default {
       required: true
     },
     fillValues: {
-      type: Object,
+      type: [Object, Array],
       required: false
     }
   },
