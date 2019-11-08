@@ -58,6 +58,10 @@ export default {
     },
 
     selectedValue() {
+      if (this.field.computeOptions && typeof this.field.computeOptions !== 'undefined') {
+        this.fetchComputedValues()
+      }
+
       if (!this.options) {
         return null
       }
@@ -90,7 +94,6 @@ export default {
 
     computedOptionsReceived(data) {
       if (data && JSON.stringify(data) !== JSON.stringify(this.options)) {
-        this.value = null
         this.options = data
       }
     },
