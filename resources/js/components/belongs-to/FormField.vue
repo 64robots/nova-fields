@@ -42,7 +42,7 @@
 
             <div
               slot="option"
-              slot-scope="{option, selected}"
+              slot-scope="{ option }"
               class="flex items-center"
             >
               <div
@@ -153,7 +153,7 @@ export default {
     viaRelationship: {},
     fillValues: {
       type: Object,
-      default: {}
+      default: () => ({})
     },
 
     dataSet: Array,
