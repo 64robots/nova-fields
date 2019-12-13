@@ -92,7 +92,6 @@
         v-if="!isModal"
         to="modals"
       >
-        <transition name="fade">
           <ModalCreate
             v-if="openModal"
             :resourceName="field.resourceName"
@@ -100,7 +99,6 @@
             @confirm="reloadResources"
             @close="openModal = false"
           />
-        </transition>
       </portal>
       <!-- Trashed State -->
       <div v-if="softDeletes && !isLocked && !field.disableTrashed">
