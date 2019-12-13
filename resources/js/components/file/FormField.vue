@@ -49,13 +49,11 @@
         </p>
 
         <portal to="modals">
-          <transition name="fade">
             <confirm-upload-removal-modal
               v-if="removeModalOpen"
               @confirm="removeFile"
               @close="closeRemoveModal"
             />
-          </transition>
         </portal>
       </div>
 
@@ -234,16 +232,6 @@ export default {
      * Remove the linked file from storage
      */
     async removeFile() {
-      if (this.isRowSubfield) {
-        this.fileName = ''
-        this.file = null
-        this.value = null
-        this.closeRemoveModal()
-        return this.emitInputEvent()
-      }
-
-      this.uploadErrors = new Errors()
-
       const {
         resourceName,
         resourceId,
@@ -252,6 +240,16 @@ export default {
         viaRelationship
       } = this
       const attribute = this.field.attribute
+
+      if (this.isRowSubfield || !resourceId) {
+        this.fileName = ''
+        this.file = null
+        this.value = null
+        this.closeRemoveModal()
+        return this.emitInputEvent()
+      }
+
+      this.uploadErrors = new Errors()
 
       const uri = this.viaRelationship
         ? `/nova-api/${resourceName}/${resourceId}/${relatedResourceName}/${relatedResourceId}/field/${attribute}?viaRelationship=${viaRelationship}`
