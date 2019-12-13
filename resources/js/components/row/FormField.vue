@@ -245,6 +245,10 @@ export default {
           }
         })
       })
+
+      if (!this.values.length) {
+        formData.append(this.field.attribute, '')
+      }
     },
 
     /**
