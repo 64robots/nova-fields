@@ -6,9 +6,8 @@
     @modal-close="handleClose"
   >
     <loading-view :loading="loading">
-      <heading class="m-3">{{__('New')}} {{ singularName }}</heading>
-
       <card class="overflow-hidden">
+      <heading class="m-3">{{__('New')}} {{ singularName }}</heading>
         <form
           v-if="fields"
           @submit.prevent="createResource"
@@ -100,7 +99,16 @@ export default {
       this.fields = []
 
       const { data } = await Nova.request().get(
-        `/nova-api/${this.resourceName}/creation-fields`
+        `/nova-api/${this.resourceName}/creation-fields`,
+        {
+            params: {
+                editing: true,
+                editMode: 'create',
+                viaResource: this.viaResource,
+                viaResourceId: this.viaResourceId,
+                viaRelationship: this.viaRelationship,
+            },
+        }
       )
 
       const fields = data.fields ? data.fields : data
@@ -190,6 +198,6 @@ export default {
     singularName() {
       return this.resourceInformation.singularLabel
     }
-  }
+  },
 }
 </script>
