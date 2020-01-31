@@ -6,9 +6,8 @@
     @modal-close="handleClose"
   >
     <loading-view :loading="loading">
-      <heading class="m-3">{{__('New')}} {{ singularName }}</heading>
-
       <card class="overflow-hidden">
+      <heading class="m-3">{{__('New')}} {{ singularName }}</heading>
         <form
           v-if="fields"
           @submit.prevent="createResource"
@@ -199,6 +198,6 @@ export default {
     singularName() {
       return this.resourceInformation.singularLabel
     }
-  }
+  },
 }
 </script>
