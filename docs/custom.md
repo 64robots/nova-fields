@@ -6,13 +6,13 @@ This field extends from R64 Select. The main difference is that you will recieve
 
 [Shared Methods](shared-methods.md)
 
-## JSON
-
-This field allows you to group together Nova Fields and merge their key-value-pairs into unique JSON.
-
 ### Demo
 
 ![Demo](http://g.recordit.co/b7alxIvlsh.gif)
+
+## JSON
+
+This field allows you to group together Nova Fields and merge their key-value-pairs into unique JSON.
 
 ### Usage
 
