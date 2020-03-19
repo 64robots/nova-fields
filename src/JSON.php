@@ -119,7 +119,7 @@ class JSON extends Field
     {
         $attribute = $attribute ?? $this->attribute;
 
-        $value = $resource->{$attribute};
+        $value = data_get($resource, $attribute);
 
         $this->value = is_object($value) || is_array($value) ? $value : json_decode($value);
 
@@ -182,7 +182,7 @@ class JSON extends Field
     {
         $attribute = $attribute ?? $this->attribute;
 
-        $value = $resource->{$attribute};
+        $value = data_get($resource, $attribute);
 
         $this->value = is_object($value) || is_array($value) ? $value : json_decode($value);
 
