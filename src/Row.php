@@ -108,7 +108,7 @@ class Row extends Field
     {
         parent::__construct($name, $attribute, $resolveCallback);
 
-        $this->fields = collect($fields);
+        $this->fields = $this->prepareFields($fields);
     }
 
     /**
@@ -343,6 +343,30 @@ class Row extends Field
         return collect($rules)->mapWithKeys(function ($rules, $key) {
             return [$this->attribute . '.*.' . $key => $rules];
         })->toArray();
+    }
+
+    /**
+     * Prepare subfields for Row.
+     *
+     * @param  array  $fields
+     * @return Collection
+     */
+    protected function prepareFields($fields)
+    {
+        return collect($fields)->each(function($field) {
+            if (!$field->showOnIndex) {
+                $field->withMeta(['hideFromIndex' => true]);
+            }
+            if (!$field->showOnCreation) {
+                $field->withMeta(['hideWhenCreating' => true]);
+            }
+            if (!$field->showOnUpdate) {
+                $field->withMeta(['hideWhenUpdating' => true]);
+            }
+            if (!$field->showOnDetail) {
+                $field->withMeta(['hideFromDetail' => true]);
+            }
+        });
     }
 
     /**

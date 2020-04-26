@@ -194,57 +194,6 @@ trait Configurable
     }
 
     /**
-     * Specify that the element should be hidden from the creation view.
-     *
-     * @return $this
-     */
-    public function hideWhenCreating($callback = true)
-    {
-        parent::hideWhenCreating($callback);
-
-        $hideOnCreation = is_callable($callback) ? function () use ($callback) {
-            return call_user_func_array($callback, func_get_args());
-        }
-            : $callback;
-
-        return $this->withMeta(['hideWhenCreating' => $hideOnCreation]);
-    }
-
-    /**
-     * Specify that the element should be hidden from the update view.
-     *
-     * @return $this
-     */
-    public function hideWhenUpdating($callback = true)
-    {
-        parent::hideWhenUpdating($callback);
-
-        $hideOnUpdate = is_callable($callback) ? function () use ($callback) {
-            return call_user_func_array($callback, func_get_args());
-        }
-            : $callback;
-
-        return $this->withMeta(['hideWhenUpdating' => $hideOnUpdate]);
-    }
-
-    /**
-     * Specify that the element should be hidden from the detail view.
-     *
-     * @return $this
-     */
-    public function hideFromDetail($callback = true)
-    {
-        parent::hideFromDetail($callback);
-
-        $hideOnDetail = is_callable($callback) ? function () use ($callback) {
-            return call_user_func_array($callback, func_get_args());
-        }
-            : $callback;
-
-        return $this->withMeta(['hideFromDetail' => $hideOnDetail]);
-    }
-
-    /**
      * Specify that the index view should show as a link to the resource
      *
      * @return $this
@@ -252,42 +201,6 @@ trait Configurable
     public function showLinkInIndex()
     {
         return $this->withMeta(['showLinkInIndex' => true]);
-    }
-
-    /**
-     * Specify that the element should be shown only on detail view.
-     *
-     * @return $this
-     */
-    public function onlyOnDetail()
-    {
-        parent::onlyOnDetail();
-
-        return $this->withMeta(['hideWhenCreating' => true, 'hideWhenUpdating' => true]);
-    }
-
-    /**
-     * Specify that the element should be shown only on forms.
-     *
-     * @return $this
-     */
-    public function onlyOnForms()
-    {
-        parent::onlyOnForms();
-
-        return $this->withMeta(['hideFromDetail' => true]);
-    }
-
-    /**
-     * Specify that the element should be hidden on forms.
-     *
-     * @return $this
-     */
-    public function exceptOnForms()
-    {
-        parent::exceptOnForms();
-
-        return $this->withMeta(['hideWhenCreating' => true, 'hideWhenUpdating' => true]);
     }
 
     /**
