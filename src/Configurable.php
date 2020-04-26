@@ -235,19 +235,6 @@ trait Configurable
     }
 
     /**
-     * Set the input as disabled.
-     *
-     * @return $this
-     */
-    public function readOnly($callback = null)
-    {
-        if (!$callback || (is_callable($callback) && call_user_func($callback))) {
-            return $this->withMeta(['readOnly' => true]);
-        }
-        return $this;
-    }
-
-    /**
      * Set the input as disabled on create view.
      *
      * @return $this
