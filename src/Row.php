@@ -354,6 +354,9 @@ class Row extends Field
     protected function prepareFields($fields)
     {
         return collect($fields)->each(function($field) {
+            if($field->isReadonly(app(NovaRequest::class))) {
+                $field->withMeta(['readOnly' => true]);
+            }
             if (!$field->showOnIndex) {
                 $field->withMeta(['hideFromIndex' => true]);
             }
