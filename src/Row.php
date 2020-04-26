@@ -389,6 +389,7 @@ class Row extends Field
             'rowWrapperClasses' => $this->rowWrapperClasses,
             'sumWrapperClasses' => $this->sumWrapperClasses,
             'sumFieldClasses' => $this->sumFieldClasses,
+            'fields' => $this->fields,
         ]);
     }
 }

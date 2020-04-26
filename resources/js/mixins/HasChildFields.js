@@ -8,6 +8,6 @@ export default {
   },
 
   created() {
-    this.fields = this.field.fields;
+    this.fields = this.field.fields || [];
   }
 };

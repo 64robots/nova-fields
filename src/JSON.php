@@ -200,6 +200,7 @@ class JSON extends Field
     {
         return array_merge(parent::jsonSerialize(), [
             'panelTitleClasses' => $this->panelTitleClasses,
+            'fields' => $this->fields,
         ]);
     }
 }
