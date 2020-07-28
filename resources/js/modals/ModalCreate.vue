@@ -82,8 +82,8 @@ export default {
     validationErrors: new Errors()
   }),
 
-  created() {
-    this.getFields()
+  async created() {
+    await this.getFields()
   },
 
   methods: {
@@ -111,13 +111,15 @@ export default {
         }
       )
 
-      const fields = data.fields ? data.fields : data
+      const fieldsObj = data.fields ? data.fields : data
+      const fields = Array.isArray(fieldsObj) ? fieldsObj : Object.values(fieldsObj)
 
       fields.forEach((field, key) => {
         if (this.fillValues[field.attribute]) {
-          fields[key] = { ...field, ...this.fillValues[field.attribute] }
+          field.value = this.fillValues[field.attribute]
         }
       })
+
       this.fields = fields
       this.loading = false
     },
