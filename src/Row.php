@@ -307,7 +307,7 @@ class Row extends Field
                     $cb = function ($value) {
                         return \Carbon\Carbon::parse($value)->format('Y-m-d');
                     };
-                };
+                }
 
                 if (isset($row->{$key})) {
                     $row->{$key} = $cb ? call_user_func($cb, $row->{$key}) : $row->{$key};
