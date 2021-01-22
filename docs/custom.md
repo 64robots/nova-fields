@@ -232,7 +232,7 @@ Row::make('Lines', [
 
 ### headingClasses
 
-Sets the classes to be displayed in row heading.
+Sets the classes to be displayed in row heading (applied both in the detail view and in the form view).
 
 ```php
 Row::make('Lines', [
@@ -244,7 +244,7 @@ Row::make('Lines', [
 
 ### itemWrapperClasses
 
-Sets the classes to be displayed wrapping the item.
+Sets the classes to be displayed wrapping the item (applied to each item in the detail view).
 
 ```php
 Row::make('Lines', [
@@ -304,7 +304,7 @@ Row::make('Lines', [
 
 ### rowWrapperClasses
 
-Sets the classes to be displayed in Row wrapper
+Sets the classes to be displayed in Row wrapper (applied to each row in the form view).
 
 ```php
 Row::make('Lines', [
