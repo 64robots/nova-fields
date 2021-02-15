@@ -42,7 +42,7 @@
           <icon type="x-circle" width="22" height="22" viewBox="0 0 22 22" />
         </a>
 
-        <span v-if="!hideTimezone" class="text-80 text-sm ml-2">({{ userTimezone }})</span>
+        <span v-if="!field.hideTimezone" class="text-80 text-sm ml-2">({{ userTimezone }})</span>
       </div>
     </template>
   </r64-default-field>
