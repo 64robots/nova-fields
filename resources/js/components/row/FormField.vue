@@ -187,7 +187,7 @@ export default {
         if (!ref) return
 
         const element = ref[0]
-        element.handleChange(value[key])
+        element.handleChange({ target: { value: value[key] } })
       })
     })
 
