@@ -64,6 +64,20 @@ trait Configurable
     public $excerptClasses = 'cursor-pointer dim inline-block text-primary font-bold';
 
     /**
+     * List of property and classes to add with optional conditional callbacks
+     *
+     * @var array
+     */
+    public $addClasses = [];
+
+    /**
+     * List of property and classes to remove with optional conditional callbacks
+     *
+     * @var array
+     */
+    public $removeClasses = [];
+
+    /**
      * Set the container classes that should be applied instead of default ones.
      *
      * @param  string  $classes
@@ -311,22 +325,51 @@ trait Configurable
         }
 
         $action = $matches[1];
-        $property =  Str::camel($matches[2]);
+        $property = Str::camel($matches[2]);
         $classes = $parameters[0];
+        $callback = $parameters[1] ?? null;
 
         if (!property_exists($this, $property)) {
             return $this;
         }
 
         if ($action === 'add') {
-            $this->$property = "{$this->$property} {$classes}";
+            $this->addClasses[] = [$property, $classes, $callback];
         }
 
         if ($action === 'remove') {
-            $this->$property = str_replace(preg_split('/[\s,]+/', $classes), '', $this->$property);
+            $this->removeClasses[] = [$property, $classes, $callback];
         }
 
         return $this;
+    }
+
+    /**
+     * Add classes to a property
+     *
+     * @param string $property
+     * @param string $classes
+     * @param ?callable $callback
+     */
+    private function addClassesToProperty($property, $classes, $callback): void
+    {
+        if (!is_null($callback) && !$callback($this->resource)) {
+            return;
+        }
+
+        $this->$property = "{$this->$property} {$classes}";
+    }
+
+    /**
+     * Remove classes from a property
+     *
+     * @param string $property
+     * @param string $classes
+     * @param ?callable $callback
+     */
+    private function removeClassesFromProperty($property, $classes, $callback): void
+    {
+        $this->$property = str_replace(preg_split('/[\s,]+/', $classes), '', $this->$property);
     }
 
     /**
@@ -336,6 +379,14 @@ trait Configurable
      */
     public function meta()
     {
+        collect($this->addClasses)->each(function ($classToAdd) {
+            $this->addClassesToProperty($classToAdd[0], $classToAdd[1], $classToAdd[2]);
+        });
+
+        collect($this->removeClasses)->each(function ($classToRemove) {
+            $this->removeClassesFromProperty($classToRemove[0], $classToRemove[1], $classToRemove[2]);
+        });
+
         return array_merge([
             'wrapperClasses' => $this->wrapperClasses,
             'indexClasses' => $this->indexClasses,

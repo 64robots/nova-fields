@@ -46,6 +46,30 @@ export default {
 
   mixins: [HandlesValidationErrors, FormField, InteractsWithDates, R64Field],
 
+  methods: {
+    /*
+     * Set the initial value for the field
+     */
+    setInitialValue() {
+      // Set the initial value of the field
+      this.value = this.field.value || ''
+    },
+
+    /**
+     * On save, populate our form data
+     */
+    fill(formData) {
+      formData.append(this.field.attribute, this.value || '')
+    },
+
+    /**
+     * Update the field's internal value when it's value changes
+     */
+    handleChange(value) {
+      this.value = value
+    },
+  },
+
   computed: {
     firstDayOfWeek() {
       return this.field.firstDayOfWeek || 0

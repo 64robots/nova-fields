@@ -110,6 +110,15 @@ Text::make('Name')->removeWrapperClasses('border-40'),
 // flex border-b
 ```
 
+You can also add an optional callback as a condition to add or remove the classes.
+
+```php
+use R64\NovaFields\Text;
+
+Date::make('Expires at')->addIndexClasses('text-danger', fn ($resource) => $resource->hasExpired()),
+// text-danger
+```
+
 ## Showing / Hidding / Disabling fields
 
 As our fields extend from the core Nova fields you can use existing methods such as
