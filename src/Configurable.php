@@ -369,6 +369,10 @@ trait Configurable
      */
     private function removeClassesFromProperty($property, $classes, $callback): void
     {
+        if (!is_null($callback) && !$callback($this->resource)) {
+            return;
+        }
+
         $this->$property = str_replace(preg_split('/[\s,]+/', $classes), '', $this->$property);
     }
 
