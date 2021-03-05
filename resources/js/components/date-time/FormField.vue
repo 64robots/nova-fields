@@ -13,7 +13,7 @@
         <DateTimePicker
             :dusk="field.attribute"
             :name="field.name"
-            :value="value"
+            :value="localizedValue"
             dateFormat="Y-m-d H:i:S"
             :placeholder="placeholder"
             :enable-time="true"
@@ -43,8 +43,8 @@ import {
   HandlesValidationErrors,
   InteractsWithDates,
 } from 'laravel-nova'
-import R64Field from "../../mixins/R64Field";
 import DateTimePicker from '../date/DateTimePicker'
+import R64Field from "../../mixins/R64Field";
 
 export default {
   components: { DateTimePicker },
