@@ -14,7 +14,7 @@
             :dusk="field.attribute"
             :name="field.name"
             :value="value"
-            dateFormat="Y-m-d"
+            dateFormat="Y-m-d H:i:S"
             :placeholder="placeholder"
             :enable-time="true"
             :enable-seconds="true"
