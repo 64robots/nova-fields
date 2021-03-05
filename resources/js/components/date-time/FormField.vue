@@ -2,7 +2,6 @@
   <r64-default-field
       :hide-field="hideField"
       :field="field"
-      :errors="errors"
       :show-help-text="showHelpText"
       :hide-label="hideLabelInForms"
       :field-classes="fieldClasses"
@@ -44,6 +43,13 @@
 
         <span v-if="!field.hideTimezone" class="text-80 text-sm ml-2">({{ userTimezone }})</span>
       </div>
+
+      <p
+          v-if="hasError"
+          class="my-2 text-danger"
+      >
+        {{ firstError }}
+      </p>
     </template>
   </r64-default-field>
 </template>
@@ -54,9 +60,10 @@ import {
   HandlesValidationErrors,
   InteractsWithDates,
 } from 'laravel-nova'
+import R64Field from "../../mixins/R64Field";
 
 export default {
-  mixins: [HandlesValidationErrors, FormField, InteractsWithDates],
+  mixins: [HandlesValidationErrors, FormField, InteractsWithDates,  R64Field],
 
   data: () => ({ localizedValue: '' }),
 
