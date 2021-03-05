@@ -10,36 +10,19 @@
   >
     <template slot="field">
       <div class="flex items-center">
-        <date-time-picker
-            class="w-full form-control form-input form-input-bordered"
-            ref="dateTimePicker"
+        <DateTimePicker
             :dusk="field.attribute"
             :name="field.name"
+            :value="value"
+            dateFormat="Y-m-d"
             :placeholder="placeholder"
-            :dateFormat="pickerFormat"
-            :alt-format="pickerDisplayFormat"
-            :value="localizedValue"
-            :twelve-hour-time="usesTwelveHourTime"
+            :enable-time="true"
+            :enable-seconds="true"
             :first-day-of-week="firstDayOfWeek"
             :class="[errorClasses, inputClasses]"
             @change="handleChange"
             :disabled="isReadonly"
         />
-
-        <a
-            v-if="field.nullable"
-            @click.prevent="$refs.dateTimePicker.clear()"
-            href="#"
-            :title="__('Clear value')"
-            tabindex="-1"
-            class="p-1 px-2 cursor-pointer leading-none focus:outline-none"
-            :class="{
-            'text-50': !value.length,
-            'text-black hover:text-danger': value.length,
-          }"
-        >
-          <icon type="x-circle" width="22" height="22" viewBox="0 0 22 22" />
-        </a>
 
         <span v-if="!field.hideTimezone" class="text-80 text-sm ml-2">({{ userTimezone }})</span>
       </div>
@@ -61,8 +44,11 @@ import {
   InteractsWithDates,
 } from 'laravel-nova'
 import R64Field from "../../mixins/R64Field";
+import DateTimePicker from '../date/DateTimePicker'
 
 export default {
+  components: { DateTimePicker },
+
   mixins: [HandlesValidationErrors, FormField, InteractsWithDates,  R64Field],
 
   data: () => ({ localizedValue: '' }),
