@@ -9,6 +9,7 @@
     :parent-attribute="parent.attribute"
     :base-classes="baseClasses"
     :row-values="values"
+    :show-help-text=true
   />
 </template>
 <script>
