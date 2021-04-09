@@ -2,7 +2,6 @@
   <r64-default-field
       :hide-field="hideField"
       :field="field"
-      :errors="errors"
       :show-help-text="showHelpText"
       :hide-label="hideLabelInForms"
       :field-classes="fieldClasses"
@@ -11,39 +10,29 @@
   >
     <template slot="field">
       <div class="flex items-center">
-        <date-time-picker
-            class="w-full form-control form-input form-input-bordered"
-            ref="dateTimePicker"
+        <DateTimePicker
             :dusk="field.attribute"
             :name="field.name"
-            :placeholder="placeholder"
-            :dateFormat="pickerFormat"
-            :alt-format="pickerDisplayFormat"
             :value="localizedValue"
-            :twelve-hour-time="usesTwelveHourTime"
+            dateFormat="Y-m-d H:i:S"
+            :placeholder="placeholder"
+            :enable-time="true"
+            :enable-seconds="true"
             :first-day-of-week="firstDayOfWeek"
             :class="[errorClasses, inputClasses]"
             @change="handleChange"
             :disabled="isReadonly"
         />
 
-        <a
-            v-if="field.nullable"
-            @click.prevent="$refs.dateTimePicker.clear()"
-            href="#"
-            :title="__('Clear value')"
-            tabindex="-1"
-            class="p-1 px-2 cursor-pointer leading-none focus:outline-none"
-            :class="{
-            'text-50': !value.length,
-            'text-black hover:text-danger': value.length,
-          }"
-        >
-          <icon type="x-circle" width="22" height="22" viewBox="0 0 22 22" />
-        </a>
-
         <span v-if="!field.hideTimezone" class="text-80 text-sm ml-2">({{ userTimezone }})</span>
       </div>
+
+      <p
+          v-if="hasError"
+          class="my-2 text-danger"
+      >
+        {{ firstError }}
+      </p>
     </template>
   </r64-default-field>
 </template>
@@ -54,9 +43,13 @@ import {
   HandlesValidationErrors,
   InteractsWithDates,
 } from 'laravel-nova'
+import DateTimePicker from '../date/DateTimePicker'
+import R64Field from "../../mixins/R64Field";
 
 export default {
-  mixins: [HandlesValidationErrors, FormField, InteractsWithDates],
+  components: { DateTimePicker },
+
+  mixins: [HandlesValidationErrors, FormField, InteractsWithDates,  R64Field],
 
   data: () => ({ localizedValue: '' }),
 

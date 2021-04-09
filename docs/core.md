@@ -201,3 +201,15 @@ Currency::make('Price')->colors()
 ## Date
 
 [Shared Methods](shared-methods.md)
+
+## DateTime
+
+### hideTimezone
+
+Indicate that you don't want to show the user timezone in this field.
+
+```php
+DateTime::make('Created At', 'created_at')->hideTimezone()
+```
+
+[Shared Methods](shared-methods.md)
