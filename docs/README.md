@@ -28,7 +28,7 @@ Looking forward to see your feedback.
 - [ ] Code
 - [ ] Country
 - [x] Date
-- [ ] DateTime
+- [x] DateTime
 - [ ] Markdown
 - [ ] Place
 - [ ] Timezone
