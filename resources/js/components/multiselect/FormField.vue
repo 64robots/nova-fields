@@ -10,7 +10,6 @@
       :wrapper-classes="panelWrapperClasses"
   >
     <template slot="field">
-      <div class="multiselect-field flex flex-col">
         <!-- Multi select field -->
         <multiselect
           v-if="!reorderMode"
@@ -82,7 +81,6 @@
         >
           {{ __(reorderMode ? 'novaMultiselect.doneReordering' : 'novaMultiselect.reorder') }}
         </div>
-      </div>
     </template>
   </r64-default-field>
 </template>
