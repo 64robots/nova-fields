@@ -18,14 +18,15 @@
     "flatpickr": "^4.6.1",
     "form-backend-validation": "^2.3.3",
     "laravel-mix": "^3.0.0",
-    "webpack": "3.12.0",
     "laravel-nova": "^1.7.0",
     "trix": "^0.12.1",
     "vue-clickaway": "^2.2.2",
     "vue-multiselect": "^2.1.6",
-    "vuepress": "^1.1.0"
+    "vuepress": "^1.1.0",
+    "webpack": "3.12.0"
   },
   "dependencies": {
+    "slugify": "^1.6.1",
     "vue": "^2.6.11"
   }
 }

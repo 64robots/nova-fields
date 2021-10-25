@@ -15,6 +15,17 @@ Nova.booting((Vue, router) => {
   )
   Vue.component('form-nova-fields-text', require('./components/text/FormField'))
 
+  /** Slug */
+  Vue.component(
+      'index-nova-fields-slug',
+      require('./components/text/IndexField')
+  )
+  Vue.component(
+      'detail-nova-fields-slug',
+      require('./components/text/DetailField')
+  )
+  Vue.component('form-nova-fields-slug', require('./components/slug/FormField'))
+
   /** Date */
   Vue.component(
     'index-nova-fields-date',
