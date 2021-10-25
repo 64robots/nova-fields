@@ -2,10 +2,12 @@
 
 namespace R64\NovaFields;
 
+use R64\NovaFields\Configurable;
 use Laravel\Nova\Fields\Field as NovaField;
 
 class ChildSelect extends NovaField
 {
+    use Configurable;
     /**
      * The base input classes of the field.
      *
