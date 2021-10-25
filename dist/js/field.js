@@ -58957,10 +58957,10 @@ var render = function() {
         showHelpText: _vm.showHelpText,
         errors: _vm.errors,
         "hide-field": _vm.hideField,
-        "hide-label": _vm.hideLabelInDetail,
-        "label-classes": _vm.panelLabelClasses,
-        "field-classes": _vm.panelFieldClasses,
-        "wrapper-classes": _vm.panelWrapperClasses
+        "hide-label": _vm.hideLabelInForms,
+        "field-classes": _vm.fieldClasses,
+        "wrapper-classes": _vm.wrapperClasses,
+        "label-classes": _vm.labelClasses
       }
     },
     [

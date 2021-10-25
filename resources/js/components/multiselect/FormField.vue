@@ -4,10 +4,10 @@
       :showHelpText="showHelpText"
       :errors="errors"
       :hide-field="hideField"
-      :hide-label="hideLabelInDetail"
-      :label-classes="panelLabelClasses"
-      :field-classes="panelFieldClasses"
-      :wrapper-classes="panelWrapperClasses"
+      :hide-label="hideLabelInForms"
+      :field-classes="fieldClasses"
+      :wrapper-classes="wrapperClasses"
+      :label-classes="labelClasses"
   >
     <template slot="field">
         <!-- Multi select field -->
