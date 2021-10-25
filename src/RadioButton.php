@@ -14,7 +14,7 @@ class RadioButton extends NovaField
      *
      * @var string
      */
-    public $inputClasses = 'mlbz-radio-container';
+    public $inputClasses = 'radio';
 
     /**
      * The base index classes of the field.
