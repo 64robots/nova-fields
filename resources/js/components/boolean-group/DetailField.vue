@@ -8,7 +8,7 @@
       :wrapper-classes="panelWrapperClasses"
   >
     <template slot="value">
-      <ul :class="[dotClasses, statusClass]" class="list-reset" v-if="value.length > 0">
+      <ul class="list-reset" v-if="value.length > 0">
         <li v-for="option in value" class="mb-1">
           <span
             :class="classes[option.checked]"
@@ -36,9 +36,8 @@
 
 <script>
 import R64Field from '../../mixins/R64Field'
-import Classes from './Classes'
 export default {
-  mixins: [Classes, R64Field],
+  mixins: [R64Field],
   props: ['resource', 'resourceName', 'resourceId', 'field'],
 
   data: () => ({

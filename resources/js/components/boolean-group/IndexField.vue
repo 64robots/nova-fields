@@ -23,7 +23,7 @@
               "
             >
               <boolean-icon :value="option.checked" width="20" height="20" />
-              <span class="ml-1" :class="[dotClasses, statusClass]">{{ option.label }}</span>
+              <span class="ml-1">{{ option.label }}</span>
             </span>
           </li>
         </ul>
@@ -34,9 +34,7 @@
 </template>
 
 <script>
-import Classes from './Classes'
 export default {
-  mixins: [Classes],
   props: ['resourceName', 'field'],
 
   data: () => ({
