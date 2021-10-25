@@ -19,7 +19,7 @@ class Multiselect extends NovaField implements RelatableField
      *
      * @var string
      */
-    public $inputClasses = 'w-full form-control form-select';
+    public $inputClasses = 'multiselect';
 
     /**
      * The base index classes of the field.
