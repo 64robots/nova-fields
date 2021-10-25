@@ -26,7 +26,7 @@ Nova.booting((Vue, router) => {
   )
   Vue.component('form-nova-fields-slug', require('./components/slug/FormField'))
 
-  /** Slug */
+  /** ChildSelect */
   Vue.component(
       'index-nova-fields-child-select',
       require('./components/text/IndexField')
@@ -36,6 +36,20 @@ Nova.booting((Vue, router) => {
       require('./components/text/DetailField')
   )
   Vue.component('form-nova-fields-child-select', require('./components/child-select/FormField'))
+
+  /** BooleanGroup */
+  Vue.component(
+      'index-nova-fields-boolean-group',
+      require('./components/boolean-group/IndexField.vue')
+  )
+  Vue.component(
+      'detail-nova-fields-boolean-group',
+      require('./components/boolean-group/DetailField.vue')
+  )
+  Vue.component(
+      'form-nova-fields-boolean-group',
+      require('./components/boolean-group/FormField.vue')
+  )
 
   /** Date */
   Vue.component(
