@@ -1,0 +1,11 @@
+{
+  "novaMultiselect.maxElements": "Maximum de :max sélectionnés.",
+  "novaMultiselect.noResult": "Aucun résultat trouvé.",
+  "novaMultiselect.noOptions": "La liste est vide.",
+  "novaMultiselect.limitText": "et :count de plus",
+  "novaMultiselect.placeholder": "Choisissez les options",
+  "novaMultiselect.nItemsSelected": ":count items sélectionnés",
+  "novaMultiselect.reorder": "Réorganiser",
+  "novaMultiselect.doneReordering": "Terminer la réorganisation",
+  "novaMultiSelect.startTypingForOptions": "Commencez à taper pour voir les options"
+}

@@ -1,0 +1,11 @@
+{
+  "novaMultiselect.maxElements": "Maximaal :max toegestaan.",
+  "novaMultiselect.noResult": "Geen resultaten gevonden.",
+  "novaMultiselect.noOptions": "Lijst is leeg.",
+  "novaMultiselect.limitText": "en :count meer",
+  "novaMultiselect.placeholder": "Selecteer optie(s)",
+  "novaMultiselect.nItemsSelected": ":count items geselecteerd",
+  "novaMultiselect.reorder": "Ordenen",
+  "novaMultiselect.doneReordering": "Ordenen afgerond",
+  "novaMultiSelect.startTypingForOptions": "Begin met typen om de opties te zien"
+}

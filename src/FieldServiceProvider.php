@@ -6,10 +6,12 @@ use Laravel\Nova\Nova;
 use Laravel\Nova\Events\ServingNova;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+use R64\NovaFields\NovaTranslationsLoader\LoadsNovaTranslations;
 
 
 class FieldServiceProvider extends ServiceProvider
 {
+    use LoadsNovaTranslations;
     /**
      * Bootstrap any application services.
      *
@@ -24,6 +26,8 @@ class FieldServiceProvider extends ServiceProvider
         Route::group($this->routeConfiguration(), function () {
             $this->loadRoutesFrom(__DIR__.'/../routes/api.php');
         });
+
+        $this->loadTranslations(__DIR__ . '/../resources/lang', 'nova-fields-multiselect', true);
     }
 
     /**

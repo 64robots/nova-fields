@@ -1,0 +1,11 @@
+{
+  "novaMultiselect.maxElements": "Maksimaalne arv :max valitud.",
+  "novaMultiselect.noResult": "Tulemusi ei leitud.",
+  "novaMultiselect.noOptions": "Valikuid ei ole.",
+  "novaMultiselect.limitText": "ja :count veel",
+  "novaMultiselect.placeholder": "Tee valik",
+  "novaMultiselect.nItemsSelected": ":count valitud",
+  "novaMultiselect.reorder": "Järjesta",
+  "novaMultiselect.doneReordering": "Lõpeta järjestamine",
+  "novaMultiSelect.startTypingForOptions": "Alusta kirjutamist, et näha valikuid"
+}
