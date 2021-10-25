@@ -7,7 +7,7 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class RadioButton extends NovaField
 {
-
+    use Configurable;
 
     /**
      * The base input classes of the field.
