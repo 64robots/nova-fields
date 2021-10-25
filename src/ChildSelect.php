@@ -2,11 +2,31 @@
 
 namespace R64\NovaFields;
 
-use Laravel\Nova\Fields\Field;
+use Laravel\Nova\Fields\Field as NovaField;
 
-class ChildSelect extends Field
+class ChildSelect extends NovaField
 {
-    public $component = 'child-select';
+    /**
+     * The base input classes of the field.
+     *
+     * @var string
+     */
+    public $inputClasses = 'w-full form-control form-select';
+
+    /**
+     * The base index classes of the field.
+     *
+     * @var string
+     */
+    public $indexClasses = 'whitespace-no-wrap';
+
+    /**
+     * The field's component.
+     *
+     * @var string
+     */
+    public $component = 'nova-fields-child-select';
+
 
     protected $options;
 
