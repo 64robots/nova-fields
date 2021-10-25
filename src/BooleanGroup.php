@@ -15,14 +15,15 @@ class BooleanGroup extends NovaField
      *
      * @var string
      */
-    public $inputClasses = 'w-full form-control form-input form-input-bordered';
+    public $inputClasses = 'mt-2';
 
     /**
      * The base index classes of the field.
      *
      * @var string
      */
-    public $indexClasses = 'whitespace-no-wrap';
+    public $indexClasses = 'text-center';
+
     /**
      * The field's component.
      *

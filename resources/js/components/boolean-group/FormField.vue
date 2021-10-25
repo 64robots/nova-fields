@@ -11,13 +11,13 @@
   >
     <template slot="field">
       <checkbox-with-label
-        :class="[inputClasses, errorClasses]"
-        v-for="option in value"
-        :key="option.name"
-        :name="option.name"
-        :checked="option.checked"
-        @input="toggle($event, option)"
-        :disabled="isReadonly"
+          :class="[inputClasses, {'opacity-50 pointer-events-none': readOnly }]"
+          v-for="option in value"
+          :key="option.name"
+          :name="option.name"
+          :checked="option.checked"
+          @input="toggle($event, option)"
+          :disabled="isReadonly"
       >
         {{ option.label }}
       </checkbox-with-label>
