@@ -31877,7 +31877,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.options = [];
 
       if (this.parentValue != null && this.parentValue != "") {
-        Nova.request().get("/nova-vendor/child-select/options/".concat(this.resourceName), {
+        Nova.request().get("/nova-r64-api/options/".concat(this.resourceName), {
           params: {
             attribute: this.field.attribute,
             parent: this.parentValue
