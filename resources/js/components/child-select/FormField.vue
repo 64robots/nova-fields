@@ -95,7 +95,7 @@ export default {
 
             if (this.parentValue != null && this.parentValue != "") {
                 Nova.request()
-                    .get(`/nova-vendor/child-select/options/${this.resourceName}`, {
+                    .get(`/nova-vendor/nova-fields-child-select/options/${this.resourceName}`, {
                         params: {
                             attribute: this.field.attribute,
                             parent: this.parentValue
