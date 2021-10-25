@@ -50552,7 +50552,7 @@ exports = module.exports = __webpack_require__(4)(false);
 
 
 // module
-exports.push([module.i, "\n.mlbz-radio-container:not(:last-child) {\n    margin-right: 20px;\n}\n.mlbz-radio-label {\n    padding-left: 5px;\n}\n.mlbz-radio-hint {\n    padding-left: 24px;\n}\n.mlbz-hidden {\n    display: none !important;\n}\n", ""]);
+exports.push([module.i, "\n.mlbz-radio-label {\n    padding-left: 5px;\n}\n.mlbz-radio-hint {\n    padding-left: 24px;\n}\n.mlbz-hidden {\n    display: none !important;\n}\n", ""]);
 
 // exports
 
@@ -50568,8 +50568,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mixins_CanToggle__ = __webpack_require__(18);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_laravel_nova__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_laravel_nova___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_laravel_nova__);
-//
-//
 //
 //
 //
@@ -50660,53 +50658,50 @@ var render = function() {
         { slot: "field" },
         _vm._l(_vm.field.options, function(option, val) {
           return _c(
-            "div",
+            "label",
             {
-              staticClass: "mlbz-radio-container",
-              class: { "mb-2": _vm.field.stack || _vm.field.addPadding }
+              class: { "mb-2": _vm.field.stack || _vm.field.addPadding },
+              attrs: { for: _vm.field.attribute + "_" + val }
             },
             [
-              _c("label", { attrs: { for: _vm.field.attribute + "_" + val } }, [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.value,
-                      expression: "value"
-                    }
-                  ],
-                  staticClass: "checkbox",
-                  class: [_vm.errorClasses, _vm.inputClasses],
-                  attrs: {
-                    id: _vm.field.attribute + "_" + val,
-                    name: _vm.field.attribute,
-                    type: "radio",
-                    disabled: _vm.field.disabled
-                  },
-                  domProps: { value: val, checked: _vm._q(_vm.value, val) },
-                  on: {
-                    change: function($event) {
-                      _vm.value = val
-                    }
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.value,
+                    expression: "value"
                   }
-                }),
-                _vm._v(" "),
-                _c("span", { staticClass: "mlbz-radio-label" }, [
-                  _vm._v(_vm._s(_vm.getOptionLabel(option)))
-                ]),
-                _vm._v(" "),
-                _vm.field.stack && _vm.hasOptionHint(option)
-                  ? _c(
-                      "span",
-                      {
-                        staticClass:
-                          "mlbz-radio-hint mt-1 block text-sm text-80 leading-normal"
-                      },
-                      [_vm._v(_vm._s(_vm.getOptionHint(option)))]
-                    )
-                  : _vm._e()
-              ])
+                ],
+                class: [_vm.errorClasses, _vm.inputClasses],
+                attrs: {
+                  id: _vm.field.attribute + "_" + val,
+                  name: _vm.field.attribute,
+                  type: "radio",
+                  disabled: _vm.field.disabled
+                },
+                domProps: { value: val, checked: _vm._q(_vm.value, val) },
+                on: {
+                  change: function($event) {
+                    _vm.value = val
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("span", { staticClass: "mlbz-radio-label" }, [
+                _vm._v(_vm._s(_vm.getOptionLabel(option)))
+              ]),
+              _vm._v(" "),
+              _vm.field.stack && _vm.hasOptionHint(option)
+                ? _c(
+                    "span",
+                    {
+                      staticClass:
+                        "mlbz-radio-hint mt-1 block text-sm text-80 leading-normal"
+                    },
+                    [_vm._v(_vm._s(_vm.getOptionHint(option)))]
+                  )
+                : _vm._e()
             ]
           )
         }),

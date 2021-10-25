@@ -69,10 +69,6 @@ import CanToggle from '../../mixins/CanToggle';
 </script>
 
 <style>
-    .mlbz-radio-container:not(:last-child) {
-        margin-right: 20px;
-    }
-
     .mlbz-radio-label {
         padding-left: 5px;
     }
