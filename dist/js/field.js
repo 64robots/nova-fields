@@ -51333,8 +51333,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
-//
-//
 
 
 
@@ -58966,191 +58964,189 @@ var render = function() {
       }
     },
     [
-      _c("template", { slot: "field" }, [
-        _c(
-          "div",
-          { staticClass: "multiselect-field flex flex-col" },
-          [
-            !_vm.reorderMode
-              ? _c(
-                  "multiselect",
-                  {
-                    ref: "multiselect",
-                    class: [_vm.errorClasses, _vm.inputClasses],
-                    attrs: {
-                      "track-by": "value",
-                      label: "label",
-                      "group-label": _vm.isOptionGroups ? "label" : void 0,
-                      "group-values": _vm.isOptionGroups ? "values" : void 0,
-                      "group-select": _vm.field.groupSelect || false,
-                      value: _vm.selected,
-                      options: _vm.field.apiUrl
-                        ? _vm.asyncOptions
-                        : _vm.computedOptions,
-                      "internal-search": !_vm.field.apiUrl,
-                      disabled: _vm.isReadonly,
-                      placeholder: _vm.field.placeholder || _vm.field.name,
-                      "close-on-select":
-                        _vm.field.max === 1 || !_vm.isMultiselect,
-                      multiple: _vm.isMultiselect,
-                      max: _vm.max || _vm.field.max || null,
-                      optionsLimit: _vm.field.optionsLimit || 1000,
-                      limit: _vm.field.limit,
-                      limitText: function(count) {
-                        return _vm.__("novaMultiselect.limitText", {
-                          count: String(count || "")
-                        })
-                      },
-                      selectLabel: "",
-                      loading: _vm.isLoading,
-                      selectGroupLabel: "",
-                      selectedLabel: "",
-                      deselectLabel: "",
-                      deselectGroupLabel: "",
-                      clearOnSelect: _vm.field.clearOnSelect || false
+      _c(
+        "template",
+        { slot: "field" },
+        [
+          !_vm.reorderMode
+            ? _c(
+                "multiselect",
+                {
+                  ref: "multiselect",
+                  class: [_vm.errorClasses, _vm.inputClasses],
+                  attrs: {
+                    "track-by": "value",
+                    label: "label",
+                    "group-label": _vm.isOptionGroups ? "label" : void 0,
+                    "group-values": _vm.isOptionGroups ? "values" : void 0,
+                    "group-select": _vm.field.groupSelect || false,
+                    value: _vm.selected,
+                    options: _vm.field.apiUrl
+                      ? _vm.asyncOptions
+                      : _vm.computedOptions,
+                    "internal-search": !_vm.field.apiUrl,
+                    disabled: _vm.isReadonly,
+                    placeholder: _vm.field.placeholder || _vm.field.name,
+                    "close-on-select":
+                      _vm.field.max === 1 || !_vm.isMultiselect,
+                    multiple: _vm.isMultiselect,
+                    max: _vm.max || _vm.field.max || null,
+                    optionsLimit: _vm.field.optionsLimit || 1000,
+                    limit: _vm.field.limit,
+                    limitText: function(count) {
+                      return _vm.__("novaMultiselect.limitText", {
+                        count: String(count || "")
+                      })
                     },
-                    on: {
-                      input: _vm.handleChange,
-                      open: _vm.handleOpen,
-                      "search-change": _vm.tryToFetchOptions
-                    }
+                    selectLabel: "",
+                    loading: _vm.isLoading,
+                    selectGroupLabel: "",
+                    selectedLabel: "",
+                    deselectLabel: "",
+                    deselectGroupLabel: "",
+                    clearOnSelect: _vm.field.clearOnSelect || false
                   },
-                  [
-                    _c("template", { slot: "maxElements" }, [
-                      _vm._v(
-                        "\n          " +
-                          _vm._s(
-                            _vm.__("novaMultiselect.maxElements", {
-                              max: String(_vm.field.max || "")
-                            })
-                          ) +
-                          "\n        "
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("template", { slot: "noResult" }, [
-                      _vm._v(
-                        "\n          " +
-                          _vm._s(_vm.__("novaMultiselect.noResult")) +
-                          "\n        "
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("template", { slot: "noOptions" }, [
-                      _vm._v(
-                        "\n          " +
-                          _vm._s(
-                            _vm.field.apiUrl
-                              ? _vm.__("novaMultiSelect.startTypingForOptions")
-                              : _vm.__("novaMultiselect.noOptions")
-                          ) +
-                          "\n        "
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("template", { slot: "clear" }, [
-                      _vm.field.nullable &&
-                      (_vm.isMultiselect ? _vm.value.length : _vm.value)
-                        ? _c("div", {
-                            staticClass: "multiselect__clear",
-                            on: {
-                              mousedown: function($event) {
-                                $event.preventDefault()
-                                $event.stopPropagation()
-                                _vm.value = _vm.isMultiselect ? [] : null
-                              }
-                            }
-                          })
-                        : _vm._e()
-                    ])
-                  ],
-                  2
-                )
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.reorderMode
-              ? _c(
-                  "div",
-                  { staticClass: "form-input-bordered py-1" },
-                  [
-                    _c(
-                      "vue-draggable",
-                      {
-                        staticClass: "flex flex-col pl-0",
-                        staticStyle: {
-                          "list-style": "none",
-                          "margin-top": "5px"
-                        },
-                        attrs: { tag: "ul" },
-                        model: {
-                          value: _vm.value,
-                          callback: function($$v) {
-                            _vm.value = $$v
-                          },
-                          expression: "value"
-                        }
-                      },
-                      [
-                        _c(
-                          "transition-group",
-                          _vm._l(_vm.selected, function(s, i) {
-                            return _c(
-                              "li",
-                              {
-                                key: i + 0,
-                                staticClass:
-                                  "reorder__tag text-sm mb-1 px-2 py-1 text-white"
-                              },
-                              [
-                                _vm._v(
-                                  "\n              " +
-                                    _vm._s(s.label) +
-                                    "\n            "
-                                )
-                              ]
-                            )
-                          }),
-                          0
-                        )
-                      ],
-                      1
-                    )
-                  ],
-                  1
-                )
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.field.reorderable
-              ? _c(
-                  "div",
-                  {
-                    staticClass:
-                      "ml-auto mt-2 text-sm font-bold text-primary cursor-pointer dim",
-                    on: {
-                      click: function($event) {
-                        _vm.reorderMode = !_vm.reorderMode
-                      }
-                    }
-                  },
-                  [
+                  on: {
+                    input: _vm.handleChange,
+                    open: _vm.handleOpen,
+                    "search-change": _vm.tryToFetchOptions
+                  }
+                },
+                [
+                  _c("template", { slot: "maxElements" }, [
                     _vm._v(
-                      "\n        " +
+                      "\n          " +
                         _vm._s(
-                          _vm.__(
-                            _vm.reorderMode
-                              ? "novaMultiselect.doneReordering"
-                              : "novaMultiselect.reorder"
-                          )
+                          _vm.__("novaMultiselect.maxElements", {
+                            max: String(_vm.field.max || "")
+                          })
                         ) +
-                        "\n      "
+                        "\n        "
                     )
-                  ]
-                )
-              : _vm._e()
-          ],
-          1
-        )
-      ])
+                  ]),
+                  _vm._v(" "),
+                  _c("template", { slot: "noResult" }, [
+                    _vm._v(
+                      "\n          " +
+                        _vm._s(_vm.__("novaMultiselect.noResult")) +
+                        "\n        "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("template", { slot: "noOptions" }, [
+                    _vm._v(
+                      "\n          " +
+                        _vm._s(
+                          _vm.field.apiUrl
+                            ? _vm.__("novaMultiSelect.startTypingForOptions")
+                            : _vm.__("novaMultiselect.noOptions")
+                        ) +
+                        "\n        "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("template", { slot: "clear" }, [
+                    _vm.field.nullable &&
+                    (_vm.isMultiselect ? _vm.value.length : _vm.value)
+                      ? _c("div", {
+                          staticClass: "multiselect__clear",
+                          on: {
+                            mousedown: function($event) {
+                              $event.preventDefault()
+                              $event.stopPropagation()
+                              _vm.value = _vm.isMultiselect ? [] : null
+                            }
+                          }
+                        })
+                      : _vm._e()
+                  ])
+                ],
+                2
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.reorderMode
+            ? _c(
+                "div",
+                { staticClass: "form-input-bordered py-1" },
+                [
+                  _c(
+                    "vue-draggable",
+                    {
+                      staticClass: "flex flex-col pl-0",
+                      staticStyle: {
+                        "list-style": "none",
+                        "margin-top": "5px"
+                      },
+                      attrs: { tag: "ul" },
+                      model: {
+                        value: _vm.value,
+                        callback: function($$v) {
+                          _vm.value = $$v
+                        },
+                        expression: "value"
+                      }
+                    },
+                    [
+                      _c(
+                        "transition-group",
+                        _vm._l(_vm.selected, function(s, i) {
+                          return _c(
+                            "li",
+                            {
+                              key: i + 0,
+                              staticClass:
+                                "reorder__tag text-sm mb-1 px-2 py-1 text-white"
+                            },
+                            [
+                              _vm._v(
+                                "\n              " +
+                                  _vm._s(s.label) +
+                                  "\n            "
+                              )
+                            ]
+                          )
+                        }),
+                        0
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.field.reorderable
+            ? _c(
+                "div",
+                {
+                  staticClass:
+                    "ml-auto mt-2 text-sm font-bold text-primary cursor-pointer dim",
+                  on: {
+                    click: function($event) {
+                      _vm.reorderMode = !_vm.reorderMode
+                    }
+                  }
+                },
+                [
+                  _vm._v(
+                    "\n        " +
+                      _vm._s(
+                        _vm.__(
+                          _vm.reorderMode
+                            ? "novaMultiselect.doneReordering"
+                            : "novaMultiselect.reorder"
+                        )
+                      ) +
+                      "\n      "
+                  )
+                ]
+              )
+            : _vm._e()
+        ],
+        1
+      )
     ],
     2
   )
