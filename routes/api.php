@@ -10,3 +10,5 @@ Route::post('/{resource}/computed/{field}', 'ComputedController@index');
 
 // Download file inside of Row field
 Route::get('/{resource}/{resourceId}/download/{field}', 'FieldDownloadController@show');
+
+Route::get('/options/{resource}', 'OptionsController@index');
