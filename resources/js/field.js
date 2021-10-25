@@ -67,6 +67,13 @@ Nova.booting((Vue, router) => {
         require('./components/multiselect/NovaMultiselectDetailFieldValue')
     );
   }
+
+  /** Items */
+  Vue.component('index-nova-fields-items', require('./components/items/IndexField'))
+  Vue.component('detail-nova-fields-items', require('./components/items/DetailField'))
+  Vue.component('form-nova-fields-items', require('./components/items/FormField'))
+  Vue.component('detail-nova-fields-item', require('./components/items/DetailFieldItem'))
+
   /** Date */
   Vue.component(
     'index-nova-fields-date',
