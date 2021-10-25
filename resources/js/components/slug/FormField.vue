@@ -8,7 +8,6 @@
       :label-classes="labelClasses"
   >
     <template slot="field">
-      <div class="flex items-center">
         <input
             ref="theInput"
             v-bind="extraAttributes"
@@ -44,7 +43,6 @@
         >
           {{ __('Customize') }}
         </button>
-      </div>
     </template>
   </r64-default-field>
 </template>
