@@ -1,5 +1,12 @@
 <template>
-    <default-field :field="field">
+  <r64-default-field
+      :field="field"
+      :hide-field="hideField"
+      :hide-label="hideLabelInForms"
+      :field-classes="fieldClasses"
+      :wrapper-classes="wrapperClasses"
+      :label-classes="labelClasses"
+  >
         <template slot="field">
 
             <template v-if="field.value && field.display == 'image'">
@@ -49,7 +56,7 @@
 
             <UploadProgress ref="uploader" :current="currentPath" :visibility="field.visibility" :rules="field.upload_rules" v-on:removeFile="removeFileFromUpload"></UploadProgress>
 
-            <file-select :id="field.name" :field="field" :is-readonly="field.readonly" :css="errorClasses"  v-model="value" v-on:open-modal="openFilemanagerModal"></file-select>
+            <file-select :id="field.name" :classes="inputClasses" :field="field" :is-readonly="field.readonly" :css="errorClasses"  v-model="value" v-on:open-modal="openFilemanagerModal"></file-select>
 
             <p class="mt-3 flex items-center text-sm" v-if="value">
                 <button type="button" class="cursor-pointer dim btn btn-link text-primary inline-flex items-center" @click="openRemoveModal">
@@ -69,7 +76,7 @@
                 {{ firstError }}
             </p>
         </template>
-    </default-field>
+    </r64-default-field>
 </template>
 
 <script>
@@ -87,8 +94,10 @@ import RenameModal from '../../components/RenameModal';
 
 import api from '../../api';
 
+import R64Field from '../../mixins/R64Field'
+
 export default {
-    mixins: [FormField, HandlesValidationErrors],
+    mixins: [FormField, HandlesValidationErrors,R64Field],
 
     props: ['resourceName', 'resourceId', 'field'],
 

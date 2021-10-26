@@ -1,8 +1,20 @@
 <template>
     <div>
         <template v-if="field.value">
-            <panel-item  v-if="display == 'normal'" :field="field" />
-            <ImagePanel v-else :field="field" />
+            <r64-panel-item  v-if="display === 'normal'"
+                         :field="field"
+                         :hide-field="hideField"
+                         :hide-label="hideLabelInDetail"
+                         :label-classes="panelLabelClasses"
+                         :field-classes="panelFieldClasses"
+                         :wrapper-classes="panelWrapperClasses"
+            />
+            <ImagePanel v-else :field="field"
+                        :hide-field="hideField"
+                        :hide-label="hideLabelInDetail"
+                        :label-classes="panelLabelClasses"
+                        :field-classes="panelFieldClasses"
+                        :wrapper-classes="panelWrapperClasses" />
         </template>
 
         <template v-else>
@@ -13,8 +25,9 @@
 
 <script>
 import ImagePanel from './custom/ImagePanel';
-
+import R64Field from '../../mixins/R64Field'
 export default {
+    mixins : [R64Field],
     props: ['resource', 'resourceName', 'resourceId', 'field'],
     components: {
         ImagePanel: ImagePanel,

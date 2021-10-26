@@ -11,8 +11,21 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class FilemanagerField extends Field implements Cover
 {
-    use CoverHelpers;
+    use CoverHelpers,Configurable;
 
+    /**
+     * The base input classes of the field.
+     *
+     * @var string
+     */
+    public $inputClasses = 'form-file-input';
+
+    /**
+     * The base index classes of the field.
+     *
+     * @var string
+     */
+    public $indexClasses = 'rounded-full w-8 h-8';
     /**
      * The field's component.
      *
