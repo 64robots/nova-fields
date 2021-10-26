@@ -7,6 +7,8 @@ use Laravel\Nova\Events\ServingNova;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use R64\NovaFields\NovaTranslationsLoader\LoadsNovaTranslations;
+use R64\NovaFields\Http\Middleware\Authorize;
+
 
 
 class FieldServiceProvider extends ServiceProvider
@@ -37,7 +39,7 @@ class FieldServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'nova-fields');
 
         $this->app->booted(function () {
-            $this->routes();
+            $this->routeConfiguration();
         });
 
         Nova::serving(function (ServingNova $event) {
