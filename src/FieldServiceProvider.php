@@ -51,7 +51,7 @@ class FieldServiceProvider extends ServiceProvider
             'namespace' => 'R64\NovaFields\Http\Controllers',
             'domain' => config('nova.domain', null),
             'as' => 'nova.r64.api.',
-            'prefix' => 'nova-r64-api',
+            'prefix' => '/nova-r64-api',
             'middleware' => 'nova',
         ];
     }

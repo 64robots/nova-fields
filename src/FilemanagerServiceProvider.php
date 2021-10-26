@@ -46,7 +46,7 @@ class FilemanagerServiceProvider extends ServiceProvider
 
         Route::middleware(['nova', Authorize::class])
             ->namespace('R64\NovaFields\Http\Controllers')
-            ->prefix('nova-r64-api')
+            ->prefix('/nova-r64-api')
             ->group(__DIR__.'/../routes/api.php');
     }
 

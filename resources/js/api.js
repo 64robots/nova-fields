@@ -1,7 +1,7 @@
 export default {
     getData(folder) {
         return window.axios
-            .get('nova-r64-api/data', {
+            .get('/nova-r64-api/data', {
                 params: {
                     folder,
                 },
@@ -11,7 +11,7 @@ export default {
 
     getDataField(resource, attribute, folder, filter) {
         return window.axios
-            .get(`nova-r64-api/${resource}/${attribute}/data`, {
+            .get(`/nova-r64-api/${resource}/${attribute}/data`, {
                 params: {
                     folder,
                     filter,
@@ -22,13 +22,13 @@ export default {
 
     uploadFile() {
         return window.axios
-            .post('nova-r64-api/uploads/add')
+            .post('/nova-r64-api/uploads/add')
             .then(response => response.data);
     },
 
     moveFile(oldPath, newPath) {
         return window.axios
-            .post('nova-r64-api/actions/move', {
+            .post('/nova-r64-api/actions/move', {
                 old: oldPath,
                 path: newPath,
             })
@@ -37,7 +37,7 @@ export default {
 
     createFolder(folderName, currentFolder) {
         return window.axios
-            .post('nova-r64-api/actions/create-folder', {
+            .post('/nova-r64-api/actions/create-folder', {
                 folder: folderName,
                 current: currentFolder,
             })
@@ -46,7 +46,7 @@ export default {
 
     removeDirectory(currentFolder) {
         return window.axios
-            .post('nova-r64-api/actions/delete-folder', {
+            .post('/nova-r64-api/actions/delete-folder', {
                 current: currentFolder,
             })
             .then(response => response.data);
@@ -54,19 +54,19 @@ export default {
 
     getInfo(file) {
         return window.axios
-            .post('nova-r64-api/actions/get-info', { file: file })
+            .post('/nova-r64-api/actions/get-info', { file: file })
             .then(response => response.data);
     },
 
     removeFile(file) {
         return window.axios
-            .post('nova-r64-api/actions/remove-file', { file: file })
+            .post('/nova-r64-api/actions/remove-file', { file: file })
             .then(response => response.data);
     },
 
     renameFile(file, name) {
         return window.axios
-            .post('nova-r64-api/actions/rename-file', {
+            .post('/nova-r64-api/actions/rename-file', {
                 file: file,
                 name: name,
             })
@@ -75,7 +75,7 @@ export default {
 
     rename(path, name) {
         return window.axios
-            .post('nova-r64-api/actions/rename', {
+            .post('/nova-r64-api/actions/rename', {
                 path: path,
                 name: name,
             })
@@ -84,7 +84,7 @@ export default {
 
     eventFolderUploaded(path) {
         return window.axios
-            .post('nova-r64-api/events/folder', { path: path })
+            .post('/nova-r64-api/events/folder', { path: path })
             .then(response => response.data);
     },
 };

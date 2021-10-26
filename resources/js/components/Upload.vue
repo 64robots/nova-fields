@@ -41,7 +41,7 @@ export default {
     data: () => ({
         token: token.content,
         dropzoneOptions: {
-            url: 'nova-r64-api/uploads/add',
+            url: '/nova-r64-api/uploads/add',
             thumbnailWidth: 200,
             addRemoveLinks: true,
             dictDefaultMessage:

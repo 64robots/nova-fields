@@ -134,7 +134,7 @@
                                     <a
                                         v-if="buttons.download_file"
                                         class="bg-50 py-1 rounded-l text-xs text-grey-500 h-9 px-2 text-90 no-underline"
-                                        :href="`nova-r64-api/actions/download-file?file=${this.info.path}`"
+                                        :href="`/nova-r64-api/actions/download-file?file=${this.info.path}`"
                                         target="_blank"
                                     >
                                         Download
