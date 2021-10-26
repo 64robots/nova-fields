@@ -28,6 +28,22 @@ class FieldServiceProvider extends ServiceProvider
         });
 
         $this->loadTranslations(__DIR__ . '/../resources/lang', 'nova-fields-multiselect', true);
+
+
+        $this->publishes([
+            __DIR__.'/../config/config.php' => config_path('filemanager.php'),
+        ], 'filemanager-config');
+
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'nova-fields');
+
+        $this->app->booted(function () {
+            $this->routes();
+        });
+
+        Nova::serving(function (ServingNova $event) {
+            Nova::script('nova-fields-filemanager', __DIR__.'/../dist/js/field.js');
+            // Nova::style('nova-fields-filemanager', __DIR__.'/../dist/css/field.css');
+        });
     }
 
     /**
@@ -51,7 +67,7 @@ class FieldServiceProvider extends ServiceProvider
             'namespace' => 'R64\NovaFields\Http\Controllers',
             'domain' => config('nova.domain', null),
             'as' => 'nova.r64.api.',
-            'prefix' => '/nova-r64-api',
+            'prefix' => 'nova-r64-api',
             'middleware' => 'nova',
         ];
     }

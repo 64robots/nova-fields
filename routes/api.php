@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use R64\NovaFields\Http\Controllers\FilemanagerToolController;
 
 // Associatable Resources...
 Route::get('/{resource}/associatable/{field}', 'AssociatableController@index');
@@ -16,18 +15,18 @@ Route::get('/options/{resource}', 'OptionsController@index');
 
 
 /** FIle Manager Routes */
-Route::get('data', FilemanagerToolController::class.'@getData');
-Route::get('{resource}/{attribute}/data', FilemanagerToolController::class.'@getDataField');
-Route::post('actions/move', FilemanagerToolController::class.'@move');
-Route::post('actions/create-folder', FilemanagerToolController::class.'@createFolder');
-Route::post('actions/delete-folder', FilemanagerToolController::class.'@deleteFolder');
-Route::post('actions/get-info', FilemanagerToolController::class.'@getInfo');
-Route::post('actions/remove-file', FilemanagerToolController::class.'@removeFile');
-Route::post('actions/rename-file', FilemanagerToolController::class.'@renameFile');
-Route::get('actions/download-file', FilemanagerToolController::class.'@downloadFile');
-Route::post('actions/rename', FilemanagerToolController::class.'@rename');
+Route::get('data', 'FilemanagerToolController@getData');
+Route::get('{resource}/{attribute}/data', 'FilemanagerToolController@getDataField');
+Route::post('actions/move', 'FilemanagerToolController@move');
+Route::post('actions/create-folder', 'FilemanagerToolController@createFolder');
+Route::post('actions/delete-folder', 'FilemanagerToolController@deleteFolder');
+Route::post('actions/get-info', 'FilemanagerToolController@getInfo');
+Route::post('actions/remove-file', 'FilemanagerToolController@removeFile');
+Route::post('actions/rename-file', 'FilemanagerToolController@renameFile');
+Route::get('actions/download-file', 'FilemanagerToolController@downloadFile');
+Route::post('actions/rename', 'FilemanagerToolController@rename');
 
-Route::post('events/folder', FilemanagerToolController::class.'@folderUploadedEvent');
+Route::post('events/folder', 'FilemanagerToolController@folderUploadedEvent');
 
-Route::post('uploads/add', FilemanagerToolController::class.'@upload');
-Route::get('uploads/update', FilemanagerToolController::class.'@updateFile');
+Route::post('uploads/add', 'FilemanagerToolController@upload');
+Route::get('uploads/update', 'FilemanagerToolController@updateFile');

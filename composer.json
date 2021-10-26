@@ -17,8 +17,7 @@
   "extra": {
     "laravel": {
       "providers": [
-        "R64\\NovaFields\\FieldServiceProvider",
-        "R64\\NovaFields\\FilemanagerServiceProvider"
+        "R64\\NovaFields\\FieldServiceProvider"
       ]
     }
   },
