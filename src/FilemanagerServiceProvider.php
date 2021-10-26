@@ -21,7 +21,7 @@ class FilemanagerServiceProvider extends ServiceProvider
             __DIR__.'/../config/config.php' => config_path('filemanager.php'),
         ], 'filemanager-config');
 
-        $this->loadViewsFrom(__DIR__.'/../resources/views', 'nova-filemanager');
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'nova-fields');
 
         $this->app->booted(function () {
             $this->routes();

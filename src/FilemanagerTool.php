@@ -14,7 +14,7 @@ class FilemanagerTool extends BaseTool
      */
     public function boot()
     {
-        Nova::script('nova-filemanager', __DIR__.'/../dist/js/field.js');
+        Nova::script('nova-fields', __DIR__.'/../dist/js/field.js');
     }
 
     /**
@@ -24,6 +24,6 @@ class FilemanagerTool extends BaseTool
      */
     public function renderNavigation()
     {
-        return view('nova-filemanager::navigation');
+        return view('nova-fields::navigation');
     }
 }
