@@ -26,9 +26,23 @@
     "webpack": "3.12.0"
   },
   "dependencies": {
+    "babel-preset-es2015": "^6.24.1",
+    "codemirror": "^5.63.3",
+    "filesize": "^8.0.3",
+    "liquor-tree": "^0.2.70",
+    "lodash": "^4.17.21",
     "lodash.debounce": "^4.0.8",
+    "md5": "^2.3.0",
+    "plyr": "^3.6.9",
     "slugify": "^1.6.1",
+    "urijs": "^1.19.7",
+    "v-copy": "^0.1.0",
+    "v-viewer": "^1.6.4",
+    "viewerjs": "^1.10.2",
     "vue": "^2.6.11",
+    "vue-codemirror": "^4.0.6",
+    "vue-plyr": "^7.0.0",
+    "vue2-dropzone": "^3.6.0",
     "vuedraggable": "^2.24.3"
   }
 }
