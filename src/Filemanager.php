@@ -367,20 +367,21 @@ class Filemanager extends Field implements Cover
      */
     public function meta()
     {
-        collect($this->addClasses)->each(function ($classToAdd) {
+     /*   collect($this->addClasses)->each(function ($classToAdd) {
             $this->addClassesToProperty($classToAdd[0], $classToAdd[1], $classToAdd[2]);
         });
 
         collect($this->removeClasses)->each(function ($classToRemove) {
             $this->removeClassesFromProperty($classToRemove[0], $classToRemove[1], $classToRemove[2]);
-        });
+        });*/
 
         return array_merge(
             $this->resolveInfo(),
             $this->buttons(),
             $this->getUploadRules(),
             $this->getCoverType(),
-            array_merge([
+            $this->meta
+           /* array_merge([
                 'wrapperClasses' => $this->wrapperClasses,
                 'indexClasses' => $this->indexClasses,
                 'inputClasses' => $this->inputClasses,
@@ -391,7 +392,7 @@ class Filemanager extends Field implements Cover
                 'panelWrapperClasses' => $this->panelWrapperClasses,
                 'indexLinkClasses' => $this->indexLinkClasses,
                 'excerptClasses' => $this->excerptClasses,
-            ], $this->meta)
+            ], $this->meta)*/
         );
     }
 
