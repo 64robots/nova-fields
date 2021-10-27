@@ -15,18 +15,18 @@ Route::get('/options/{resource}', 'OptionsController@index');
 
 
 /** FIle Manager Routes */
-Route::get('data', 'FilemanagerToolController@getData');
-Route::get('{resource}/{attribute}/data', 'FilemanagerToolController@getDataField');
-Route::post('actions/move', 'FilemanagerToolController@move');
-Route::post('actions/create-folder', 'FilemanagerToolController@createFolder');
-Route::post('actions/delete-folder', 'FilemanagerToolController@deleteFolder');
-Route::post('actions/get-info', 'FilemanagerToolController@getInfo');
-Route::post('actions/remove-file', 'FilemanagerToolController@removeFile');
-Route::post('actions/rename-file', 'FilemanagerToolController@renameFile');
-Route::get('actions/download-file', 'FilemanagerToolController@downloadFile');
-Route::post('actions/rename', 'FilemanagerToolController@rename');
+Route::get('/data', 'FilemanagerToolController@getData');
+Route::get('/{resource}/{attribute}/data', 'FilemanagerToolController@getDataField');
+Route::post('/actions/move', 'FilemanagerToolController@move');
+Route::post('/actions/create-folder', 'FilemanagerToolController@createFolder');
+Route::post('/actions/delete-folder', 'FilemanagerToolController@deleteFolder');
+Route::post('/actions/get-info', 'FilemanagerToolController@getInfo');
+Route::post('/actions/remove-file', 'FilemanagerToolController@removeFile');
+Route::post('/actions/rename-file', 'FilemanagerToolController@renameFile');
+Route::get('/actions/download-file', 'FilemanagerToolController@downloadFile');
+Route::post('/actions/rename', 'FilemanagerToolController@rename');
 
-Route::post('events/folder', 'FilemanagerToolController@folderUploadedEvent');
+Route::post('/events/folder', 'FilemanagerToolController@folderUploadedEvent');
 
-Route::post('uploads/add', 'FilemanagerToolController@upload');
-Route::get('uploads/update', 'FilemanagerToolController@updateFile');
+Route::post('/uploads/add', 'FilemanagerToolController@upload');
+Route::get('/uploads/update', 'FilemanagerToolController@updateFile');

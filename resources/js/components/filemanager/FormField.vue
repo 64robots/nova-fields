@@ -81,6 +81,7 @@
 
 <script>
 import { FormField, HandlesValidationErrors } from 'laravel-nova';
+import R64Field from '../../mixins/R64Field'
 import FileSelect from './custom/FileSelect';
 import ModalFileManager from '../../components/ModalFileManager';
 import CreateFolderModal from '../../components/CreateFolderModal';
@@ -94,7 +95,6 @@ import RenameModal from '../../components/RenameModal';
 
 import api from '../../api';
 
-import R64Field from '../../mixins/R64Field'
 
 export default {
     mixins: [FormField, HandlesValidationErrors,R64Field],
