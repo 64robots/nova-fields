@@ -18,7 +18,7 @@ class Filemanager extends Field implements Cover
      *
      * @var string
      */
-    public $inputClasses = 'form-file-input';
+    public $inputClasses = 'form-control form-input form-input-bordered-l relative';
 
     /**
      * The base index classes of the field.
