@@ -58,7 +58,7 @@
 
             <file-select :id="field.name" :classes="inputClasses" :field="field" :is-readonly="field.readonly" :css="errorClasses"  v-model="value" v-on:open-modal="openFilemanagerModal"></file-select>
 
-            <p class="mt-3 flex items-center text-sm" v-if="value">
+            <p class="mt-3 flex items-center text-sm btn-link" v-if="value">
                 <button type="button" class="cursor-pointer dim btn btn-link text-primary inline-flex items-center" @click="openRemoveModal">
                     <icon type="delete" view-box="0 0 20 20" width="16" height="16" />
                     <span class="class ml-2 mt-1">
