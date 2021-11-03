@@ -29571,7 +29571,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   props: {
     wrapperClasses: {
       type: String,
-      "default": 'flex border-b border-40'
+      "default": 'fuckit-c flex border-b border-40'
     },
     labelClasses: {
       type: String,
@@ -29772,7 +29772,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     wrapperClasses: {
       type: String,
-      "default": 'flex border-b border-40'
+      "default": 'fuckit-c2 flex border-b border-40'
     },
     hideLabel: {
       type: Boolean,
