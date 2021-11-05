@@ -1,25 +1,19 @@
 <template>
-  <r64-default-field
-    :hide-field="hideField"
-    :field="field"
-    :hide-label="hideLabelInForms"
-    :field-classes="fieldClasses"
-    :wrapper-classes="wrapperClasses"
-    :label-classes="labelClasses"
-  >
+  <r64-default-field :hide-field="hideField" :field="field" :hide-label="hideLabelInForms" :field-classes="fieldClasses" :wrapper-classes="wrapperClasses" :label-classes="labelClasses">
     <template slot="field">
-      <DateTimePicker
-        :dusk="field.attribute"
-        :name="field.name"
-        :value="value"
-        dateFormat="Y-m-d"
-        :placeholder="placeholder"
-        :enable-time="false"
-        :enable-seconds="false"
-        :first-day-of-week="firstDayOfWeek"
+      <date-time-picker
+        :alt-format="pickerDisplayFormat"
         :class="[errorClasses, inputClasses]"
-        @change="handleChange"
+        :dateFormat="pickerFormat"
         :disabled="isReadonly"
+        :dusk="field.attribute"
+        :enable-seconds="false"
+        :enable-time="false"
+        :first-day-of-week="firstDayOfWeek"
+        :name="field.name"
+        :placeholder="placeholder"
+        :value="value"
+        @change="handleChange"
       />
 
       <p
@@ -76,9 +70,20 @@ export default {
     },
 
     placeholder() {
-      const format = this.field.format ? this.field.format : 'YYYY-MM-DD'
-      return this.field.placeholder || moment().format(format)
-    }
-  }
+      return this.field.placeholder || moment().format(this.format)
+    },
+
+    format() {
+      return this.field.format || 'YYYY-MM-DD'
+    },
+
+    pickerFormat() {
+      return this.field.pickerFormat || 'Y-m-d'
+    },
+
+    pickerDisplayFormat() {
+      return this.field.pickerDisplayFormat || 'Y-m-d'
+    },
+  },
 }
 </script>
