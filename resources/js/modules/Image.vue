@@ -40,8 +40,7 @@
 import { Minimum } from 'laravel-nova';
 
 import 'viewerjs/dist/viewer.css'
-import Viewer from 'v-viewer';
-import 'viewerjs/dist/viewer.css';
+import { component as Viewer }  from 'v-viewer';
 
 export default {
     components: {
