@@ -45,11 +45,9 @@ import
   HandlesValidationErrors,
   InteractsWithDates,
 } from 'laravel-nova'
-//import DateTimePicker from '../date/DateTimePicker'
 import R64Field from "../../mixins/R64Field";
 
 export default {
-  //components: { DateTimePicker },
 
   mixins: [HandlesValidationErrors, FormField, InteractsWithDates,  R64Field],
 
