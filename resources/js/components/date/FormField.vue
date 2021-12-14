@@ -12,7 +12,7 @@
         :dusk="field.attribute"
         :name="field.name"
         :value="value"
-        dateFormat="m/d/Y"
+        dateFormat="Y-m-d"
         :placeholder="placeholder"
         :enable-time="false"
         :enable-seconds="false"

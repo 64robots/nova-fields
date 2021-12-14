@@ -14,7 +14,7 @@
             :dusk="field.attribute"
             :name="field.name"
             :value="localizedValue"
-            dateFormat="m/d/Y h:i K"
+            dateFormat="Y-m-d H:i:S"
             :placeholder="placeholder"
             :enable-time="true"
             :enable-seconds="true"
