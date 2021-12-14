@@ -12,7 +12,7 @@
         :dusk="field.attribute"
         :name="field.name"
         :value="value"
-        :dateFormat="field.pickerFormat"
+        dateFormat="m/d/Y"
         :placeholder="placeholder"
         :enable-time="false"
         :enable-seconds="false"
@@ -38,7 +38,7 @@ import {
   HandlesValidationErrors,
   InteractsWithDates
 } from 'laravel-nova'
-import DateTimePicker from '../date/DateTimePicker'
+import DateTimePicker from './DateTimePicker'
 import R64Field from '../../mixins/R64Field'
 
 export default {
@@ -77,15 +77,7 @@ export default {
     placeholder() {
       const format = this.field.format ? this.field.format : 'YYYY-MM-DD'
       return this.field.placeholder || moment().format(format)
-    },
-
-    format() {
-      return this.field.format || 'YYYY-MM-DD'
-    },
-
-    pickerFormat() {
-      return this.field.pickerFormat || 'Y-m-d'
-    },
+    }
   }
 }
 </script>

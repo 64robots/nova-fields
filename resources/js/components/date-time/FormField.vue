@@ -14,7 +14,7 @@
             :dusk="field.attribute"
             :name="field.name"
             :value="localizedValue"
-            :dateFormat="field.pickerFormat"
+            dateFormat="m/d/Y h:i K"
             :placeholder="placeholder"
             :enable-time="true"
             :enable-seconds="true"
