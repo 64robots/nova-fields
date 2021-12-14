@@ -10,11 +10,12 @@
   >
     <template slot="field">
       <div class="flex items-center">
-        <DateTimePicker
+        <date-time-picker
             :dusk="field.attribute"
             :name="field.name"
             :value="localizedValue"
-            dateFormat="Y-m-d H:i:S"
+            :dateFormat="field.pickerFormat"
+            :alt-format="pickerDisplayFormat"
             :placeholder="placeholder"
             :enable-time="true"
             :enable-seconds="true"
@@ -38,16 +39,17 @@
 </template>
 
 <script>
-import {
+import
+{
   FormField,
   HandlesValidationErrors,
   InteractsWithDates,
 } from 'laravel-nova'
-import DateTimePicker from '../date/DateTimePicker'
+//import DateTimePicker from '../date/DateTimePicker'
 import R64Field from "../../mixins/R64Field";
 
 export default {
-  components: { DateTimePicker },
+  //components: { DateTimePicker },
 
   mixins: [HandlesValidationErrors, FormField, InteractsWithDates,  R64Field],
 
