@@ -8,7 +8,7 @@
     :label-classes="labelClasses"
   >
     <template slot="field">
-      <date-time-picker
+      <DateTimePicker
         :dusk="field.attribute"
         :name="field.name"
         :value="value"
@@ -38,10 +38,11 @@ import {
   HandlesValidationErrors,
   InteractsWithDates
 } from 'laravel-nova'
+import DateTimePicker from '../date/DateTimePicker'
 import R64Field from '../../mixins/R64Field'
 
 export default {
-
+  components: { DateTimePicker },
   mixins: [HandlesValidationErrors, FormField, InteractsWithDates, R64Field],
 
   methods: {

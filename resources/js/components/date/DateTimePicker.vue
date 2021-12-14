@@ -30,7 +30,7 @@ export default {
     },
     dateFormat: {
       type: String,
-      default: 'Y-m-d H:i:S'
+      default: 'm/d/Y h:i K'
     },
     twelveHourTime: {
       type: Boolean,
