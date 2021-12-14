@@ -8,12 +8,11 @@
     :label-classes="labelClasses"
   >
     <template slot="field">
-      <date-time-picker
+      <DateTimePicker
         :dusk="field.attribute"
         :name="field.name"
         :value="value"
-        :dateFormat="field.pickerFormat"
-        :alt-format="pickerDisplayFormat"
+        dateFormat="Y-m-d"
         :placeholder="placeholder"
         :enable-time="false"
         :enable-seconds="false"
@@ -39,10 +38,11 @@ import {
   HandlesValidationErrors,
   InteractsWithDates
 } from 'laravel-nova'
+import DateTimePicker from '../date/DateTimePicker'
 import R64Field from '../../mixins/R64Field'
 
 export default {
-
+  components: { DateTimePicker },
   mixins: [HandlesValidationErrors, FormField, InteractsWithDates, R64Field],
 
   methods: {
@@ -77,19 +77,7 @@ export default {
     placeholder() {
       const format = this.field.format ? this.field.format : 'YYYY-MM-DD'
       return this.field.placeholder || moment().format(format)
-    },
-
-    format() {
-      return this.field.format || 'YYYY-MM-DD'
-    },
-
-    pickerFormat() {
-      return this.field.pickerFormat || 'Y-m-d'
-    },
-
-    pickerDisplayFormat() {
-      return this.field.pickerDisplayFormat || 'Y-m-d'
-    },
+    }
   }
 }
 </script>
