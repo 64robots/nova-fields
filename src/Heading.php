@@ -41,4 +41,18 @@ class Heading extends NovaHeading
     {
         return $this->withMeta(['asHtml' => true]);
     }
+
+    /**
+     * The base input classes of the field.
+     *
+     * @var string
+     */
+    public $inputClasses = '';
+
+    /**
+     * The base index classes of the field.
+     *
+     * @var string
+     */
+    public $indexClasses = '';
 }
