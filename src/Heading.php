@@ -2,10 +2,12 @@
 
 namespace R64\NovaFields;
 
+use R64\NovaFields\Configurable;
 use Laravel\Nova\Fields\Heading as NovaHeading;
 
 class Heading extends NovaHeading
 {
+    use Configurable;
     /**
      * The field's component.
      *
