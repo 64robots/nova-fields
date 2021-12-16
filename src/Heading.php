@@ -13,7 +13,7 @@ class Heading extends NovaHeading
      *
      * @var string
      */
-    public $component = 'heading';
+    public $component = 'nova-fields-heading';
 
     /**
      * Create a new field.
