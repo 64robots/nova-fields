@@ -1,0 +1,42 @@
+<?php
+
+namespace R64\NovaFields;
+
+use Laravel\Nova\Fields\Heading as NovaHeading;
+
+class Heading extends NovaHeading
+{
+    /**
+     * The field's component.
+     *
+     * @var string
+     */
+    public $component = 'heading';
+
+    /**
+     * Create a new field.
+     *
+     * @param  string  $name
+     * @param  string|null  $attribute
+     * @param  mixed|null  $resolveCallback
+     * @return void
+     */
+    public function __construct($name, $attribute = null, $resolveCallback = null)
+    {
+        parent::__construct(null, $attribute, $resolveCallback);
+
+        $this->withMeta(['value' => $name]);
+        $this->hideFromIndex();
+        $this->withMeta(['asHtml' => false]);
+    }
+
+    /**
+     * Display the field as raw HTML using Vue.
+     *
+     * @return $this
+     */
+    public function asHtml()
+    {
+        return $this->withMeta(['asHtml' => true]);
+    }
+}

@@ -79,6 +79,11 @@ Nova.booting((Vue, router) => {
   Vue.component('detail-nova-fields-filemanager', require('./components/filemanager/DetailField'));
   Vue.component('form-nova-fields-filemanager', require('./components/filemanager/FormField'));
 
+  /** FileManager */
+  Vue.component('index-nova-fields-heading', require('./components/heading/IndexField'));
+  Vue.component('detail-nova-fields-heading', require('./components/heading/DetailField'));
+  Vue.component('form-nova-fields-heading', require('./components/heading/FormField'));
+
   /** Date */
   Vue.component(
     'index-nova-fields-date',
