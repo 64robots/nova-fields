@@ -4,6 +4,9 @@
       <img v-if="!url && field.url" :src="field.url" class="image block w-full self-center" draggable="false">
       <img v-if="url" :src="url" class="image block w-full self-center" draggable="false">
     </div>
+    <div v-else-if="!url && !field.url && field.value" class="image-block card flex justify-center w-full h-5/6 px-2">
+      <img :src="field.value" class="image block w-full self-center" draggable="false">
+    </div>
     <div class="items-stretch w-full mb-2 relative pt-1">
       <div class="flex -mr-px max-w-xs">
         <button type="button" class="filemanager-open flex items-center leading-normal rounded border border-grey-light bg-40 px-3 whitespace-no-wrap text-grey-dark text-sm cursor-pointer" @click="openModalFilemanager">{{ __('Open FileManager') }}</button>
