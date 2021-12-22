@@ -100,7 +100,11 @@ export default {
     },
 
     handleChange(value) {
-      this.value = slugify(value, this.field.separator)
+      //this.value = slugify(value, this.field.separator);
+      this.value = this.slugify(value);
+    },
+    slugify:function(value){
+      return value.toLowerCase().replace(/&#8482;/g, '').trim().replace(/[^\w ]+/g, '').replace(/ +/g, '-').replace(/\_/g, '');
     },
 
     toggleCustomizeClick() {
