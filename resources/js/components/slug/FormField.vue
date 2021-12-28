@@ -114,6 +114,7 @@ export default {
         this.field.readonly = false
         this.field.extraAttributes.readonly = false
         this.field.showCustomizeButton = false
+        this.registerChangeListener()
         this.$refs.theInput.focus()
         return
       }
