@@ -157,6 +157,11 @@ export default {
       required: false,
       default: null,
     },
+    selectMultiple: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
     buttons: {
       default: () => [],
       required: true,
