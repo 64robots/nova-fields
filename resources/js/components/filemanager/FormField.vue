@@ -30,6 +30,7 @@
           :active="openModal"
           :currentPath="currentPath"
           :defaultFolder="defaultFolder"
+          :selectMultiple="field.selectMultiple"
           :filter="field.filterBy"
           :buttons="field.buttons"
           v-on:open-modal="openModalCreateFolder"
@@ -37,6 +38,7 @@
           v-on:update-current-path="updateCurrentPath"
           v-on:showInfoItem="showInfoItem"
           v-on:uploadFiles="uploadFiles"
+          v-on:addImages="addImages"
           :value="value"
       />
 
@@ -133,6 +135,10 @@ export default {
   }),
 
   methods: {
+    addImages:function(items){
+      Nova.$emit('addImages',items);
+      this.openModal = false;
+    },
     openModalCreateFolder() {
       this.showCreateFolder = true;
     },

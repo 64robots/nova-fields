@@ -87,6 +87,8 @@ class FileManagerService
     {
         $folder = $this->cleanSlashes($request->get('folder'));
 
+        $isMultipleSelection = $this->cleanSlashes($request->get('isMultipleSelection'));
+
         if (! $this->folderExists($folder)) {
             $folder = '/';
         }
@@ -120,7 +122,7 @@ class FileManagerService
             'files'   => $files,
             'path'    => $this->getPaths($folder),
             'filters' => $filters,
-            'buttons' => $this->getButtons(),
+            'buttons' => $this->getButtons($isMultipleSelection),
             'parent'  => $parent,
         ]);
     }
@@ -426,12 +428,14 @@ class FileManagerService
         return [];
     }
 
-    private function getButtons()
+    private function getButtons($isMultipleSelection)
     {
+        $isMultipleSelection = filter_var($isMultipleSelection, FILTER_VALIDATE_BOOLEAN);
+        Config::set('filemanager.buttons.select_multiple',$isMultipleSelection);
         return config('filemanager.buttons', [
             'create_folder'   => true,
             'upload_button'   => true,
-            'select_multiple' => true,
+            'select_multiple' => $isMultipleSelection,
             'upload_drag'     => true,
             'rename_folder'   => true,
             'delete_folder'   => true,

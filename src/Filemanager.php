@@ -81,6 +81,11 @@ class Filemanager extends Field implements Cover
     protected $downloadFileButton;
 
     /**
+     * @var bool
+     */
+    protected $selectMultiple;
+
+    /**
      * The callback used to determine if the field is readonly.
      *
      * @var Closure
@@ -114,6 +119,18 @@ class Filemanager extends Field implements Cover
     public function displayAsImage()
     {
         return $this->withMeta(['display' => 'image']);
+    }
+
+    /**
+     * Set current folder for the field.
+     *
+     * @param   bool  $isMultiple
+     *
+     */
+    public function selectMultiple($isMultiple = false)
+    {
+        $this->selectMultiple = $isMultiple;
+        return $this->withMeta(['selectMultiple' => $isMultiple]);
     }
 
     /**
@@ -408,6 +425,7 @@ class Filemanager extends Field implements Cover
         $this->renameFileButton = config('filemanager.buttons.rename_file', true);
         $this->deleteFileButton = config('filemanager.buttons.delete_file', true);
         $this->downloadFileButton = config('filemanager.buttons.download_file', true);
+        $this->selectMultiple = config('filemanager.buttons.select_multiple', false);
     }
 
     /**
@@ -426,6 +444,7 @@ class Filemanager extends Field implements Cover
             'rename_file' => $this->renameFileButton,
             'delete_file' => $this->deleteFileButton,
             'download_file' => $this->downloadFileButton,
+            'select_multiple' => $this->selectMultiple
         ];
 
         return ['buttons' => $buttons];

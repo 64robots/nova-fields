@@ -39,6 +39,10 @@
                 <button v-if="view == 'grid'" @click="viewAs('list')" class="btn btn-default btn-small btn-primary text-white mr-3">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width="20" height="20"><path d="M1 4h2v2H1V4zm4 0h14v2H5V4zM1 9h2v2H1V9zm4 0h14v2H5V9zm-4 5h2v2H1v-2zm4 0h14v2H5v-2z"/></svg>
                 </button>
+
+                <button v-if="selectMultiple && selectedFiles.length > 0" type="button" class="btn btn-default btn-primary mr-3" @click="addImages">
+                  Add images
+                </button>
               </div>
 
               <!-- Search -->
@@ -80,6 +84,8 @@
                 :loading="loadingfiles"
                 :search="search"
                 :filter="filter"
+                :multi-selecting="selectMultiple"
+                :selected-files="selectedFiles"
                 :filters="filteredExtensions"
                 :buttons="buttons"
                 v-on:goToFolderManager="goToFolder"
@@ -90,6 +96,7 @@
                 v-on:uploadFiles="uploadFiles"
                 v-on:rename="openRenameModal"
                 v-on:delete="openDeleteModal"
+                v-on:select="select"
             />
 
             <rename-modal ref="renameModal" v-on:refresh="refreshCurrent" />
@@ -188,6 +195,10 @@ export default {
     filters: [],
     filterBy: '',
     showFilters: false,
+    selectedFiles: [], // { type: 'folder/file', path: '...'' }
+    buttons: [],
+    multiSelecting: false,
+    selectedData:[]
   }),
 
   computed: {
@@ -209,7 +220,7 @@ export default {
       this.path = [];
       this.loadingfiles = true;
 
-      api.getDataField(this.resource, this.name, folder, this.filter)
+      api.getDataField(this.resource, this.name, folder, this.filter,this.selectMultiple)
           .then(result => {
             this.files = result.files;
             this.path = result.path;
@@ -298,6 +309,21 @@ export default {
     searchItems: _.debounce(function(e) {
       this.search = e.target.value;
     }, 300),
+    select(file) {
+      const findIndex = _.findIndex(this.selectedFiles, file);
+      if (findIndex >= 0) {
+        this.selectedFiles.splice(findIndex, 1);
+        return;
+      }
+      this.selectedFiles.push(file);
+    },
+    addImages:function(){
+      let selectedImages = this.selectedFiles;
+      this.selectedFiles = [];
+      this.multiSelecting = false
+      this.$emit('addImages',selectedImages);
+
+    },
   },
 
   watch: {

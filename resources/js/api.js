@@ -9,12 +9,13 @@ export default {
             .then(response => response.data);
     },
 
-    getDataField(resource, attribute, folder, filter) {
+    getDataField(resource, attribute, folder, filter,isMultipleSelection) {
         return window.axios
             .get(`/nova-r64-api/${resource}/${attribute}/data`, {
                 params: {
                     folder,
                     filter,
+                    isMultipleSelection
                 },
             })
             .then(response => response.data);
