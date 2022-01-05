@@ -58,7 +58,7 @@
 
       <UploadProgress ref="uploader" :current="currentPath" :visibility="field.visibility" :rules="field.upload_rules" v-on:removeFile="removeFileFromUpload"></UploadProgress>
 
-      <file-select :id="field.name" :classes="inputClasses"   :url="selectImageUrl"  :field="field" :is-readonly="field.readonly" :css="errorClasses"  v-model="value" v-on:open-modal="openFilemanagerModal"></file-select>
+      <file-select :id="field.name" :classes="inputClasses" :selectMultiple="field.selectMultiple"  :url="selectImageUrl"  :field="field" :is-readonly="field.readonly" :css="errorClasses"  v-model="value" v-on:open-modal="openFilemanagerModal"></file-select>
 
       <!--            <p class="mt-3 flex items-center text-sm btn-link" v-if="value">
                       <button type="button" class="cursor-pointer dim btn btn-link text-primary inline-flex items-center" @click="openRemoveModal">
