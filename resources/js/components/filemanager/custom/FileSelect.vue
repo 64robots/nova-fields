@@ -39,7 +39,7 @@ import DetailPopup from "../../DetailPopup";
 import UploadProgress from "../../UploadProgress";
 import ConfirmModalRemoveFile from "../../ConfirmModalRemoveFile";
 export default {
-  props: ['value', 'field', 'isReadonly','classes','url','selectMultiple'],
+  props: ['value', 'field', 'isReadonly','classes','url','selectMultiple','fileType'],
   components: {
     ImageDetail: ImageDetail,
   },
