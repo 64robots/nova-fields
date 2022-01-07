@@ -4,13 +4,28 @@
       <img v-if="!url && field.url" :src="field.url" class="image block w-full self-center" draggable="false">
       <img v-if="url" :src="url" class="image block w-full self-center" draggable="false">
     </div>
-    <div v-else-if="!url && !field.url && field.value" class="image-block card flex justify-center w-full h-5/6 px-2">
+    <div v-else-if="!url && !field.url && field.value"
+         class="image-block card flex justify-center w-full h-5/6 px-2 relative">
+        <span v-if="fileType=='video'"
+              class="absolute inset-0 flex items-center justify-center h-full w-full play-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="#fff">
+  <path fill-rule="evenodd"
+        d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
+        clip-rule="evenodd"/>
+</svg>
+        </span>
       <img :src="field.value" class="image block w-full self-center" draggable="false">
     </div>
     <div class="items-stretch w-full mb-2 relative pt-1">
       <div class="flex -mr-px max-w-xs">
-        <button v-if="selectMultiple" type="button" class="filemanager-open flex items-center leading-normal rounded border btn btn-default btn-primary mr-3 px-3 text-sm cursor-pointer" @click="openModalFilemanager">Add Multiple Media</button>
-        <button v-else type="button" class="filemanager-open flex items-center leading-normal rounded border border-grey-light bg-40 px-3 whitespace-no-wrap text-grey-dark text-sm cursor-pointer" @click="openModalFilemanager">{{ __('Open FileManager') }}</button>
+        <button v-if="selectMultiple" type="button"
+                class="filemanager-open flex items-center leading-normal rounded border btn btn-default btn-primary mr-3 px-3 text-sm cursor-pointer"
+                @click="openModalFilemanager">Add Multiple Media
+        </button>
+        <button v-else type="button"
+                class="filemanager-open flex items-center leading-normal rounded border border-grey-light bg-40 px-3 whitespace-no-wrap text-grey-dark text-sm cursor-pointer"
+                @click="openModalFilemanager">{{ __('Open FileManager') }}
+        </button>
       </div>
     </div>
   </div>
