@@ -19,11 +19,11 @@
     <div class="items-stretch w-full mb-2 relative pt-1">
       <div class="flex -mr-px max-w-xs">
         <button v-if="selectMultiple" type="button"
-                class="filemanager-open flex items-center leading-normal rounded border btn btn-default btn-primary mr-3 px-3 text-sm cursor-pointer"
+                class="filemanager-open flex items-center leading-normal rounded border btn btn-default btn-primary mr-3 px-3 cursor-pointer"
                 @click="openModalFilemanager">Add Multiple Media
         </button>
         <button v-else type="button"
-                class="filemanager-open flex items-center leading-normal rounded border border-grey-light bg-40 px-3 whitespace-no-wrap text-grey-dark text-sm cursor-pointer"
+                class="filemanager-open flex items-center leading-normal rounded border border-grey-light bg-40 px-3 whitespace-no-wrap text-grey-dark cursor-pointer"
                 @click="openModalFilemanager">{{ __('Open FileManager') }}
         </button>
       </div>
