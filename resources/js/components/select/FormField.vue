@@ -13,6 +13,7 @@
         v-model="value"
         :class="[inputClasses, errorClasses]"
         :disabled="readOnly"
+        @change="handleChange"
       >
         <option value="" selected disabled>
           {{ placeholder }}
@@ -102,7 +103,18 @@ export default {
      */
     fill(formData) {
       formData.append(this.field.attribute, this.value)
-    }
+    },
+
+    /**
+     * Handle the selection change event.
+     */
+    handleChange(e) {
+      this.value = e.target.value
+
+      if (this.field) {
+        Nova.$emit(this.field.attribute + '-change', this.value)
+      }
+    },
   }
 }
 </script>
