@@ -10,16 +10,20 @@
   >
     <template slot="field">
       <div class="flex items-center">
-        <DateTimePicker
+        <date-time-picker
+            class="w-full form-control form-input form-input-bordered"
+            ref="dateTimePicker"
             :dusk="field.attribute"
             :name="field.name"
-            :value="localizedValue"
-            dateFormat="Y-m-d H:i:S"
             :placeholder="placeholder"
-            :enable-time="true"
-            :enable-seconds="true"
+            :dateFormat="pickerFormat"
+            :alt-format="pickerDisplayFormat"
+            :hour-increment="pickerHourIncrement"
+            :minute-increment="pickerMinuteIncrement"
+            :value="localizedValue"
+            :twelve-hour-time="usesTwelveHourTime"
             :first-day-of-week="firstDayOfWeek"
-            :class="[errorClasses, inputClasses]"
+            :class="errorClasses"
             @change="handleChange"
             :disabled="isReadonly"
         />
@@ -44,11 +48,9 @@ import
   HandlesValidationErrors,
   InteractsWithDates,
 } from 'laravel-nova'
-import DateTimePicker from '../date/DateTimePicker'
 import R64Field from "../../mixins/R64Field";
 
 export default {
-  components: { DateTimePicker },
   mixins: [HandlesValidationErrors, FormField, InteractsWithDates,  R64Field],
 
   data: () => ({ localizedValue: '' }),
@@ -64,7 +66,7 @@ export default {
       // If the field has a value let's convert it from the app's timezone
       // into the user's local time to display in the field
       if (this.value !== '') {
-        this.localizedValue = this.fromAppTimezone(this.value)
+        this.localizedValue = this.value
       }
     },
 
@@ -79,7 +81,7 @@ export default {
      * Update the field's internal value when it's value changes
      */
     handleChange(value) {
-      this.value = this.toAppTimezone(value)
+      this.value = value
     },
   },
 
@@ -98,6 +100,18 @@ export default {
 
     pickerFormat() {
       return this.field.pickerFormat || 'Y-m-d H:i:S'
+    },
+
+    pickerDisplayFormat() {
+      return this.field.pickerDisplayFormat || 'Y-m-d H:i:S'
+    },
+
+    pickerHourIncrement() {
+      return this.field.pickerHourIncrement || 1
+    },
+
+    pickerMinuteIncrement() {
+      return this.field.pickerMinuteIncrement || 5
     },
   },
 }
