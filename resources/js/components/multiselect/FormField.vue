@@ -81,6 +81,9 @@
         >
           {{ __(reorderMode ? 'novaMultiselect.doneReordering' : 'novaMultiselect.reorder') }}
         </div>
+      <p v-if="hasError" class="my-2 text-danger">
+        {{ firstError }}
+      </p>
     </template>
   </r64-default-field>
 </template>
