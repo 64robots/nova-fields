@@ -137,40 +137,6 @@ export default {
     extraAttributes() {
       return this.field.extraAttributes || {}
     },
-    /**
-     * Get the input type.
-     */
-    inputType() {
-      return this.field.type || 'text'
-    },
-
-    /**
-     * Get the input step amount.
-     */
-    inputStep() {
-      return this.field.step
-    },
-
-    /**
-     * Get the input minimum amount.
-     */
-    inputMin() {
-      return this.field.min
-    },
-
-    /**
-     * Get the input maximum amount.
-     */
-    inputMax() {
-      return this.field.max
-    },
-
-    /**
-     * Get the pattern that should be used for the field
-     */
-    inputPattern() {
-      return this.field.pattern
-    }
   },
 }
 </script>
