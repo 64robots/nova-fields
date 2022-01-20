@@ -21,7 +21,7 @@
         :class="[errorClasses, inputClasses]"
         :placeholder="placeholder"
 
-        @input="$emit('input', $event.target.value)"
+        @input="handleChange"
       />
 
       <p v-if="hasError" class="my-2 text-danger">
