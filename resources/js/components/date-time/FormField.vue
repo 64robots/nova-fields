@@ -28,6 +28,20 @@
             :disabled="isReadonly"
         />
 
+        <a
+            v-if="field.nullable"
+            @click.prevent="$refs.dateTimePicker.clear()"
+            href="#"
+            :title="__('Clear value')"
+            tabindex="-1"
+            class="p-1 px-2 cursor-pointer leading-none focus:outline-none"
+            :class="{
+            'text-50': !value.length,
+            'text-black hover:text-danger': value.length,
+          }"
+        >
+          <icon type="x-circle" width="22" height="22" viewBox="0 0 22 22" />
+        </a>
         <span v-if="!field.hideTimezone" class="text-80 text-sm ml-2">({{ userTimezone }})</span>
       </div>
 
