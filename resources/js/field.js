@@ -255,4 +255,8 @@ Nova.booting((Vue, router) => {
       component: require('./components/Tool'),
     },
   ]);
+
+  /* simple repeatable */
+  Vue.component('form-nova-fields-simple-repeatable', require('./components/simple-repetable/FormField'));
+  Vue.component('detail-nova-fields-simple-repeatable',require('./components/simple-repetable/DetailField'))
 })
