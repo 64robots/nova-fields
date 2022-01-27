@@ -110,7 +110,7 @@ export default {
      */
     handleChange(e) {
       this.value = e.target.value
-
+      Nova.$emit("updateConfigurableAttributes",data);
       if (this.field) {
         Nova.$emit(this.field.attribute + '-change', this.value)
       }
