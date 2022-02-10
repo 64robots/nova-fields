@@ -80,7 +80,7 @@ export default {
       // If the field has a value let's convert it from the app's timezone
       // into the user's local time to display in the field
       if (this.value !== '') {
-        this.localizedValue = this.value
+        this.localizedValue = this.fromAppTimezone(this.value);
       }
     },
 
@@ -95,7 +95,7 @@ export default {
      * Update the field's internal value when it's value changes
      */
     handleChange(value) {
-      this.value = value
+      this.value = this.toAppTimezone(value);
     },
   },
 
