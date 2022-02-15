@@ -181,7 +181,7 @@ export default {
 
   computed: {
     selected() {
-      return this.value || [];
+      return this.field.value || this.value || [];
     },
 
     flexibleKey() {
