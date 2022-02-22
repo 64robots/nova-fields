@@ -17,7 +17,7 @@
           :name="option.name"
           :checked="option.checked"
           @input="toggle($event, option)"
-          :disabled="isReadonly"
+          :disabled="field.readonly"
       >
         {{ option.label }}
       </checkbox-with-label>

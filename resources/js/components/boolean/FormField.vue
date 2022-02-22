@@ -14,7 +14,7 @@
         :id="field.name"
         :name="field.name"
         :checked="checked"
-        :disabled="readOnly"
+        :disabled="field.readonly"
       />
 
       <p v-if="hasError" class="my-2 text-danger" v-html="firstError" />
