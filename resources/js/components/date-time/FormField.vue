@@ -29,7 +29,7 @@
         />
 
         <a
-            v-if="field.nullable"
+            v-if="field.nullable && !isReadonly"
             @click.prevent="$refs.dateTimePicker.clear()"
             href="#"
             :title="__('Clear value')"
