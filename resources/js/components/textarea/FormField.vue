@@ -13,6 +13,7 @@
         v-model="value"
         :class="[errorClasses, inputClasses]"
         v-bind="extraAttributes"
+        :disabled="field.readonly"
       />
       <p v-if="hasError" class="my-2 text-danger">
         {{ firstError }}
