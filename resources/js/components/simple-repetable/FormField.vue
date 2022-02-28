@@ -15,7 +15,7 @@
               :key="fields[0].attribute"
               class="simple-repeatable-row flex py-3 pl-3 relative rounded-md"
           >
-            <div class="vue-draggable-handle flex justify-center items-center cursor-pointer">
+            <div v-if="field.canDraggable" class="vue-draggable-handle flex justify-center items-center cursor-pointer">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" class="fill-current">
                 <path
                     d="M4 5h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2z"

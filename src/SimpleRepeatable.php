@@ -47,4 +47,9 @@ class SimpleRepeatable extends Field
     {
         return $this->withMeta(['canDeleteRows' => $canDeleteRows]);
     }
+
+    public function canDraggable($canDraggable = true)
+    {
+        return $this->withMeta(['canDraggable' => $canDraggable]);
+    }
 }
