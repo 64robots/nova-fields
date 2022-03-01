@@ -36,7 +36,7 @@
                 :key="i"
                 :is="`form-${repField.component}`"
                 :field="repField"
-                class="mr-3"
+                class="mr-4"
             />
 
             <div
