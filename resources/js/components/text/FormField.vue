@@ -16,7 +16,7 @@
         :max="inputMax"
         :step="inputStep"
         :pattern="inputPattern"
-        :disabled="readOnly"
+        :disabled="field.readOnly"
         v-model="value"
         :class="[errorClasses, inputClasses]"
         :placeholder="placeholder"

@@ -12,7 +12,7 @@
         :id="field.name"
         v-model="value"
         :class="[inputClasses, errorClasses]"
-        :disabled="readOnly"
+        :disabled="field.readOnly"
         @change="handleChange"
       >
         <option value="" selected disabled>

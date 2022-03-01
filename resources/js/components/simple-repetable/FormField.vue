@@ -1,5 +1,13 @@
 <template>
-  <default-field :field="field" :errors="errors" :show-help-text="showHelpText" class="simple-repeatable">
+  <r64-default-field
+      :hide-field="hideField"
+      :field="field"
+      :hide-label="hideLabelInForms"
+      :field-classes="fieldClasses"
+      :wrapper-classes="wrapperClasses"
+      :label-classes="labelClasses"
+      class="simple-repeatable"
+  >
     <template slot="field">
       <div class="flex flex-col">
         <!-- Title columns -->
@@ -13,7 +21,7 @@
           <div
               v-for="(fields, i) in fieldsWithValues"
               :key="fields[0].attribute"
-              class="simple-repeatable-row flex py-3 pl-3 relative rounded-md"
+              :class="[inputClasses, errorClasses]"
           >
             <div v-if="field.canDraggable" class="vue-draggable-handle flex justify-center items-center cursor-pointer">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" class="fill-current">
@@ -56,17 +64,18 @@
         </button>
       </div>
     </template>
-  </default-field>
+  </r64-default-field>
 </template>
 
 <script>
 import Draggable from 'vuedraggable';
 import { FormField, HandlesValidationErrors } from 'laravel-nova';
+import R64Field from '../../mixins/R64Field'
 
 let UNIQUE_ID_INDEX = 0;
 
 export default {
-  mixins: [FormField, HandlesValidationErrors],
+  mixins: [FormField, HandlesValidationErrors,R64Field],
 
   components: { Draggable },
 
