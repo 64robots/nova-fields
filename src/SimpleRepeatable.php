@@ -9,7 +9,7 @@ class SimpleRepeatable extends Field
     use Configurable;
 
 
-    public $inputClasses = 'simple-repeatable-row flex py-3 pl-3 relative rounded-md mass-update-repeatable-row';
+    public $inputClasses = 'simple-repeatable-row flex py-3 pl-3 relative rounded-md';
 
 
     public $indexClasses = 'whitespace-no-wrap';
