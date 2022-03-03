@@ -38,4 +38,36 @@ class DateTime extends NovaDateTime
     {
         return $this->withMeta(['hideTimezone' => true]);
     }
+
+    /**
+     * @param  int  $hour
+     */
+    public function defaultHour($hour)
+    {
+        return $this->withMeta([__FUNCTION__ => $hour]);
+    }
+
+    /**
+     * @param  int  $minute
+     */
+    public function defaultMinute($minute)
+    {
+        return $this->withMeta([__FUNCTION__ => $minute]);
+    }
+
+    /**
+     * @param  bool  $seconds
+     */
+    public function enableSeconds($seconds)
+    {
+        return $this->withMeta([__FUNCTION__ => $seconds]);
+    }
+
+    /**
+     * @param  bool  $time
+     */
+    public function enableTime($time)
+    {
+        return $this->withMeta([__FUNCTION__ => $time]);
+    }
 }

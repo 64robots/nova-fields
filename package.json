@@ -15,7 +15,7 @@
     "babel-plugin-component": "^1.1.1",
     "cross-env": "^5.0.0",
     "element-ui": "^2.8.2",
-    "flatpickr": "^4.6.1",
+    "flatpickr": "^4.6.9",
     "form-backend-validation": "^2.3.3",
     "laravel-mix": "^3.0.0",
     "laravel-nova": "^1.7.0",

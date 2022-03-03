@@ -10,9 +10,9 @@
   >
     <template slot="field">
       <div class="flex items-center">
-        <date-time-picker
+        <DateTimePicker
             class="w-full form-control form-input form-input-bordered"
-            ref="dateTimePicker"
+            ref="DateTimePicker"
             :dusk="field.attribute"
             :name="field.name"
             :placeholder="placeholder"
@@ -25,12 +25,16 @@
             :first-day-of-week="firstDayOfWeek"
             :class="errorClasses"
             @change="handleChange"
+            :default-hour="defaultHour"
+            :default-minute="defaultMinute"
+            :enable-seconds="enableSeconds"
+            :enable-time="enableTime"
             :disabled="isReadonly"
         />
 
         <a
             v-if="field.nullable && !isReadonly"
-            @click.prevent="$refs.dateTimePicker.clear()"
+            @click.prevent="$refs.DateTimePicker.clear()"
             href="#"
             :title="__('Clear value')"
             tabindex="-1"
@@ -63,11 +67,14 @@ import
   InteractsWithDates,
 } from 'laravel-nova'
 import R64Field from "../../mixins/R64Field";
+import DateTimePicker from  './DateTimePicker';
 
 export default {
   mixins: [HandlesValidationErrors, FormField, InteractsWithDates,  R64Field],
 
   data: () => ({ localizedValue: '' }),
+
+  components:{DateTimePicker},
 
   methods: {
     /*
@@ -127,6 +134,22 @@ export default {
     pickerMinuteIncrement() {
       return this.field.pickerMinuteIncrement || 5
     },
-  },
+
+    defaultHour() {
+      return this.field.defaultHour || 12
+    },
+
+    defaultMinute() {
+      return this.field.defaultMinute || 0
+    },
+
+    enableSeconds() {
+      return this.field.enableSeconds === false ? false : true
+    },
+
+    enableTime() {
+      return this.field.enableTime === false ? false : true
+    },
+  }
 }
 </script>
