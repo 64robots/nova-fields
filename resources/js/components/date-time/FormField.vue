@@ -10,9 +10,9 @@
   >
     <template slot="field">
       <div class="flex items-center">
-        <DateTimePicker
+        <date-time-picker
             class="w-full form-control form-input form-input-bordered"
-            ref="DateTimePicker"
+            ref="dateTimePicker"
             :dusk="field.attribute"
             :name="field.name"
             :placeholder="placeholder"
@@ -25,16 +25,12 @@
             :first-day-of-week="firstDayOfWeek"
             :class="errorClasses"
             @change="handleChange"
-            :default-hour="defaultHour"
-            :default-minute="defaultMinute"
-            :enable-seconds="enableSeconds"
-            :enable-time="enableTime"
             :disabled="isReadonly"
         />
 
         <a
             v-if="field.nullable && !isReadonly"
-            @click.prevent="$refs.DateTimePicker.clear()"
+            @click.prevent="$refs.dateTimePicker.clear()"
             href="#"
             :title="__('Clear value')"
             tabindex="-1"
@@ -67,14 +63,14 @@ import
   InteractsWithDates,
 } from 'laravel-nova'
 import R64Field from "../../mixins/R64Field";
-import DateTimePicker from  './DateTimePicker';
+// import DateTimePicker from  './DateTimePicker';
 
 export default {
   mixins: [HandlesValidationErrors, FormField, InteractsWithDates,  R64Field],
 
   data: () => ({ localizedValue: '' }),
 
-  components:{DateTimePicker},
+  // components:{DateTimePicker},
 
   methods: {
     /*
@@ -106,7 +102,7 @@ export default {
         let date = new Date(value);
         let onlyDate = date.getFullYear()+'-'+ ('0' + (date.getMonth()+1)).slice(-2) +'-'+ ('0' + date.getDate()).slice(-2) +" "+('0' + date.getHours()).slice(-2)+":00"+":00";
         this.value = this.toAppTimezone(onlyDate);
-        //this.$refs.DateTimePicker.getUpdatedValue(onlyDate);
+        //this.$refs.dateTimePicker.getUpdatedValue(onlyDate);
       }else{
         this.value = this.toAppTimezone(value);
       }
