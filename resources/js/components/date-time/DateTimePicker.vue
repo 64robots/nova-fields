@@ -120,6 +120,12 @@ export default {
       this.$emit('change', this.$refs.datePicker.value)
     },
 
+    getUpdatedValue(value) {
+      if (this.flatpickr) {
+        this.flatpickr.setDate(value);
+      }
+    },
+
     clear() {
       this.flatpickr.clear()
     },

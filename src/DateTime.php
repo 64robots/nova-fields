@@ -70,4 +70,12 @@ class DateTime extends NovaDateTime
     {
         return $this->withMeta([__FUNCTION__ => $time]);
     }
+
+    /**
+     * @param  bool  $time
+     */
+    public function setDefaultMinuteZero($value)
+    {
+        return $this->withMeta([__FUNCTION__ => $value]);
+    }
 }
