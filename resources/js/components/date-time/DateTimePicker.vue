@@ -80,6 +80,8 @@ export default {
   methods: {
     createFlatpickr() {
       this.flatpickr = flatpickr(this.$refs.datePicker, {
+        defaultHour: this.defaultHour,
+        defaultMinute: this.defaultMinute,
         enableTime: this.enableTime,
         enableSeconds: this.enableSeconds,
         onOpen: this.onOpen,
