@@ -14,7 +14,6 @@ import flatpickr from 'flatpickr'
 import 'flatpickr/dist/themes/airbnb.css'
 
 export default {
-  name: 'date-time-picker',
   props: {
     value: {
       required: false,
@@ -57,14 +56,6 @@ export default {
       type: Boolean,
       default: true,
     },
-    defaultHour: {
-      type: Number,
-      default: 12,
-    },
-    defaultMinute: {
-      type: Number,
-      default: 0,
-    },
     firstDayOfWeek: {
       type: Number,
       default: 0,
@@ -81,11 +72,13 @@ export default {
     },
   },
 
+  mounted() {
+    this.$nextTick(() => this.createFlatpickr())
+  },
+
   methods: {
     createFlatpickr() {
       this.flatpickr = flatpickr(this.$refs.datePicker, {
-        defaultHour: this.defaultHour,
-        defaultMinute: this.defaultMinute,
         enableTime: this.enableTime,
         enableSeconds: this.enableSeconds,
         onOpen: this.onOpen,
@@ -116,19 +109,9 @@ export default {
       this.$emit('change', this.$refs.datePicker.value)
     },
 
-    // getUpdatedValue(value) {
-    //   if (this.flatpickr) {
-    //     this.flatpickr.setDate(value);
-    //   }
-    // },
-
     clear() {
       this.flatpickr.clear()
     },
-  },
-
-  mounted() {
-    this.$nextTick(() => this.createFlatpickr())
   },
 
   beforeDestroy() {
