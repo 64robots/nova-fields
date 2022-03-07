@@ -10,8 +10,9 @@
 </template>
 
 <script>
-import flatpickr from 'flatpickr'
-import 'flatpickr/dist/themes/airbnb.css'
+import flatpickr from "flatpickr";
+import 'flatpickr/dist/themes/airbnb.css';
+
 
 export default {
   props: {
@@ -78,21 +79,21 @@ export default {
 
   methods: {
     createFlatpickr() {
-      this.flatpickr = new flatpickr(this.$refs.datePicker, {
+      this.flatpickr = flatpickr(this.$refs.datePicker, {
         enableTime: this.enableTime,
-        // enableSeconds: this.enableSeconds,
-        // onOpen: this.onOpen,
-        // onClose: this.onClose,
-        // onChange: this.onChange,
-        // dateFormat: this.dateFormat,
-        // altInput: true,
-        // altFormat: this.altFormat,
-        // allowInput: true,
-        // // static: true,
-        // time_24hr: !this.twelveHourTime,
-        // hourIncrement: this.hourIncrement,
-        // minuteIncrement: this.minuteIncrement,
-        // locale: { firstDayOfWeek: this.firstDayOfWeek },
+        enableSeconds: this.enableSeconds,
+        onOpen: this.onOpen,
+        onClose: this.onClose,
+        onChange: this.onChange,
+        dateFormat: this.dateFormat,
+        altInput: true,
+        altFormat: this.altFormat,
+        allowInput: true,
+        // static: true,
+        time_24hr: !this.twelveHourTime,
+        hourIncrement: this.hourIncrement,
+        minuteIncrement: this.minuteIncrement,
+        locale: { firstDayOfWeek: this.firstDayOfWeek },
       })
     },
 
