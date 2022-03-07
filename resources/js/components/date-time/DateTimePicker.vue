@@ -73,7 +73,7 @@ export default {
   },
 
   mounted() {
-    this.$nextTick(() => this.createFlatpickr())
+  //  this.$nextTick(() => this.createFlatpickr())
   },
 
   methods: {
