@@ -81,10 +81,6 @@ export default {
     },
   },
 
-  mounted() {
-    this.$nextTick(() => this.createFlatpickr())
-  },
-
   methods: {
     createFlatpickr() {
       this.flatpickr = flatpickr(this.$refs.datePicker, {
@@ -129,6 +125,10 @@ export default {
     clear() {
       this.flatpickr.clear()
     },
+  },
+
+  mounted() {
+    this.$nextTick(() => this.createFlatpickr())
   },
 
   beforeDestroy() {
