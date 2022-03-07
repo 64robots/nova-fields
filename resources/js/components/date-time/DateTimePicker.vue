@@ -73,12 +73,12 @@ export default {
   },
 
   mounted() {
+    console.log(this.flatpickr);
    this.$nextTick(() => this.createFlatpickr())
   },
 
   methods: {
     createFlatpickr() {
-      console.log(this.$refs.datePicker);
       // this.flatpickr = flatpickr(this.$refs.datePicker, {
       //   enableTime: this.enableTime,
       //   enableSeconds: this.enableSeconds,
