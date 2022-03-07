@@ -57,6 +57,14 @@ export default {
       type: Boolean,
       default: true,
     },
+    defaultHour: {
+      type: Number,
+      default: 12,
+    },
+    defaultMinute: {
+      type: Number,
+      default: 0,
+    },
     firstDayOfWeek: {
       type: Number,
       default: 0,
