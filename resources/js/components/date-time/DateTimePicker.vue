@@ -72,12 +72,12 @@ export default {
     },
   },
 
-  mounted() {
+  // mounted() {
   //  this.$nextTick(() => this.createFlatpickr())
-  },
-  created(){
-    this.$nextTick(() => this.createFlatpickr())
-  },
+  // },
+  // created(){
+  //   this.$nextTick(() => this.createFlatpickr())
+  // },
 
   methods: {
     createFlatpickr() {
