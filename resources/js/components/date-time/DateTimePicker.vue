@@ -72,9 +72,9 @@ export default {
     },
   },
 
-  // mounted() {
-  //  this.$nextTick(() => this.createFlatpickr())
-  // },
+  mounted() {
+   this.$nextTick(() => this.createFlatpickr())
+  },
   // created(){
   //   this.$nextTick(() => this.createFlatpickr())
   // },
@@ -82,20 +82,20 @@ export default {
   methods: {
     createFlatpickr() {
       this.flatpickr = flatpickr(this.$refs.datePicker, {
-        enableTime: this.enableTime,
-        enableSeconds: this.enableSeconds,
-        onOpen: this.onOpen,
-        onClose: this.onClose,
-        onChange: this.onChange,
-        dateFormat: this.dateFormat,
-        altInput: true,
-        altFormat: this.altFormat,
-        allowInput: true,
-        // static: true,
-        time_24hr: !this.twelveHourTime,
-        hourIncrement: this.hourIncrement,
-        minuteIncrement: this.minuteIncrement,
-        locale: { firstDayOfWeek: this.firstDayOfWeek },
+        // enableTime: this.enableTime,
+        // enableSeconds: this.enableSeconds,
+        // onOpen: this.onOpen,
+        // onClose: this.onClose,
+        // onChange: this.onChange,
+        // dateFormat: this.dateFormat,
+        // altInput: true,
+        // altFormat: this.altFormat,
+        // allowInput: true,
+        // // static: true,
+        // time_24hr: !this.twelveHourTime,
+        // hourIncrement: this.hourIncrement,
+        // minuteIncrement: this.minuteIncrement,
+        // locale: { firstDayOfWeek: this.firstDayOfWeek },
       })
     },
 
