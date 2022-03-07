@@ -75,6 +75,9 @@ export default {
   mounted() {
   //  this.$nextTick(() => this.createFlatpickr())
   },
+  created(){
+    this.$nextTick(() => this.createFlatpickr())
+  },
 
   methods: {
     createFlatpickr() {
