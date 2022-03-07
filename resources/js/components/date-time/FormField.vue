@@ -10,9 +10,9 @@
   >
     <template slot="field">
       <div class="flex items-center">
-        <date-time-picker
+        <DateTimePicker
             class="w-full form-control form-input form-input-bordered"
-            ref="dateTimePicker"
+            ref="DateTimePicker"
             :dusk="field.attribute"
             :name="field.name"
             :placeholder="placeholder"
@@ -25,12 +25,16 @@
             :first-day-of-week="firstDayOfWeek"
             :class="errorClasses"
             @change="handleChange"
+            :default-hour="defaultHour"
+            :default-minute="defaultMinute"
+            :enable-seconds="enableSeconds"
+            :enable-time="enableTime"
             :disabled="isReadonly"
         />
 
         <a
             v-if="field.nullable && !isReadonly"
-            @click.prevent="$refs.dateTimePicker.clear()"
+            @click.prevent="$refs.DateTimePicker.clear()"
             href="#"
             :title="__('Clear value')"
             tabindex="-1"
@@ -63,14 +67,14 @@ import
   InteractsWithDates,
 } from 'laravel-nova'
 import R64Field from "../../mixins/R64Field";
-// import DateTimePicker from  './DateTimePicker';
+import DateTimePicker from  './DateTimePicker';
 
 export default {
   mixins: [HandlesValidationErrors, FormField, InteractsWithDates,  R64Field],
 
   data: () => ({ localizedValue: '' }),
 
-  // components:{DateTimePicker},
+  components:{DateTimePicker},
 
   methods: {
     /*
@@ -98,15 +102,14 @@ export default {
      * Update the field's internal value when it's value changes
      */
     handleChange(value) {
-      // if(this.field.setDefaultMinuteZero == true && value !== ''){
-      //   let date = new Date(value);
-      //   let onlyDate = date.getFullYear()+'-'+ ('0' + (date.getMonth()+1)).slice(-2) +'-'+ ('0' + date.getDate()).slice(-2) +" "+('0' + date.getHours()).slice(-2)+":00"+":00";
-      //   this.value = this.toAppTimezone(onlyDate);
-      //   //this.$refs.dateTimePicker.getUpdatedValue(onlyDate);
-      // }else{
-      //   this.value = this.toAppTimezone(value);
-      // }
-      this.value = this.toAppTimezone(value);
+      if(this.field.setDefaultMinuteZero == true && value !== ''){
+        let date = new Date(value);
+        let onlyDate = date.getFullYear()+'-'+ ('0' + (date.getMonth()+1)).slice(-2) +'-'+ ('0' + date.getDate()).slice(-2) +" "+('0' + date.getHours()).slice(-2)+":00"+":00";
+        this.value = this.toAppTimezone(onlyDate);
+        this.$refs.DateTimePicker.getUpdatedValue(onlyDate);
+      }else{
+        this.value = this.toAppTimezone(value);
+      }
     },
   },
 

@@ -121,9 +121,9 @@ export default {
     },
 
     getUpdatedValue(value) {
-      // if (this.flatpickr) {
-      //   this.flatpickr.setDate(value);
-      // }
+      if (this.flatpickr) {
+        this.flatpickr.setDate(value);
+      }
     },
 
     clear() {
