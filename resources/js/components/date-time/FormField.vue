@@ -10,7 +10,7 @@
   >
     <template slot="field">
       <div class="flex items-center">
-        <date-time-picker
+        <DateTimePicker
             class="w-full form-control form-input form-input-bordered"
             ref="dateTimePicker"
             :dusk="field.attribute"
@@ -67,12 +67,14 @@ import
   InteractsWithDates,
 } from 'laravel-nova'
 import R64Field from "../../mixins/R64Field";
+import DateTimePicker from "./DateTimePicker";
 
 export default {
   mixins: [HandlesValidationErrors, FormField, InteractsWithDates,  R64Field],
 
   data: () => ({ localizedValue: '' }),
 
+  components: { DateTimePicker },
 
   methods: {
     /*
@@ -131,6 +133,12 @@ export default {
 
     pickerMinuteIncrement() {
       return this.field.pickerMinuteIncrement || 5
+    },
+    enableSeconds() {
+      return this.field.enableSeconds === false ? false : true
+    },
+    enableTime() {
+      return this.field.enableTime === false ? false : true
     },
   }
 }
