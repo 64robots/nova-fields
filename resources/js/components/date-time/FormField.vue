@@ -10,9 +10,9 @@
   >
     <template slot="field">
       <div class="flex items-center">
-        <DateTimePicker
+        <date-time-picker
             class="w-full form-control form-input form-input-bordered"
-            ref="DateTimePicker"
+            ref="dateTimePicker"
             :dusk="field.attribute"
             :name="field.name"
             :placeholder="placeholder"
@@ -34,7 +34,7 @@
 
         <a
             v-if="field.nullable && !isReadonly"
-            @click.prevent="$refs.DateTimePicker.clear()"
+            @click.prevent="$refs.dateTimePicker.clear()"
             href="#"
             :title="__('Clear value')"
             tabindex="-1"
@@ -67,14 +67,12 @@ import
   InteractsWithDates,
 } from 'laravel-nova'
 import R64Field from "../../mixins/R64Field";
-import DateTimePicker from  './DateTimePicker';
 
 export default {
   mixins: [HandlesValidationErrors, FormField, InteractsWithDates,  R64Field],
 
   data: () => ({ localizedValue: '' }),
 
-  components:{DateTimePicker},
 
   methods: {
     /*
@@ -102,14 +100,7 @@ export default {
      * Update the field's internal value when it's value changes
      */
     handleChange(value) {
-      if(this.field.setDefaultMinuteZero == true && value !== ''){
-        let date = new Date(value);
-        let onlyDate = date.getFullYear()+'-'+ ('0' + (date.getMonth()+1)).slice(-2) +'-'+ ('0' + date.getDate()).slice(-2) +" "+('0' + date.getHours()).slice(-2)+":00"+":00";
-        this.value = this.toAppTimezone(onlyDate);
-        this.$refs.DateTimePicker.getUpdatedValue(onlyDate);
-      }else{
         this.value = this.toAppTimezone(value);
-      }
     },
   },
 
@@ -140,22 +131,6 @@ export default {
 
     pickerMinuteIncrement() {
       return this.field.pickerMinuteIncrement || 5
-    },
-
-    defaultHour() {
-      return this.field.defaultHour || 12
-    },
-
-    defaultMinute() {
-      return this.field.defaultMinute || 0
-    },
-
-    enableSeconds() {
-      return this.field.enableSeconds === false ? false : true
-    },
-
-    enableTime() {
-      return this.field.enableTime === false ? false : true
     },
   }
 }
