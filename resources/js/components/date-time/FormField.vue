@@ -140,6 +140,12 @@ export default {
     enableTime() {
       return this.field.enableTime === false ? false : true
     },
+    defaultHour() {
+      return this.field.defaultHour || 12
+    },
+    defaultMinute() {
+      return this.field.defaultMinute || 0
+    },
   }
 }
 </script>
