@@ -56,6 +56,14 @@ export default {
       type: Boolean,
       default: true,
     },
+    defaultHour: {
+      type: Number,
+      default: 12,
+    },
+    defaultMinute: {
+      type: Number,
+      default: 0,
+    },
     firstDayOfWeek: {
       type: Number,
       default: 0,
@@ -79,6 +87,8 @@ export default {
   methods: {
     createFlatpickr() {
       this.flatpickr = flatpickr(this.$refs.datePicker, {
+        defaultHour: this.defaultHour,
+        defaultMinute: this.defaultMinute,
         enableTime: this.enableTime,
         enableSeconds: this.enableSeconds,
         onOpen: this.onOpen,
