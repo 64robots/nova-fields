@@ -38,7 +38,7 @@ export default {
     },
     dateFormat: {
       type: String,
-      default: 'm/d/Y h:i K',
+      default: 'Y-m-d H:i:S',
     },
     altFormat: {
       type: String,

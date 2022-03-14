@@ -131,7 +131,7 @@ export default {
     },
 
     pickerDisplayFormat() {
-      return this.field.pickerDisplayFormat || 'm/d/Y h:i K'
+      return this.field.pickerDisplayFormat || 'Y-m-d H:i:S'
     },
 
     pickerHourIncrement() {
