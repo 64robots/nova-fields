@@ -38,7 +38,7 @@ export default {
     },
     dateFormat: {
       type: String,
-      default: 'Y-m-d H:i:S',
+      default: 'm/d/Y h:i K',
     },
     altFormat: {
       type: String,
@@ -117,6 +117,12 @@ export default {
 
     onChange(event) {
       this.$emit('change', this.$refs.datePicker.value)
+    },
+
+    getUpdatedValue(value) {
+      if (this.flatpickr) {
+        this.flatpickr.setDate(value);
+      }
     },
 
     clear() {

@@ -10,7 +10,7 @@
   >
     <template slot="field">
       <div class="flex items-center">
-        <date-time-picker
+        <DateTimePicker
             class="w-full form-control form-input form-input-bordered"
             ref="dateTimePicker"
             :dusk="field.attribute"
@@ -67,14 +67,14 @@ import
   InteractsWithDates,
 } from 'laravel-nova'
 import R64Field from "../../mixins/R64Field";
-// import DateTimePicker from "./DateTimePicker";
+import DateTimePicker from "./DateTimePicker";
 
 export default {
   mixins: [HandlesValidationErrors, FormField, InteractsWithDates,  R64Field],
 
   data: () => ({ localizedValue: '' }),
 
-  // components: { DateTimePicker },
+  components: { DateTimePicker },
 
   methods: {
     /*
@@ -102,7 +102,14 @@ export default {
      * Update the field's internal value when it's value changes
      */
     handleChange(value) {
+      if(this.field.setDefaultMinuteZero == true && value !== ''){
+        let date = new Date(value);
+        let onlyDate = date.getFullYear()+'-'+ ('0' + (date.getMonth()+1)).slice(-2) +'-'+ ('0' + date.getDate()).slice(-2) +" "+('0' + date.getHours()).slice(-2)+":00"+":00";
+        this.value = this.toAppTimezone(onlyDate);
+        this.$refs.dateTimePicker.getUpdatedValue(onlyDate);
+      }else{
         this.value = this.toAppTimezone(value);
+      }
     },
   },
 
@@ -124,7 +131,7 @@ export default {
     },
 
     pickerDisplayFormat() {
-      return this.field.pickerDisplayFormat || 'Y-m-d H:i:S'
+      return this.field.pickerDisplayFormat || 'm/d/Y h:i K'
     },
 
     pickerHourIncrement() {
