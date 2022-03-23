@@ -82,7 +82,7 @@ export default {
      */
     setInitialValue() {
       // Set the initial value of the field
-      this.value = this.field.value || ''
+      this.value = this.field.value || '';
 
       // If the field has a value let's convert it from the app's timezone
       // into the user's local time to display in the field
