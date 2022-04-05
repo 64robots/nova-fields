@@ -197,7 +197,7 @@ export default {
 
       const flexibleKey = this.flexibleKey;
       if (!flexibleKey) return this.field.dependsOn;
-      return `${flexibleKey}__${this.field.dependsOn}`;
+      return `${this.field.dependsOn}`;
     },
   },
 
