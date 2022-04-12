@@ -6,12 +6,12 @@ Nova.booting((Vue, router) => {
 
   /** Text & Number */
   Vue.component(
-    'index-nova-fields-text',
-    require('./components/text/IndexField')
+      'index-nova-fields-text',
+      require('./components/text/IndexField')
   )
   Vue.component(
-    'detail-nova-fields-text',
-    require('./components/text/DetailField')
+      'detail-nova-fields-text',
+      require('./components/text/DetailField')
   )
   Vue.component('form-nova-fields-text', require('./components/text/FormField'))
 
@@ -86,12 +86,12 @@ Nova.booting((Vue, router) => {
 
   /** Date */
   Vue.component(
-    'index-nova-fields-date',
-    require('./components/date/IndexField')
+      'index-nova-fields-date',
+      require('./components/date/IndexField')
   )
   Vue.component(
-    'detail-nova-fields-date',
-    require('./components/date/DetailField')
+      'detail-nova-fields-date',
+      require('./components/date/DetailField')
   )
   Vue.component('form-nova-fields-date', require('./components/date/FormField'))
 
@@ -111,103 +111,103 @@ Nova.booting((Vue, router) => {
 
   /** Computed */
   Vue.component(
-    'index-nova-fields-computed',
-    require('./components/text/IndexField')
+      'index-nova-fields-computed',
+      require('./components/text/IndexField')
   )
   Vue.component(
-    'detail-nova-fields-computed',
-    require('./components/text/DetailField')
+      'detail-nova-fields-computed',
+      require('./components/text/DetailField')
   )
   Vue.component(
-    'form-nova-fields-computed',
-    require('./components/computed/FormField')
+      'form-nova-fields-computed',
+      require('./components/computed/FormField')
   )
 
   /** Textarea */
   Vue.component(
-    'index-nova-fields-textarea',
-    require('./components/text/IndexField')
+      'index-nova-fields-textarea',
+      require('./components/text/IndexField')
   )
   Vue.component(
-    'detail-nova-fields-textarea',
-    require('./components/textarea/DetailField')
+      'detail-nova-fields-textarea',
+      require('./components/textarea/DetailField')
   )
   Vue.component(
-    'form-nova-fields-textarea',
-    require('./components/textarea/FormField')
+      'form-nova-fields-textarea',
+      require('./components/textarea/FormField')
   )
 
   /** Password */
   Vue.component(
-    'index-nova-fields-password',
-    require('./components/password/IndexField')
+      'index-nova-fields-password',
+      require('./components/password/IndexField')
   )
   Vue.component(
-    'detail-nova-fields-password',
-    require('./components/password/DetailField')
+      'detail-nova-fields-password',
+      require('./components/password/DetailField')
   )
   Vue.component(
-    'form-nova-fields-password',
-    require('./components/password/FormField')
+      'form-nova-fields-password',
+      require('./components/password/FormField')
   )
 
   /** Boolean */
   Vue.component(
-    'index-nova-fields-boolean',
-    require('./components/boolean/IndexField')
+      'index-nova-fields-boolean',
+      require('./components/boolean/IndexField')
   )
   Vue.component(
-    'detail-nova-fields-boolean',
-    require('./components/boolean/DetailField')
+      'detail-nova-fields-boolean',
+      require('./components/boolean/DetailField')
   )
   Vue.component(
-    'form-nova-fields-boolean',
-    require('./components/boolean/FormField')
+      'form-nova-fields-boolean',
+      require('./components/boolean/FormField')
   )
 
   /** Select */
   Vue.component(
-    'index-nova-fields-select',
-    require('./components/text/IndexField')
+      'index-nova-fields-select',
+      require('./components/text/IndexField')
   )
   Vue.component(
-    'detail-nova-fields-select',
-    require('./components/text/DetailField')
+      'detail-nova-fields-select',
+      require('./components/text/DetailField')
   )
   Vue.component(
-    'form-nova-fields-select',
-    require('./components/select/FormField')
+      'form-nova-fields-select',
+      require('./components/select/FormField')
   )
 
   /** Autocomplete */
   Vue.component(
-    'index-nova-fields-autocomplete',
-    require('./components/text/IndexField')
+      'index-nova-fields-autocomplete',
+      require('./components/text/IndexField')
   )
   Vue.component(
-    'detail-nova-fields-autocomplete',
-    require('./components/text/DetailField')
+      'detail-nova-fields-autocomplete',
+      require('./components/text/DetailField')
   )
   Vue.component(
-    'form-nova-fields-autocomplete',
-    require('./components/autocomplete/FormField')
+      'form-nova-fields-autocomplete',
+      require('./components/autocomplete/FormField')
   )
 
   /** File & Image */
   Vue.component(
-    'index-nova-fields-file',
-    require('./components/file/IndexField')
+      'index-nova-fields-file',
+      require('./components/file/IndexField')
   )
   Vue.component(
-    'detail-nova-fields-file',
-    require('./components/file/DetailField')
+      'detail-nova-fields-file',
+      require('./components/file/DetailField')
   )
   Vue.component('form-nova-fields-file', require('./components/file/FormField'))
 
   /** Trix */
   Vue.component(
-    'detail-nova-fields-trix',
-    require('./components/textarea/DetailField')
+      'detail-nova-fields-trix',
+      require('./components/textarea/DetailField')
   )
   Vue.component('form-nova-fields-trix', require('./components/trix/FormField'))
 
@@ -216,19 +216,19 @@ Nova.booting((Vue, router) => {
   /** Row */
   Vue.component('index-nova-fields-row', require('./components/row/IndexField'))
   Vue.component(
-    'detail-nova-fields-row',
-    require('./components/row/DetailField')
+      'detail-nova-fields-row',
+      require('./components/row/DetailField')
   )
   Vue.component('form-nova-fields-row', require('./components/row/FormField'))
 
   /** JSON */
   Vue.component(
-    'index-nova-fields-json',
-    require('./components/json/IndexField')
+      'index-nova-fields-json',
+      require('./components/json/IndexField')
   )
   Vue.component(
-    'detail-nova-fields-json',
-    require('./components/json/DetailField')
+      'detail-nova-fields-json',
+      require('./components/json/DetailField')
   )
   Vue.component('form-nova-fields-json', require('./components/json/FormField'))
 
@@ -236,16 +236,16 @@ Nova.booting((Vue, router) => {
 
   /** BelongsTo */
   Vue.component(
-    'index-nova-fields-belongs-to',
-    require('./components/belongs-to/IndexField')
+      'index-nova-fields-belongs-to',
+      require('./components/belongs-to/IndexField')
   )
   Vue.component(
-    'detail-nova-fields-belongs-to',
-    require('./components/belongs-to/DetailField')
+      'detail-nova-fields-belongs-to',
+      require('./components/belongs-to/DetailField')
   )
   Vue.component(
-    'form-nova-fields-belongs-to',
-    require('./components/belongs-to/FormField')
+      'form-nova-fields-belongs-to',
+      require('./components/belongs-to/FormField')
   )
 
   router.addRoutes([
@@ -262,4 +262,9 @@ Nova.booting((Vue, router) => {
 
   /* Blank Div */
   Vue.component('form-nova-fields-blank-div', require('./components/blank-div/FormField'))
+
+  /* MultiSelectDualBox */
+  Vue.component('form-nova-fields-multi-select-dual-box', require('./components/multi-select-dual-box/FormField'));
+  Vue.component('detail-nova-fields-multi-select-dual-box',require('./components/multi-select-dual-box/DetailField'))
+  Vue.component('index-nova-fields-multi-select-dual-box',require('./components/multi-select-dual-box/IndexField'))
 })
