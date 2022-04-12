@@ -90,23 +90,26 @@ export default {
     moveLeft(item) {
       let vue = this;
       if (typeof item == 'object') {
-        let index = vue.options.options.indexOf(item);
-        vue.options.options.push(vue.options.selected[index]);
-        let idIndex = vue.options.selectedIds.indexOf(vue.options.selected[index].value);
-        if (idIndex >= 0) {
-          vue.options.selectedIds.splice(idIndex, 1);
+        let index = (vue.options.options.indexOf(item) != -1 ? vue.options.options.indexOf(item) : vue.options.selected.indexOf(item)) ?? null;
+        if(index != null){
+          vue.options.options.push(vue.options.selected[index]);
+          let idIndex = vue.options.selectedIds.indexOf(vue.options.selected[index].value);
+          if (idIndex >= 0) {
+            vue.options.selectedIds.splice(idIndex, 1);
+          }
+          vue.options.selected.splice(index, 1);
+          return;
         }
-        vue.options.selected.splice(index, 1);
-        return;
-      }
-      for (var cont = 0; cont < vue.options.selected.length; cont++) {
-        vue.options.options.push(vue.options.selected[cont]);
-        let idIndex = vue.options.selectedIds.indexOf(vue.options.selected[cont].value);
-        if (idIndex >= 0) {
-          vue.options.selectedIds.splice(idIndex, 1);
+      }else{
+        for (var cont = 0; cont < vue.options.selected.length; cont++) {
+          vue.options.options.push(vue.options.selected[cont]);
+          let idIndex = vue.options.selectedIds.indexOf(vue.options.selected[cont].value);
+          if (idIndex >= 0) {
+            vue.options.selectedIds.splice(idIndex, 1);
+          }
         }
+        vue.options.selected.splice(0, vue.options.selected.length);
       }
-      vue.options.selected.splice(0, vue.options.selected.length);
     }
   },
   computed: {
