@@ -15,6 +15,17 @@ Nova.booting((Vue, router) => {
   )
   Vue.component('form-nova-fields-text', require('./components/text/FormField'))
 
+  /** ID */
+  Vue.component(
+      'index-nova-fields-id',
+      require('./components/id/IndexField')
+  )
+  Vue.component(
+      'detail-nova-fields-id',
+      require('./components/text/DetailField')
+  )
+  Vue.component('form-nova-fields-id', require('./components/text/FormField'))
+
   /** Slug */
   Vue.component(
       'index-nova-fields-slug',
