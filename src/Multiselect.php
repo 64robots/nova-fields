@@ -107,6 +107,11 @@ class Multiselect extends NovaField implements RelatableField
         return $this->api($apiUrl, $resourceClass);
     }
 
+    public function taggable($taggable = true)
+    {
+        return $this->withMeta(['taggable' => $taggable]);
+    }
+
     protected function resolveAttribute($resource, $attribute)
     {
         $singleSelect = $this->meta['singleSelect'] ?? false;

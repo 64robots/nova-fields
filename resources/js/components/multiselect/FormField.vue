@@ -10,8 +10,8 @@
       :label-classes="labelClasses"
   >
     <template slot="field">
-        <!-- Multi select field -->
-        <multiselect
+      <!-- Multi select field -->
+      <multiselect
           v-if="!reorderMode"
           @input="handleChange"
           @open="handleOpen"
@@ -41,46 +41,48 @@
           deselectLabel=""
           deselectGroupLabel=""
           :clearOnSelect="field.clearOnSelect || false"
-        >
-          <template slot="maxElements">
-            {{ __('novaMultiselect.maxElements', { max: String(field.max || '') }) }}
-          </template>
+          :taggable="field.taggable || false"
+          @tag="addTag"
+      >
+        <template slot="maxElements">
+          {{ __('novaMultiselect.maxElements', { max: String(field.max || '') }) }}
+        </template>
 
-          <template slot="noResult">
-            {{ __('novaMultiselect.noResult') }}
-          </template>
+        <template slot="noResult">
+          {{ __('novaMultiselect.noResult') }}
+        </template>
 
-          <template slot="noOptions">
-            {{ field.apiUrl ? __('novaMultiSelect.startTypingForOptions') : __('novaMultiselect.noOptions') }}
-          </template>
+        <template slot="noOptions">
+          {{ field.apiUrl ? __('novaMultiSelect.startTypingForOptions') : __('novaMultiselect.noOptions') }}
+        </template>
 
-          <template slot="clear">
-            <div
+        <template slot="clear">
+          <div
               class="multiselect__clear"
               v-if="field.nullable && (isMultiselect ? value.length : value)"
               @mousedown.prevent.stop="value = isMultiselect ? [] : null"
-            ></div>
-          </template>
-        </multiselect>
+          ></div>
+        </template>
+      </multiselect>
 
-        <!-- Reorder mode field -->
-        <div v-if="reorderMode" class="form-input-bordered py-1">
-          <vue-draggable tag="ul" v-model="value" class="flex flex-col pl-0" style="list-style: none; margin-top: 5px">
-            <transition-group>
-              <li v-for="(s, i) in selected" :key="i + 0" class="reorder__tag text-sm mb-1 px-2 py-1 text-white">
-                {{ s.label }}
-              </li>
-            </transition-group>
-          </vue-draggable>
-        </div>
+      <!-- Reorder mode field -->
+      <div v-if="reorderMode" class="form-input-bordered py-1">
+        <vue-draggable tag="ul" v-model="value" class="flex flex-col pl-0" style="list-style: none; margin-top: 5px">
+          <transition-group>
+            <li v-for="(s, i) in selected" :key="i + 0" class="reorder__tag text-sm mb-1 px-2 py-1 text-white">
+              {{ s.label }}
+            </li>
+          </transition-group>
+        </vue-draggable>
+      </div>
 
-        <div
+      <div
           v-if="field.reorderable"
           class="ml-auto mt-2 text-sm font-bold text-primary cursor-pointer dim"
           @click="reorderMode = !reorderMode"
-        >
-          {{ __(reorderMode ? 'novaMultiselect.doneReordering' : 'novaMultiselect.reorder') }}
-        </div>
+      >
+        {{ __(reorderMode ? 'novaMultiselect.doneReordering' : 'novaMultiselect.reorder') }}
+      </div>
       <p v-if="hasError" class="my-2 text-danger">
         {{ firstError }}
       </p>
@@ -202,6 +204,21 @@ export default {
   },
 
   methods: {
+    addTag(newTag) {
+      console.log("here");
+      const tag = {
+        label: newTag,
+        value: newTag,
+      };
+
+      this.options.push(tag);
+
+      if (this.isMultiselect) {
+        this.value.push(tag);
+      } else {
+        this.value = tag;
+      }
+    },
     setInitialValue() {
       if (this.isMultiselect) {
         const valuesArray = this.getInitialFieldValuesArray();
@@ -215,6 +232,7 @@ export default {
       if (this.isMultiselect) {
         if (this.value && this.value.length) {
           formData.append(this.field.attribute, JSON.stringify(this.value));
+          formData.append(this.field.attribute+'-json', JSON.stringify(this.value));
           this.value.forEach((v, i) => {
             formData.append(`${this.field.attribute}[${i}]`, v.value);
           });
