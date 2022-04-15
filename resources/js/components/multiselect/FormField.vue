@@ -238,6 +238,7 @@ export default {
           });
         } else {
           formData.append(this.field.attribute, '');
+          formData.append(this.field.attribute+'-json', '');
         }
       } else {
         formData.append(this.field.attribute, (this.value && this.value.value) || '');
