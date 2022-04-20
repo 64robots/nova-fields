@@ -29,4 +29,18 @@ class Slug extends NovaSlug
      * @var string
      */
     public $component = 'nova-fields-slug';
+
+    protected $showCustomize = true;
+
+    public function showCustomize($value = true){
+        $this->showCustomize = $value;
+        return $this;
+    }
+
+    public function jsonSerialize()
+    {
+        return array_merge(parent::jsonSerialize(),[
+            'showCustomize' => $this->showCustomize,
+        ]);
+    }
 }

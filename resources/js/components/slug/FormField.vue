@@ -8,26 +8,26 @@
       :label-classes="labelClasses"
   >
     <template slot="field">
-        <input
-            ref="theInput"
-            v-bind="extraAttributes"
+      <input
+          ref="theInput"
+          v-bind="extraAttributes"
 
-            :id="field.name"
-            :dusk="field.attribute"
-            :type="inputType"
-            :min="inputMin"
-            :max="inputMax"
-            :step="inputStep"
-            :pattern="inputPattern"
-            :disabled="readOnly"
-            v-model="value"
-            :class="[errorClasses, inputClasses]"
-            :placeholder="placeholder"
+          :id="field.name"
+          :dusk="field.attribute"
+          :type="inputType"
+          :min="inputMin"
+          :max="inputMax"
+          :step="inputStep"
+          :pattern="inputPattern"
+          :disabled="readOnly"
+          v-model="value"
+          :class="[errorClasses, inputClasses]"
+          :placeholder="placeholder"
 
-        />
+      />
 
-        <button
-            class="
+      <button
+          class="
             btn btn-link
             rounded
             px-1
@@ -37,15 +37,15 @@
             ml-1
             mt-2
           "
-            v-if="field.showCustomizeButton"
-            type="button"
-            @click="toggleCustomizeClick"
-        >
-          {{ __('Customize') }}
-        </button>
-        <p v-if="hasError" class="my-2 text-danger">
-          {{ firstError }}
-        </p>
+          v-if="field.showCustomizeButton && field.showCustomize"
+          type="button"
+          @click="toggleCustomizeClick"
+      >
+        {{ __('Customize') }}
+      </button>
+      <p v-if="hasError" class="my-2 text-danger">
+        {{ firstError }}
+      </p>
     </template>
   </r64-default-field>
 </template>
@@ -74,6 +74,11 @@ export default {
 
     if (this.shouldRegisterInitialListener) {
       this.registerChangeListener()
+    }else if(!this.field.showCustomize){
+      this.registerChangeListener()
+      this.isListeningToChanges = false
+      this.field.readonly = false
+      this.field.extraAttributes.readonly = false
     }
 
     this.$once('hook:beforeDestroy', () => {
@@ -130,7 +135,7 @@ export default {
 
   computed: {
     shouldRegisterInitialListener() {
-      return !this.field.updating
+      return !this.field.updating;
     },
 
     eventName() {
