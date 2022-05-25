@@ -139,7 +139,7 @@ class FileManagerService
     public function createFolderOnPath($folder, $currentFolder)
     {
         $folder = $this->fixDirname($this->fixFilename($folder));
-
+        $folder = str_replace(" ","_",$folder);
         $path = $currentFolder.'/'.$folder;
 
         if ($this->storage->has($path)) {
@@ -188,7 +188,7 @@ class FileManagerService
         }
 
         $fileName = $this->namingStrategy->name($currentFolder, $file);
-
+        $fileName = str_replace(" ","_",$fileName);
         if ($this->storage->putFileAs($currentFolder, $file, $fileName)) {
             $this->setVisibility($currentFolder, $fileName, $visibility);
 
