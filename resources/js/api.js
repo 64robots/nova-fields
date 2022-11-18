@@ -53,6 +53,14 @@ export default {
             .then(response => response.data);
     },
 
+    validatePassword(password){
+        return window.axios
+            .post('/nova-r64-api/actions/validatePassword', {
+                password: password,
+            })
+            .then(response => response.data);
+    },
+
     getInfo(file) {
         return window.axios
             .post('/nova-r64-api/actions/get-info', { file: file })

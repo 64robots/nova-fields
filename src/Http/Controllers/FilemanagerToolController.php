@@ -57,6 +57,15 @@ class FilemanagerToolController extends Controller
     /**
      * @param Request $request
      */
+    public function validatePassword(Request $request)
+    {
+        $pwd = config('filemanager.deletePassword');
+        return strcmp($pwd,$request->password) == 0 ? true : false;
+    }
+
+    /**
+     * @param Request $request
+     */
     public function upload(Request $request)
     {
         $uploadingFolder = $request->folder ?? false;
