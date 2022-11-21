@@ -61,6 +61,7 @@ export default {
     errorMsg: '',
     password:'',
     passwordMessage:'',
+    isDeleted:false,
     isDeleting: false,
   }),
   methods: {
@@ -72,6 +73,10 @@ export default {
       this.password = '';
     },
     handleClose() {
+      let $this = this;
+      setTimeout(function () {
+        $this.password = '';
+      },1500);
       this.active = false;
     },
     deleteData() {
@@ -87,6 +92,7 @@ export default {
             } else {
               this.deleteFile();
             }
+            $this.isDeleted = true;
           } else {
             $this.passwordMessage = "Your password is incorrect. Please enter valid password";
           }
