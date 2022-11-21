@@ -76,6 +76,7 @@ export default {
       let $this = this;
       setTimeout(function () {
         $this.password = '';
+        $this.isDeleted = false;
       },1500);
       this.active = false;
     },
