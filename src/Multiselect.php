@@ -14,6 +14,13 @@ class Multiselect extends NovaField implements RelatableField
 {
     use MultiselectBelongsToSupport, Configurable;
 
+    public function relationshipName(){
+
+    }
+
+    public function relationshipType(){
+
+    }
     /**
      * The base input classes of the field.
      *
