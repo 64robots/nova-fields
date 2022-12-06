@@ -2,6 +2,7 @@
 
 namespace R64\NovaFields;
 
+use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Tool as BaseTool;
@@ -26,5 +27,10 @@ class FilemanagerTool extends BaseTool
     public function renderNavigation()
     {
         return view('nova-fields::navigation');
+    }
+
+    public function menu(Request $request)
+    {
+        // TODO: Implement menu() method.
     }
 }

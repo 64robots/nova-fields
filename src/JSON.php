@@ -3,13 +3,14 @@
 namespace R64\NovaFields;
 
 use Laravel\Nova\Panel;
+use JsonSerializable;
 use Laravel\Nova\Fields\Field;
 use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Contracts\Resolvable;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class JSON extends Field
+class JSON extends Field implements JsonSerializable
 {
     use Configurable, HasChilds;
 
@@ -196,7 +197,7 @@ class JSON extends Field
      *
      * @return array
      */
-    public function jsonSerialize()
+    public function jsonSerialize() :array
     {
         return array_merge(parent::jsonSerialize(), [
             'panelTitleClasses' => $this->panelTitleClasses,

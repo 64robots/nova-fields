@@ -3,9 +3,10 @@
 namespace R64\NovaFields;
 
 use R64\NovaFields\Configurable;
+use JsonSerializable;
 use Laravel\Nova\Fields\Slug as NovaSlug;
 
-class Slug extends NovaSlug
+class Slug extends NovaSlug implements JsonSerializable
 {
     use Configurable;
 
@@ -37,7 +38,7 @@ class Slug extends NovaSlug
         return $this;
     }
 
-    public function jsonSerialize()
+    public function jsonSerialize() :array
     {
         return array_merge(parent::jsonSerialize(),[
             'showCustomize' => $this->showCustomize,

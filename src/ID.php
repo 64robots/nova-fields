@@ -7,8 +7,9 @@ use Laravel\Nova\Fields\ID as NovaID;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Util;
 use R64\NovaFields\Configurable;
+use JsonSerializable;
 
-class ID extends NovaID
+class ID extends NovaID implements JsonSerializable
 {
     use Configurable;
     /**
@@ -158,7 +159,7 @@ class ID extends NovaID
      * @return array
      */
     #[\ReturnTypeWillChange]
-    public function jsonSerialize()
+    public function jsonSerialize() :array
     {
         return array_merge(parent::jsonSerialize(), array_filter([
             'pivotValue' => $this->pivotValue ?? null,

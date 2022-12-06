@@ -4,9 +4,10 @@ namespace R64\NovaFields;
 
 use Laravel\Nova\Http\Requests\NovaRequest;
 use R64\NovaFields\Configurable;
+use JsonSerializable;
 use Laravel\Nova\Fields\Field as NovaField;
 
-class BooleanGroup extends NovaField
+class BooleanGroup extends NovaField implements JsonSerializable
 {
     use Configurable;
 
@@ -145,7 +146,7 @@ class BooleanGroup extends NovaField
      *
      * @return array
      */
-    public function jsonSerialize()
+    public function jsonSerialize() :array
     {
         return array_merge(parent::jsonSerialize(), [
             'hideTrueValues' => $this->hideTrueValues,
