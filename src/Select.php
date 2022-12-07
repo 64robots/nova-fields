@@ -37,7 +37,7 @@ class Select extends NovaSelect
     public function displayUsingLabels()
     {
         $this->displayUsing(function ($value) {
-            return collect($this->meta['options'])
+            return collect($this->serializeOptions(false))
                     ->where('value', $value)
                     ->first()['label'] ?? $value;
         });

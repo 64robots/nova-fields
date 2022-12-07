@@ -72,12 +72,12 @@ Nova.booting((Vue, router) => {
   Vue.component('detail-nova-fields-multiselect', require('./components/multiselect/DetailField'));
   Vue.component('form-nova-fields-multiselect', require('./components/multiselect/FormField'));
   // Allow user to overwrite nova-multiselect-detail-field-value
-  if (!Vue.options.components['nova-multiselect-detail-field-value']) {
-    Vue.component(
-        'nova-multiselect-detail-field-value',
-        require('./components/multiselect/NovaMultiselectDetailFieldValue')
-    );
-  }
+  // if (!Vue.options.components['nova-multiselect-detail-field-value']) {
+  //   Vue.component(
+  //       'nova-multiselect-detail-field-value',
+  //       require('./components/multiselect/NovaMultiselectDetailFieldValue')
+  //   );
+  // }
 
   /** Items */
   Vue.component('index-nova-fields-items', require('./components/items/IndexField'))
@@ -88,7 +88,7 @@ Nova.booting((Vue, router) => {
   /** FileManager */
   Vue.component('index-nova-fields-filemanager', require('./components/filemanager/IndexField'));
   Vue.component('detail-nova-fields-filemanager', require('./components/filemanager/DetailField'));
-  Vue.component('form-nova-fields-filemanager', require('./components/filemanager/FormField'));
+  // Vue.component('form-nova-fields-filemanager', require('./components/filemanager/FormField'));
 
   /** Heading */
   Vue.component('index-nova-fields-heading', require('./components/heading/IndexField'));
@@ -259,13 +259,13 @@ Nova.booting((Vue, router) => {
       require('./components/belongs-to/FormField')
   )
 
-  router.addRoutes([
-    {
-      name: 'nova-filemanager',
-      path: '/nova-filemanager',
-      component: require('./components/Tool'),
-    },
-  ]);
+  // router.addRoutes([
+  //   {
+  //     name: 'nova-filemanager',
+  //     path: '/nova-filemanager',
+  //     component: require('./components/Tool'),
+  //   },
+  // ]);
 
   /* simple repeatable */
   Vue.component('form-nova-fields-simple-repeatable', require('./components/simple-repetable/FormField'));
