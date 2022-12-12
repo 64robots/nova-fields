@@ -25,6 +25,9 @@ import PasswordFormField from './components/password/FormField.vue'
 import BooleanIndexField from './components/boolean/IndexField.vue'
 import BooleanDetailField from './components/boolean/DetailField.vue'
 import BooleanFormField from './components/boolean/FormField.vue'
+import BooleanGroupIndexField from './components/boolean-group/IndexField.vue'
+import BooleanGroupDetailField from './components/boolean-group/DetailField.vue'
+import BooleanGroupFormField from './components/boolean-group/FormField.vue'
 import RadioButtonIndexField from './components/radio-button/IndexField.vue'
 import RadioButtonDetailField from './components/radio-button/DetailField.vue'
 import RadioButtonFormField from './components/radio-button/FormField.vue'
@@ -87,9 +90,9 @@ Nova.booting((app, store) => {
     app.component('form-nova-fields-child-select', SelectFormField)
 
     /** BooleanGroup */
-    app.component('index-nova-fields-boolean-group', BooleanIndexField)
-    app.component('detail-nova-fields-boolean-group', BooleanDetailField)
-    app.component('form-nova-fields-boolean-group', BooleanFormField)
+    app.component('index-nova-fields-boolean-group', BooleanGroupIndexField)
+    app.component('detail-nova-fields-boolean-group', BooleanGroupDetailField)
+    app.component('form-nova-fields-boolean-group', BooleanGroupFormField)
 
     /** RadioButton */
     app.component('index-nova-fields-radio', RadioButtonIndexField);

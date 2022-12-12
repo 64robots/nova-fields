@@ -6,9 +6,9 @@ export default {
 
     statusClass() {
       if (this.field.value) {
-        return this.field.successClass || 'bg-success';
+        return this.field.successClass || 'bg-green-500';
       }
-      return this.field.dangerClass || 'bg-danger';
+      return this.field.dangerClass || 'bg-red-500';
     }
   }
 };

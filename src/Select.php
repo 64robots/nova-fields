@@ -13,7 +13,7 @@ class Select extends NovaSelect
      *
      * @var string
      */
-    public $inputClasses = 'w-full form-control form-select';
+    public $inputClasses = 'w-full form-control form-select form-select-bordered';
 
     /**
      * The base index classes of the field.

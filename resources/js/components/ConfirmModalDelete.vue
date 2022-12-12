@@ -20,7 +20,7 @@
             <div class="deleteModalPassword">
               <label for="password">Enter Password : </label>
               <input type="password" name="password" class="w-full h-full form-control form-input form-input-bordered py-3" id="password" v-model="password">
-              <span class="text-danger" v-if="passwordMessage.length > 0">{{ passwordMessage }}</span>
+              <span class="text-red-500" v-if="passwordMessage.length > 0">{{ passwordMessage }}</span>
             </div>
           </template>
           <template v-else>
@@ -29,7 +29,7 @@
             <div class="deleteModalPassword">
               <label for="password">Enter Password : </label>
               <input type="password" name="password" class="w-full h-full form-control form-input form-input-bordered py-3" id="password" v-model="password">
-              <span class="text-danger" v-if="passwordMessage.length > 0">{{ passwordMessage }}</span>
+              <span class="text-red-500" v-if="passwordMessage.length > 0">{{ passwordMessage }}</span>
             </div>
           </template>
 

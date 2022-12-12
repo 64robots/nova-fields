@@ -16,7 +16,7 @@
               <input type="password" class="w-full h-full form-control form-input form-input-bordered py-3" :placeholder="Password" v-model="password" autofocus required>
               <i class="bi bi-eye-slash"
                  id="togglePassword"></i>
-              <span class="text-danger" v-if="passwordMessage.length > 0">{{ passwordMessage }}</span>
+              <span class="text-red-500" v-if="passwordMessage.length > 0">{{ passwordMessage }}</span>
             </div>
           </template>
 
@@ -38,7 +38,7 @@
               <input type="password" class="w-full h-full form-control form-input form-input-bordered py-3" :placeholder="Password" v-model="password" autofocus required>
               <i class="bi bi-eye-slash"
                  id="togglePassword"></i>
-              <span class="text-danger" v-if="passwordMessage.length > 0">{{ passwordMessage }}</span>
+              <span class="text-red-500" v-if="passwordMessage.length > 0">{{ passwordMessage }}</span>
             </div>
 
             <p class="my-2 text-danger" v-if="error">{{ errorMsg }}</p>
