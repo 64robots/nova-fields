@@ -3,14 +3,14 @@
         <template v-if="field.value">
             <r64-panel-item  v-if="display === 'normal'"
                          :field="field"
-                         :hide-field="hideField"
+
                          :hide-label="hideLabelInDetail"
                          :label-classes="panelLabelClasses"
                          :field-classes="panelFieldClasses"
                          :wrapper-classes="panelWrapperClasses"
             />
             <ImagePanel v-else :field="field"
-                        :hide-field="hideField"
+
                         :hide-label="hideLabelInDetail"
                         :label-classes="panelLabelClasses"
                         :field-classes="panelFieldClasses"

@@ -1,13 +1,13 @@
 <template>
   <r64-panel-item
       :field="field"
-      :hide-field="hideField"
+
       :hide-label="hideLabelInDetail"
       :label-classes="panelLabelClasses"
       :field-classes="panelFieldClasses"
       :wrapper-classes="panelWrapperClasses"
   >
-    <template slot="value">
+    <template #value>
       <ul class="list-reset" v-if="value.length > 0">
         <li v-for="option in value" class="mb-1">
           <span

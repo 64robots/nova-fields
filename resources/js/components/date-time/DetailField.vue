@@ -1,12 +1,12 @@
 <template>
   <r64-panel-item
-      :hide-field="hideField"
+
       :field="field"
       :hide-label="hideLabelInDetail"
       :label-classes="panelLabelClasses"
       :field-classes="panelFieldClasses"
   >
-    <template slot="value">
+    <template #value>
       <p v-if="field.value" class="text-90">{{ localizedDateTime }}</p>
       <p v-else>&mdash;</p>
     </template>
@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { InteractsWithDates } from 'laravel-nova'
+import { InteractsWithDates } from '../../../../../../laravel/nova/resources/js/mixins';
 
 export default {
   mixins: [InteractsWithDates],

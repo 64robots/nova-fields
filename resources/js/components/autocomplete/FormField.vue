@@ -1,13 +1,13 @@
 <template>
   <r64-default-field
-    :hide-field="hideField"
+
     :field="field"
     :hide-label="hideLabelInForms"
     :field-classes="fieldClasses"
     :wrapper-classes="wrapperClasses"
     :label-classes="labelClasses"
   >
-    <template slot="field">
+    <template #field>
       <Multiselect
         :value="selectedValue"
         track-by="value"

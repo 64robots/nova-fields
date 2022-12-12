@@ -1,17 +1,17 @@
 <template>
   <r64-panel-item
-      :hide-field="hideField"
+
       :field="field"
       :hide-label="hideLabelInDetail"
       :label-classes="panelLabelClasses"
       :field-classes="panelFieldClasses"
       :wrapper-classes="panelWrapperClasses"
   >
-    <div slot="value">
+    <template #value>
       <div v-if="value.length > 0" class="py-1 flex flex-wrap" >
         <span  v-for="(item,index) in value" :key="index" class='bg-70 font-bold text-white px-2 py-1 m-1 text-xs rounded-full whitespace-no-wrap'>{{ item.label }}</span>
       </div>
-    </div>
+    </template>
   </r64-panel-item>
 </template>
 

@@ -1,13 +1,13 @@
 <template>
   <r64-default-field
-    :hide-field="hideField"
+
     :field="field"
     :hide-label="hideLabelInForms"
     :field-classes="fieldClasses"
     :wrapper-classes="wrapperClasses"
     :label-classes="labelClasses"
   >
-    <template slot="field">
+    <template #field>
       <div
         v-if="hasValue"
         class="mb-6"
@@ -148,7 +148,7 @@
 
 <script>
 import { FormField, HandlesValidationErrors, Errors } from 'laravel-nova'
-import { Upload } from 'element-ui'
+import { ElUpload } from 'element-plus'
 import ImageLoader from '../../nova/ImageLoader'
 import DeleteButton from '../../nova/DeleteButton'
 import R64Field from '../../mixins/R64Field'
@@ -156,7 +156,7 @@ import R64Field from '../../mixins/R64Field'
 export default {
   mixins: [HandlesValidationErrors, FormField, R64Field],
 
-  components: { DeleteButton, ImageLoader, 'el-upload': Upload },
+  components: { DeleteButton, ImageLoader, 'el-upload': ElUpload },
 
   data: () => ({
     file: null,

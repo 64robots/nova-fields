@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import { Minimum } from 'laravel-nova';
+import { minimum } from '../../../../../laravel/nova/resources/js/util';
 
 import 'viewerjs/dist/viewer.css'
 import { component as Viewer }  from 'v-viewer';

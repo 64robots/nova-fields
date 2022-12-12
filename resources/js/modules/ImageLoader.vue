@@ -1,54 +1,54 @@
 <template>
     <transition name="fade">
-        <template v-if="view == 'grid'">
+<!--        <template v-if="view == 'grid'">-->
 
-            <div @click="clickStrategy"
-                 ref="card"
-                 :loading="loading"
-                 class="card relative flex flex-wrap justify-center border border-lg border-50 overflow-hidden px-0 py-0 cursor-pointer"
-            >
-                <template v-if="loading">
-                    <div class="rounded-lg flex items-center justify-center absolute pin z-50">
-                        <loader class="text-60" />
-                    </div>
-                </template>
+<!--            <div @click="clickStrategy"-->
+<!--                 ref="card"-->
+<!--                 :loading="loading"-->
+<!--                 class="card relative flex flex-wrap justify-center border border-lg border-50 overflow-hidden px-0 py-0 cursor-pointer"-->
+<!--            >-->
+<!--                <template v-if="loading">-->
+<!--                    <div class="rounded-lg flex items-center justify-center absolute pin z-50">-->
+<!--                        <loader class="text-60" />-->
+<!--                    </div>-->
+<!--                </template>-->
 
-                <div v-if="file.mime != 'image'" v-html="file.thumb" class="mime-icon flex items-center justify-center  h-5/6">
+<!--                <div v-if="file.mime != 'image'" v-html="file.thumb" class="mime-icon flex items-center justify-center  h-5/6">-->
 
-                </div>
+<!--                </div>-->
 
-                <div  v-if="file.mime == 'image'" ref="image" class="image-block block w-full h-5/6">
+<!--                <div  v-if="file.mime == 'image'" ref="image" class="image-block block w-full h-5/6">-->
 
-                </div>
+<!--                </div>-->
 
-                <div class="actions-grid absolute pin-t pin-r pr-2 pt-2 pb-1 pl-2 "
-                     :class="{ 'hidden': !multiSelecting , 'bg-50' : shouldShowHover}"
-                >
-                    <div v-if="multiSelecting">
-                        <input :checked="selected" type="checkbox">
-                    </div>
+<!--                <div class="actions-grid absolute pin-t pin-r pr-2 pt-2 pb-1 pl-2 "-->
+<!--                     :class="{ 'hidden': !multiSelecting , 'bg-50' : shouldShowHover}"-->
+<!--                >-->
+<!--                    <div v-if="multiSelecting">-->
+<!--                        <input :checked="selected" type="checkbox">-->
+<!--                    </div>-->
 
-                    <div v-else class="flex flex-wrap text-70" >
-                        <div class="cursor-pointer" :class="{ ' mr-2' : renamePermission }" v-if="deletePermission" @click.prevent="deleteFile($event)">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" aria-labelledby="delete" class="fill-current"><path fill-rule="nonzero" d="M6 4V2a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2h5a1 1 0 0 1 0 2h-1v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6H1a1 1 0 1 1 0-2h5zM4 6v12h12V6H4zm8-2V2H8v2h4zM8 8a1 1 0 0 1 1 1v6a1 1 0 0 1-2 0V9a1 1 0 0 1 1-1zm4 0a1 1 0 0 1 1 1v6a1 1 0 0 1-2 0V9a1 1 0 0 1 1-1z"></path></svg>
-                        </div>
-                        <div class="cursor-pointer" v-if="renamePermission" @click.prevent="renameFile($event)">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" aria-labelledby="edit" class="fill-current"><path d="M4.3 10.3l10-10a1 1 0 0 1 1.4 0l4 4a1 1 0 0 1 0 1.4l-10 10a1 1 0 0 1-.7.3H5a1 1 0 0 1-1-1v-4a1 1 0 0 1 .3-.7zM6 14h2.59l9-9L15 2.41l-9 9V14zm10-2a1 1 0 0 1 2 0v6a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4c0-1.1.9-2 2-2h6a1 1 0 1 1 0 2H2v14h14v-6z"></path></svg>
-                        </div>
-                    </div>
-                </div>
+<!--                    <div v-else class="flex flex-wrap text-70" >-->
+<!--                        <div class="cursor-pointer" :class="{ ' mr-2' : renamePermission }" v-if="deletePermission" @click.prevent="deleteFile($event)">-->
+<!--                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" aria-labelledby="delete" class="fill-current"><path fill-rule="nonzero" d="M6 4V2a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2h5a1 1 0 0 1 0 2h-1v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6H1a1 1 0 1 1 0-2h5zM4 6v12h12V6H4zm8-2V2H8v2h4zM8 8a1 1 0 0 1 1 1v6a1 1 0 0 1-2 0V9a1 1 0 0 1 1-1zm4 0a1 1 0 0 1 1 1v6a1 1 0 0 1-2 0V9a1 1 0 0 1 1-1z"></path></svg>-->
+<!--                        </div>-->
+<!--                        <div class="cursor-pointer" v-if="renamePermission" @click.prevent="renameFile($event)">-->
+<!--                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" aria-labelledby="edit" class="fill-current"><path d="M4.3 10.3l10-10a1 1 0 0 1 1.4 0l4 4a1 1 0 0 1 0 1.4l-10 10a1 1 0 0 1-.7.3H5a1 1 0 0 1-1-1v-4a1 1 0 0 1 .3-.7zM6 14h2.59l9-9L15 2.41l-9 9V14zm10-2a1 1 0 0 1 2 0v6a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4c0-1.1.9-2 2-2h6a1 1 0 1 1 0 2H2v14h14v-6z"></path></svg>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
 
-                <div class="missing p-8" v-if="missing">
-                    <p class="text-center leading-normal">
-                        <a :href="file.name" class="text-primary dim" target="_blank">{{__('This image')}}</a> {{__('could not be found.')}}
-                    </p>
-                </div>
+<!--                <div class="missing p-8" v-if="missing">-->
+<!--                    <p class="text-center leading-normal">-->
+<!--                        <a :href="file.name" class="text-primary dim" target="_blank">{{__('This image')}}</a> {{__('could not be found.')}}-->
+<!--                    </p>-->
+<!--                </div>-->
 
-                <div class="h-1/6 w-full text-center text-xs  border-t border-30 bg-50 flex items-center justify-center">
-                    {{ file.name | truncate(25) }}
-                </div>
-            </div>
-        </template>
+<!--                <div class="h-1/6 w-full text-center text-xs  border-t border-30 bg-50 flex items-center justify-center">-->
+<!--                    {{ file.name | truncate(25) }}-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </template>-->
 
         <template v-if="view == 'list'">
 
@@ -114,7 +114,7 @@
 
 <script>
 import findIndex from 'lodash/findIndex';
-import { Minimum } from 'laravel-nova';
+import { minimum } from '../../../../../laravel/nova/resources/js/util';
 
 export default {
     components: {

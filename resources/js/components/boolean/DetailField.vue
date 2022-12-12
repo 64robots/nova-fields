@@ -1,18 +1,18 @@
 <template>
   <r64-panel-item
-    :hide-field="hideField"
+
     :field="field"
     :hide-label="hideLabelInDetail"
     :label-classes="panelLabelClasses"
     :field-classes="panelFieldClasses"
     :wrapper-classes="panelWrapperClasses"
   >
-    <p slot="value" class="text-90">
+    <template #value class="text-90">
       <span
         :class="[dotClasses, statusClass]"
       />
       <span v-if="!field.hideBooleanLabel">{{ label }}</span>
-    </p>
+    </template>
   </r64-panel-item>
 </template>
 

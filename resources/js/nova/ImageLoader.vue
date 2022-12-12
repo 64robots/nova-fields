@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import { Minimum } from 'laravel-nova'
+import { minimum } from '../../../../../laravel/nova/resources/js/util';
 
 export default {
     props: {

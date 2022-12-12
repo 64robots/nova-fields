@@ -1,13 +1,13 @@
 <template>
   <r64-panel-item
-      :hide-field="hideField"
+
       :field="field"
       :hide-label="hideLabelInDetail"
       :label-classes="panelLabelClasses"
       :field-classes="panelFieldClasses"
       :wrapper-classes="panelWrapperClasses"
   >
-    <div slot="value">
+    <div #value>
       <component
           :item="item"
           :key="index"

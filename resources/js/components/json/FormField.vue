@@ -8,7 +8,7 @@
       :wrapper-classes="field.wrapperClasses"
       :label-classes="field.labelClasses"
     >
-      <template slot="field">
+      <template #field>
         <FormFieldItem
           :class="{'remove-bottom-border': index === fields.length - 1}"
           :key="index"

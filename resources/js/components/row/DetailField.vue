@@ -7,7 +7,7 @@
     :wrapper-classes="panelWrapperClasses"
   >
     <r64-excerpt
-      slot="value"
+      #value
       :content="field.value"
       :excerpt-classes="excerptClasses"
       :show-label="showContentLabel"

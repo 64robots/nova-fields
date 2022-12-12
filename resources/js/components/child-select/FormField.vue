@@ -2,13 +2,13 @@
     <r64-default-field
         :field="field"
         :errors="errors"
-        :hide-field="hideField"
+
         :hide-label="hideLabelInForms"
         :field-classes="fieldClasses"
         :wrapper-classes="wrapperClasses"
         :label-classes="labelClasses"
     >
-        <template slot="field">
+        <template #field>
             <select
                 :id="field.attribute"
                 v-model="value"

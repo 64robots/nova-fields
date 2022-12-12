@@ -1,6 +1,6 @@
 <template>
   <r64-default-field
-    :hide-field="hideField"
+
     :field="field"
     :hide-label="hideLabelInForms"
     :field-classes="fieldClasses"
@@ -8,7 +8,7 @@
     :label-classes="labelClasses"
     :show-help-text="false"
   >
-    <template slot="field">
+    <template #field>
       <trix
         name="trixman"
         :value="field.value"

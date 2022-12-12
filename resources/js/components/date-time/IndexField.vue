@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import { InteractsWithDates } from 'laravel-nova'
+import { InteractsWithDates } from '../../../../../../laravel/nova/resources/js/mixins';
 
 export default {
   mixins: [InteractsWithDates],

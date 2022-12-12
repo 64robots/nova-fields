@@ -1,6 +1,6 @@
 <template>
   <r64-default-field
-      :hide-field="hideField"
+
       :field="field"
       :hide-label="hideLabelInForms"
       :field-classes="fieldClasses"
@@ -8,7 +8,7 @@
       :label-classes="labelClasses"
       class="simple-repeatable"
   >
-    <template slot="field">
+    <template #field>
       <div class="flex flex-col">
         <!-- Title columns -->
         <div class="simple-repeatable-header-row flex border-b border-40 py-2">

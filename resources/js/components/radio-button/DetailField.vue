@@ -1,6 +1,6 @@
 <template>
   <r64-panel-item
-      :hide-field="hideField"
+
       :field="field"
       :hide-label="hideLabelInDetail"
       :label-classes="panelLabelClasses"

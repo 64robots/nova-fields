@@ -1,281 +1,211 @@
-Nova.booting((Vue, router) => {
-  /** Shared */
-  Vue.component('r64-default-field', require('./components/DefaultField'))
-  Vue.component('r64-panel-item', require('./components/PanelItem'))
-  Vue.component('r64-excerpt', require('./components/Excerpt'))
+import DefaultField from './components/DefaultField.vue'
+import PanelItem from './components/PanelItem.vue'
+import DateIndexField from './components/date/IndexField.vue'
+import Excerpt from './components/Excerpt.vue'
+// import DateDetailField from './components/date/DetailField.vue'
+// import DateTimeIndexField from './components/date-time/IndexField.vue'
+// import DateTimeDetailField from './components/date-time/DetailField.vue'
+// import DateTimeFormField from './components/date-time/FormField.vue'
+// import DateFormField from './components/date/FormField.vue'
+import TextIndexField from './components/text/IndexField.vue'
+import TextDetailField from './components/text/DetailField.vue'
+import TextFormField from './components/text/FormField.vue'
+import MultiSelectDualBoxIndexField from './components/multi-select-dual-box/IndexField.vue'
+import MultiSelectDualBoxDetailField from './components/multi-select-dual-box/DetailField.vue'
+import MultiSelectDualBoxFormField from './components/multi-select-dual-box/FormField.vue'
+import HeadingIndexField from './components/heading/IndexField.vue'
+import HeadingDetailField from './components/heading/DetailField.vue'
+import HeadingFormField from './components/heading/FormField.vue'
+import ComputedFormField from './components/computed/FormField.vue'
+import TextAreaDetailField from './components/textarea/DetailField.vue'
+import TextAreaFormField from './components/textarea/FormField.vue'
+import PasswordIndexField from './components/password/IndexField.vue'
+import PasswordDetailField from './components/password/DetailField.vue'
+import PasswordFormField from './components/password/FormField.vue'
+import BooleanIndexField from './components/boolean/IndexField.vue'
+import BooleanDetailField from './components/boolean/DetailField.vue'
+import BooleanFormField from './components/boolean/FormField.vue'
+import RadioButtonIndexField from './components/radio-button/IndexField.vue'
+import RadioButtonDetailField from './components/radio-button/DetailField.vue'
+import RadioButtonFormField from './components/radio-button/FormField.vue'
+import SelectFormField from './components/select/FormField.vue'
+import AutoCompleteFormField from './components/autocomplete/FormField.vue'
+import FileIndexField from './components/file/IndexField.vue'
+import FileDetailField from './components/file/DetailField.vue'
+import FileFormField from './components/file/FormField.vue'
+import TrixFormField from './components/trix/FormField.vue'
+import RowDetailField from './components/row/DetailField.vue'
+import JsonIndexField from './components/json/IndexField.vue'
+import RowIndexField from './components/row/IndexField.vue'
+import JsonDetailField from './components/json/DetailField.vue'
+import BelongsToIndexField from './components/belongs-to/IndexField.vue'
+import RowFormField from './components/row/FormField.vue'
+// import BelongsToDetailField from './components/belongs-to/DetailField.vue'
+// import BelongsToFormField from './components/belongs-to/FormField.vue'
+import JsonFormField from './components/json/FormField.vue'
+// import IdIndexField from './components/id/IndexField.vue'
+import SlugFormField from './components/slug/FormField.vue'
+// import MultiselectIndexField from './components/multiselect/IndexField.vue'
+// import MultiselectDetailField from './components/multiselect/DetailField.vue'
+// import MultiselectFormField from './components/multiselect/FormField.vue'
+// import NovaMultiselectDetailFieldValue from './components/multiselect/NovaMultiselectDetailFieldValue.vue'
+// import ItemsIndexField from './components/items/IndexField.vue'
+// import ItemsDetailField from './components/items/DetailField.vue'
+// import ItemDetailField from './components/items/DetailFieldItem.vue'
+// import ItemsFormField from './components/items/FormField.vue'
+// import FileManagerIndexField from './components/filemanager/IndexField.vue'
+// import FileManagerDetailField from './components/filemanager/DetailField.vue'
+// import FileManagerFormField from './components/filemanager/FormField.vue'
+// import SimpleRepeatableDetailField from './components/simple-repetable/DetailField.vue'
+// import SimpleRepeatableFormField from './components/simple-repetable/FormField.vue'
+import BlankDivFormField from './components/blank-div/FormField.vue'
 
-  /** Text & Number */
-  Vue.component(
-      'index-nova-fields-text',
-      require('./components/text/IndexField')
-  )
-  Vue.component(
-      'detail-nova-fields-text',
-      require('./components/text/DetailField')
-  )
-  Vue.component('form-nova-fields-text', require('./components/text/FormField'))
+Nova.booting((app, store) => {
+    /** Shared */
+    app.component('r64-default-field', DefaultField)
+    app.component('r64-panel-item', PanelItem)
+    app.component('r64-excerpt', Excerpt)
 
-  /** ID */
-  Vue.component(
-      'index-nova-fields-id',
-      require('./components/id/IndexField')
-  )
-  Vue.component(
-      'detail-nova-fields-id',
-      require('./components/text/DetailField')
-  )
-  Vue.component('form-nova-fields-id', require('./components/text/FormField'))
+    /** Text & Number */
+    app.component('index-nova-fields-text', TextIndexField)
+    app.component('detail-nova-fields-text', TextDetailField)
+    app.component('form-nova-fields-text', TextFormField)
 
-  /** Slug */
-  Vue.component(
-      'index-nova-fields-slug',
-      require('./components/text/IndexField')
-  )
-  Vue.component(
-      'detail-nova-fields-slug',
-      require('./components/text/DetailField')
-  )
-  Vue.component('form-nova-fields-slug', require('./components/slug/FormField'))
+    /** ID */
+    // app.component('index-nova-fields-id',IdIndexField)
+    app.component('detail-nova-fields-id',TextDetailField)
+    app.component('form-nova-fields-id',TextFormField)
 
-  /** ChildSelect */
-  Vue.component(
-      'index-nova-fields-child-select',
-      require('./components/text/IndexField')
-  )
-  Vue.component(
-      'detail-nova-fields-child-select',
-      require('./components/text/DetailField')
-  )
-  Vue.component('form-nova-fields-child-select', require('./components/child-select/FormField'))
+    /** Slug */
+    app.component('index-nova-fields-slug',TextIndexField)
+    app.component('detail-nova-fields-slug', TextDetailField)
+    app.component('form-nova-fields-slug', SlugFormField)
 
-  /** BooleanGroup */
-  Vue.component(
-      'index-nova-fields-boolean-group',
-      require('./components/boolean-group/IndexField.vue')
-  )
-  Vue.component(
-      'detail-nova-fields-boolean-group',
-      require('./components/boolean-group/DetailField.vue')
-  )
-  Vue.component(
-      'form-nova-fields-boolean-group',
-      require('./components/boolean-group/FormField.vue')
-  )
+    /** ChildSelect */
+    app.component('index-nova-fields-child-select',TextIndexField)
+    app.component('detail-nova-fields-child-select', TextDetailField)
+    app.component('form-nova-fields-child-select', SelectFormField)
 
-  /** RadioButton */
-  Vue.component('index-nova-fields-radio', require('./components/radio-button/IndexField'));
-  Vue.component('detail-nova-fields-radio', require('./components/radio-button/DetailField'));
-  Vue.component('form-nova-fields-radio', require('./components/radio-button/FormField'));
+    /** BooleanGroup */
+    app.component('index-nova-fields-boolean-group', BooleanIndexField)
+    app.component('detail-nova-fields-boolean-group', BooleanDetailField)
+    app.component('form-nova-fields-boolean-group', BooleanFormField)
 
-  /** MultiSelect */
-  Vue.component('index-nova-fields-multiselect', require('./components/multiselect/IndexField'));
-  Vue.component('detail-nova-fields-multiselect', require('./components/multiselect/DetailField'));
-  Vue.component('form-nova-fields-multiselect', require('./components/multiselect/FormField'));
-  // Allow user to overwrite nova-multiselect-detail-field-value
-  // if (!Vue.options.components['nova-multiselect-detail-field-value']) {
-  //   Vue.component(
-  //       'nova-multiselect-detail-field-value',
-  //       require('./components/multiselect/NovaMultiselectDetailFieldValue')
-  //   );
-  // }
+    /** RadioButton */
+    app.component('index-nova-fields-radio', RadioButtonIndexField);
+    app.component('detail-nova-fields-radio', RadioButtonDetailField);
+    app.component('form-nova-fields-radio', RadioButtonFormField);
 
-  /** Items */
-  Vue.component('index-nova-fields-items', require('./components/items/IndexField'))
-  Vue.component('detail-nova-fields-items', require('./components/items/DetailField'))
-  Vue.component('form-nova-fields-items', require('./components/items/FormField'))
-  Vue.component('detail-nova-fields-item', require('./components/items/DetailFieldItem'))
+    /** MultiSelect */
+    // app.component('index-nova-fields-multiselect', MultiselectIndexField);
+    // app.component('detail-nova-fields-multiselect', MultiselectDetailField);
+    // app.component('form-nova-fields-multiselect', MultiselectFormField);
+    // Allow user to overwrite nova-multiselect-detail-field-value
+    // if (!app.options.components['nova-multiselect-detail-field-value']) {
+    //   app.component('nova-multiselect-detail-field-value',NovaMultiselectDetailFieldValue);
+    // }
 
-  /** FileManager */
-  Vue.component('index-nova-fields-filemanager', require('./components/filemanager/IndexField'));
-  Vue.component('detail-nova-fields-filemanager', require('./components/filemanager/DetailField'));
-  // Vue.component('form-nova-fields-filemanager', require('./components/filemanager/FormField'));
+    /** Items */
+    // app.component('index-nova-fields-items', ItemsIndexField)
+    // app.component('detail-nova-fields-items', ItemsDetailField)
+    // app.component('form-nova-fields-items', ItemsFormField)
+    // app.component('detail-nova-fields-item', ItemDetailField)
+    //
+    // /** FileManager */
+    // app.component('index-nova-fields-filemanager', FileManagerIndexField);
+    // app.component('detail-nova-fields-filemanager', FileManagerDetailField);
+    // app.component('form-nova-fields-filemanager', FileManagerFormField);
 
-  /** Heading */
-  Vue.component('index-nova-fields-heading', require('./components/heading/IndexField'));
-  Vue.component('detail-nova-fields-heading', require('./components/heading/DetailField'));
-  Vue.component('form-nova-fields-heading', require('./components/heading/FormField'));
+    /** Heading */
+    app.component('index-nova-fields-heading', HeadingIndexField);
+    app.component('detail-nova-fields-heading', HeadingDetailField);
+    app.component('form-nova-fields-heading', HeadingFormField);
 
-  /** Date */
-  Vue.component(
-      'index-nova-fields-date',
-      require('./components/date/IndexField')
-  )
-  Vue.component(
-      'detail-nova-fields-date',
-      require('./components/date/DetailField')
-  )
-  Vue.component('form-nova-fields-date', require('./components/date/FormField'))
+    /** Date */
+    app.component('index-nova-fields-date', DateIndexField)
+    // app.component('detail-nova-fields-date', DateDetailField)
+    // app.component('form-nova-fields-date', DateFormField)
+    //
+    // /** DateTime */
+    // app.component('index-nova-fields-date-time', DateTimeIndexField)
+    // app.component('detail-nova-fields-date-time', DateTimeDetailField)
+    // app.component('form-nova-fields-date-time', DateTimeFormField)
 
-  /** DateTime */
-  Vue.component(
-      'index-nova-fields-date-time',
-      require('./components/date-time/IndexField')
-  )
-  Vue.component(
-      'detail-nova-fields-date-time',
-      require('./components/date-time/DetailField')
-  )
-  Vue.component(
-      'form-nova-fields-date-time',
-      require('./components/date-time/FormField')
-  )
+    /** Computed */
+    app.component('index-nova-fields-computed',TextIndexField)
+    app.component('detail-nova-fields-computed', TextDetailField)
+    app.component('form-nova-fields-computed', ComputedFormField)
 
-  /** Computed */
-  Vue.component(
-      'index-nova-fields-computed',
-      require('./components/text/IndexField')
-  )
-  Vue.component(
-      'detail-nova-fields-computed',
-      require('./components/text/DetailField')
-  )
-  Vue.component(
-      'form-nova-fields-computed',
-      require('./components/computed/FormField')
-  )
+    /** Textarea */
+    app.component('index-nova-fields-textarea',TextIndexField)
+    app.component('detail-nova-fields-textarea', TextAreaDetailField)
+    app.component('form-nova-fields-textarea', TextAreaFormField)
 
-  /** Textarea */
-  Vue.component(
-      'index-nova-fields-textarea',
-      require('./components/text/IndexField')
-  )
-  Vue.component(
-      'detail-nova-fields-textarea',
-      require('./components/textarea/DetailField')
-  )
-  Vue.component(
-      'form-nova-fields-textarea',
-      require('./components/textarea/FormField')
-  )
+    /** Password */
+    app.component('index-nova-fields-password', PasswordIndexField)
+    app.component('detail-nova-fields-password', PasswordDetailField)
+    app.component('form-nova-fields-password', PasswordFormField)
 
-  /** Password */
-  Vue.component(
-      'index-nova-fields-password',
-      require('./components/password/IndexField')
-  )
-  Vue.component(
-      'detail-nova-fields-password',
-      require('./components/password/DetailField')
-  )
-  Vue.component(
-      'form-nova-fields-password',
-      require('./components/password/FormField')
-  )
+    /** Boolean */
+    app.component('index-nova-fields-boolean', BooleanIndexField)
+    app.component('detail-nova-fields-boolean', BooleanDetailField)
+    app.component('form-nova-fields-boolean', BooleanFormField)
 
-  /** Boolean */
-  Vue.component(
-      'index-nova-fields-boolean',
-      require('./components/boolean/IndexField')
-  )
-  Vue.component(
-      'detail-nova-fields-boolean',
-      require('./components/boolean/DetailField')
-  )
-  Vue.component(
-      'form-nova-fields-boolean',
-      require('./components/boolean/FormField')
-  )
+    /** Select */
+    app.component('index-nova-fields-select',TextIndexField)
+    app.component('detail-nova-fields-select', TextDetailField)
+    app.component('form-nova-fields-select', SelectFormField)
 
-  /** Select */
-  Vue.component(
-      'index-nova-fields-select',
-      require('./components/text/IndexField')
-  )
-  Vue.component(
-      'detail-nova-fields-select',
-      require('./components/text/DetailField')
-  )
-  Vue.component(
-      'form-nova-fields-select',
-      require('./components/select/FormField')
-  )
+    /** Autocomplete */
+    app.component('index-nova-fields-autocomplete',TextIndexField)
+    app.component('detail-nova-fields-autocomplete', TextDetailField)
+    app.component('form-nova-fields-autocomplete', AutoCompleteFormField)
 
-  /** Autocomplete */
-  Vue.component(
-      'index-nova-fields-autocomplete',
-      require('./components/text/IndexField')
-  )
-  Vue.component(
-      'detail-nova-fields-autocomplete',
-      require('./components/text/DetailField')
-  )
-  Vue.component(
-      'form-nova-fields-autocomplete',
-      require('./components/autocomplete/FormField')
-  )
+    /** File & Image */
+    app.component('index-nova-fields-file', FileIndexField)
+    app.component('detail-nova-fields-file', FileDetailField)
+    app.component('form-nova-fields-file', FileFormField)
 
-  /** File & Image */
-  Vue.component(
-      'index-nova-fields-file',
-      require('./components/file/IndexField')
-  )
-  Vue.component(
-      'detail-nova-fields-file',
-      require('./components/file/DetailField')
-  )
-  Vue.component('form-nova-fields-file', require('./components/file/FormField'))
+    /** Trix */
+    app.component('detail-nova-fields-trix', TextAreaDetailField)
+    app.component('form-nova-fields-trix', TrixFormField)
 
-  /** Trix */
-  Vue.component(
-      'detail-nova-fields-trix',
-      require('./components/textarea/DetailField')
-  )
-  Vue.component('form-nova-fields-trix', require('./components/trix/FormField'))
+    /** R64 Fields */
 
-  /** R64 Fields */
+    /** Row */
+    app.component('index-nova-fields-row', RowIndexField)
+    app.component('detail-nova-fields-row', RowDetailField)
+    app.component('form-nova-fields-row', RowFormField)
 
-  /** Row */
-  Vue.component('index-nova-fields-row', require('./components/row/IndexField'))
-  Vue.component(
-      'detail-nova-fields-row',
-      require('./components/row/DetailField')
-  )
-  Vue.component('form-nova-fields-row', require('./components/row/FormField'))
+    /** JSON */
+    app.component('index-nova-fields-json', JsonIndexField)
+    app.component('detail-nova-fields-json', JsonDetailField)
+    app.component('form-nova-fields-json', JsonFormField)
 
-  /** JSON */
-  Vue.component(
-      'index-nova-fields-json',
-      require('./components/json/IndexField')
-  )
-  Vue.component(
-      'detail-nova-fields-json',
-      require('./components/json/DetailField')
-  )
-  Vue.component('form-nova-fields-json', require('./components/json/FormField'))
+    /** RELATIONS */
 
-  /** RELATIONS */
+    /** BelongsTo */
+    app.component('index-nova-fields-belongs-to', BelongsToIndexField)
+    // app.component('detail-nova-fields-belongs-to', BelongsToDetailField)
+    // app.component('form-nova-fields-belongs-to', BelongsToFormField)
 
-  /** BelongsTo */
-  Vue.component(
-      'index-nova-fields-belongs-to',
-      require('./components/belongs-to/IndexField')
-  )
-  Vue.component(
-      'detail-nova-fields-belongs-to',
-      require('./components/belongs-to/DetailField')
-  )
-  Vue.component(
-      'form-nova-fields-belongs-to',
-      require('./components/belongs-to/FormField')
-  )
+    // router.addRoutes([
+    //   {
+    //     name: 'nova-filemanager',
+    //     path: '/nova-filemanager',
+    //     component: require('./components/Tool'),
+    //   },
+    // ]);
 
-  // router.addRoutes([
-  //   {
-  //     name: 'nova-filemanager',
-  //     path: '/nova-filemanager',
-  //     component: require('./components/Tool'),
-  //   },
-  // ]);
+    /* simple repeatable */
+    // app.component('detail-nova-fields-simple-repeatable', SimpleRepeatableDetailField)
+    // app.component('form-nova-fields-simple-repeatable', SimpleRepeatableFormField);
 
-  /* simple repeatable */
-  Vue.component('form-nova-fields-simple-repeatable', require('./components/simple-repetable/FormField'));
-  Vue.component('detail-nova-fields-simple-repeatable',require('./components/simple-repetable/DetailField'))
+    /* Blank Div */
+    app.component('form-nova-fields-blank-div', BlankDivFormField)
 
-  /* Blank Div */
-  Vue.component('form-nova-fields-blank-div', require('./components/blank-div/FormField'))
-
-  /* MultiSelectDualBox */
-  Vue.component('form-nova-fields-multi-select-dual-box', require('./components/multi-select-dual-box/FormField'));
-  Vue.component('detail-nova-fields-multi-select-dual-box',require('./components/multi-select-dual-box/DetailField'))
-  Vue.component('index-nova-fields-multi-select-dual-box',require('./components/multi-select-dual-box/IndexField'))
-})
+    /* MultiSelectDualBox */
+    app.component('index-nova-fields-multi-select-dual-box', MultiSelectDualBoxIndexField)
+    app.component('detail-nova-fields-multi-select-dual-box', MultiSelectDualBoxDetailField)
+    app.component('form-nova-fields-multi-select-dual-box', MultiSelectDualBoxFormField);
+});

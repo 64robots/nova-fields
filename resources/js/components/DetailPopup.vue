@@ -184,7 +184,7 @@ import TreeView from './TreeView';
 import { copy } from 'v-copy';
 import VuePlyr from 'vue-plyr'
 import 'vue-plyr/dist/vue-plyr.css'
-import { codemirror } from 'vue-codemirror';
+import { Codemirror } from 'vue-codemirror';
 import ConfirmModalDelete from './ConfirmModalDelete';
 //themes
 import 'codemirror/lib/codemirror.css'

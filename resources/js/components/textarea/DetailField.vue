@@ -1,6 +1,6 @@
 <template>
   <r64-panel-item
-    :hide-field="hideField"
+
     :field="field"
     :hide-label="hideLabelInDetail"
     :label-classes="panelLabelClasses"
@@ -8,7 +8,7 @@
     :wrapper-classes="panelWrapperClasses"
   >
     <r64-excerpt
-      slot="value"
+      #value
       :content="field.value"
       :excerpt-classes="excerptClasses"
       :show-label="showContentLabel"

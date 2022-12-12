@@ -6,7 +6,7 @@
     :wrapper-classes="wrapperClasses"
     :label-classes="labelClasses"
   >
-    <template slot="field">
+    <template #field>
       <RowHeading
         v-if="shouldShowHeading"
         :fields="fields"

@@ -3,13 +3,13 @@
       :field="field"
       :errors="errors"
       :show-help-text="showHelpText"
-      :hide-field="hideField"
+
       :hide-label="hideLabelInForms"
       :field-classes="fieldClasses"
       :wrapper-classes="wrapperClasses"
       :label-classes="labelClasses"
   >
-    <template slot="field">
+    <template #field>
       <checkbox-with-label
           :class="[inputClasses, {'opacity-50 pointer-events-none': readOnly }]"
           v-for="option in value"

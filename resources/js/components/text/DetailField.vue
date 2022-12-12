@@ -1,6 +1,6 @@
 <template>
-  <r64-panel-item
-    :hide-field="hideField"
+  <panel-item
+
     :field="field"
     :hide-label="hideLabelInDetail"
     :label-classes="panelLabelClasses"
@@ -11,7 +11,7 @@
 
 <script>
 import R64Field from '../../mixins/R64Field'
-
+import PanelItem from '../PanelItem.vue'
 export default {
   mixins: [R64Field],
 

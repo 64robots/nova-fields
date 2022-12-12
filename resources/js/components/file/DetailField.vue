@@ -1,18 +1,18 @@
 <template>
   <r64-panel-item
-    :hide-field="hideField"
-    :field="field"
-    :hide-label="hideLabelInDetail"
-    :label-classes="panelLabelClasses"
-    :field-classes="panelFieldClasses"
-    :wrapper-classes="panelWrapperClasses"
+
+      :field="field"
+      :hide-label="hideLabelInDetail"
+      :label-classes="panelLabelClasses"
+      :field-classes="panelFieldClasses"
+      :wrapper-classes="panelWrapperClasses"
   >
-    <div slot="value">
+    <template #value>
       <template v-if="shouldShowLoader">
         <ImageLoader
-          :src="field.thumbnailUrl"
-          class="max-w-xs"
-          @missing="(value) => missing = value"
+            :src="field.thumbnailUrl"
+            class="max-w-xs"
+            @missing="(value) => missing = value"
         />
       </template>
 
@@ -26,24 +26,24 @@
       <portal to="modals">
         <transition name="fade">
           <confirm-upload-removal-modal
-            v-if="removeModalOpen"
-            @confirm="removeFile"
-            @close="closeRemoveModal"
+              v-if="removeModalOpen"
+              @confirm="removeFile"
+              @close="closeRemoveModal"
           />
         </transition>
       </portal>
 
       <p
-        v-if="shouldShowToolbar"
-        class="flex items-center text-sm mt-3"
+          v-if="shouldShowToolbar"
+          class="flex items-center text-sm mt-3"
       >
         <a
-          v-if="isDownloadable"
-          :dusk="field.attribute + '-download-link'"
-          @keydown.enter.prevent="download"
-          @click.prevent="download"
-          tabindex="0"
-          class="cursor-pointer dim btn btn-link text-primary inline-flex items-center"
+            v-if="isDownloadable"
+            :dusk="field.attribute + '-download-link'"
+            @keydown.enter.prevent="download"
+            @click.prevent="download"
+            tabindex="0"
+            class="cursor-pointer dim btn btn-link text-primary inline-flex items-center"
         >
           <icon class="mr-2" type="download" view-box="0 0 24 24" width="16" height="16" />
           <span class="class mt-1">
@@ -51,7 +51,7 @@
           </span>
         </a>
       </p>
-    </div>
+    </template>
   </r64-panel-item>
 </template>
 
@@ -77,8 +77,8 @@ export default {
       const attribute = this.field.attribute
 
       const href = this.parentAttribute ?
-                  `/nova-r64-api/${resourceName}/${resourceId}/download/${attribute}?row=${this.parentAttribute}&value=${this.displayValue}` :
-                  `/nova-api/${resourceName}/${resourceId}/download/${attribute}`
+          `/nova-r64-api/${resourceName}/${resourceId}/download/${attribute}?row=${this.parentAttribute}&value=${this.displayValue}` :
+          `/nova-api/${resourceName}/${resourceId}/download/${attribute}`
 
       let link = document.createElement('a')
       link.href = href
@@ -109,7 +109,7 @@ export default {
 
       try {
         await Nova.request().delete(
-          `/nova-api/${resourceName}/${resourceId}/field/${attribute}`
+            `/nova-api/${resourceName}/${resourceId}/field/${attribute}`
         )
         this.closeRemoveModal()
         this.deleted = true
@@ -122,9 +122,9 @@ export default {
   computed: {
     hasValue() {
       return (
-        Boolean(this.value || this.field.value || this.field.thumbnailUrl) &&
-        !Boolean(this.deleted) &&
-        !Boolean(this.missing)
+          Boolean(this.value || this.field.value || this.field.thumbnailUrl) &&
+          !Boolean(this.deleted) &&
+          !Boolean(this.missing)
       )
     },
 
@@ -134,8 +134,8 @@ export default {
 
     shouldShowToolbar() {
       return (
-        Boolean(this.isDownloadable || this.field.deletable) &&
-        this.hasValue
+          Boolean(this.isDownloadable || this.field.deletable) &&
+          this.hasValue
       )
     },
 

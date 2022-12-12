@@ -1,6 +1,6 @@
 <template>
   <r64-default-field
-      :hide-field="hideField"
+
       :field="field"
       :show-help-text="showHelpText"
       :hide-label="hideLabelInForms"
@@ -8,7 +8,7 @@
       :wrapper-classes="wrapperClasses"
       :label-classes="labelClasses"
   >
-    <template slot="field">
+    <template #field>
         <div class="flex items-center">
           <date-time-picker
               ref="dateTimePicker"

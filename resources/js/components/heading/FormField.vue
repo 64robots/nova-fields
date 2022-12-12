@@ -1,6 +1,6 @@
 <template>
   <r64-default-field
-      :hide-field="hideField"
+
       :field="field"
       :hide-label="hideLabelInForms"
       :field-classes="fieldClasses"

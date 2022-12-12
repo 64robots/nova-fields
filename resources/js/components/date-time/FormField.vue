@@ -1,6 +1,6 @@
 <template>
   <r64-default-field
-      :hide-field="hideField"
+
       :field="field"
       :show-help-text="showHelpText"
       :hide-label="hideLabelInForms"
@@ -8,7 +8,7 @@
       :wrapper-classes="wrapperClasses"
       :label-classes="labelClasses"
   >
-    <template slot="field">
+    <template #field>
       <div class="flex items-center">
         <DateTimePicker
             class="w-full form-control form-input form-input-bordered"
@@ -60,11 +60,11 @@
 </template>
 
 <script>
+import { InteractsWithDates } from '../../../../../../laravel/nova/resources/js/mixins';
 import
 {
   FormField,
   HandlesValidationErrors,
-  InteractsWithDates,
 } from 'laravel-nova'
 import R64Field from "../../mixins/R64Field";
 import DateTimePicker from "./DateTimePicker";

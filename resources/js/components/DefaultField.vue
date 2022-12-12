@@ -7,9 +7,9 @@
       <slot>
         <form-label :for="field.name">
           {{ field.name || fieldName }}
-          <span v-if="field.required" class="text-danger text-sm">{{
-            __('*')
-          }}</span>
+          <span v-if="field.required" class="text-red-500 text-sm">{{
+              __('*')
+            }}</span>
         </form-label>
       </slot>
     </div>

@@ -60,8 +60,8 @@
                                     </div>
                                 </template>
 
-                                <template v-for="file in filteredFiles">
-                                    <div :class="filemanagerClass" :key="file.id" >
+                                <template v-for="file in filteredFiles" :key="file.id">
+                                    <div :class="filemanagerClass" >
                                         <template v-if="file.type == 'file'">
                                             <ImageLoader
                                                 v-drag-and-drop:file
@@ -191,7 +191,7 @@
 
 <script>
 import _ from 'lodash';
-import filesize from 'filesize';
+import { filesize } from 'filesize';
 import MD5 from 'md5';
 import api from '../api';
 import ImageLoader from '../modules/ImageLoader';

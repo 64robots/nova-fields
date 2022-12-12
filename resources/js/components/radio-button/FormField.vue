@@ -2,14 +2,14 @@
     <r64-default-field
         :field="field"
         :errors="errors"
-        :hide-field="hideField"
+
         :hide-label="hideLabelInForms"
         :field-classes="fieldClasses"
         :wrapper-classes="wrapperClasses"
         :label-classes="labelClasses"
     >
 
-      <template slot="field">
+      <template #field>
           <label v-for="(option, val) in field.options" :class="{'mb-2' : field.stack || field.addPadding}" :for="`${field.attribute}_${val}`">
             <input :class="[errorClasses, inputClasses]" @change="handleChange" v-model="value" :value="val" :id="`${field.attribute}_${val}`" :name="field.attribute" type="radio" :disabled="field.disabled">
             <span class="mlbz-radio-label">{{ getOptionLabel(option) }}</span>

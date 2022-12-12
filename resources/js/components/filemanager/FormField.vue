@@ -1,13 +1,13 @@
 <template>
   <r64-default-field
       :field="field"
-      :hide-field="hideField"
+
       :hide-label="hideLabelInForms"
       :field-classes="fieldClasses"
       :wrapper-classes="wrapperClasses"
       :label-classes="labelClasses"
   >
-    <template slot="field">
+    <template #field>
 
       <template v-if="field.value && field.display == 'image'">
         <!--                <div class="card relative card relative border-lg border-50 overflow-hidden px-0 py-0 max-w-xs mb-2">

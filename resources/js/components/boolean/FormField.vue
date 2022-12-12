@@ -1,13 +1,13 @@
 <template>
   <r64-default-field
-    :hide-field="hideField"
+
     :field="field"
     :hide-label="hideLabelInForms"
     :field-classes="fieldClasses"
     :wrapper-classes="wrapperClasses"
     :label-classes="labelClasses"
   >
-    <template slot="field">
+    <template #field>
       <checkbox
         :class="[inputClasses, {'opacity-50 pointer-events-none': readOnly }]"
         @input="toggle"
@@ -23,8 +23,7 @@
 </template>
 
 <script>
-import FormField from 'laravel-nova/src/mixins/FormField'
-import HandlesValidationErrors from 'laravel-nova/src/mixins/HandlesValidationErrors'
+import {FormField, HandlesValidationErrors} from 'laravel-nova';
 import R64Field from '../../mixins/R64Field'
 
 export default {

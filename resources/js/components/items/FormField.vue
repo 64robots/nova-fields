@@ -2,13 +2,13 @@
     <r64-default-field
         :field="field"
         :full-width-content="field.fullWidth"
-        :hide-field="hideField"
+
         :hide-label="hideLabelInForms"
         :field-classes="fieldClasses"
         :wrapper-classes="wrapperClasses"
         :label-classes="labelClasses"
     >
-        <template slot="field" class="nova-items-field">
+        <template #field class="nova-items-field">
             <div class="nova-items-field-input-wrapper flex border border-40 p-4" v-if="field.listFirst == false && ! maxReached">
                 <input
                     :class="[errorClasses, inputClasses]"
