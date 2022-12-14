@@ -8,12 +8,14 @@
     :label-classes="labelClasses"
   >
     <template #field>
-      <select
-        :id="field.name"
-        v-model="value"
-        :class="[inputClasses, errorClasses]"
-        :disabled="field.readonly"
-        @change="handleChange"
+      <SelectControl
+          :id="field.attribute"
+          :dusk="field.attribute"
+          v-model="value"
+          @change="handleChange"
+          class="w-full"
+          :select-classes="{ 'form-input-border-error': hasError }"
+          :disabled="field.readonly"
       >
         <option value="" selected disabled>
           {{ placeholder }}
@@ -28,7 +30,7 @@
         >
           {{ option.label }}
         </option>
-      </select>
+      </SelectControl>
 
       <p v-if="hasError" class="my-2 text-danger">
           {{ firstError }}
@@ -81,7 +83,7 @@ export default {
      * Get the placeholder.
      */
     placeholder() {
-      return this.field.placeholder === undefined
+      return this.field.placeholder == null
         ? this.__('Choose an option')
         : this.field.placeholder
     }

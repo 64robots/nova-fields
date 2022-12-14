@@ -78,4 +78,20 @@ class DateTime extends NovaDateTime
     {
         return $this->withMeta([__FUNCTION__ => $value]);
     }
+
+    /**
+     * @param  bool  $time
+     */
+    public function pickerFormat($value)
+    {
+        return $this->withMeta([__FUNCTION__ => $value]);
+    }
+
+    /**
+     * @param  bool  $time
+     */
+    public function pickerDisplayFormat($value)
+    {
+        return $this->withMeta([__FUNCTION__ => $value]);
+    }
 }

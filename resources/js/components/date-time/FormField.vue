@@ -60,7 +60,7 @@
 </template>
 
 <script>
-import { InteractsWithDates } from '../../../../../../laravel/nova/resources/js/mixins';
+// import { InteractsWithDates } from '../../../../../../laravel/nova/resources/js/mixins';
 import
 {
   FormField,
@@ -70,7 +70,7 @@ import R64Field from "../../mixins/R64Field";
 import DateTimePicker from "./DateTimePicker";
 
 export default {
-  mixins: [HandlesValidationErrors, FormField, InteractsWithDates,  R64Field],
+  mixins: [HandlesValidationErrors, FormField,  R64Field],
 
   data: () => ({ localizedValue: '' }),
 
