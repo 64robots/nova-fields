@@ -1,5 +1,5 @@
 <template>
-  <r64-panel-item
+  <panel-item
 
     :field="field"
     :hide-label="hideLabelInDetail"
@@ -13,12 +13,13 @@
       />
       <span v-if="!field.hideBooleanLabel">{{ label }}</span>
     </template>
-  </r64-panel-item>
+  </panel-item>
 </template>
 
 <script>
 import R64Field from '../../mixins/R64Field'
 import Classes from './Classes'
+import PanelItem from '../PanelItem.vue'
 
 export default {
   mixins: [Classes, R64Field],
