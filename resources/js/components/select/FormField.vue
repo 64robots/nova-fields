@@ -1,17 +1,17 @@
 <template>
   <r64-default-field
 
-    :field="field"
-    :hide-label="hideLabelInForms"
-    :field-classes="fieldClasses"
-    :wrapper-classes="wrapperClasses"
-    :label-classes="labelClasses"
+      :field="field"
+      :hide-label="hideLabelInForms"
+      :field-classes="fieldClasses"
+      :wrapper-classes="wrapperClasses"
+      :label-classes="labelClasses"
   >
     <template #field>
       <SelectControl
           :id="field.attribute"
           :dusk="field.attribute"
-          v-model="value"
+          v-model:selected="value"
           @change="handleChange"
           class="w-full"
           :select-classes="{ 'form-input-border-error': hasError }"
@@ -22,18 +22,18 @@
         </option>
 
         <option
-          v-for="option in options"
-          :key="option.value"
-          :value="option.value"
-          :selected="option.value == value"
-          :disabled="option.group"
+            v-for="option in options"
+            :key="option.value"
+            :value="option.value"
+            :selected="option.value == value"
+            :disabled="option.group"
         >
           {{ option.label }}
         </option>
       </SelectControl>
 
-      <p v-if="hasError" class="my-2 text-danger">
-          {{ firstError }}
+      <p v-if="hasError" class="my-2 text-red-500">
+        {{ firstError }}
       </p>
     </template>
   </r64-default-field>
@@ -49,7 +49,7 @@ export default {
   computed: {
     options() {
       const withoutGroup = this.field.options.filter(
-        option => typeof option.label !== 'object'
+          option => typeof option.label !== 'object'
       )
 
       if (withoutGroup.length === this.field.options.length) {
@@ -57,7 +57,7 @@ export default {
       }
 
       const grouped = this.field.options.filter(
-        option => typeof option.label === 'object'
+          option => typeof option.label === 'object'
       )
 
       const options = [...withoutGroup]
@@ -66,10 +66,10 @@ export default {
         if (typeof option.label === 'object') {
           options.push({ label: option.value, value: '', group: true })
           Object.keys(option.label).map(key =>
-            options.push({
-              value: key,
-              label: option.label[key]
-            })
+              options.push({
+                value: key,
+                label: option.label[key]
+              })
           )
         } else {
           options.push(option)
@@ -84,8 +84,8 @@ export default {
      */
     placeholder() {
       return this.field.placeholder == null
-        ? this.__('Choose an option')
-        : this.field.placeholder
+          ? this.__('Choose an option')
+          : this.field.placeholder
     }
   },
 
@@ -110,8 +110,8 @@ export default {
     /**
      * Handle the selection change event.
      */
-    handleChange(e) {
-      this.value = e.target.value
+    handleChange(value) {
+      this.value = value;
       const data = {'field':this.field,'value':this.value};
       Nova.$emit("updateConfigurableAttributes",data);
       if (this.field) {

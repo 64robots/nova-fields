@@ -17,46 +17,46 @@
           </div>
         </div>
 
-        <draggable v-model="fieldsWithValues" :options="{ handle: '.vue-draggable-handle' }">
-          <div
-              v-for="(fields, i) in fieldsWithValues"
-              :key="fields[0].attribute"
-              :class="[inputClasses, errorClasses]"
-          >
-            <div v-if="field.canDraggable" class="vue-draggable-handle flex justify-center items-center cursor-pointer">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" class="fill-current">
-                <path
-                    d="M4 5h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2z"
-                />
-              </svg>
-            </div>
-
-            <component
-                v-for="(repField, i) in fields"
-                :key="i"
-                :is="`form-${repField.component}`"
-                :field="repField"
-                class="mr-4"
-            />
-
-            <div
-                class="delete-icon flex justify-center items-center cursor-pointer"
-                @click="deleteRow(i)"
-                v-if="field.canDeleteRows"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" class="fill-current">
-                <path
-                    d="M8 6V4c0-1.1.9-2 2-2h4a2 2 0 012 2v2h5a1 1 0 010 2h-1v12a2 2 0 01-2 2H6a2 2 0 01-2-2V8H3a1 1 0 110-2h5zM6 8v12h12V8H6zm8-2V4h-4v2h4zm-4 4a1 1 0 011 1v6a1 1 0 01-2 0v-6a1 1 0 011-1zm4 0a1 1 0 011 1v6a1 1 0 01-2 0v-6a1 1 0 011-1z"
-                />
-              </svg>
-            </div>
+        <!--        <draggable v-model="fieldsWithValues" >-->
+        <div
+            v-for="(fields, i) in fieldsWithValues"
+            :key="fields[0].attribute"
+            :class="[inputClasses, errorClasses]"
+        >
+          <div v-if="field.canDraggable" class="vue-draggable-handle flex justify-center items-center cursor-pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" class="fill-current">
+              <path
+                  d="M4 5h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2z"
+              />
+            </svg>
           </div>
-        </draggable>
+
+          <component
+              v-for="(repField, i) in fields"
+              :key="i"
+              :is="`form-${repField.component}`"
+              :field="repField"
+              class="mr-4"
+          />
+
+          <div
+              class="delete-icon flex justify-center items-center cursor-pointer"
+              @click="deleteRow(i)"
+              v-if="field.canDeleteRows"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" class="fill-current">
+              <path
+                  d="M8 6V4c0-1.1.9-2 2-2h4a2 2 0 012 2v2h5a1 1 0 010 2h-1v12a2 2 0 01-2 2H6a2 2 0 01-2-2V8H3a1 1 0 110-2h5zM6 8v12h12V8H6zm8-2V4h-4v2h4zm-4 4a1 1 0 011 1v6a1 1 0 01-2 0v-6a1 1 0 011-1zm4 0a1 1 0 011 1v6a1 1 0 01-2 0v-6a1 1 0 011-1z"
+              />
+            </svg>
+          </div>
+        </div>
+        <!--        </draggable>-->
 
         <button
             v-if="field.canAddRows"
             @click="addRow"
-            class="add-button btn btn-default btn-primary mt-3"
+            class="mt-3 add-button shadow relative bg-primary-500 hover:bg-primary-400 text-white dark:text-gray-900 cursor-pointer rounded text-sm font-bold focus:outline-none focus:ring ring-primary-200 dark:ring-gray-600 inline-flex items-center justify-center h-9 px-3 shadow relative bg-primary-500 hover:bg-primary-400 text-white dark:text-gray-900"
             :class="{ 'delete-width': field.canDeleteRows }"
             type="button"
         >
@@ -68,7 +68,7 @@
 </template>
 
 <script>
-import Draggable from 'vuedraggable';
+import draggable from "vue3-draggable";
 import { FormField, HandlesValidationErrors } from 'laravel-nova';
 import R64Field from '../../mixins/R64Field'
 
@@ -77,7 +77,7 @@ let UNIQUE_ID_INDEX = 0;
 export default {
   mixins: [FormField, HandlesValidationErrors,R64Field],
 
-  components: { Draggable },
+  components: { draggable },
 
   props: ['resourceName', 'resourceId', 'field'],
 
@@ -86,7 +86,6 @@ export default {
       fieldsWithValues: [],
     };
   },
-
   methods: {
     handleChange(e) {
       Nova.$emit(this.field.attribute + '-change', this.getAllValues())
@@ -105,16 +104,14 @@ export default {
       } catch (e) {
         value = [];
       }
-
       this.fieldsWithValues = value.map(this.copyFields);
-
     },
 
     copyFields(value) {
       return this.field.repeatableFields.map(field => ({
         ...field,
         attribute: `${field.attribute}---${UNIQUE_ID_INDEX++}`,
-        value: value && value[field.attribute],
+        value: value && value[field.attribute] || '',
       }));
     },
 
@@ -147,7 +144,6 @@ export default {
 
     deleteRow(index) {
       this.fieldsWithValues.splice(index, 1);
-      console.log(this.field.attribute + '-change');
       Nova.$emit(this.field.attribute + '-change', this.getAllValues())
     },
   },

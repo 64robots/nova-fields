@@ -36,15 +36,15 @@ export default {
         const valueGroups = Object.values(this.field.dependsOnOptions || {});
         options = [];
         valueGroups.forEach(values =>
-          Object.keys(values).forEach(value => options.push({ value, label: values[value] }))
+            Object.keys(values).forEach(value => options.push({ value, label: values[value] }))
         );
       }
 
       if (this.isOptionGroups) {
         return this.field.options
-          .map(optGroup => optGroup.values.map(values => ({ ...values, group: optGroup.label })))
-          .flat()
-          .find(opt => String(opt.value) === String(value));
+            .map(optGroup => optGroup.values.map(values => ({ ...values, group: optGroup.label })))
+            .flat()
+            .find(opt => String(opt.value) === String(value));
       }
 
       return options.find(opt => String(opt.value) === String(value));
@@ -52,7 +52,7 @@ export default {
   },
   computed: {
     isMultiselect() {
-      return !this.field.singleSelect;
+      return !this.field.singleSelect || !this.field.mode == "single";
     },
 
     isOptionGroups() {

@@ -48,9 +48,9 @@ import RowFormField from './components/row/FormField.vue'
 import JsonFormField from './components/json/FormField.vue'
 // import IdIndexField from './components/id/IndexField.vue'
 import SlugFormField from './components/slug/FormField.vue'
-// import MultiselectIndexField from './components/multiselect/IndexField.vue'
-// import MultiselectDetailField from './components/multiselect/DetailField.vue'
-// import MultiselectFormField from './components/multiselect/FormField.vue'
+import MultiselectIndexField from './components/multiselect/IndexField.vue'
+import MultiselectDetailField from './components/multiselect/DetailField.vue'
+import MultiselectFormField from './components/multiselect/FormField.vue'
 // import NovaMultiselectDetailFieldValue from './components/multiselect/NovaMultiselectDetailFieldValue.vue'
 // import ItemsIndexField from './components/items/IndexField.vue'
 // import ItemsDetailField from './components/items/DetailField.vue'
@@ -59,8 +59,8 @@ import SlugFormField from './components/slug/FormField.vue'
 // import FileManagerIndexField from './components/filemanager/IndexField.vue'
 // import FileManagerDetailField from './components/filemanager/DetailField.vue'
 // import FileManagerFormField from './components/filemanager/FormField.vue'
-// import SimpleRepeatableDetailField from './components/simple-repetable/DetailField.vue'
-// import SimpleRepeatableFormField from './components/simple-repetable/FormField.vue'
+import SimpleRepeatableDetailField from './components/simple-repetable/DetailField.vue'
+import SimpleRepeatableFormField from './components/simple-repetable/FormField.vue'
 import BlankDivFormField from './components/blank-div/FormField.vue'
 
 Nova.booting((app, store) => {
@@ -100,9 +100,9 @@ Nova.booting((app, store) => {
     app.component('form-nova-fields-radio', RadioButtonFormField);
 
     /** MultiSelect */
-    // app.component('index-nova-fields-multiselect', MultiselectIndexField);
-    // app.component('detail-nova-fields-multiselect', MultiselectDetailField);
-    // app.component('form-nova-fields-multiselect', MultiselectFormField);
+    app.component('index-nova-fields-multiselect', MultiselectIndexField);
+    app.component('detail-nova-fields-multiselect', MultiselectDetailField);
+    app.component('form-nova-fields-multiselect', MultiselectFormField);
     // Allow user to overwrite nova-multiselect-detail-field-value
     // if (!app.options.components['nova-multiselect-detail-field-value']) {
     //   app.component('nova-multiselect-detail-field-value',NovaMultiselectDetailFieldValue);
@@ -201,8 +201,8 @@ Nova.booting((app, store) => {
     // ]);
 
     /* simple repeatable */
-    // app.component('detail-nova-fields-simple-repeatable', SimpleRepeatableDetailField)
-    // app.component('form-nova-fields-simple-repeatable', SimpleRepeatableFormField);
+    app.component('detail-nova-fields-simple-repeatable', SimpleRepeatableDetailField)
+    app.component('form-nova-fields-simple-repeatable', SimpleRepeatableFormField);
 
     /* Blank Div */
     app.component('form-nova-fields-blank-div', BlankDivFormField)

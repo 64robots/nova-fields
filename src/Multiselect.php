@@ -357,6 +357,11 @@ class Multiselect extends NovaField implements RelatableField
         return $this->withMeta(['indexValueDisplayLimit' => $limit]);
     }
 
+    public function mode(string $mode = 'single')
+    {
+        return $this->withMeta(['mode' => $mode]);
+    }
+
     /**
      * Display the field as raw HTML using Vue.
      *

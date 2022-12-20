@@ -3,7 +3,6 @@
       :field="field"
       :showHelpText="showHelpText"
       :errors="errors"
-
       :hide-label="hideLabelInForms"
       :field-classes="fieldClasses"
       :wrapper-classes="wrapperClasses"
@@ -11,44 +10,27 @@
   >
     <template #field>
       <!-- Multi select field -->
-      <multiselect
-          v-if="!reorderMode"
+      <Multiselect
+          v-model="value"
+          :mode="field.mode"
           @input="handleChange"
           @open="handleOpen"
           @search-change="tryToFetchOptions"
-          track-by="value"
-          label="label"
-          :group-label="isOptionGroups ? 'label' : void 0"
-          :group-values="isOptionGroups ? 'values' : void 0"
-          :group-select="field.groupSelect || false"
-          ref="multiselect"
-          :value="selected"
+          :delay="0"
+          :object="true"
+          :min-chars="1"
+          :close-on-select="field.max === 1 || !isMultiselect"
+          :max="field.max > 0 ? field.max : -1"
+          :searchable="true"
+          :create-option="true"
           :options="field.apiUrl ? asyncOptions : computedOptions"
-          :internal-search="!field.apiUrl"
-          :class="[errorClasses, inputClasses]"
           :disabled="isReadonly"
           :placeholder="field.placeholder || field.name"
-          :close-on-select="field.max === 1 || !isMultiselect"
-          :multiple="isMultiselect"
-          :max="max || field.max || null"
-          :optionsLimit="field.optionsLimit || 1000"
-          :limit="field.limit"
-          :limitText="count => __('novaMultiselect.limitText', { count: String(count || '') })"
-          selectLabel=""
+          ref="multiselect"
           :loading="isLoading"
-          selectGroupLabel=""
-          selectedLabel=""
-          deselectLabel=""
-          deselectGroupLabel=""
           :clearOnSelect="field.clearOnSelect || false"
-          :taggable="field.taggable || false"
-          @tag="addTag"
       >
-        <template slot="maxElements">
-          {{ __('novaMultiselect.maxElements', { max: String(field.max || '') }) }}
-        </template>
-
-        <template slot="noResult">
+        <template slot="noResults">
           {{ __('novaMultiselect.noResult') }}
         </template>
 
@@ -63,17 +45,17 @@
               @mousedown.prevent.stop="value = isMultiselect ? [] : null"
           ></div>
         </template>
-      </multiselect>
+      </Multiselect>
 
       <!-- Reorder mode field -->
       <div v-if="reorderMode" class="form-input-bordered py-1">
-        <vue-draggable tag="ul" v-model="value" class="flex flex-col pl-0" style="list-style: none; margin-top: 5px">
+        <draggable tag="ul" v-model="value" class="flex flex-col pl-0" style="list-style: none; margin-top: 5px">
           <transition-group>
             <li v-for="(s, i) in selected" :key="i + 0" class="reorder__tag text-sm mb-1 px-2 py-1 text-white">
               {{ s.label }}
             </li>
           </transition-group>
-        </vue-draggable>
+        </draggable>
       </div>
 
       <div
@@ -83,7 +65,7 @@
       >
         {{ __(reorderMode ? 'novaMultiselect.doneReordering' : 'novaMultiselect.reorder') }}
       </div>
-      <p v-if="hasError" class="my-2 text-danger">
+      <p v-if="hasError" class="my-2 text-red-500">
         {{ firstError }}
       </p>
     </template>
@@ -93,19 +75,20 @@
 <script>
 import { FormField, HandlesValidationErrors } from 'laravel-nova';
 import HandlesFieldValue from '../../mixins/HandlesFieldValue';
-import Multiselect from 'vue-multiselect';
-import VueDraggable from 'vuedraggable';
+import Multiselect from '@vueform/multiselect';
+import draggable from "vue3-draggable";
 import debounce from 'lodash/debounce';
 import R64Field from '../../mixins/R64Field'
 
 export default {
-  components: { Multiselect, VueDraggable },
+  components: { Multiselect, draggable },
 
   mixins: [FormField, HandlesValidationErrors, HandlesFieldValue,R64Field],
 
   props: ['resourceName', 'resourceId', 'field'],
 
   data: () => ({
+    value:[],
     reorderMode: false,
     options: [],
     max: void 0,
@@ -114,7 +97,6 @@ export default {
     isLoading: false,
     isInitialized: false,
   }),
-
   mounted() {
     window.addEventListener('scroll', this.repositionDropdown);
 
@@ -205,7 +187,6 @@ export default {
 
   methods: {
     addTag(newTag) {
-      console.log("here");
       const tag = {
         label: newTag,
         value: newTag,
@@ -220,11 +201,15 @@ export default {
       }
     },
     setInitialValue() {
-      if (this.isMultiselect) {
-        const valuesArray = this.getInitialFieldValuesArray();
-        this.value = valuesArray && valuesArray.length ? valuesArray.map(this.getValueFromOptions).filter(Boolean) : [];
-      } else {
-        this.value = this.getValueFromOptions(this.field.value);
+      if(this.field.value){
+        if (this.isMultiselect) {
+          const valuesArray = this.getInitialFieldValuesArray();
+          this.value = valuesArray && valuesArray.length ? valuesArray.map(this.getValueFromOptions).filter(Boolean) : [];
+          console.log(this.value);
+        } else {
+          this.value = this.getValueFromOptions(this.field.value);
+          console.log(this.value);
+        }
       }
     },
 
@@ -307,21 +292,23 @@ export default {
 
       const handlePositioning = () => {
         const { top, height, bottom } = el.getBoundingClientRect();
-        if (onOpen) ms.$refs.list.scrollTop = 0;
+        if(ms.$refs.list != undefined){
+          if (onOpen) ms.$refs.list.scrollTop = 0;
 
-        const fromBottom = (window.innerHeight || document.documentElement.clientHeight) - bottom;
+          const fromBottom = (window.innerHeight || document.documentElement.clientHeight) - bottom;
 
-        ms.$refs.list.style.position = 'fixed';
-        ms.$refs.list.style.width = `${el.clientWidth}px`;
+          ms.$refs.list.style.position = 'fixed';
+          ms.$refs.list.style.width = `${el.clientWidth}px`;
 
-        if (fromBottom < 300) {
-          ms.$refs.list.style.top = 'auto';
-          ms.$refs.list.style.bottom = `${fromBottom + height}px`;
-          ms.$refs.list.style['border-radius'] = '5px 5px 0 0';
-        } else {
-          ms.$refs.list.style.bottom = 'auto';
-          ms.$refs.list.style.top = `${top + height}px`;
-          ms.$refs.list.style['border-radius'] = '0 0 5px 5px';
+          if (fromBottom < 300) {
+            ms.$refs.list.style.top = 'auto';
+            ms.$refs.list.style.bottom = `${fromBottom + height}px`;
+            ms.$refs.list.style['border-radius'] = '5px 5px 0 0';
+          } else {
+            ms.$refs.list.style.bottom = 'auto';
+            ms.$refs.list.style.top = `${top + height}px`;
+            ms.$refs.list.style['border-radius'] = '0 0 5px 5px';
+          }
         }
       };
 
@@ -379,7 +366,7 @@ export default {
   },
 };
 </script>
-
+<style src="@vueform/multiselect/themes/default.css"></style>
 <style lang="scss">
 .multiselect-field {
   .reorder__tag {
