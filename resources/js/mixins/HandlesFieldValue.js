@@ -52,7 +52,7 @@ export default {
   },
   computed: {
     isMultiselect() {
-      return !this.field.singleSelect || !this.field.mode == "single";
+      return (this.field.singleSelect != undefined && !this.field.singleSelect) || this.field.mode != "single";
     },
 
     isOptionGroups() {

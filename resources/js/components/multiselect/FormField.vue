@@ -205,10 +205,8 @@ export default {
         if (this.isMultiselect) {
           const valuesArray = this.getInitialFieldValuesArray();
           this.value = valuesArray && valuesArray.length ? valuesArray.map(this.getValueFromOptions).filter(Boolean) : [];
-          console.log(this.value);
         } else {
           this.value = this.getValueFromOptions(this.field.value);
-          console.log(this.value);
         }
       }
     },
