@@ -11,7 +11,7 @@
   >
     <template #field>
       <checkbox-with-label
-          :class="[inputClasses, {'opacity-50 pointer-events-none': readOnly }]"
+          :class="[inputClasses]"
           v-for="option in value"
           :key="option.name"
           :name="option.name"

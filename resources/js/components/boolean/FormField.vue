@@ -9,7 +9,7 @@
   >
     <template #field>
       <checkbox
-        :class="[inputClasses, {'opacity-50 pointer-events-none': readOnly }]"
+        :class="[inputClasses]"
         @input="toggle"
         :id="field.name"
         :name="field.name"
