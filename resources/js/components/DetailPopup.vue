@@ -181,7 +181,7 @@ import api from '../api';
 import ImageInfo from '../modules/Image';
 import ConfirmationButton from './ConfirmationButton';
 // import TreeView from './TreeView';
-import { copy } from 'v-copy';
+import Copy from "vue3-copy";
 import VuePlyr from 'vue-plyr'
 import 'vue-plyr/dist/vue-plyr.css'
 import { Codemirror } from 'vue-codemirror';
@@ -240,7 +240,7 @@ export default {
   },
 
   directives: {
-    copy,
+    Copy,
   },
 
   data: () => ({

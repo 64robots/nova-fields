@@ -21,7 +21,7 @@
               :enable-time="false"
               :enable-seconds="false"
               :first-day-of-week="firstDayOfWeek"
-              :class="[errorClasses, inputClasses]"
+              :class="inputClasses"
               @change="handleChange"
               :disabled="isReadonly"
           />

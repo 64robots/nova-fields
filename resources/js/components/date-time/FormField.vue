@@ -23,7 +23,7 @@
             :value="localizedValue"
             :twelve-hour-time="usesTwelveHourTime"
             :first-day-of-week="firstDayOfWeek"
-            :class="errorClasses"
+            :class="inputClasses"
             @change="handleChange"
             :default-hour="defaultHour"
             :default-minute="defaultMinute"
