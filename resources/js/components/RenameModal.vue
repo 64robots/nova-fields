@@ -1,7 +1,17 @@
 <template>
   <portal to="portal-filemanager" name="Rename Modal" transition="fade-transition">
-    <modal v-if="active" @modal-close="handleClose">
-      <div class="bg-white rounded-lg shadow-lg " style="width: 600px;">
+    <Modal
+        data-testid="confirm-action-modal"
+        tabindex="-1"
+        role="dialog"
+        :closes-via-backdrop="true"
+        @modal-close="handleClose"
+        show="true"
+        size="lg"
+        v-if="active"
+        class="z-100"
+    >
+      <div class="bg-white rounded-lg shadow-lg ">
         <div class="p-8">
 
           <template v-if="type == 'folder'">
@@ -41,7 +51,7 @@
               <span class="text-red-500" v-if="passwordMessage.length > 0">{{ passwordMessage }}</span>
             </div>
 
-            <p class="my-2 text-danger" v-if="error">{{ errorMsg }}</p>
+            <p class="my-2 text-red-500" v-if="error">{{ errorMsg }}</p>
 
           </template>
 
@@ -50,7 +60,7 @@
         <div class="bg-30 px-6 py-3 flex">
           <div class="ml-auto">
             <button type="button" data-testid="cancel-button" @click.prevent="cancelRename" class="btn text-80 font-normal h-9 px-3 mr-3 btn-link">{{ __('Cancel') }}</button>
-            <button ref="confirmButton" data-testid="confirm-button" :disabled="isSaving" @click.prevent="renamePath" class="btn btn-default btn-primary" :class="{ 'cursor-not-allowed': isSaving, 'opacity-50': isSaving }">
+            <button ref="confirmButton" data-testid="confirm-button" :disabled="isSaving" @click.prevent="renamePath" class="shadow relative bg-primary-500 hover:bg-primary-400 text-white dark:text-gray-900 cursor-pointer rounded text-sm font-bold focus:outline-none focus:ring ring-primary-200 dark:ring-gray-600 inline-flex items-center justify-center h-9 px-3 shadow relative bg-primary-500 hover:bg-primary-400 text-white dark:text-gray-900" :class="{ 'cursor-not-allowed': isSaving, 'opacity-50': isSaving }">
               <span v-if="isSaving">{{ __('Renaming') }}</span>
               <span v-else>{{ __('Rename') }}</span>
             </button>
@@ -118,19 +128,17 @@ export default {
               this.error = false;
               this.name = null;
               if (result.success == true) {
-                this.$toasted.show(this.__('Renamed successfully'), { type: 'success' });
+                Nova.success(this.__('Renamed successfully'), { type: 'success' })
                 this.$emit('refresh', true);
                 this.cancelRename();
               } else {
                 this.error = true;
                 if (result.error) {
                   this.errorMsg = result.error;
-                  this.$toasted.show(this.__('Error:') + ' ' + result.error, {
-                    type: 'error',
-                  });
+                  Nova.error(this.__('Error:') + ' ' + result.error, {type: 'error',})
                 } else {
                   this.errorMsg = this.__('The name is required');
-                  this.$toasted.show(this.__('The name is required'), { type: 'error' });
+                  Nova.error(this.__('The name is required'), { type: 'error' })
                 }
               }
             });

@@ -1,9 +1,18 @@
 <template>
   <portal to="portal-filemanager" name="Confirm Delete" transition="fade-transition">
-    <modal v-if="active" @modal-close="handleClose">
+    <Modal
+        data-testid="confirm-action-modal"
+        tabindex="-1"
+        role="dialog"
+        :closes-via-backdrop="true"
+        @modal-close="handleClose"
+        show="true"
+        size="lg"
+        v-if="active"
+        class="z-100"
+    >
       <div
           class="bg-white rounded-lg shadow-lg overflow-hidden"
-          style="width: 460px"
       >
         <div class="p-8">
           <heading :level="2" class="mb-6">
@@ -38,7 +47,7 @@
         <div class="bg-30 px-6 py-3 flex">
           <div class="ml-auto">
             <button dusk="cancel-upload-delete-button" type="button" data-testid="cancel-button" @click.prevent="handleClose" class="btn text-80 font-normal h-9 px-3 mr-3 btn-link">{{__('Cancel')}}</button>
-            <button ref="confirmButton" data-testid="confirm-button" :disabled="isDeleting" @click.prevent="deleteData" class="btn btn-default btn-danger" :class="{ 'cursor-not-allowed': isDeleting, 'opacity-50': isDeleting }">
+            <button ref="confirmButton" data-testid="confirm-button" :disabled="isDeleting" @click.prevent="deleteData" class="shadow relative bg-red-500 hover:bg-red-400 text-white dark:text-gray-900 cursor-pointer rounded text-sm font-bold focus:outline-none focus:ring ring-red-200 dark:ring-red-600 inline-flex items-center justify-center h-9 px-3 shadow relative bg-red-500 hover:bg-red-400 text-white dark:text-gray-900" :class="{ 'cursor-not-allowed': isDeleting, 'opacity-50': isDeleting }">
               <span v-if="isDeleting">{{ __('Deleting') }}</span>
               <span v-else>{{ __('Delete') }}</span>
             </button>
@@ -64,6 +73,7 @@ export default {
     isDeleted:false,
     isDeleting: false,
   }),
+  emits: ['confirm', 'close'],
   methods: {
     openModal(type, path) {
       this.type = type;
@@ -74,6 +84,7 @@ export default {
     },
     handleClose() {
       let $this = this;
+      this.$emit('close');
       setTimeout(function () {
         $this.password = '';
         $this.isDeleted = false;
@@ -105,18 +116,18 @@ export default {
         this.error = false;
         this.name = null;
         if (result == true) {
-          this.$toasted.show(this.__('Deleted successfully'), { type: 'success' });
+          Nova.success(this.__('Deleted successfully'), { type: 'success' });
           this.$emit('refresh', true);
           this.handleClose();
         } else {
           this.error = true;
           if (result.error) {
             this.errorMsg = result.error;
-            this.$toasted.show(this.__('Error:') + ' ' + result.error, {
+            Nova.error(this.__('Error:') + ' ' + result.error, {
               type: 'error',
             });
           } else {
-            this.$toasted.show(this.__('Error deleting. Please, see your logs'), {
+            Nova.error(this.__('Error deleting. Please, see your logs'), {
               type: 'error',
             });
           }
@@ -128,18 +139,18 @@ export default {
         this.error = false;
         this.name = null;
         if (result == true) {
-          this.$toasted.show(this.__('Deleted successfully'), { type: 'success' });
+          Nova.success(this.__('Deleted successfully'), { type: 'success' });
           this.$emit('refresh', true);
           this.handleClose();
         } else {
           this.error = true;
           if (result.error) {
             this.errorMsg = result.error;
-            this.$toasted.show(this.__('Error:') + ' ' + result.error, {
+            Nova.error(this.__('Error:') + ' ' + result.error, {
               type: 'error',
             });
           } else {
-            this.$toasted.show(this.__('Error deleting. Please, see your logs'), {
+            Nova.error(this.__('Error deleting. Please, see your logs'), {
               type: 'error',
             });
           }

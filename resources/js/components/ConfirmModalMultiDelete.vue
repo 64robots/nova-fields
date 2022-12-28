@@ -74,16 +74,16 @@ export default {
             return api.removeDirectory(file.path).then(result => {
                 this.error = false;
                 if (result == true) {
-                    this.$toasted.show(this.__('Deleted successfully'), { type: 'success' });
+                  Nova.success(this.__('Deleted successfully'), { type: 'success' });
                 } else {
                     this.error = true;
                     if (result.error) {
                         this.errorMsg = result.error;
-                        this.$toasted.show(this.__('Error:') + ' ' + result.error, {
+                      Nova.error(this.__('Error:') + ' ' + result.error, {
                             type: 'error',
                         });
                     } else {
-                        this.$toasted.show(this.__('Error deleting. Please, see your logs'), {
+                      Nova.error(this.__('Error deleting. Please, see your logs'), {
                             type: 'error',
                         });
                     }
@@ -95,16 +95,16 @@ export default {
             return api.removeFile(file.path).then(result => {
                 this.error = false;
                 if (result == true) {
-                    this.$toasted.show(this.__('Deleted successfully'), { type: 'success' });
+                  Nova.success(this.__('Deleted successfully'), { type: 'success' });
                 } else {
                     this.error = true;
                     if (result.error) {
                         this.errorMsg = result.error;
-                        this.$toasted.show(this.__('Error:') + ' ' + result.error, {
+                      Nova.error(this.__('Error:') + ' ' + result.error, {
                             type: 'error',
                         });
                     } else {
-                        this.$toasted.show(this.__('Error deleting. Please, see your logs'), {
+                      Nova.error(this.__('Error deleting. Please, see your logs'), {
                             type: 'error',
                         });
                     }

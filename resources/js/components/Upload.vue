@@ -61,13 +61,13 @@ export default {
         vsuccess(file, response) {
             if (response.success == true) {
                 this.$refs.dropzone.removeFile(file);
-                this.$toasted.show(
+              Nova.success(
                     this.__('File') + ' ' + response.name + ' ' + this.__('uploaded successfully'),
                     { type: 'success' }
                 );
                 this.$emit('refresh', true);
             } else {
-                this.$toasted.show(
+              Nova.error(
                     this.__('Error uploading the file. Check your MaxFilesize or permissions'),
                     { type: 'error' }
                 );

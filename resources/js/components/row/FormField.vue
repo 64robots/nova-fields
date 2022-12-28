@@ -217,7 +217,7 @@ export default {
         row => row.row_id === this.rowToRemove
       )
       this.rowToRemove = false
-      this.$nextTick(() => this.$delete(this.values, index))
+      this.$nextTick(() => this.values.splice(index,1))
     },
 
     /*

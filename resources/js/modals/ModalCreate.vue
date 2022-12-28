@@ -132,7 +132,7 @@ export default {
       try {
         const response = await this.createRequest()
 
-        this.$toasted.show(
+        Nova.success(
           this.__('The :resource was created!', {
             resource: this.resourceInformation.singularLabel.toLowerCase()
           }),
@@ -155,7 +155,7 @@ export default {
       try {
         const response = await this.createRequest()
 
-        this.$toasted.show(
+        Nova.success(
           this.__('The :resource was created!', {
             resource: this.resourceInformation.singularLabel.toLowerCase()
           }),

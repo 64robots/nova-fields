@@ -37,11 +37,10 @@
 </template>
 
 <script>
-import { minimum } from '../../../../../laravel/nova/resources/js/util';
 
 import 'viewerjs/dist/viewer.css'
 import { component as Viewer }  from 'v-viewer';
-
+import axios from 'axios'
 export default {
     components: {
         Viewer,
@@ -111,7 +110,7 @@ export default {
             this.images.push(this.file.image);
         } else {
             Minimum(
-                window.axios.get(this.file.image, {
+                axios.get(this.file.image, {
                     responseType: 'blob',
                 })
             )

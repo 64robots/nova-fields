@@ -37,7 +37,7 @@
               <div class="text-danger">{{ __('Error on upload') }}</div>
             </template>
             <template v-else>
-              {{ file.name | truncate(15) }} <small v-if="file.progress == 100" class="text-success uppercase">{{ __('Success') }}</small>
+              {{ fileName }} <small v-if="file.progress == 100" class="text-success uppercase">{{ __('Success') }}</small>
               <progress-module :file="file"></progress-module>
             </template>
           </div>
@@ -52,7 +52,7 @@ import _ from 'lodash';
 import Progress from '../modules/Progress';
 
 let token = document.head.querySelector('meta[name="csrf-token"]');
-
+import axios from 'axios';
 export default {
   props: {
     current: {
@@ -143,7 +143,7 @@ export default {
     },
 
     uploadFileToServer(file, data, config) {
-      window.axios
+      axios
           .post('/nova-r64-api/uploads/add', data, config)
           .then(response => {
             if (response.data.success == true) {
@@ -194,7 +194,7 @@ export default {
     uploadFolderToServer(file, data, config) {
       data.append('folder', true);
 
-      window.axios
+      axios
           .post('/nova-r64-api/uploads/add', data, config)
           .then(response => {
             if (response.data.success == true) {
@@ -233,9 +233,12 @@ export default {
     },
   },
 
-  filters: {
-    truncate: function(text, stop, clamp) {
-      return text.slice(0, stop) + (stop < text.length ? clamp || '...' : '');
+  computed: {
+    fileName() {
+      if(this.file != undefined){
+        let text = this.file.name;
+        return text.slice(0, 25) + (25 < text.length ? '...' : '');
+      }
     },
   },
 };

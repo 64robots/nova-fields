@@ -56,9 +56,10 @@ import MultiselectFormField from './components/multiselect/FormField.vue'
 // import ItemsDetailField from './components/items/DetailField.vue'
 // import ItemDetailField from './components/items/DetailFieldItem.vue'
 // import ItemsFormField from './components/items/FormField.vue'
-// import FileManagerIndexField from './components/filemanager/IndexField.vue'
-// import FileManagerDetailField from './components/filemanager/DetailField.vue'
-// import FileManagerFormField from './components/filemanager/FormField.vue'
+import FileManagerIndexField from './components/filemanager/IndexField.vue'
+import FileManagerDetailField from './components/filemanager/DetailField.vue'
+import FileManagerFormField from './components/filemanager/FormField.vue'
+import Tool from './components/Tool.vue'
 import SimpleRepeatableDetailField from './components/simple-repetable/DetailField.vue'
 import SimpleRepeatableFormField from './components/simple-repetable/FormField.vue'
 import BlankDivFormField from './components/blank-div/FormField.vue'
@@ -115,9 +116,9 @@ Nova.booting((app, store) => {
     // app.component('detail-nova-fields-item', ItemDetailField)
     //
     // /** FileManager */
-    // app.component('index-nova-fields-filemanager', FileManagerIndexField);
-    // app.component('detail-nova-fields-filemanager', FileManagerDetailField);
-    // app.component('form-nova-fields-filemanager', FileManagerFormField);
+    app.component('index-nova-fields-filemanager', FileManagerIndexField);
+    app.component('detail-nova-fields-filemanager', FileManagerDetailField);
+    app.component('form-nova-fields-filemanager', FileManagerFormField);
 
     /** Heading */
     app.component('index-nova-fields-heading', HeadingIndexField);
@@ -192,13 +193,7 @@ Nova.booting((app, store) => {
     // app.component('detail-nova-fields-belongs-to', BelongsToDetailField)
     // app.component('form-nova-fields-belongs-to', BelongsToFormField)
 
-    // router.addRoutes([
-    //   {
-    //     name: 'nova-filemanager',
-    //     path: '/nova-filemanager',
-    //     component: require('./components/Tool'),
-    //   },
-    // ]);
+    app.component('nova-filemanager',Tool);
 
     /* simple repeatable */
     app.component('detail-nova-fields-simple-repeatable', SimpleRepeatableDetailField)

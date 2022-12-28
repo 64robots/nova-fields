@@ -156,6 +156,7 @@ export default {
     },
 
     closeFilemanagerModal() {
+      this.$emit('close');
       this.openModal = false;
     },
 
@@ -184,7 +185,7 @@ export default {
     removeFileFromUpload(uploadedFileId) {
       let index = this.filesToUpload.map(item => item.id).indexOf(uploadedFileId);
 
-      this.$delete(this.filesToUpload, index);
+      this.filesToUpload.splice(index,1);
       if (this.filesToUpload.length === 0) {
         if (this.uploadType == 'folders') {
           this.callFolderEvent(this.folderUploadedName);
