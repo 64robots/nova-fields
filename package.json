@@ -44,7 +44,6 @@
     "vue3-click-away": "^1.2.4",
     "vue3-copy": "^1.0.1",
     "vue3-draggable": "^2.0.9",
-    "vue3-treeview": "^0.4.0",
-    "vuedraggable": "^2.24.3"
+    "vue3-treeview": "^0.4.0"
   }
 }
