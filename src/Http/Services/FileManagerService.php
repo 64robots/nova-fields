@@ -321,7 +321,7 @@ class FileManagerService
         $dirNameLength = strlen($dir);
 
         foreach ($directories as $subDir) {
-            $subDirName = substr($subDir, $dirNameLength);
+            $subDirName = substr($dir, $dirNameLength);
 
             array_push($files, ...$this->storage->files($subDir));
 
