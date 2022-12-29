@@ -84,6 +84,7 @@ export default {
     },
     handleClose() {
       let $this = this;
+      this.isDeleting = false;
       this.$emit('close');
       setTimeout(function () {
         $this.password = '';
@@ -97,6 +98,7 @@ export default {
       }else{
         this.passwordMessage = '';
         let $this = this;
+        this.isDeleting = true;
         api.validatePassword(this.password).then(result => {
           if (result == true) {
             if (this.type == 'folder') {
@@ -106,6 +108,7 @@ export default {
             }
             $this.isDeleted = true;
           } else {
+            this.isDeleting = false;
             $this.passwordMessage = "Your password is incorrect. Please enter valid password";
           }
         });
@@ -117,6 +120,7 @@ export default {
         this.name = null;
         if (result == true) {
           Nova.success(this.__('Deleted successfully'), { type: 'success' });
+          this.isDeleting = false;
           this.$emit('refresh', true);
           this.handleClose();
         } else {
@@ -131,6 +135,7 @@ export default {
               type: 'error',
             });
           }
+          this.isDeleting = false;
         }
       });
     },
@@ -140,6 +145,7 @@ export default {
         this.name = null;
         if (result == true) {
           Nova.success(this.__('Deleted successfully'), { type: 'success' });
+          this.isDeleting = false;
           this.$emit('refresh', true);
           this.handleClose();
         } else {
@@ -154,6 +160,7 @@ export default {
               type: 'error',
             });
           }
+          this.isDeleting = false;
         }
       });
     },

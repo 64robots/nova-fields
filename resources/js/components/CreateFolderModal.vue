@@ -71,13 +71,14 @@ export default {
         this.error = true;
         return false;
       }
-
+      this.isSaving = true;
       return api.createFolder(this.folderName, this.current).then(result => {
         this.error = false;
         this.folderName = null;
         if (result == true) {
           this.$emit('closeCreateFolderModal', true);
           Nova.success(this.__('Folder created successfully'), {type: 'success'});
+          this.isSaving = false;
           this.$emit('refresh', true);
         } else {
           this.error = true;
@@ -90,6 +91,7 @@ export default {
             this.errorMsg = this.__('The folder name is required');
             Nova.error(this.__('Error creating the folder'), {type: 'error'});
           }
+          this.isSaving = false;
         }
       });
     },
@@ -102,6 +104,7 @@ export default {
 
     handleClose() {
       this.$emit('close');
+      this.isSaving = false;
       this.cancelCreate();
     },
   },

@@ -306,7 +306,7 @@ class FileManagerService
         }
     }
 
-    protected function renameDirectory($dir, $newName)
+    public function renameDirectory($dir, $newName)
     {
         $path = str_replace(basename($dir), '', $dir);
         $newDir = $path.$newName;
@@ -314,16 +314,15 @@ class FileManagerService
         if ($this->storage->exists($newDir)) {
             return response()->json(false);
         }
-
         $this->storage->makeDirectory($newDir);
-
         $files = $this->storage->files($dir);
         $directories = $this->storage->directories($dir);
 
         $dirNameLength = strlen($dir);
 
         foreach ($directories as $subDir) {
-            $subDirName = substr($dir, $dirNameLength);
+            $subDirName = substr($subDir, $dirNameLength);
+
             array_push($files, ...$this->storage->files($subDir));
 
             if (! Storage::exists($newDir.$subDirName)) {

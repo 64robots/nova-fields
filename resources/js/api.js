@@ -85,8 +85,17 @@ export default {
     },
 
     rename(path, name) {
-        return axios
+        return renameFile
             .post('/nova-r64-api/actions/rename', {
+                path: path,
+                name: name,
+            })
+            .then(response => response.data);
+    },
+
+    renameDirectory(path, name) {
+        return axios
+            .post('/nova-r64-api/actions/rename-directory', {
                 path: path,
                 name: name,
             })

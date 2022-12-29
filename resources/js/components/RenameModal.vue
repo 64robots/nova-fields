@@ -96,6 +96,7 @@ export default {
       this.name = path.replace(/^.*[\\/]/, '');
       this.active = true;
       this.password = '';
+      this.isSaving = false;
     },
     renamePath() {
       let isCorrectPwd = false;
@@ -104,6 +105,7 @@ export default {
       }else{
         this.passwordMessage = '';
         let $this = this;
+        this.isSaving = true;
         api.validatePassword(this.password).then(result1 => {
           if (result1 == true) {
             let nameToSave = null;
@@ -122,33 +124,47 @@ export default {
             }
             if (!nameToSave) {
               this.error = true;
+              this.isSaving = false;
               return false;
             }
-            return api.rename(this.path, nameToSave).then(result => {
-              this.error = false;
-              this.name = null;
-              if (result.success == true) {
-                Nova.success(this.__('Renamed successfully'), { type: 'success' })
-                this.$emit('refresh', true);
-                this.cancelRename();
-              } else {
-                this.error = true;
-                if (result.error) {
-                  this.errorMsg = result.error;
-                  Nova.error(this.__('Error:') + ' ' + result.error, {type: 'error',})
+            this.isSaving = true;
+            let renameApi = null;
+            if(this.type == 'folder'){
+              renameApi = api.renameDirectory(this.path, nameToSave);
+            }else{
+              renameApi = api.renameFile(this.path, nameToSave);
+            }
+            if(renameApi != null){
+              return renameApi.then(result => {
+                this.error = false;
+                if (result.success == true) {
+                  Nova.success(this.__('Renamed successfully'), { type: 'success' })
+                  this.isSaving = false;
+                  this.$emit('refresh', true);
+                  this.cancelRename();
                 } else {
-                  this.errorMsg = this.__('The name is required');
-                  Nova.error(this.__('The name is required'), { type: 'error' })
+                  this.error = true;
+                  if (result.error) {
+                    this.errorMsg = result.error;
+                    Nova.error(this.__('Error:') + ' ' + result.error, {type: 'error',})
+                  } else {
+                    this.errorMsg = this.__('The name is required');
+                    Nova.error(this.__('The name is required'), { type: 'error' })
+                  }
+                  this.isSaving = false;
                 }
-              }
-            });
+              });
+            }
+            this.isSaving = false;
           } else {
+            this.isSaving = false;
             $this.passwordMessage = "Your password is incorrect. Please enter valid password";
           }
         });
       }
     },
     cancelRename() {
+      this.isSaving = false;
       this.error = false;
       this.name = null;
       this.type = null;
