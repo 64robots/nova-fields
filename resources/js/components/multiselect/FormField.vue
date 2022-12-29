@@ -49,7 +49,12 @@
 
       <!-- Reorder mode field -->
       <div v-if="reorderMode" class="form-input-bordered py-1">
-        <draggable tag="ul" v-model="value" class="flex flex-col pl-0" style="list-style: none; margin-top: 5px">
+        <draggable v-model="value"
+                   :sort="true"
+                   class="dragArea list-group flex flex-col pl-0" style="list-style: none; margin-top: 5px"
+                   :scroll-sensitivity="400"
+                   tag="ul"
+        >
           <transition-group>
             <li v-for="(s, i) in selected" :key="i + 0" class="reorder__tag text-sm mb-1 px-2 py-1 text-white">
               {{ s.label }}
@@ -76,12 +81,12 @@
 import { FormField, HandlesValidationErrors } from 'laravel-nova';
 import HandlesFieldValue from '../../mixins/HandlesFieldValue';
 import Multiselect from '@vueform/multiselect';
-import draggable from "vue3-draggable";
+import {VueDraggableNext} from 'vue-draggable-next'
 import debounce from 'lodash/debounce';
 import R64Field from '../../mixins/R64Field'
 
 export default {
-  components: { Multiselect, draggable },
+  components: { Multiselect, draggable : VueDraggableNext},
 
   mixins: [FormField, HandlesValidationErrors, HandlesFieldValue,R64Field],
 

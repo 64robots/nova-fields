@@ -12,46 +12,54 @@
       <div class="flex flex-col">
         <!-- Title columns -->
         <div class="simple-repeatable-header-row flex border-b border-40 py-2">
-          <div v-for="(repField, i) in field.repeatableFields" :key="i" class="font-bold text-90 text-md w-full mr-3">
+          <div v-for="(repField, i) in field.repeatableFields" :key="i"
+               class="font-bold text-90 text-md w-full mr-3">
             {{ repField.name }}
           </div>
         </div>
 
-        <!--        <draggable v-model="fieldsWithValues" >-->
-        <div
-            v-for="(fields, i) in fieldsWithValues"
-            :key="fields[0].attribute"
-            :class="[inputClasses, errorClasses]"
+        <draggable v-model="fieldsWithValues"
+                   :sort="true"
+                   class="dragArea list-group w-full"
+                   :scroll-sensitivity="400"
         >
-          <div v-if="field.canDraggable" class="vue-draggable-handle flex justify-center items-center cursor-pointer">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" class="fill-current">
-              <path
-                  d="M4 5h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2z"
-              />
-            </svg>
-          </div>
-
-          <component
-              v-for="(repField, i) in fields"
-              :key="i"
-              :is="`form-${repField.component}`"
-              :field="repField"
-              class="mr-4"
-          />
-
           <div
-              class="delete-icon flex justify-center items-center cursor-pointer"
-              @click="deleteRow(i)"
-              v-if="field.canDeleteRows"
+              v-for="(fields, i) in fieldsWithValues"
+              :key="fields[0].attribute"
+              :class="[inputClasses, errorClasses]"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" class="fill-current">
-              <path
-                  d="M8 6V4c0-1.1.9-2 2-2h4a2 2 0 012 2v2h5a1 1 0 010 2h-1v12a2 2 0 01-2 2H6a2 2 0 01-2-2V8H3a1 1 0 110-2h5zM6 8v12h12V8H6zm8-2V4h-4v2h4zm-4 4a1 1 0 011 1v6a1 1 0 01-2 0v-6a1 1 0 011-1zm4 0a1 1 0 011 1v6a1 1 0 01-2 0v-6a1 1 0 011-1z"
-              />
-            </svg>
+            <div v-if="field.canDraggable"
+                 class="vue-draggable-handle flex justify-center items-center cursor-pointer">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22"
+                   class="fill-current">
+                <path
+                    d="M4 5h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2z"
+                />
+              </svg>
+            </div>
+
+            <component
+                v-for="(repField, i) in fields"
+                :key="i"
+                :is="`form-${repField.component}`"
+                :field="repField"
+                class="mr-4"
+            />
+
+            <div
+                class="delete-icon flex justify-center items-center cursor-pointer"
+                @click="deleteRow(i)"
+                v-if="field.canDeleteRows"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"
+                   class="fill-current">
+                <path
+                    d="M8 6V4c0-1.1.9-2 2-2h4a2 2 0 012 2v2h5a1 1 0 010 2h-1v12a2 2 0 01-2 2H6a2 2 0 01-2-2V8H3a1 1 0 110-2h5zM6 8v12h12V8H6zm8-2V4h-4v2h4zm-4 4a1 1 0 011 1v6a1 1 0 01-2 0v-6a1 1 0 011-1zm4 0a1 1 0 011 1v6a1 1 0 01-2 0v-6a1 1 0 011-1z"
+                />
+              </svg>
+            </div>
           </div>
-        </div>
-        <!--        </draggable>-->
+        </draggable>
 
         <button
             v-if="field.canAddRows"
@@ -68,16 +76,16 @@
 </template>
 
 <script>
-import draggable from "vue3-draggable";
-import { FormField, HandlesValidationErrors } from 'laravel-nova';
+import {VueDraggableNext} from 'vue-draggable-next'
+import {FormField, HandlesValidationErrors} from 'laravel-nova';
 import R64Field from '../../mixins/R64Field'
 
 let UNIQUE_ID_INDEX = 0;
 
 export default {
-  mixins: [FormField, HandlesValidationErrors,R64Field],
+  mixins: [FormField, HandlesValidationErrors, R64Field],
 
-  components: { draggable },
+  components: {draggable: VueDraggableNext},
 
   props: ['resourceName', 'resourceId', 'field'],
 
@@ -149,11 +157,11 @@ export default {
   },
 
   watch: {
-    fieldsWithValues: function(fieldGroups) {
-      fieldGroups.forEach(function(fieldGroup) {
-        fieldGroup.forEach(function(field) {
-          Nova.$off(field.attribute+'-change', this.handleChange)
-          Nova.$on(field.attribute+'-change', this.handleChange)
+    fieldsWithValues: function (fieldGroups) {
+      fieldGroups.forEach(function (fieldGroup) {
+        fieldGroup.forEach(function (field) {
+          Nova.$off(field.attribute + '-change', this.handleChange)
+          Nova.$on(field.attribute + '-change', this.handleChange)
         }.bind(this))
       }.bind(this))
     }
