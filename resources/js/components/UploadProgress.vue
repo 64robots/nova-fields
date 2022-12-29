@@ -1,5 +1,5 @@
 <template>
-  <div class="stack-uploads fixed pin-b bg-white shadow" v-if="files.length > 0">
+  <div class="stack-uploads fixed bg-white shadow" v-if="files.length > 0">
 
     <div class="files p-4" v-if="type == 'folders'">
       <transition name="fade" >
@@ -21,7 +21,7 @@
     </div>
 
 
-    <div class="files p-4" v-for="(file, indexFiles) in files" v-bind:key="indexFiles" v-else>
+    <div class="files p-4 my-2" v-for="(file, indexFiles) in files" v-bind:key="indexFiles" v-else>
       <transition name="fade" >
         <div class="flex flex-wrap w-full items-center"  v-bind:key="indexFiles" v-if="file.upload == true">
           <div class="preview w-1/3">
@@ -37,7 +37,8 @@
               <div class="text-danger">{{ __('Error on upload') }}</div>
             </template>
             <template v-else>
-              {{ fileName }} <small v-if="file.progress == 100" class="text-success uppercase">{{ __('Success') }}</small>
+              {{ fileName(file) }} <small v-if="file.progress < 100" class="text-success uppercase"><br>{{ file.progress }}%</small>
+              <small v-if="file.progress == 100" class="text-success uppercase"><br>{{ __('Success') }}</small>
               <progress-module :file="file"></progress-module>
             </template>
           </div>
@@ -231,12 +232,9 @@ export default {
             }, 1000);
           });
     },
-  },
-
-  computed: {
-    fileName() {
-      if(this.file != undefined){
-        let text = this.file.name;
+    fileName(file) {
+      if(file != undefined){
+        let text = file.name;
         return text.slice(0, 25) + (25 < text.length ? '...' : '');
       }
     },
@@ -250,5 +248,14 @@ export default {
   bottom: 10px;
   width: 300px;
   z-index: 99;
+}
+.w-1\/3 {
+  width: 33.33333%;
+}
+.fixed {
+  position: fixed;
+}
+.pin-b {
+  bottom: 10px !important;
 }
 </style>
