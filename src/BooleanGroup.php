@@ -77,9 +77,7 @@ class BooleanGroup extends NovaField implements JsonSerializable
 
         $this->options = with(collect($options), function ($options) {
             return $options->map(function ($label, $name) use ($options) {
-                return $options->isAssoc()
-                    ? ['label' => $label, 'name' => $name]
-                    : ['label' => $label, 'name' => $label];
+                return ['label' => $label, 'name' => $label];
             })->values()->all();
         });
 
