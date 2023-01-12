@@ -24,6 +24,7 @@ Route::post('/actions/get-info', 'FilemanagerToolController@getInfo');
 Route::post('/actions/remove-file', 'FilemanagerToolController@removeFile');
 Route::post('/actions/validatePassword', 'FilemanagerToolController@validatePassword');
 Route::post('/actions/rename-file', 'FilemanagerToolController@renameFile');
+Route::post('/actions/rename-directory', 'FilemanagerToolController@renameDirectory');
 Route::get('/actions/download-file', 'FilemanagerToolController@downloadFile');
 Route::post('/actions/rename', 'FilemanagerToolController@rename');
 

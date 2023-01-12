@@ -306,7 +306,7 @@ class FileManagerService
         }
     }
 
-    protected function renameDirectory($dir, $newName)
+    public function renameDirectory($dir, $newName)
     {
         $path = str_replace(basename($dir), '', $dir);
         $newDir = $path.$newName;
