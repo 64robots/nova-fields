@@ -99,7 +99,7 @@ export default {
         api.validatePassword(this.password).then(result1 => {
           if (result1 == true) {
             let nameToSave = null;
-            if (this.name.length == 0) {
+            if (this.name.length == 0 || (this.type != 'folder' && this.nameWithoutExtension.length == 0)) {
               Nova.error(this.__('Error:') + ' ' + (this.type.charAt(0).toUpperCase() + this.type.slice(1)) + " name is requied.", {type: 'error',})
               this.isSaving = false;
               return false;
