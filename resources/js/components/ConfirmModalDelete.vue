@@ -77,6 +77,7 @@ export default {
       setTimeout(function () {
         $this.password = '';
         $this.isDeleted = false;
+        $this.name = null;
       },1500);
       this.active = false;
     },
@@ -103,20 +104,18 @@ export default {
     deleteFolder() {
       return api.removeDirectory(this.path).then(result => {
         this.error = false;
-        this.name = null;
-        if (result == true) {
-          this.$toasted.show(this.__('Deleted successfully'), { type: 'success' });
+        if (result.success == true) {
+          Nova.success(this.__('Deleted successfully'), { type: 'success' });
           this.$emit('refresh', true);
           this.handleClose();
         } else {
           this.error = true;
-          if (result.error) {
-            this.errorMsg = result.error;
-            this.$toasted.show(this.__('Error:') + ' ' + result.error, {
+          if (result.error != null) {
+            Nova.error(this.__('Error:') + ' ' + result.error, {
               type: 'error',
             });
           } else {
-            this.$toasted.show(this.__('Error deleting. Please, see your logs'), {
+            Nova.error(this.__('Error deleting. Please, see your logs'), {
               type: 'error',
             });
           }
@@ -126,20 +125,18 @@ export default {
     deleteFile() {
       return api.removeFile(this.path).then(result => {
         this.error = false;
-        this.name = null;
-        if (result == true) {
-          this.$toasted.show(this.__('Deleted successfully'), { type: 'success' });
+        if (result.success == true) {
+          Nova.success(this.__('Deleted successfully'), { type: 'success' });
           this.$emit('refresh', true);
           this.handleClose();
         } else {
           this.error = true;
-          if (result.error) {
-            this.errorMsg = result.error;
-            this.$toasted.show(this.__('Error:') + ' ' + result.error, {
+          if (result.error != null) {
+            Nova.error(this.__('Error:') + ' ' + result.error, {
               type: 'error',
             });
           } else {
-            this.$toasted.show(this.__('Error deleting. Please, see your logs'), {
+            Nova.error(this.__('Error deleting. Please, see your logs'), {
               type: 'error',
             });
           }

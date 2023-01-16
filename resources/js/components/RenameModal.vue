@@ -99,15 +99,16 @@ export default {
         api.validatePassword(this.password).then(result1 => {
           if (result1 == true) {
             let nameToSave = null;
+            if (this.name.length == 0) {
+              Nova.error(this.__('Error:') + ' ' + (this.type.charAt(0).toUpperCase() + this.type.slice(1)) + " name is requied.", {type: 'error',})
+              this.isSaving = false;
+              return false;
+            }
             if (this.type == 'folder') {
-              if (this.name == null) {
-                this.error = true;
-                return false;
-              }
               nameToSave = this.name;
             } else {
               if (this.nameWithoutExtension == null) {
-                this.error = true;
+                Nova.error(this.__('Error:') + ' ' + "File extenstion is requied.", {type: 'error',})
                 return false;
               }
               nameToSave = this.nameWithoutExtension + this.extension;
@@ -132,13 +133,11 @@ export default {
                   this.isSaving = false;
                   this.$emit('refresh', true);
                   this.cancelRename();
-              } else {
-                this.error = true;
-                  if (result.error) {
-                    this.errorMsg = result.error;
+                } else {
+                  this.error = true;
+                  if (result.error != null) {
                     Nova.error(this.__('Error:') + ' ' + result.error, {type: 'error',})
-                  } else {
-                    this.errorMsg = this.__('The name is required');
+                  } else if(this.name == null){
                     Nova.error(this.__('The name is required'), { type: 'error' })
                   }
                   this.isSaving = false;
@@ -154,7 +153,7 @@ export default {
       }
     },
     cancelRename() {
-        this.isSaving = false;
+      this.isSaving = false;
       this.error = false;
       this.name = null;
       this.type = null;
