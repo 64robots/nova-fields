@@ -165,9 +165,9 @@ class FileManagerService
         if ($this->storage->deleteDirectory($path)) {
             event(new FolderRemoved($this->storage, $path));
 
-            return response()->json(true);
+            return response()->json(['success' => true, 'data' => []]);
         } else {
-            return response()->json(false);
+            return response()->json(['success' => false, 'data' => "Something is wrong to delete folder. please try again later."]);
         }
     }
 
@@ -274,7 +274,7 @@ class FileManagerService
 
             return response()->json(['success' => true, 'data' => []]);
         } else {
-            return response()->json(['success' => false, 'error' => "Something is wrong to delete file."]);
+            return response()->json(['success' => false, 'error' => "Something is wrong to delete file. please try again later."]);
         }
     }
 
