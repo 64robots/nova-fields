@@ -20,7 +20,6 @@
             <div class="deleteModalPassword">
               <label for="password">Enter Password : </label>
               <input type="password" name="password" class="w-full h-full form-control form-input form-input-bordered py-3" id="password" v-model="password">
-              <span class="text-danger" v-if="passwordMessage.length > 0">{{ passwordMessage }}</span>
             </div>
           </template>
           <template v-else>
@@ -29,7 +28,6 @@
             <div class="deleteModalPassword">
               <label for="password">Enter Password : </label>
               <input type="password" name="password" class="w-full h-full form-control form-input form-input-bordered py-3" id="password" v-model="password">
-              <span class="text-danger" v-if="passwordMessage.length > 0">{{ passwordMessage }}</span>
             </div>
           </template>
 
@@ -60,7 +58,6 @@ export default {
     error: false,
     errorMsg: '',
     password:'',
-    passwordMessage:'',
     isDeleted:false,
     isDeleting: false,
   }),
@@ -83,9 +80,10 @@ export default {
     },
     deleteData() {
       if(this.password.length == 0 ){
-        this.passwordMessage = "Please enter valid password";
+        Nova.error(this.__('Please enter valid password'), {
+          type: 'error',
+        });
       }else{
-        this.passwordMessage = '';
         let $this = this;
         api.validatePassword(this.password).then(result => {
           if (result == true) {
@@ -96,7 +94,9 @@ export default {
             }
             $this.isDeleted = true;
           } else {
-            $this.passwordMessage = "Your password is incorrect. Please enter valid password";
+            Nova.error(this.__('Your password is incorrect. Please enter valid password'), {
+              type: 'error',
+            });
           }
         });
       }
@@ -111,7 +111,7 @@ export default {
         } else {
           this.error = true;
           if (result.error != null) {
-            Nova.error(this.__('Error:') + ' ' + result.error, {
+            Nova.error(result.error, {
               type: 'error',
             });
           } else {
@@ -132,7 +132,7 @@ export default {
         } else {
           this.error = true;
           if (result.error != null) {
-            Nova.error(this.__('Error:') + ' ' + result.error, {
+            Nova.error(result.error, {
               type: 'error',
             });
           } else {

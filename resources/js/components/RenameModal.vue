@@ -16,7 +16,6 @@
               <input type="password" class="w-full h-full form-control form-input form-input-bordered py-3" :placeholder="Password" v-model="password" autofocus required>
               <i class="bi bi-eye-slash"
                  id="togglePassword"></i>
-              <span class="text-danger" v-if="passwordMessage.length > 0">{{ passwordMessage }}</span>
             </div>
           </template>
 
@@ -38,7 +37,6 @@
               <input type="password" class="w-full h-full form-control form-input form-input-bordered py-3" :placeholder="Password" v-model="password" autofocus required>
               <i class="bi bi-eye-slash"
                  id="togglePassword"></i>
-              <span class="text-danger" v-if="passwordMessage.length > 0">{{ passwordMessage }}</span>
             </div>
 
             <p class="my-2 text-danger" v-if="error">{{ errorMsg }}</p>
@@ -76,7 +74,6 @@ export default {
     errorMsg: '',
     isSaving: false,
     password:'',
-    passwordMessage:'',
     nameWithoutExtension: null,
   }),
   methods: {
@@ -91,16 +88,15 @@ export default {
     renamePath() {
       let isCorrectPwd = false;
       if(this.password.length == 0 ){
-        this.passwordMessage = "Please enter valid password";
+        Nova.error(this.__("Please enter valid password"), {type: 'error',})
       }else{
-        this.passwordMessage = '';
         let $this = this;
         this.isSaving = true;
         api.validatePassword(this.password).then(result1 => {
           if (result1 == true) {
             let nameToSave = null;
             if (this.name.length == 0 || (this.type != 'folder' && this.nameWithoutExtension.length == 0)) {
-              Nova.error(this.__('Error:') + ' ' + (this.type.charAt(0).toUpperCase() + this.type.slice(1)) + " name is requied.", {type: 'error',})
+              Nova.error("Name is requied", {type: 'error',})
               this.isSaving = false;
               return false;
             }
@@ -108,7 +104,7 @@ export default {
               nameToSave = this.name;
             } else {
               if (this.nameWithoutExtension == null) {
-                Nova.error(this.__('Error:') + ' ' + "File extenstion is requied.", {type: 'error',})
+                Nova.error("File extenstion is requied.", {type: 'error',})
                 return false;
               }
               nameToSave = this.nameWithoutExtension + this.extension;
@@ -136,7 +132,7 @@ export default {
                 } else {
                   this.error = true;
                   if (result.error != null) {
-                    Nova.error(this.__('Error:') + ' ' + result.error, {type: 'error',})
+                    Nova.error(result.error, {type: 'error',})
                   } else if(this.name == null){
                     Nova.error(this.__('The name is required'), { type: 'error' })
                   }
@@ -147,7 +143,7 @@ export default {
             this.isSaving = false;
           } else {
             this.isSaving = false;
-            $this.passwordMessage = "Your password is incorrect. Please enter valid password";
+            Nova.error(this.__("Your password is incorrect. Please enter valid password"), {type: 'error',})
           }
         });
       }

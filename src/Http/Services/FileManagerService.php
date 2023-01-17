@@ -296,6 +296,7 @@ class FileManagerService
 
             return response()->json(['success' => false, 'error' => "Something is wrong to rename file name."]);
         } catch (\Exception $e) {
+            \Log::info($e->getMessage());
             return response()->json(['success' => false, 'error' => $e->getMessage()]);
         }
     }
@@ -307,7 +308,7 @@ class FileManagerService
             $newDir = $path.$newName;
 
             if ($this->storage->exists($newDir)) {
-                return response()->json(['success' => false, 'error' => "Folder already exists."]);
+                return response()->json(['success' => false, 'error' => "The folder exist in current path."]);
             }
 
             $this->storage->makeDirectory($newDir);
