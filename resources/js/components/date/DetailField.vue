@@ -1,35 +1,40 @@
 <template>
   <r64-panel-item
-
-    :field="field"
-    :hide-label="hideLabelInDetail"
-    :label-classes="panelLabelClasses"
-    :field-classes="panelFieldClasses"
+      :field="field"
+      :hide-label="hideLabelInDetail"
+      :label-classes="panelLabelClasses"
+      :field-classes="panelFieldClasses"
   >
     <template #value>
-      <p
-        v-if="field.value"
-        class="text-90"
-      >{{ formattedDate }}</p>
-      <p v-else>&mdash;</p>
+      <p>
+        <span v-if="fieldHasValue">
+          {{ formattedDate }}
+        </span>
+        <span v-else>&mdash;</span>
+      </p>
     </template>
   </r64-panel-item>
 </template>
 
 <script>
 import R64Field from '../../mixins/R64Field'
+import { DateTime } from 'luxon'
+import { FieldValue } from '@/mixins'
 
 export default {
-  mixins: [R64Field],
+  mixins: [FieldValue,R64Field],
 
-  props: ['resource', 'resourceName', 'resourceId', 'field'],
+  props: ['index', 'resource', 'resourceName', 'resourceId', 'field'],
 
   computed: {
     formattedDate() {
-      return this.field.format
-        ? moment(this.field.value).format(this.field.format)
-        : this.field.value
-    }
+      if (this.field.usesCustomizedDisplay) {
+        return this.field.displayedAs
+      }
+
+      let date = new Date(this.field.value);
+      return ('0' + (date.getMonth()+1)).slice(-2) +'/'+ ('0' + date.getDate()).slice(-2) +'/'+date.getFullYear();
+    },
   }
 }
 </script>

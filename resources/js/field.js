@@ -2,11 +2,11 @@ import DefaultField from './components/DefaultField.vue'
 import PanelItem from './components/PanelItem.vue'
 import DateIndexField from './components/date/IndexField.vue'
 import Excerpt from './components/Excerpt.vue'
-// import DateDetailField from './components/date/DetailField.vue'
-// import DateTimeIndexField from './components/date-time/IndexField.vue'
-// import DateTimeDetailField from './components/date-time/DetailField.vue'
-// import DateTimeFormField from './components/date-time/FormField.vue'
-// import DateFormField from './components/date/FormField.vue'
+import DateDetailField from './components/date/DetailField.vue'
+import DateTimeIndexField from './components/date-time/IndexField.vue'
+import DateTimeDetailField from './components/date-time/DetailField.vue'
+import DateTimeFormField from './components/date-time/FormField.vue'
+import DateFormField from './components/date/FormField.vue'
 import TextIndexField from './components/text/IndexField.vue'
 import TextDetailField from './components/text/DetailField.vue'
 import TextFormField from './components/text/FormField.vue'
@@ -43,19 +43,11 @@ import RowIndexField from './components/row/IndexField.vue'
 import JsonDetailField from './components/json/DetailField.vue'
 import BelongsToIndexField from './components/belongs-to/IndexField.vue'
 import RowFormField from './components/row/FormField.vue'
-// import BelongsToDetailField from './components/belongs-to/DetailField.vue'
-// import BelongsToFormField from './components/belongs-to/FormField.vue'
 import JsonFormField from './components/json/FormField.vue'
-// import IdIndexField from './components/id/IndexField.vue'
 import SlugFormField from './components/slug/FormField.vue'
 import MultiselectIndexField from './components/multiselect/IndexField.vue'
 import MultiselectDetailField from './components/multiselect/DetailField.vue'
 import MultiselectFormField from './components/multiselect/FormField.vue'
-// import NovaMultiselectDetailFieldValue from './components/multiselect/NovaMultiselectDetailFieldValue.vue'
-// import ItemsIndexField from './components/items/IndexField.vue'
-// import ItemsDetailField from './components/items/DetailField.vue'
-// import ItemDetailField from './components/items/DetailFieldItem.vue'
-// import ItemsFormField from './components/items/FormField.vue'
 import FileManagerIndexField from './components/filemanager/IndexField.vue'
 import FileManagerDetailField from './components/filemanager/DetailField.vue'
 import FileManagerFormField from './components/filemanager/FormField.vue'
@@ -63,6 +55,14 @@ import Tool from './components/Tool.vue'
 import SimpleRepeatableDetailField from './components/simple-repetable/DetailField.vue'
 import SimpleRepeatableFormField from './components/simple-repetable/FormField.vue'
 import BlankDivFormField from './components/blank-div/FormField.vue'
+// import BelongsToDetailField from './components/belongs-to/DetailField.vue'
+// import BelongsToFormField from './components/belongs-to/FormField.vue'
+// import IdIndexField from './components/id/IndexField.vue'
+// import NovaMultiselectDetailFieldValue from './components/multiselect/NovaMultiselectDetailFieldValue.vue'
+// import ItemsIndexField from './components/items/IndexField.vue'
+// import ItemsDetailField from './components/items/DetailField.vue'
+// import ItemDetailField from './components/items/DetailFieldItem.vue'
+// import ItemsFormField from './components/items/FormField.vue'
 
 Nova.booting((app, store) => {
     /** Shared */
@@ -127,13 +127,13 @@ Nova.booting((app, store) => {
 
     /** Date */
     app.component('index-nova-fields-date', DateIndexField)
-    // app.component('detail-nova-fields-date', DateDetailField)
-    // app.component('form-nova-fields-date', DateFormField)
+    app.component('detail-nova-fields-date', DateDetailField)
+    app.component('form-nova-fields-date', DateFormField)
     //
     // /** DateTime */
-    // app.component('index-nova-fields-date-time', DateTimeIndexField)
-    // app.component('detail-nova-fields-date-time', DateTimeDetailField)
-    // app.component('form-nova-fields-date-time', DateTimeFormField)
+    app.component('index-nova-fields-date-time', DateTimeIndexField)
+    app.component('detail-nova-fields-date-time', DateTimeDetailField)
+    app.component('form-nova-fields-date-time', DateTimeFormField)
 
     /** Computed */
     app.component('index-nova-fields-computed',TextIndexField)

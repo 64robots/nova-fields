@@ -11,6 +11,7 @@
     "nova:install": "npm --prefix='../../vendor/laravel/nova' ci"
   },
   "devDependencies": {
+    "@vue/babel-plugin-jsx": "^1.1.1",
     "@vue/compiler-sfc": "^3.2.22",
     "form-backend-validation": "^2.3.3",
     "laravel-mix": "^6.0.41",
@@ -23,6 +24,7 @@
     "vue-loader": "^16.8.3"
   },
   "dependencies": {
+    "@inertiajs/inertia": "^0.11.1",
     "@vueform/multiselect": "^2.5.7",
     "babel-plugin-component": "^1.1.1",
     "codemirror": "^5.63.3",
@@ -30,6 +32,7 @@
     "filesize": "^10.0.5",
     "flatpickr": "^4.6.13",
     "liquor-tree": "^0.2.70",
+    "luxon": "^3.2.1",
     "md5": "^2.3.0",
     "plyr": "^3.7.3",
     "slugify": "^1.6.5",
@@ -44,6 +47,7 @@
     "vue2-dropzone": "^3.6.0",
     "vue3-click-away": "^1.2.4",
     "vue3-copy": "^1.0.1",
-    "vue3-treeview": "^0.4.0"
+    "vue3-treeview": "^0.4.0",
+    "vuex": "^4.1.0"
   }
 }

@@ -9,103 +9,101 @@
       :label-classes="labelClasses"
   >
     <template #field>
-        <div class="flex items-center">
-          <date-time-picker
-              ref="dateTimePicker"
-              :dusk="field.attribute"
-              :name="field.name"
-              :value="value"
-              dateFormat="Y-m-d"
-              :alt-format="pickerDisplayFormat"
-              :placeholder="placeholder"
-              :enable-time="false"
-              :enable-seconds="false"
-              :first-day-of-week="firstDayOfWeek"
-              :class="inputClasses"
-              @change="handleChange"
-              :disabled="isReadonly"
-          />
+      <div class="flex items-center">
+        <input
+            type="date"
+            class="w-full form-control form-input form-input-bordered"
+            ref="dateTimePicker"
+            :id="currentField.uniqueKey"
+            :dusk="field.attribute"
+            :name="field.name"
+            :value="formattedDate"
+            :class="errorClasses"
+            :disabled="currentlyIsReadonly"
+            @change="handleChange"
+            :min="currentField.min"
+            :max="currentField.max"
+            :step="currentField.step"
+        />
 
-          <a
-              v-if="field.nullable && !isReadonly"
-              @click.prevent="$refs.dateTimePicker.clear()"
-              href="#"
-              :title="__('Clear value')"
-              tabindex="-1"
-              class="p-1 px-2 cursor-pointer leading-none focus:outline-none"
-              :class="{
-                'text-50': !value.length,
-                'text-black hover:text-danger': value.length,
-              }"
-          >
-            <icon type="x-circle" width="22" height="22" viewBox="0 0 22 22" />
-          </a>
-        </div>
-        <p
-            v-if="hasError"
-            class="my-2 text-danger"
+        <a
+            v-if="field.nullable && !isReadonly"
+            @click.prevent="formattedDate = value = ''"
+            href="#"
+            :title="__('Clear value')"
+            tabindex="-1"
+            class="p-1 px-2 cursor-pointer leading-none focus:outline-none"
         >
-          {{ firstError }}
-        </p>
+          <icon type="x-circle" width="22" height="22" viewBox="0 0 22 22" />
+        </a>
+      </div>
+      <p
+          v-if="hasError"
+          class="my-2 text-danger"
+      >
+        {{ firstError }}
+      </p>
     </template>
   </r64-default-field>
 </template>
 
 <script>
-import {
-  FormField,
-  HandlesValidationErrors,
-  InteractsWithDates
-} from 'laravel-nova'
-import R64Field from '../../mixins/R64Field'
+import isNil from 'lodash/isNil'
+import { DateTime } from 'luxon'
+import { DependentFormField, HandlesValidationErrors } from '@/mixins'
+import filled from '@/util/filled'
+import R64Field from "../../mixins/R64Field";
 
 export default {
-  mixins: [HandlesValidationErrors, FormField, InteractsWithDates, R64Field],
-
+  mixins: [HandlesValidationErrors, DependentFormField,R64Field],
+  data: () => ({
+    formattedDate: '',
+  }),
   methods: {
     /*
-     * Set the initial value for the field
-     */
+      * Set the initial value for the field
+      */
     setInitialValue() {
-      // Set the initial value of the field
-      this.value = this.field.value || ''
+      let onlyDate = this.currentField.value;
+      if (!isNil(this.currentField.value)) {
+        let date = new Date(this.currentField.value);
+        onlyDate = date.getFullYear()+'-'+ ('0' + (date.getMonth()+1)).slice(-2) +'-'+ ('0' + date.getDate()).slice(-2);
+      }
+      this.value = onlyDate;
+      this.formattedDate = onlyDate
     },
 
     /**
      * On save, populate our form data
      */
     fill(formData) {
-      formData.append(this.field.attribute, this.value || '')
+      this.fillIfVisible(formData, this.field.attribute, this.value || '')
+
+      if (this.currentlyIsVisible && filled(this.value)) {
+        this.formattedDate = this.value
+      }
     },
 
     /**
-     * Update the field's internal value when it's value changes
+     * Update the field's internal value
      */
-    handleChange(value) {
-      this.value = value
+    handleChange(event) {
+      let value = event?.target?.value ?? event
+
+      this.value = DateTime.fromISO(value, {
+        setZone: Nova.config('userTimezone') || Nova.config('timezone'),
+      }).toISODate()
+
+      if (this.field) {
+        this.emitFieldValueChange(this.field.attribute, this.value)
+      }
     },
   },
 
   computed: {
-    firstDayOfWeek() {
-      return this.field.firstDayOfWeek || 0
+    timezone() {
+      return Nova.config('userTimezone') || Nova.config('timezone')
     },
-
-    placeholder() {
-      return this.field.placeholder || moment().format(this.format)
-    },
-
-    format() {
-      return this.field.format || 'YYYY-MM-DD'
-    },
-
-    pickerFormat() {
-      return this.field.pickerFormat || 'Y-m-d'
-    },
-
-    pickerDisplayFormat() {
-      return this.field.pickerDisplayFormat || 'Y-m-d'
-    },
-  }
+  },
 }
 </script>
