@@ -55,6 +55,7 @@ import Tool from './components/Tool.vue'
 import SimpleRepeatableDetailField from './components/simple-repetable/DetailField.vue'
 import SimpleRepeatableFormField from './components/simple-repetable/FormField.vue'
 import BlankDivFormField from './components/blank-div/FormField.vue'
+import DynamicSelectFormField from './components/dynamic-select/FormField.vue';
 // import BelongsToDetailField from './components/belongs-to/DetailField.vue'
 // import BelongsToFormField from './components/belongs-to/FormField.vue'
 // import IdIndexField from './components/id/IndexField.vue'
@@ -84,11 +85,6 @@ Nova.booting((app, store) => {
     app.component('index-nova-fields-slug',TextIndexField)
     app.component('detail-nova-fields-slug', TextDetailField)
     app.component('form-nova-fields-slug', SlugFormField)
-
-    /** ChildSelect */
-    app.component('index-nova-fields-child-select',TextIndexField)
-    app.component('detail-nova-fields-child-select', TextDetailField)
-    app.component('form-nova-fields-child-select', SelectFormField)
 
     /** BooleanGroup */
     app.component('index-nova-fields-boolean-group', BooleanGroupIndexField)
@@ -206,4 +202,9 @@ Nova.booting((app, store) => {
     app.component('index-nova-fields-multi-select-dual-box', MultiSelectDualBoxIndexField)
     app.component('detail-nova-fields-multi-select-dual-box', MultiSelectDualBoxDetailField)
     app.component('form-nova-fields-multi-select-dual-box', MultiSelectDualBoxFormField);
+
+    /* dynamic select */
+    app.component('index-nova-fields-dynamic-select', TextIndexField);
+    app.component('detail-nova-fields-dynamic-select', TextDetailField);
+    app.component('form-nova-fields-dynamic-select', DynamicSelectFormField);
 });
