@@ -53,7 +53,7 @@
 import { FormField, HandlesValidationErrors } from 'laravel-nova'
 import R64Field from '../../mixins/R64Field'
 import slugify from '../../util/slugify'
-
+import mitt from 'mitt'
 export default {
   mixins: [HandlesValidationErrors, FormField,R64Field],
 
@@ -79,8 +79,8 @@ export default {
       this.field.readonly = false
       this.field.extraAttributes.readonly = false
     }
-
-    this.$once('hook:beforeDestroy', () => {
+    const emitter = mitt()
+    emitter.on('hook:beforeDestroy', () => {
       Nova.$off('create-relation-modal-opened', this.removeChangeListener)
       Nova.$off('create-relation-modal-closed', listenToCreateModalClosed)
       this.removeChangeListener()
