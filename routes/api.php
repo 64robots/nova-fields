@@ -13,7 +13,6 @@ Route::get('/{resource}/{resourceId}/download/{field}', 'FieldDownloadController
 
 Route::get('/options/{resource}', 'OptionsController@index');
 
-
 /** FIle Manager Routes */
 Route::get('/data', 'FilemanagerToolController@getData');
 Route::get('/{resource}/{attribute}/data', 'FilemanagerToolController@getDataField');
