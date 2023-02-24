@@ -87,13 +87,16 @@ class FileManagerService
     public function ajaxGetFilesAndFolders(Request $request)
     {
         $folder = $this->cleanSlashes($request->get('folder'));
-
+        \Log::info("after clean slashes ");
+        \Log::info($folder);
         $isMultipleSelection = $this->cleanSlashes($request->get('isMultipleSelection'));
 
         if (! $this->folderExists($folder)) {
             $folder = '/';
         }
-
+        \Log::info("is folder exists");
+        \Log::info(!$this->folderExists($folder));
+        \Log::info($folder);
         $this->setRelativePath($folder);
 
         $order = $request->get('sort');
