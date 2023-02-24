@@ -224,7 +224,7 @@ export default {
       this.parent = {};
       this.path = [];
       this.loadingfiles = true;
-
+      console.log("selected folder : " ,folder);
       api.getDataField(this.resource, this.name, folder, this.filter,this.selectMultiple)
           .then(result => {
             this.files = result.files;
@@ -257,7 +257,9 @@ export default {
 
     goToFolder(path) {
       let pathDefault = this.defaultFolder.split('/');
-
+      console.log("path : ",path);
+      console.log("pathDefault : ",pathDefault[0]);
+      console.log("compare : ",path == pathDefault[0]);
       if (path == pathDefault[0]) {
         this.getData(this.defaultFolder);
         this.currentPathFolder = this.defaultFolder;
