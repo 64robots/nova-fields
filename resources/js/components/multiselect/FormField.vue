@@ -205,7 +205,6 @@ export default {
 
   methods: {
     addTag(newTag) {
-      console.log("here");
       const tag = {
         label: newTag,
         value: newTag,

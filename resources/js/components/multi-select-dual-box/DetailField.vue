@@ -56,7 +56,6 @@ export default {
     }*/
   },
   created(){
-    //console.log(this.getElementValue(this.$parent, this.field.parentAttribute));
     this.parentValue = this.field.value ?? null;
     this.updateOptions();
   }

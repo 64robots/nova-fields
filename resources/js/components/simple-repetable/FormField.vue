@@ -147,7 +147,6 @@ export default {
 
     deleteRow(index) {
       this.fieldsWithValues.splice(index, 1);
-      console.log(this.field.attribute + '-change');
       Nova.$emit(this.field.attribute + '-change', this.getAllValues())
     },
   },

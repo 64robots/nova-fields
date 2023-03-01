@@ -297,7 +297,6 @@ export default {
 
   methods: {
     goToFolder(path) {
-      console.log("emit goToFolderManager : ",path);
       this.$emit('goToFolderManager', path);
     },
 

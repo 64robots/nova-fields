@@ -198,8 +198,6 @@ export default {
     },
 
     setCurrentPath() {
-      console.log("set current path ",this.field.folder);
-      console.log("is set current path null ",this.field.folder != null);
       if (this.field.folder != null) {
         this.defaultFolder = this.field.folder;
         this.currentPath = this.field.folder;

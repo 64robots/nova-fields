@@ -193,7 +193,6 @@ export default {
     },
 
     goToFolder() {
-      console.log("goToFolderEvent :",this.file);
       this.$emit('goToFolderEvent', this.file.path);
     },
 

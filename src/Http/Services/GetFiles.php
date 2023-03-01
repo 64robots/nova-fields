@@ -32,8 +32,6 @@ trait GetFiles
         $files = [];
 
         $cacheTime = config('filemanager.cache', false);
-        \Log::info("filesData");
-        \Log::info($filesData);
         foreach ($filesData as $file) {
             $id = $this->generateId($file);
 
@@ -62,10 +60,6 @@ trait GetFiles
      */
     public function getFileData($file, $id)
     {
-        \Log::info("file");
-        \Log::info($file);
-        \Log::info("cleanSlashes => ");
-        \Log::info($this->cleanSlashes($file['path']));
         if (! $this->isDot($file) && ! $this->exceptExtensions->contains($file['extension']) && ! $this->exceptFolders->contains($file['basename']) && ! $this->exceptFiles->contains($file['basename']) && $this->accept($file)) {
             $fileInfo = [
                 'id'         => $id,
@@ -99,8 +93,6 @@ trait GetFiles
                     return false;
                 }
             }
-            \Log::info("fileInfo");
-            \Log::info($fileInfo);
             return (object) $fileInfo;
         }
     }
