@@ -4,6 +4,7 @@ namespace R64\NovaFields\Http\Services;
 
 use Carbon\Carbon;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -28,15 +29,16 @@ trait GetFiles
     public function getFiles($folder, $order, $filter = false)
     {
         $filesData = $this->storage->listContents($folder);
+
+        $cacheTime = config('filemanager.cache', false);
+        $cacheKey = md5($folder);
+        $fileData = cache()->remember($cacheKey, $cacheTime, function () use ($folder) {
+            $filesData = $this->storage->listContents($folder);
+        });
         $filesData = $this->normalizeFiles($filesData);
         $files = [];
-        \Log::info($folder);
-        \Log::info("filesData");
-        \Log::info($filesData);
-        $cacheTime = config('filemanager.cache', false);
         foreach ($filesData as $file) {
             $id = $this->generateId($file);
-
             if ($cacheTime) {
                 $fileData = cache()->remember($id, $cacheTime, function () use ($file, $id) {
                     return $this->getFileData($file, $id);
@@ -62,8 +64,6 @@ trait GetFiles
      */
     public function getFileData($file, $id)
     {
-        \Log::info("file path");
-        \Log::info($file['path']);
         if (! $this->isDot($file) && ! $this->exceptExtensions->contains($file['extension']) && ! $this->exceptFolders->contains($file['basename']) && ! $this->exceptFiles->contains($file['basename']) && $this->accept($file)) {
             $fileInfo = [
                 'id'         => $id,
@@ -97,8 +97,6 @@ trait GetFiles
                     return false;
                 }
             }
-            \Log::info("file info");
-            \Log::info($fileInfo);
             return (object) $fileInfo;
         }
     }
@@ -186,10 +184,10 @@ trait GetFiles
     public function generateId($file)
     {
         if (isset($file['timestamp'])) {
-            return md5($this->disk.'_'.trim($file['basename']).$file['timestamp']);
+            return md5($this->disk.'_'.trim($file['path']).$file['timestamp']);
         }
 
-        return md5($this->disk.'_'.trim($file['basename']));
+        return md5($this->disk.'_'.trim($file['path']));
     }
 
     /**
@@ -524,3 +522,4 @@ trait GetFiles
         return false;
     }
 }
+

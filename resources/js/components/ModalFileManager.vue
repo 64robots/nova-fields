@@ -251,7 +251,9 @@ export default {
     },
 
     refreshCurrent() {
-      this.getData(this.currentPathFolder);
+      let last_path = sessionStorage.getItem('last_open_folder_path');
+      this.selectedFiles = [];
+      this.getData(this.currentPathFolder || last_path);
     },
 
     goToFolder(path) {
