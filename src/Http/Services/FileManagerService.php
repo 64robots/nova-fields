@@ -106,7 +106,7 @@ class FileManagerService
         $filters = $this->getAvailableFilters($files);
 
         $parent = (object) [];
-
+        \Log::info($files);
         if ($files->count() > 0) {
             $folders = $files->filter(function ($file) {
                 return $file->type == 'dir';

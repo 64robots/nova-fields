@@ -30,7 +30,9 @@ trait GetFiles
         $filesData = $this->storage->listContents($folder);
         $filesData = $this->normalizeFiles($filesData);
         $files = [];
-
+        \Log::info($folder);
+        \Log::info("filesData");
+        \Log::info($filesData);
         $cacheTime = config('filemanager.cache', false);
         foreach ($filesData as $file) {
             $id = $this->generateId($file);
@@ -60,6 +62,8 @@ trait GetFiles
      */
     public function getFileData($file, $id)
     {
+        \Log::info("file path");
+        \Log::info($file['path']);
         if (! $this->isDot($file) && ! $this->exceptExtensions->contains($file['extension']) && ! $this->exceptFolders->contains($file['basename']) && ! $this->exceptFiles->contains($file['basename']) && $this->accept($file)) {
             $fileInfo = [
                 'id'         => $id,
@@ -93,6 +97,8 @@ trait GetFiles
                     return false;
                 }
             }
+            \Log::info("file info");
+            \Log::info($fileInfo);
             return (object) $fileInfo;
         }
     }
