@@ -147,6 +147,12 @@ export default {
     },
 
     addRow() {
+      let fieldsAddEmit = this.copyFields();
+      let $this = this;
+      fieldsAddEmit.forEach(function (field) {
+        Nova.$off(field.attribute + '-change', $this.handleChange)
+        Nova.$on(field.attribute + '-change', $this.handleChange)
+      });
       this.fieldsWithValues.push(this.copyFields());
     },
 
