@@ -20,6 +20,7 @@
             :class="currentField.hideTimezone ? 'w-full' : ''"
             :disabled="currentlyIsReadonly"
             @change="handleChange"
+            @keyup.delete="formattedDate = value = ''"
             :min="currentField.min"
             :max="currentField.max"
             :step="currentField.step"
@@ -30,11 +31,8 @@
             href="#"
             :title="__('Clear value')"
             tabindex="-1"
-            class="p-1 px-2 cursor-pointer leading-none focus:outline-none"
-            :class="{
-            'text-50': !value.length,
-            'text-black hover:text-danger': value.length,
-          }"
+            class="p-1 px-2 cursor-pointer leading-none"
+            :class="!value.length ? 'text-50' : 'text-black hover:text-danger'"
         >
           <icon type="x-circle" width="22" height="22" viewBox="0 0 22 22" />
         </a>
@@ -86,13 +84,15 @@ export default {
         ].join('T')
       }
     },
-
     /**
      * On save, populate our form data
      */
     fill(formData) {
+      let validDate = DateTime.fromISO(this.value);
+      if(validDate.hasOwnProperty('invalid') && validDate.invalid != null){
+        this.value = '';
+      }
       this.fillIfVisible(formData, this.field.attribute, this.value || '')
-
       if (this.currentlyIsVisible && filled(this.value)) {
         let isoDate = DateTime.fromISO(this.value, { zone: this.timezone })
 
@@ -102,12 +102,18 @@ export default {
         ].join('T')
       }
     },
-
+    openDatePicker(){
+      console.log("click enter");
+    },
     /**
      * Update the field's internal value
      */
     handleChange(event) {
       let value = event?.target?.value ?? event
+      if(value.length == 0){
+        this.value = '';
+        this.formattedDate = '';
+      }
       if(this.field.setDefaultMinuteZero == true && value !== ''){
         let date = new Date(value);
         let onlyDate = date.getFullYear()+'-'+ ('0' + (date.getMonth()+1)).slice(-2) +'-'+ ('0' + date.getDate()).slice(-2) +" "+('0' + date.getHours()).slice(-2)+":00"+":00";
