@@ -9,7 +9,7 @@
       :wrapper-classes="wrapperClasses"
       :label-classes="labelClasses"
   >
-    <template slot="field">
+    <template #field>
       <!-- Multi select field -->
       <multiselect
           v-if="!reorderMode"
