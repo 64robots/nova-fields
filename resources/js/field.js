@@ -39,6 +39,9 @@ import FileFormField from './components/file/FormField.vue'
 import TrixFormField from './components/trix/FormField.vue'
 import RowDetailField from './components/row/DetailField.vue'
 import JsonIndexField from './components/json/IndexField.vue'
+import CustomAutoCompleteMultiSelectIndexField from './components/custom-autocomplete-multiselect/IndexField.vue'
+import CustomAutoCompleteMultiSelectFormField from './components/custom-autocomplete-multiselect/FormField.vue'
+import CustomAutoCompleteMultiSelectDetailField from './components/custom-autocomplete-multiselect/DetailField.vue'
 import RowIndexField from './components/row/IndexField.vue'
 import JsonDetailField from './components/json/DetailField.vue'
 import BelongsToIndexField from './components/belongs-to/IndexField.vue'
@@ -105,6 +108,10 @@ Nova.booting((app, store) => {
     //   app.component('nova-multiselect-detail-field-value',NovaMultiselectDetailFieldValue);
     // }
 
+    /** MultiSelect */
+    app.component('index-nova-fields-custom-autocomplete-multiselect', CustomAutoCompleteMultiSelectIndexField);
+    app.component('detail-nova-fields-custom-autocomplete-multiselect', CustomAutoCompleteMultiSelectDetailField);
+    app.component('form-nova-fields-custom-autocomplete-multiselect', CustomAutoCompleteMultiSelectFormField);
     /** Items */
     // app.component('index-nova-fields-items', ItemsIndexField)
     // app.component('detail-nova-fields-items', ItemsDetailField)
