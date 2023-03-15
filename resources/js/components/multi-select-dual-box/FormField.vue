@@ -39,8 +39,8 @@ export default {
       options: {
         searchText1: this.field.leftPlaceholder || "Search Here...",
         searchText2: this.field.rightPlaceholder || "Search Here...",
-        subHeader1: this.field.leftHeader || "",
-        subHeader2: this.field.rightHeader ||  "",
+        subHeader1: this.field.leftHeader || "Unassigned Items",
+        subHeader2: this.field.rightHeader ||  "Assigned Items",
         noData1: this.field.leftEmptyMessage || "No Data Found",
         noData2: this.field.rightEmptyMessage || "No Data Found",
         selected: [], // Array of pre-selected elements (list 2)
@@ -58,7 +58,9 @@ export default {
     };
   },
   mounted() {
-    this.watchedComponents.forEach(component => {
+    Nova.$off(this.field.parentAttribute+"-change",this.updateOptions);
+    Nova.$on(this.field.parentAttribute+"-change",this.updateOptions);
+    /*this.watchedComponents.forEach(component => {
       let attribute = "value";
 
       if (component.field.component === "belongs-to-field") {
@@ -77,14 +79,14 @@ export default {
           },
           { immediate: true }
       );
-    });
+    });*/
   },
   computed: {
-    watchedComponents() {
+    /*watchedComponents() {
       return this.$parent.$children.filter(component => {
         return this.isWatchingComponent(component);
       });
-    },
+    },*/
 
     disabled() {
       return this.options.length == 0;
@@ -99,7 +101,8 @@ export default {
       formData.append(this.field.attribute, ids || '');
     },
 
-    updateOptions() {
+    updateOptions(field_value) {
+      this.parentValue = field_value != null && field_value.length > 0 ? field_value : null;
       if (this.parentValue != null && this.parentValue != "") {
         this.options.options = this.defaultOptions;
         Nova.request()
@@ -127,12 +130,12 @@ export default {
       }
     },
 
-    isWatchingComponent(component) {
+    /*isWatchingComponent(component) {
       return (
           component.field !== undefined &&
           component.field.attribute == this.field.parentAttribute
       );
-    }
+    }*/
   }
 }
 </script>

@@ -40,7 +40,7 @@ class OptionsController extends Controller
                             return $data;
                         }
                     }
-                    if (isset($value->attribute) && $value->attribute == $attribute && $value->component == "nova-fields-dynamic-select"){
+                    if ((isset($value->attribute) && $value->attribute == $attribute) && ($value->component == "nova-fields-dynamic-select" || $value->component == "nova-fields-multi-select-dual-box")){
                         return $value;
                     }
                 }
@@ -55,7 +55,7 @@ class OptionsController extends Controller
 
     public function getChildSelect($field,$attribute){
         foreach ($field["fields"] as $value){
-            if (isset($value->attribute) && $value->attribute == $attribute && $value->component == "nova-fields-dynamic-select"){
+            if ((isset($value->attribute) && $value->attribute == $attribute) && ($value->component == "nova-fields-dynamic-select" || $value->component == "nova-fields-multi-select-dual-box")){
                 return $value;
             }
         }

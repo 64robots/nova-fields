@@ -8,22 +8,22 @@
         </div>
         <input type="text" v-model="searchOptions" :placeholder="options.searchText1"
                class="w-full form-control form-input form-input-bordered">
-        <div class="overflow-x-auto multi-select-box p-0 mt-2 form-input-bordered">
-          <ul class="p-0" v-if="filterOptions.length > 0">
+        <div class="overflow-x-auto multi-select-box p-0 mt-2 form-input-bordered multi-select-left-dualbox">
+          <ul class="p-0 list-none" v-if="filterOptions != undefined && filterOptions.length > 0">
             <li class="p-2 cursor-pointer hover:bg-40" v-for="(item,index) in filterOptions"
                 v-bind:key="item.id" @click="changeValue('right',item)">
               {{ item.label }}
             </li>
           </ul>
-          <ul class="p-0 bg-40 h-full text-center" v-else>
+          <ul class="p-0 bg-40 h-full text-center list-none" v-else>
             <li class="p-2 hover:bg-40"> {{ options.noData1 }}</li>
           </ul>
         </div>
         <div class="flex items-center justify-center py-2">
-          <button type="button" class="btn btn-default btn-primary inline-flex items-center relative mr-3"
+          <button type="button" class="shadow relative bg-primary-500 hover:bg-primary-400 text-white dark:text-gray-900 cursor-pointer rounded text-sm font-bold focus:outline-none focus:ring ring-primary-200 dark:ring-gray-600 inline-flex items-center justify-center h-9 px-3 shadow relative bg-primary-500 hover:bg-primary-400 text-white dark:text-gray-900 mr-3"
                   @click="changeValue('right',-1)">Move All Right
           </button>
-          <a class="btn btn-link dim cursor-pointer text-80" v-if="searchOptions.length > 0"
+          <a class="btn btn-link dim cursor-pointer text-80 font-bold" v-if="searchOptions.length > 0"
              @click="searchOptions = ''">Clear</a>
         </div>
       </div>
@@ -34,33 +34,33 @@
         </div>
         <input type="text" v-model="searchSelectedOptions" :placeholder="options.searchText2"
                class="w-full form-control form-input form-input-bordered">
-        <div class="overflow-x-auto multi-select-box p-0 mt-2 form-input-bordered">
-          <draggable :move="checkMove" :list="filterSelected" class="list-group" group="people" @start="drag=true" @end="drag=false" v-if="field.sortable">
+        <div class="overflow-x-auto multi-select-box p-0 mt-2 form-input-bordered multi-select-right-dualbox">
+          <draggable :move="checkMove" :list="filterSelected" class="list-group list-none" group="people" @start="drag=true" @end="drag=false" v-if="field.sortable">
             <div v-if="filterSelected.length > 0" class="p-2 cursor-pointer hover:bg-40" v-for="(item,index) in filterSelected"
                  v-bind:key="item.id" @click="changeValue('left',item)">
               {{ item.label }}
             </div>
-            <div class="p-0 bg-40 h-full text-center" v-else>
+            <div class="p-0 bg-40 h-full text-center list-none" v-else>
               <li class="p-2"> {{ options.noData2 }}</li>
             </div>
           </draggable>
           <div v-else>
-            <ul class="p-0" v-if="filterSelected.length > 0">
+            <ul class="p-0 list-none" v-if="filterSelected.length > 0">
               <li class="p-2 cursor-pointer hover:bg-40" v-for="(item,index) in filterSelected"
                   v-bind:key="item.id" @click="changeValue('left',item)">
                 {{ item.label }}
               </li>
             </ul>
-            <ul class="p-0 bg-40 h-full text-center" v-else>
+            <ul class="p-0 bg-40 h-full text-center list-none" v-else>
               <li class="p-2"> {{ options.noData2 }}</li>
             </ul>
           </div>
         </div>
         <div class="flex items-center justify-center py-2">
-          <button type="button" class="btn btn-default btn-primary inline-flex items-center relative mr-3"
+          <button type="button" class="shadow relative bg-primary-500 hover:bg-primary-400 text-white dark:text-gray-900 cursor-pointer rounded text-sm font-bold focus:outline-none focus:ring ring-primary-200 dark:ring-gray-600 inline-flex items-center justify-center h-9 px-3 shadow relative bg-primary-500 hover:bg-primary-400 text-white dark:text-gray-900 mr-3"
                   @click="changeValue('left',-1)">Move All Left
           </button>
-          <a class="btn btn-link dim cursor-pointer text-80" v-if="searchSelectedOptions.length > 0"
+          <a class="btn btn-link dim cursor-pointer text-80 font-bold " v-if="searchSelectedOptions.length > 0"
              @click="searchSelectedOptions = ''">Clear</a>
         </div>
       </div>
@@ -85,7 +85,6 @@ export default {
   data() {
     return {
       selected: [],
-      options: [],
       searchOptions: "",
       searchSelectedOptions: "",
       value: [],
@@ -95,6 +94,10 @@ export default {
       confirmationMessage : this.options.confirmationMessage,
       isVisibleModal: ((this.resourceId != undefined && this.options.confirmationOnUpdate) || (this.resourceId == undefined && this.options.confirmationOnCreate)  || this.options.confirmation) ? true : false
     };
+  },
+  created(){
+    this.confirmationMessage = this.options.confirmationMessage;
+    this.isVisibleModal = ((this.resourceId != undefined && this.options.confirmationOnUpdate) || (this.resourceId == undefined && this.options.confirmationOnCreate)  || this.options.confirmation) ? true : false;
   },
   updated() {
     this.updateSelectedOptions();
@@ -197,6 +200,7 @@ export default {
         });
         return val;
       }
+      return vue.options.options;
     },
     filterSelected() {
       let vue = this;
@@ -216,5 +220,11 @@ export default {
 .multi-select-box {
   max-height: 250px;
   height: 250px;
+}
+.multi-select-left-dualbox .list-none,
+.multi-select-right-dualbox .list-none{
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 </style>
