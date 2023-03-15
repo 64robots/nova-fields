@@ -40,6 +40,8 @@ class Multiselect extends NovaField implements RelatableField
     protected $pageResponseResolveCallback;
     protected $saveAsJSON = false;
 
+    public $creationOption = false;
+
     /**
      * Sets the options available for select.
      *
@@ -360,6 +362,19 @@ class Multiselect extends NovaField implements RelatableField
     public function mode(string $mode = 'single')
     {
         return $this->withMeta(['mode' => $mode]);
+    }
+
+    public function createOption(bool $creationOption = true)
+    {
+        return $this->withMeta(['createOption' => $creationOption]);
+    }
+
+    public function jsonSerialize(): array
+    {
+        return array_merge([
+            'createOption' => $this->creationOption,
+            'mode' => 'single'
+        ],parent::jsonSerialize());
     }
 
     /**

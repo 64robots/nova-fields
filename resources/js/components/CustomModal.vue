@@ -2,7 +2,7 @@
   <Teleport to="#modals">
     <Modal
         data-testid="delete-resource-modal"
-        :show="display_notify"
+        :show="true"
         role="alertdialog"
         size="lg"
         :closes-via-backdrop="false"
@@ -67,7 +67,7 @@ export default {
     handleConfirm(){
       this.$emit('confirm');
     }
-  }
+  },
 }
 </script>
 

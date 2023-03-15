@@ -58,8 +58,12 @@ export default {
     };
   },
   mounted() {
-    Nova.$off(this.field.parentAttribute+"-change",this.updateOptions);
-    Nova.$on(this.field.parentAttribute+"-change",this.updateOptions);
+    if(this.resourceId != undefined && this.resourceId.length > 0){
+      this.updateOptions(this.resourceId);
+    }else{
+      Nova.$off(this.field.parentAttribute+"-change",this.updateOptions);
+      Nova.$on(this.field.parentAttribute+"-change",this.updateOptions);
+    }
     /*this.watchedComponents.forEach(component => {
       let attribute = "value";
 
@@ -117,6 +121,7 @@ export default {
               if (response.data.length > 0){
                 let options = response.data;
                 this.options.cloneSelected = options || [];
+                this.options.selected = options || [];
                 let vue = this;
                 options.filter(function(val){
                   vue.options.selectedIds.push(val.value);

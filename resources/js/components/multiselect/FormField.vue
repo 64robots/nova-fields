@@ -22,7 +22,7 @@
           :close-on-select="field.max === 1 || !isMultiselect"
           :max="field.max > 0 ? field.max : -1"
           :searchable="true"
-          :create-option="true"
+          :create-option="field.createOption"
           :options="field.apiUrl ? asyncOptions : computedOptions"
           :disabled="isReadonly"
           :placeholder="field.placeholder || field.name"
