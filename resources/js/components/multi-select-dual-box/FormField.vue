@@ -106,7 +106,7 @@ export default {
     },
 
     updateOptions(field_value) {
-      this.parentValue = field_value != null && field_value.length > 0 ? field_value : null;
+      this.parentValue = field_value != null ? field_value : null;
       if (this.parentValue != null && this.parentValue != "") {
         this.options.options = this.defaultOptions;
         Nova.request()
