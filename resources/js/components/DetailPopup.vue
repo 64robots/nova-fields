@@ -190,8 +190,8 @@ import ImageInfo from '../modules/Image';
 import ConfirmationButton from './ConfirmationButton';
 import Tree from "vue3-treeview";
 import Copy from "vue3-copy";
-import VuePlyr from 'vue-plyr'
-import 'vue-plyr/dist/vue-plyr.css'
+import Plyr from 'plyr';
+// import 'vue-plyr/dist/vue-plyr.css'
 import { Codemirror } from 'vue-codemirror'
 import ConfirmModalDelete from './ConfirmModalDelete';
 //themes
@@ -365,7 +365,7 @@ export default {
         this.$nextTick(function() {
           setTimeout(() => {
             this.cssType = ' py-custom items-center';
-            new VuePlyr(this.$refs.audio);
+            new Plyr(this.$refs.audio);
           });
         });
       }
@@ -374,7 +374,7 @@ export default {
         this.$nextTick(function() {
           setTimeout(() => {
             // this.cssType = 'items-center';
-            new VuePlyr(this.$refs.video);
+            new Plyr(this.$refs.video);
           });
         });
       }
