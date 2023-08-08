@@ -35,7 +35,7 @@ export default {
 
   computed: {
     classes: () => [
-      'bg-white dark:bg-gray-700',
+      'bg-20 dark:bg-gray-700',
       'remove-last-margin-bottom',
       'leading-normal',
       'w-full',
