@@ -196,7 +196,7 @@ class JSON extends Field
      *
      * @return array
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         return array_merge(parent::jsonSerialize(), [
             'panelTitleClasses' => $this->panelTitleClasses,
