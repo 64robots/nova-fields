@@ -161,6 +161,7 @@ export default {
     },
 
     updateCurrentPath(val) {
+      sessionStorage.setItem('last_open_folder_path',val);
       this.currentPath = val;
     },
 
@@ -199,12 +200,13 @@ export default {
     },
 
     setCurrentPath() {
+      let last_open_path = sessionStorage.getItem('last_open_folder_path');
       if (this.field.folder != null) {
         this.defaultFolder = this.field.folder;
-        this.currentPath = this.field.folder;
+        this.currentPath = last_open_path || this.field.folder;
       } else {
         this.defaultFolder = '/';
-        this.currentPath = '/';
+        this.currentPath = last_open_path || '/';
       }
     },
 

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use R64\NovaFields\Http\Services\FileManagerService;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Illuminate\Support\Facades\Cache;
 
 class FilemanagerToolController extends Controller
 {
@@ -69,7 +70,11 @@ class FilemanagerToolController extends Controller
     public function upload(Request $request)
     {
         $uploadingFolder = $request->folder ?? false;
-
+        if($request->current !== null) {
+            $cacheKey = $request->current;
+            $cacheKey = trim($cacheKey,"//");
+            Cache::tags($cacheKey)->flush();
+        }
         return $this->service->uploadFile(
             $request->file,
             $request->current ?? '',
@@ -111,6 +116,14 @@ class FilemanagerToolController extends Controller
         return $this->service->renameFile($request->file, $request->name);
     }
 
+     /**
+     * @param Request $request
+     */
+    public function renameDirectory(Request $request)
+    {
+        return $this->service->renameDirectory($request->path, $request->name);
+    }
+    
     /**
      * @param Request $request
      */

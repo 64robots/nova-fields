@@ -9,21 +9,17 @@
 
         <template v-if="loading">
           <div class="rounded-lg flex items-center justify-center absolute pin z-50 mx-auto w-full">
-            <loader class="text-60"/>
+            <loader class="text-60" />
           </div>
         </template>
 
         <template v-if="file.id == 'folder_back'">
-          <svg class="w-2/3 h-5/6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-            <path
-                d="M20 6a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6c0-1.1.9-2 2-2h7.41l2 2H20zM4 6v12h16V8h-7.41l-2-2H4z"
-                fill="#B3C1D1"/>
-            <path fill="#b3c1d1"
-                  d="M12.307 10.628v5a.32.32 0 0 1-.64 0v-5l-1.68 1.71a.323.323 0 0 1-.49-.42l2.25-2.25a.32.32 0 0 1 .45 0l2.25 2.25a.323.323 0 1 1-.42.49l-1.71-1.71-.01-.07z"/>
+          <svg  class="w-2/3 h-5/6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M20 6a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6c0-1.1.9-2 2-2h7.41l2 2H20zM4 6v12h16V8h-7.41l-2-2H4z" fill="#B3C1D1"/>
+            <path fill="#b3c1d1" d="M12.307 10.628v5a.32.32 0 0 1-.64 0v-5l-1.68 1.71a.323.323 0 0 1-.49-.42l2.25-2.25a.32.32 0 0 1 .45 0l2.25 2.25a.323.323 0 1 1-.42.49l-1.71-1.71-.01-.07z"/>
           </svg>
 
-          <div
-              class="h-1/6 w-full text-center text-xs border-t border-30 bg-gray-500 text-white flex items-center justify-center ">
+          <div class="h-1/6 w-full text-center text-xs border-t border-30 bg-gray-500 text-white flex items-center justify-center ">
             {{ __('Go up') }}
           </div>
         </template>
@@ -31,8 +27,7 @@
         <template v-else>
 
           <svg class="w-2/3 h-5/6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-            <path fill="#B3C1D1"
-                  d="M20 6a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6c0-1.1.9-2 2-2h7.41l2 2H20zM4 6v12h16V8h-7.41l-2-2H4z"/>
+            <path fill="#B3C1D1"  d="M20 6a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6c0-1.1.9-2 2-2h7.41l2 2H20zM4 6v12h16V8h-7.41l-2-2H4z"/>
           </svg>
 
           <div class="actions-grid absolute pin-t pin-r pr-2 pt-2"
@@ -60,8 +55,7 @@
             </div>
           </div>
 
-          <div
-              class="h-1/6 w-full text-center text-xs border-t border-30 bg-gray-500 text-white flex items-center justify-center ">
+          <div class="h-1/6 w-full text-center text-xs  border-t border-30 bg-gray-500 text-white flex items-center justify-center ">
             {{ file.name }}
           </div>
 
@@ -74,23 +68,20 @@
     <template v-else-if="view == 'list'">
 
       <template v-if="file.id == 'folder_back'">
-        <tr @click="goToFolder" :loading="loading" v-bind:key="file.id" class="cursor-pointer">
+        <tr @click="goToFolder" :loading="loading" v-bind:key="file.id"  class="cursor-pointer">
           <td class="w-8" v-if="multiBlankSpace">
           </td>
           <td>
             <div class="w-full flex justify-center items-center">
               <template v-if="loading">
                 <div class="rounded-lg flex items-center justify-center absolute pin z-50 mx-auto w-full">
-                  <loader class="text-60"/>
+                  <loader class="text-60" />
                 </div>
               </template>
 
               <svg class="w-24 h-24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                <path
-                    d="M20 6a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6c0-1.1.9-2 2-2h7.41l2 2H20zM4 6v12h16V8h-7.41l-2-2H4z"
-                    fill="#B3C1D1"/>
-                <path fill="#b3c1d1"
-                      d="M12.307 10.628v5a.32.32 0 0 1-.64 0v-5l-1.68 1.71a.323.323 0 0 1-.49-.42l2.25-2.25a.32.32 0 0 1 .45 0l2.25 2.25a.323.323 0 1 1-.42.49l-1.71-1.71-.01-.07z"/>
+                <path d="M20 6a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6c0-1.1.9-2 2-2h7.41l2 2H20zM4 6v12h16V8h-7.41l-2-2H4z" fill="#B3C1D1"/>
+                <path fill="#b3c1d1" d="M12.307 10.628v5a.32.32 0 0 1-.64 0v-5l-1.68 1.71a.323.323 0 0 1-.49-.42l2.25-2.25a.32.32 0 0 1 .45 0l2.25 2.25a.323.323 0 1 1-.42.49l-1.71-1.71-.01-.07z"/>
               </svg>
             </div>
           </td>
@@ -101,14 +92,18 @@
         </tr>
       </template>
       <template v-else>
-        <tr @click="clickStrategy" :loading="loading" v-bind:key="file.id" class="cursor-pointer">
-          <td class="w-8" v-if="multiBlankSpace">
+        <tr @click="clickStrategy" :loading="loading" v-bind:key="file.id"  class="cursor-pointer">
+          <td class="w-8" v-if="multiSelecting" class="w-8">
+            <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="block">
+              <g v-if="selected"><rect width="20" height="20" rx="4" fill="var(--primary)"></rect> <path fill="#FFF" d="M7.7 9.3c-.23477048-.3130273-.63054226-.46037132-1.01285927-.37708287-.38231702.08328846-.68093514.38190658-.7642236.7642236C5.83962868 10.0694577 5.9869727 10.4652295 6.3 10.7l2 2c.38884351.3811429 1.01115649.3811429 1.4 0l4-4c.3130273-.23477048.4603713-.63054226.3770829-1.01285927-.0832885-.38231702-.3819066-.68093514-.7642236-.7642236C12.9305423 6.83962868 12.5347705 6.9869727 12.3 7.3L9 10.58l-1.3-1.3v.02z"></path></g>
+              <g v-else><rect width="20" height="20" fill="#FFF" rx="4"></rect> <rect width="19" height="19" fill="none" x=".5" y=".5" stroke="#CCD4DB" rx="4"></rect></g>
+            </svg>
           </td>
           <td>
             <div class="w-full flex justify-center items-center">
               <template v-if="loading">
                 <div class="rounded-lg flex items-center justify-center absolute pin z-50 mx-auto w-full">
-                  <loader class="text-60"/>
+                  <loader class="text-60" />
                 </div>
               </template>
 
@@ -164,8 +159,8 @@ export default {
   props: {
     file: {
       type: Object,
-      default: function () {
-        return {name: ''};
+      default: function() {
+        return { name: '' };
       },
       required: true,
     },
@@ -214,7 +209,7 @@ export default {
   computed: {
     selected() {
       return (
-          findIndex(this.selectedFiles, {type: this.file.type, path: this.file.path}) >= 0
+          findIndex(this.selectedFiles, { type: this.file.type, path: this.file.path }) >= 0
       );
     },
   },

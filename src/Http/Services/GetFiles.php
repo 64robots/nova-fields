@@ -4,6 +4,7 @@ namespace R64\NovaFields\Http\Services;
 
 use Carbon\Carbon;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -28,14 +29,16 @@ trait GetFiles
     public function getFiles($folder, $order, $filter = false)
     {
         $filesData = $this->storage->listContents($folder);
-        $filesData = $this->normalizeFiles($filesData);
-        $files = [];
 
         $cacheTime = config('filemanager.cache', false);
-
+        $cacheKey = md5($folder);
+        $fileData = cache()->remember($cacheKey, $cacheTime, function () use ($folder) {
+            $filesData = $this->storage->listContents($folder);
+        });
+        $filesData = $this->normalizeFiles($filesData);
+        $files = [];
         foreach ($filesData as $file) {
             $id = $this->generateId($file);
-
             if ($cacheTime) {
                 $fileData = cache()->remember($id, $cacheTime, function () use ($file, $id) {
                     return $this->getFileData($file, $id);
@@ -94,7 +97,6 @@ trait GetFiles
                     return false;
                 }
             }
-
             return (object) $fileInfo;
         }
     }
@@ -142,7 +144,6 @@ trait GetFiles
     {
         $folders = $files->where('type', 'dir');
         $items = $files->where('type', 'file');
-
         if ($order == 'size') {
             $folders = $folders->sortByDesc($order);
             $items = $items->sortByDesc($order);
@@ -183,10 +184,10 @@ trait GetFiles
     public function generateId($file)
     {
         if (isset($file['timestamp'])) {
-            return md5($this->disk.'_'.trim($file['basename']).$file['timestamp']);
+            return md5($this->disk.'_'.trim($file['path']).$file['timestamp']);
         }
 
-        return md5($this->disk.'_'.trim($file['basename']));
+        return md5($this->disk.'_'.trim($file['path']));
     }
 
     /**
@@ -521,3 +522,4 @@ trait GetFiles
         return false;
     }
 }
+

@@ -87,13 +87,11 @@ class FileManagerService
     public function ajaxGetFilesAndFolders(Request $request)
     {
         $folder = $this->cleanSlashes($request->get('folder'));
-
         $isMultipleSelection = $this->cleanSlashes($request->get('isMultipleSelection'));
 
         if (! $this->folderExists($folder)) {
             $folder = '/';
         }
-
         $this->setRelativePath($folder);
 
         $order = $request->get('sort');
@@ -108,7 +106,6 @@ class FileManagerService
         $filters = $this->getAvailableFilters($files);
 
         $parent = (object) [];
-
         if ($files->count() > 0) {
             $folders = $files->filter(function ($file) {
                 return $file->type == 'dir';
@@ -165,9 +162,9 @@ class FileManagerService
         if ($this->storage->deleteDirectory($path)) {
             event(new FolderRemoved($this->storage, $path));
 
-            return response()->json(true);
+            return response()->json(['success' => true, 'data' => []]);
         } else {
-            return response()->json(false);
+            return response()->json(['success' => false, 'data' => "Something is wrong to delete folder. please try again later."]);
         }
     }
 
@@ -272,9 +269,9 @@ class FileManagerService
         if ($this->storage->delete($file)) {
             event(new FileRemoved($this->storage, $file));
 
-            return response()->json(true);
+            return response()->json(['success' => true, 'data' => []]);
         } else {
-            return response()->json(false);
+            return response()->json(['success' => false, 'error' => "Something is wrong to delete file. please try again later."]);
         }
     }
 
@@ -294,58 +291,57 @@ class FileManagerService
                 return response()->json(['success' => true, 'data' => $info->toArray()]);
             }
 
-            return response()->json(false);
+            return response()->json(['success' => false, 'error' => "Something is wrong to rename file name."]);
         } catch (\Exception $e) {
-            $directories = $this->storage->directories($path);
-
-            if (in_array($file, $directories)) {
-                return $this->renameDirectory($file, $newName);
-            }
-
-            return response()->json(false);
+            return response()->json(['success' => false, 'error' => $e->getMessage()]);
         }
     }
 
     public function renameDirectory($dir, $newName)
     {
-        $path = str_replace(basename($dir), '', $dir);
-        $newDir = $path.$newName;
+        try {
+            $path = str_replace(basename($dir), '', $dir);
+            $newDir = $path.$newName;
 
-        if ($this->storage->exists($newDir)) {
-            return response()->json(false);
-        }
-        $this->storage->makeDirectory($newDir);
-        $files = $this->storage->files($dir);
-        $directories = $this->storage->directories($dir);
-
-        $dirNameLength = strlen($dir);
-
-        foreach ($directories as $subDir) {
-            $subDirName = substr($dir, $dirNameLength);
-
-            array_push($files, ...$this->storage->files($subDir));
-
-            if (! Storage::exists($newDir.$subDirName)) {
-                $this->storage->makeDirectory($newDir.$subDirName);
+            if ($this->storage->exists($newDir)) {
+                return response()->json(['success' => false, 'error' => "The folder exist in current path."]);
             }
+
+            $this->storage->makeDirectory($newDir);
+
+            $files = $this->storage->files($dir);
+            $directories = $this->storage->directories($dir);
+
+            $dirNameLength = strlen($dir);
+
+            foreach ($directories as $subDir) {
+                $subDirName = substr($dir, $dirNameLength);
+                array_push($files, ...$this->storage->files($subDir));
+
+                if (! Storage::exists($newDir.$subDirName)) {
+                    $this->storage->makeDirectory($newDir.$subDirName);
+                }
+            }
+
+            $copiedFileCount = 0;
+
+            foreach ($files as $file) {
+                $filename = substr($file, $dirNameLength);
+                $this->storage->copy($file, $newDir.$filename) === true ? $copiedFileCount++ : null;
+            }
+
+            if ($copiedFileCount === count($files)) {
+                $this->storage->deleteDirectory($dir);
+            }
+
+            $fullPath = $this->storage->path($newDir);
+
+            $info = new NormalizeFile($this->storage, $fullPath, $newDir);
+
+            return response()->json(['success' => true, 'data' => $info->toArray()]);
+        }catch (\Exception $e){
+            return response()->json(['success' => false, 'error' => $e->getMessage()]);
         }
-
-        $copiedFileCount = 0;
-
-        foreach ($files as $file) {
-            $filename = substr($file, $dirNameLength);
-            $this->storage->copy($file, $newDir.$filename) === true ? $copiedFileCount++ : null;
-        }
-
-        if ($copiedFileCount === count($files)) {
-            $this->storage->deleteDirectory($dir);
-        }
-
-        $fullPath = $this->storage->path($newDir);
-
-        $info = new NormalizeFile($this->storage, $fullPath, $newDir);
-
-        return response()->json(['success' => true, 'data' => $info->toArray()]);
     }
 
     /**

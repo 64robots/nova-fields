@@ -69,7 +69,6 @@ export default {
     error: false,
     errorMsg: '',
     password:'',
-    passwordMessage:'',
     isDeleted:false,
     isDeleting: false,
   }),
@@ -89,14 +88,16 @@ export default {
       setTimeout(function () {
         $this.password = '';
         $this.isDeleted = false;
+        $this.name = null;
       },1500);
       this.active = false;
     },
     deleteData() {
       if(this.password.length == 0 ){
-        this.passwordMessage = "Please enter valid password";
+        Nova.error(this.__('Please enter valid password'), {
+          type: 'error',
+        });
       }else{
-        this.passwordMessage = '';
         let $this = this;
         this.isDeleting = true;
         api.validatePassword(this.password).then(result => {
@@ -109,7 +110,9 @@ export default {
             $this.isDeleted = true;
           } else {
             this.isDeleting = false;
-            $this.passwordMessage = "Your password is incorrect. Please enter valid password";
+            Nova.error(this.__('Your password is incorrect. Please enter valid password'), {
+              type: 'error',
+            });
           }
         });
       }
@@ -117,17 +120,14 @@ export default {
     deleteFolder() {
       return api.removeDirectory(this.path).then(result => {
         this.error = false;
-        this.name = null;
-        if (result == true) {
+        if (result.success == true) {
           Nova.success(this.__('Deleted successfully'), { type: 'success' });
-          this.isDeleting = false;
           this.$emit('refresh', true);
           this.handleClose();
         } else {
           this.error = true;
-          if (result.error) {
-            this.errorMsg = result.error;
-            Nova.error(this.__('Error:') + ' ' + result.error, {
+          if (result.error != null) {
+            Nova.error(result.error, {
               type: 'error',
             });
           } else {
@@ -142,17 +142,14 @@ export default {
     deleteFile() {
       return api.removeFile(this.path).then(result => {
         this.error = false;
-        this.name = null;
-        if (result == true) {
+        if (result.success == true) {
           Nova.success(this.__('Deleted successfully'), { type: 'success' });
-          this.isDeleting = false;
           this.$emit('refresh', true);
           this.handleClose();
         } else {
           this.error = true;
-          if (result.error) {
-            this.errorMsg = result.error;
-            Nova.error(this.__('Error:') + ' ' + result.error, {
+          if (result.error != null) {
+            Nova.error(result.error, {
               type: 'error',
             });
           } else {

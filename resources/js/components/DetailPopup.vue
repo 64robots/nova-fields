@@ -325,7 +325,9 @@ export default {
     this.loaded = false;
     let $this = this;
     let confirmDelete = setInterval(function () {
-      if($this.$refs.confirmDelete != undefined && $this.$refs.confirmDelete.password.length > 0 && $this.$refs.confirmDelete.isDeleted == true){
+      if($this.$refs.confirmDelete != undefined &&
+          ($this.$refs.confirmDelete.hasOwnProperty("password") && $this.$refs.confirmDelete.password.length > 0) &&
+          ($this.$refs.confirmDelete.hasOwnProperty("isDeleted") && $this.$refs.confirmDelete.isDeleted == true) ){
         $this.$emit('refresh');
         confirmDelete = null;
       }

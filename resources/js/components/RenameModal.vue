@@ -86,7 +86,6 @@ export default {
     errorMsg: '',
     isSaving: false,
     password:'',
-    passwordMessage:'',
     nameWithoutExtension: null,
   }),
   methods: {
@@ -101,23 +100,23 @@ export default {
     renamePath() {
       let isCorrectPwd = false;
       if(this.password.length == 0 ){
-        this.passwordMessage = "Please enter valid password";
+        Nova.error(this.__("Please enter valid password"), {type: 'error',})
       }else{
-        this.passwordMessage = '';
         let $this = this;
         this.isSaving = true;
         api.validatePassword(this.password).then(result1 => {
           if (result1 == true) {
             let nameToSave = null;
+            if (this.name.length == 0 || (this.type != 'folder' && this.nameWithoutExtension.length == 0)) {
+              Nova.error("Name is requied", {type: 'error',})
+              this.isSaving = false;
+              return false;
+            }
             if (this.type == 'folder') {
-              if (this.name == null) {
-                this.error = true;
-                return false;
-              }
               nameToSave = this.name;
             } else {
               if (this.nameWithoutExtension == null) {
-                this.error = true;
+                Nova.error("File extenstion is requied.", {type: 'error',})
                 return false;
               }
               nameToSave = this.nameWithoutExtension + this.extension;
@@ -144,11 +143,9 @@ export default {
                   this.cancelRename();
                 } else {
                   this.error = true;
-                  if (result.error) {
-                    this.errorMsg = result.error;
-                    Nova.error(this.__('Error:') + ' ' + result.error, {type: 'error',})
-                  } else {
-                    this.errorMsg = this.__('The name is required');
+                  if (result.error != null) {
+                    Nova.error(result.error, {type: 'error',})
+                  } else if(this.name == null){
                     Nova.error(this.__('The name is required'), { type: 'error' })
                   }
                   this.isSaving = false;
@@ -158,7 +155,7 @@ export default {
             this.isSaving = false;
           } else {
             this.isSaving = false;
-            $this.passwordMessage = "Your password is incorrect. Please enter valid password";
+            Nova.error(this.__("Your password is incorrect. Please enter valid password"), {type: 'error',})
           }
         });
       }

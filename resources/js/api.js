@@ -107,4 +107,13 @@ export default {
             .post('/nova-r64-api/events/folder', { path: path })
             .then(response => response.data);
     },
+
+    renameDirectory(path, name) {
+        return axios
+            .post('/nova-r64-api/actions/rename-directory', {
+                path: path,
+                name: name,
+            })
+            .then(response => response.data);
+    },
 };
