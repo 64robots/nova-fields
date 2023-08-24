@@ -79,6 +79,11 @@ Nova.booting((Vue, router) => {
     );
   }
 
+  /** MultiSelect */
+  Vue.component('index-nova-fields-custom-autocomplete-multiselect', require('./components/custom-autocomplete-multiselect/IndexField'));
+  Vue.component('detail-nova-fields-custom-autocomplete-multiselect', require('./components/custom-autocomplete-multiselect/DetailField'));
+  Vue.component('form-nova-fields-custom-autocomplete-multiselect', require('./components/custom-autocomplete-multiselect/FormField'));
+
   /** Items */
   Vue.component('index-nova-fields-items', require('./components/items/IndexField'))
   Vue.component('detail-nova-fields-items', require('./components/items/DetailField'))

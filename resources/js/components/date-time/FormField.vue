@@ -87,7 +87,7 @@ export default {
       // If the field has a value let's convert it from the app's timezone
       // into the user's local time to display in the field
       if (this.value !== '') {
-        this.localizedValue = this.fromAppTimezone(this.value);
+        this.localizedValue = this.value;
       }
     },
 
@@ -105,10 +105,10 @@ export default {
       if(this.field.setDefaultMinuteZero == true && value !== ''){
         let date = new Date(value);
         let onlyDate = date.getFullYear()+'-'+ ('0' + (date.getMonth()+1)).slice(-2) +'-'+ ('0' + date.getDate()).slice(-2) +" "+('0' + date.getHours()).slice(-2)+":00"+":00";
-        this.value = this.toAppTimezone(onlyDate);
+        this.value = onlyDate;
         this.$refs.dateTimePicker.getUpdatedValue(onlyDate);
       }else{
-        this.value = this.toAppTimezone(value);
+        this.value = value;
       }
     },
   },

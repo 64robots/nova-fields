@@ -122,6 +122,22 @@ class MultiSelectDualBox extends Field
         return $this->withMeta(['rightEmptyMessage' => $message]);
     }
 
+    public function confirmationOnUpdate($onUpdate = true){
+        return $this->withMeta(['confirmationOnUpdate' => $onUpdate]);
+    }
+
+    public function confirmationOnCreate($onCreate = true){
+        return $this->withMeta(['confirmationOnCreate' => $onCreate]);
+    }
+
+    public function confirmation($confirmation = true){
+        return $this->withMeta(['confirmation' => $confirmation]);
+    }
+
+    public function confirmationMessage($confirmationMessage){
+        return $this->withMeta(['confirmationMessage' => $confirmationMessage]);
+    }
+
     public function basedOn($attribute)
     {
         $this->withMeta(['parentAttribute' => $attribute]);

@@ -23,6 +23,10 @@
                     v-for="option in options"
                 >{{ option.label }}</option>
             </select>
+
+            <p v-if="hasError" class="my-2 text-danger">
+              {{ firstError }}
+            </p>
         </template>
     </r64-default-field>
 </template>

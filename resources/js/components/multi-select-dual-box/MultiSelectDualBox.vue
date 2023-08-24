@@ -11,7 +11,7 @@
         <div class="overflow-x-auto multi-select-box p-0 mt-2 form-input-bordered">
           <ul class="p-0" v-if="filterOptions.length > 0">
             <li class="p-2 cursor-pointer hover:bg-40" v-for="(item,index) in filterOptions"
-                v-bind:key="item.id" @click="moveRight(item)">
+                v-bind:key="item.id" @click="changeValue('right',item)">
               {{ item.label }}
             </li>
           </ul>
@@ -21,7 +21,7 @@
         </div>
         <div class="flex items-center justify-center py-2">
           <button type="button" class="btn btn-default btn-primary inline-flex items-center relative mr-3"
-                  @click="moveRight(-1)">Move All Right
+                  @click="changeValue('right',-1)">Move All Right
           </button>
           <a class="btn btn-link dim cursor-pointer text-80" v-if="searchOptions.length > 0"
              @click="searchOptions = ''">Clear</a>
@@ -35,43 +35,120 @@
         <input type="text" v-model="searchSelectedOptions" :placeholder="options.searchText2"
                class="w-full form-control form-input form-input-bordered">
         <div class="overflow-x-auto multi-select-box p-0 mt-2 form-input-bordered">
-          <ul class="p-0" v-if="filterSelected.length > 0">
-            <li class="p-2 cursor-pointer hover:bg-40" v-for="(item,index) in filterSelected"
-                v-bind:key="item.id" @click="moveLeft(item)">
+          <draggable :move="checkMove" :list="filterSelected" class="list-group" group="people" @start="drag=true" @end="drag=false" v-if="field.sortable">
+            <div v-if="filterSelected.length > 0" class="p-2 cursor-pointer hover:bg-40" v-for="(item,index) in filterSelected"
+                 v-bind:key="item.id" @click="changeValue('left',item)">
               {{ item.label }}
-            </li>
-          </ul>
-          <ul class="p-0 bg-40 h-full text-center" v-else>
-            <li class="p-2"> {{ options.noData2 }}</li>
-          </ul>
+            </div>
+            <div class="p-0 bg-40 h-full text-center" v-else>
+              <li class="p-2"> {{ options.noData2 }}</li>
+            </div>
+          </draggable>
+          <div v-else>
+            <ul class="p-0" v-if="filterSelected.length > 0">
+              <li class="p-2 cursor-pointer hover:bg-40" v-for="(item,index) in filterSelected"
+                  v-bind:key="item.id" @click="changeValue('left',item)">
+                {{ item.label }}
+              </li>
+            </ul>
+            <ul class="p-0 bg-40 h-full text-center" v-else>
+              <li class="p-2"> {{ options.noData2 }}</li>
+            </ul>
+          </div>
         </div>
         <div class="flex items-center justify-center py-2">
           <button type="button" class="btn btn-default btn-primary inline-flex items-center relative mr-3"
-                  @click="moveLeft(-1)">Move All Left
+                  @click="changeValue('left',-1)">Move All Left
           </button>
           <a class="btn btn-link dim cursor-pointer text-80" v-if="searchSelectedOptions.length > 0"
              @click="searchSelectedOptions = ''">Clear</a>
         </div>
       </div>
     </div>
+
+    <custom-modal v-if="openModal" @close="handleClose" @confirm="handleConfirm" :confirmation-message="confirmationMessage" :confirmation-title="`Warning!`"></custom-modal>
+
   </div>
+
 </template>
 
 
 <script>
+import draggable from 'vuedraggable'
+import CustomModal from '../CustomModal.vue';
+
 export default {
   name: 'MultiSelectDualBox',
-  props: ["options"],
+  props: ["options","field","parentValue",'resourceId'],
+  components:{
+    draggable,
+    CustomModal
+  },
   data() {
     return {
       selected: [],
       options: [],
       searchOptions: "",
       searchSelectedOptions: "",
-      value: []
+      value: [],
+      openModal: false,
+      cloneType:"",
+      cloneitem:null,
+      confirmationMessage : this.options.confirmationMessage,
+      isVisibleModal: ((this.resourceId != undefined && this.options.confirmationOnUpdate) || (this.resourceId == undefined && this.options.confirmationOnCreate)  || this.options.confirmation) ? true : false
     };
   },
+  updated() {
+    this.updateSelectedOptions();
+  },
   methods: {
+    handleClose(){
+      this.searchOptions = '';
+      this.searchSelectedOptions = '';
+      this.openModal = false;
+      this.$emit('close');
+    },
+    handleConfirm(){
+      this.searchOptions = '';
+      this.searchSelectedOptions = '';
+      this.openModal = false;
+      if(this.cloneType == 'right'){
+        this.moveRight(this.cloneitem);
+      }else{
+        this.moveLeft(this.cloneitem);
+      }
+    },
+    changeValue(type,item){
+      if(this.isVisibleModal){
+        this.cloneType = type;
+        this.cloneitem = item;
+        this.openModal = true;
+      }else{
+        if(type == 'right'){
+          this.moveRight(item);
+        }else{
+          this.moveLeft(item);
+        }
+      }
+    },
+    updateSelectedOptions(){
+      if(this.filterSelected.length > 0){
+        let ids = [];
+        this.filterSelected.forEach((element) => {
+          ids.push(element.value);
+        });
+        let values = {
+          value : ids,
+          parentValue : this.parentValue != null ? this.parentValue.value : null
+        }
+        if(this.field.sortable)
+        {
+          this.options.selectedIds = ids;
+          this.options.finalSelectedIds = ids;
+        }
+        Nova.$emit(this.field.attribute+'-change',values);
+      }
+    },
     moveRight(item) {
       let vue = this;
       if (typeof item == 'object') {
@@ -86,6 +163,7 @@ export default {
         }
         vue.options.options.splice(0, vue.options.options.length);
       }
+      vue.options.cloneSelected = vue.options.selected;
     },
     moveLeft(item) {
       let vue = this;
@@ -98,7 +176,6 @@ export default {
             vue.options.selectedIds.splice(idIndex, 1);
           }
           vue.options.selected.splice(index, 1);
-          return;
         }
       }else{
         for (var cont = 0; cont < vue.options.selected.length; cont++) {
@@ -110,6 +187,7 @@ export default {
         }
         vue.options.selected.splice(0, vue.options.selected.length);
       }
+      vue.options.cloneSelected = vue.options.selected;
     }
   },
   computed: {
@@ -132,7 +210,7 @@ export default {
           );
         });
       }
-      return vue.options.selected || [];
+      return vue.options.cloneSelected || [];
     }
   }
 };

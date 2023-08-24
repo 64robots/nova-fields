@@ -4,6 +4,8 @@ namespace R64\NovaFields\Http\Services;
 
 use Illuminate\Contracts\Bus\Dispatcher;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -133,14 +135,26 @@ class FileManagerService
      *
      * @return  json
      */
-    public function createFolderOnPath($folder, $currentFolder)
+    public function createFolderOnPath($folder, $currentFolder,$isCreateSameName)
     {
         $folder = $this->fixDirname($this->fixFilename($folder));
         $folder = str_replace(" ","_",$folder);
         $path = $currentFolder.'/'.$folder;
-
-        if ($this->storage->has($path)) {
-            return response()->json(['error' => __('The folder exist in current path')]);
+        if($isCreateSameName){
+            $count = 1;
+            while($count > 0){
+                $temp_path = $path.'_'.$count;
+                if ($this->storage->has($temp_path)) {
+                    $count++;
+                    continue;
+                }
+                $path = $temp_path;
+                break;
+            }
+        }else{
+            if ($this->storage->has($path)) {
+                return response()->json(['error' => __('The folder exist in current path')]);
+            }
         }
 
         if ($this->storage->makeDirectory($path)) {
@@ -285,7 +299,10 @@ class FileManagerService
         try {
             if ($this->storage->move($file, $path.$newName)) {
                 $fullPath = $this->storage->path($path.$newName);
-
+                $splitOld = explode("/",$file);
+                $oldFileName = array_pop($splitOld);
+                $oldPath = implode("/",$splitOld);
+                Artisan::call("rename:catalog-path", ['old_path' => $oldPath,'new_path'=> $path,'files' => [$newName],'renameType' => 'file_name','old_file_name' => [$oldFileName]]);
                 $info = new NormalizeFile($this->storage, $fullPath, $path.$newName);
 
                 return response()->json(['success' => true, 'data' => $info->toArray()]);
@@ -302,7 +319,6 @@ class FileManagerService
         try {
             $path = str_replace(basename($dir), '', $dir);
             $newDir = $path.$newName;
-
             if ($this->storage->exists($newDir)) {
                 return response()->json(['success' => false, 'error' => "The folder exist in current path."]);
             }
@@ -331,6 +347,14 @@ class FileManagerService
             }
 
             if ($copiedFileCount === count($files)) {
+                $allfiles = $this->storage->allFiles($dir);
+                foreach ($allfiles as $files){
+                    $splitFiles = explode("/",$files);
+                    $filename = array_pop($splitFiles);
+                    $oldDir = implode("/",$splitFiles);
+                    $newSubDir = str_replace($dir,$newDir,$oldDir);
+                    Artisan::call("rename:catalog-path", ['old_path' => $oldDir,'new_path'=> $newSubDir,'files' => [$filename]]);
+                }
                 $this->storage->deleteDirectory($dir);
             }
 
@@ -355,6 +379,80 @@ class FileManagerService
     public function moveFile($oldPath, $newPath)
     {
         if ($this->storage->move($oldPath, $newPath)) {
+            $splitOld = explode("/",$oldPath);
+            array_pop($splitOld);
+            $old = implode("/",$splitOld);
+            $splitNew = explode("/",$newPath);
+            $fileName = array_pop($splitNew);
+            $new = implode("/",$splitNew);
+            $fullPath = $this->storage->path($newPath);
+            $oldCacheKey = md5($oldPath);
+            $newCacheKey = md5($new);
+            Cache::forget($oldCacheKey);
+            Cache::forget($newCacheKey);
+            Artisan::call("rename:catalog-path", ['old_path' => $old,'new_path'=> $new,'files' => [$fileName]]);
+            return response()->json(['success' => true]);
+        }
+        return response()->json(false);
+    }
+
+    /**
+     * Move Folder.
+     *
+     * @param   string  $oldPath
+     * @param   string  $newPath
+     *
+     * @return  json
+     */
+    public function moveFolder($oldPath, $newPath)
+    {
+        $dir = $oldPath;
+        $newDir = $newPath;
+        $splitOldPath = explode("/",$oldPath);
+        $folderName = array_pop($splitOldPath);
+        $newDir = $newDir != '/' ? $newDir.'/'.$folderName : $folderName;
+        $this->storage->makeDirectory($newDir);
+
+        $files = $this->storage->files($dir);
+        $directories = $this->storage->directories($dir);
+        $dirNameLength = strlen($dir);
+        foreach ($directories as $subDir) {
+            $subDirName = substr($dir, $dirNameLength);
+            array_push($files, ...$this->storage->files($subDir));
+
+            if (! Storage::exists($newDir.$subDirName)) {
+                $this->storage->makeDirectory($newDir.$subDirName);
+            }
+        }
+
+        $copiedFileCount = 0;
+        foreach ($files as $file) {
+            $filepath = substr($file, $dirNameLength);
+            $splitOld = explode("/",$file);
+            array_pop($splitOld);
+            $old = implode("/",$splitOld);
+            $splitNew = explode("/",$filepath);
+            $filename = array_pop($splitNew);
+            $new = '';
+            $new = implode("/",$splitNew);
+            if($new != ""){
+                $new = $newDir. ($new[0] != '/' ? '/'.$new : $new);
+            }else{
+                $new = $newDir;
+            }
+            if($this->storage->copy($file, $newDir.$filepath) === true){
+                $copiedFileCount++;
+                Artisan::call("rename:catalog-path", ['old_path' => $old,'new_path'=> $new,'files' => [$filename]]);
+            }
+        }
+        if ($copiedFileCount === count($files)) {
+            $this->storage->deleteDirectory($dir);
+        }
+
+        $fullPath = $this->storage->path($newDir);
+        $info = new NormalizeFile($this->storage, $fullPath, $newDir);
+
+        if(!empty($info->toArray())) {
             return response()->json(['success' => true]);
         }
 

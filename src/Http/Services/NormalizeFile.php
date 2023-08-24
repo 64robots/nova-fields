@@ -158,12 +158,13 @@ class NormalizeFile
      */
     private function getDimensions($mime)
     {
-        if (env('FILEMANAGER_DISK') != 'public') {
+        if (env('FILEMANAGER_DISK') != 'public' && env('FILEMANAGER_DISK') != 's3') {
             return false;
         }
 
         if (Str::contains($mime, 'image')) {
-            [$width, $height] = getimagesize($this->storage->path($this->storagePath));
+            $storagePath = env('FILEMANAGER_DISK') == 'public' ? $this->storage->path($this->storagePath) : $this->storage->url($this->storagePath);
+            [$width, $height] = getimagesize($storagePath);
 
             if (! empty($width) && ! empty($height)) {
                 return $width.'x'.$height;

@@ -15,7 +15,7 @@
           v-html="field.value"
       />
 
-      <MultiSelectDualBox ref="multi-select-dual-box" :options="options"></MultiSelectDualBox>
+      <MultiSelectDualBox ref="multi-select-dual-box" :resourceId="resourceId" :parentValue="parentValue" :field="field" :options="options"></MultiSelectDualBox>
       <p v-if="hasError" class="my-2 text-danger">
         {{ firstError }}
       </p>
@@ -44,8 +44,14 @@ export default {
         noData1: this.field.leftEmptyMessage || "No Data Found",
         noData2: this.field.rightEmptyMessage || "No Data Found",
         selected: [], // Array of pre-selected elements (list 2)
+        cloneSelected: [],
         selectedIds:[],
-        options: this.field.options || [] // Array of options (list 1)
+        finalSelectedIds:[],
+        options: this.field.options || [], // Array of options (list 1)
+        confirmationOnUpdate: this.field.confirmationOnUpdate == true ? true : false,
+        confirmationOnCreate: this.field.confirmationOnCreate == true ? true : false,
+        confirmation: this.field.confirmation == true ? true : false,
+        confirmationMessage: this.field.confirmationMessage || "Are you sure you want to change ?",
       },
       defaultOptions: this.field.options || [],
       parentValue: null,
@@ -86,7 +92,11 @@ export default {
   },
   methods:{
     fill(formData){
-      formData.append(this.field.attribute, this.options.selectedIds || '');
+      let ids = [];
+      this.options.cloneSelected.forEach((element) => {
+        ids.push(element.value);
+      });
+      formData.append(this.field.attribute, ids || '');
     },
 
     updateOptions() {
@@ -104,10 +114,12 @@ export default {
               if (response.data.length > 0){
                 let options = response.data;
                 this.options.selected = options || [];
+                this.options.cloneSelected = options || [];
                 let vue = this;
                 options.filter(function(val){
                   vue.options.selectedIds.push(val.value);
                 });
+                vue.options.finalSelectedIds = vue.options.selectedIds;
                 if(vue.options.options.length > 0){
                   vue.options.options = vue.options.options.filter(o1 => !options.some(o2 => o1.value === o2.value));
                 }
