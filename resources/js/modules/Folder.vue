@@ -69,7 +69,7 @@
 
       <template v-if="file.id == 'folder_back'">
         <tr @click="goToFolder" :loading="loading" v-bind:key="file.id"  class="cursor-pointer">
-          <td class="w-8" v-if="multiBlankSpace || multiSelecting">
+          <td class="w-8" v-if="multiSelecting">
           </td>
           <td>
             <div class="w-full flex justify-center items-center">
@@ -162,11 +162,6 @@ export default {
     view: {
       type: String,
       default: 'grid',
-      required: false,
-    },
-    multiBlankSpace: {
-      type: Boolean,
-      default: false,
       required: false,
     },
     multiSelecting: {
