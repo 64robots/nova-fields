@@ -134,14 +134,6 @@ class FilemanagerToolController extends Controller
     /**
      * @param Request $request
      */
-    public function renameDirectory(Request $request)
-    {
-        return $this->service->renameDirectory($request->path, $request->name);
-    }
-
-    /**
-     * @param Request $request
-     */
     public function downloadFile(Request $request)
     {
         return $this->service->downloadFile($request->file);
