@@ -44,7 +44,7 @@ class FilemanagerToolController extends Controller
      */
     public function createFolder(Request $request)
     {
-        return $this->service->createFolderOnPath($request->folder, $request->current);
+        return $this->service->createFolderOnPath($request->folder, $request->current,$request->isCreateSameName);
     }
 
     /**
@@ -89,7 +89,14 @@ class FilemanagerToolController extends Controller
      */
     public function move(Request $request)
     {
-        return $this->service->moveFile($request->old, $request->path);
+        if($request->type == 'file'){
+            $old = str_replace(basename($request->old), '', $request->old);
+            $splitOld = explode("/",$request->old);
+            $new = $request->path.'/'.$splitOld[count($splitOld)-1];
+            return $this->service->moveFile($request->old, $new);
+        }else{
+            return $this->service->moveFolder($request->old, $request->path);
+        }
     }
 
     /**
@@ -116,14 +123,14 @@ class FilemanagerToolController extends Controller
         return $this->service->renameFile($request->file, $request->name);
     }
 
-     /**
+    /**
      * @param Request $request
      */
     public function renameDirectory(Request $request)
     {
         return $this->service->renameDirectory($request->path, $request->name);
     }
-    
+
     /**
      * @param Request $request
      */

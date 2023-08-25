@@ -69,6 +69,7 @@
     <custom-modal v-if="openModal" @close="handleClose" @confirm="handleConfirm" :confirmation-message="confirmationMessage" :confirmation-title="`Warning!`"></custom-modal>
 
   </div>
+
 </template>
 
 

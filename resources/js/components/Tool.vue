@@ -46,7 +46,14 @@
             <button v-if="multiSelecting && selectedFiles.length > 0" type="button" class="btn btn-default btn-small btn-danger text-white mr-3" @click="openMultiDeleteModal">
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" aria-labelledby="delete" role="presentation"><path fill-rule="nonzero" d="M6 4V2a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2h5a1 1 0 0 1 0 2h-1v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6H1a1 1 0 1 1 0-2h5zM4 6v12h12V6H4zm8-2V2H8v2h4zM8 8a1 1 0 0 1 1 1v6a1 1 0 0 1-2 0V9a1 1 0 0 1 1-1zm4 0a1 1 0 0 1 1 1v6a1 1 0 0 1-2 0V9a1 1 0 0 1 1-1z"></path></svg>
             </button>
-          </div>
+
+            <button title="Paste to this directory" :disabled="isMoveFiles" v-if="movePath.length > 0 && moveType != null" type="button" class="btn btn-default btn-primary mr-3" @click="move">
+                Paste
+            </button>
+            <button title="Paste to this directory" :disabled="isMoveFiles" v-if="movePath.length > 0 && moveType != null" type="button" class="btn btn-default btn-primary mr-3" @click="clearClipboard">
+                Clear Clipboard
+            </button>
+        </div>
 
           <!-- Search -->
           <div class="w-1/3 flex flex-wrap justify-end">
@@ -87,6 +94,7 @@
           v-on:showInfoItem="showInfoItem"
           v-on:rename="openRenameModal"
           v-on:delete="openDeleteModal"
+          v-on:move="setMovePath"
           v-on:select="select"
       />
 
@@ -157,6 +165,9 @@ export default {
     multiSelecting: false,
     selectedFiles: [], // { type: 'folder/file', path: '...'' }
     buttons: [],
+    moveType:null,
+    movePath:'',
+    isMoveFiles:false
   }),
 
   async created() {
@@ -182,6 +193,50 @@ export default {
   },
 
   methods: {
+    clearClipboard(){
+      this.moveType = null;
+      this.movePath = '';
+    },
+    setMovePath(type,path){
+      this.moveType = type;
+      this.movePath = path;
+    },
+    async move(){
+      if(this.currentPath.length > 0 && this.movePath.length > 0 && this.moveType != null){
+        await this.moveData(this.moveType,this.movePath,this.currentPath);
+        this.clearClipboard();
+      }
+    },
+    moveData(moveType,oldPath, newPath) {
+      this.isMoveFiles = true;
+      return api
+        .moveFile(moveType,oldPath, newPath)
+        .then(result => {
+          if (result.success == true) {
+            this.refreshCurrent();
+            this.$toasted.show(this.__('File moved successfully'), {
+              type: 'success',
+              duration: 2000,
+            });
+          } else {
+            this.$toasted.show(
+              this.__('Error opening the file. Check your permissions'),
+              {
+                type: 'error',
+                duration: 3000,
+              }
+            );
+          }
+          this.isMoveFiles = false;
+        })
+        .catch(error => {
+          this.isMoveFiles = false;
+          this.$toasted.show(error.response.data.message, {
+            type: 'error',
+            duration: 3000,
+          });
+        });
+    },
     getData(pathToList) {
       this.files = [];
       this.parent = {};

@@ -21,7 +21,10 @@
     "resolve-url-loader": "^5.0.0",
     "sass": "^1.56.2",
     "sass-loader": "^12.6.0",
-    "vue-loader": "^16.8.3"
+    "vue-loader": "^16.8.3",
+    "vue-clickaway": "^2.2.2",
+    "vuepress": "^1.1.0",
+    "webpack": "3.12.0"
   },
   "dependencies": {
     "@inertiajs/inertia": "^0.11.1",

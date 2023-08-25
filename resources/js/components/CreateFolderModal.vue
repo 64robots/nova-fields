@@ -7,6 +7,7 @@
         :closes-via-backdrop="true"
         @modal-close="handleClose"
         show="true"
+        class="z-100"
         v-if="active"
     >
       <div class="bg-white rounded-lg shadow-lg " style="width: 600px;">
@@ -35,8 +36,34 @@
           </div>
         </div>
       </div>
-    </Modal>
-  </portal>
+    </modal>
+      <Modal
+        data-testid="confirm-action-modal"
+        tabindex="-1"
+        role="dialog"
+        :closes-via-backdrop="true"
+        @modal-close="handleErrorPromptClose"
+        show="true"
+        class="z-100"
+        v-if="errorPrompt"
+      >
+        <div class="bg-white rounded-lg shadow-lg " style="width: 600px;">
+          <div class="p-8">
+            <heading :level="2" class="mb-6">{{ __('Warning!') }}</heading>
+            <p>Oops! A folder with the same name already exists.</p>
+          </div>
+
+          <div class="bg-30 px-6 py-3 flex">
+            <div class="ml-auto">
+              <button type="button" data-testid="cancel-button" @click.prevent="cancelCreatePrompt" class="btn text-80 font-normal h-9 px-3 mr-3 btn-link">{{ __('Cancel') }}</button>
+              <button ref="confirmButton" data-testid="confirm-button" @click.prevent="confirmErrorPrompt" class="btn btn-default btn-primary" :class="{ 'cursor-not-allowed': isSaving, 'opacity-50': isSaving }">
+                <span>{{ __('Confirm') }}</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </modal>
+    </portal>
 </template>
 
 <script>
@@ -62,6 +89,8 @@ export default {
     errorMsg: '',
     showUpload: false,
     isSaving: false,
+    errorPrompt:false,
+    isCreateSameName:false
   }),
   emits: ['confirm', 'close'],
   methods: {
@@ -72,10 +101,13 @@ export default {
         return false;
       }
       this.isSaving = true;
-      return api.createFolder(this.folderName, this.current).then(result => {
+      return api.createFolder(this.folderName, this.current,this.isCreateSameName).then(result => {
         this.error = false;
         this.folderName = null;
+        this.errorPrompt = false;
         if (result == true) {
+          this.folderName = null;
+          this.isCreateSameName = false;
           this.$emit('closeCreateFolderModal', true);
           Nova.success(this.__('Folder created successfully'), {type: 'success'});
           this.isSaving = false;
@@ -83,11 +115,14 @@ export default {
         } else {
           this.error = true;
           if (result.error) {
+            this.$emit('closeCreateFolderModal', true);
+            this.errorPrompt = true;
             this.errorMsg = result.error;
             Nova.error(this.__('Error:') + ' ' + result.error, {
               type: 'error',
             });
           } else {
+            this.folderName = null;
             this.errorMsg = this.__('The folder name is required');
             Nova.error(this.__('Error creating the folder'), {type: 'error'});
           }
@@ -101,12 +136,21 @@ export default {
       this.folderName = null;
       this.$emit('closeCreateFolderModal', true);
     },
-
-    handleClose() {
-      this.$emit('close');
-      this.isSaving = false;
+    cancelCreatePrompt() {
+      this.errorPrompt = false;
       this.cancelCreate();
     },
+
+    handleClose() {
+      this.cancelCreate();
+    },
+    handleErrorPromptClose() {
+      this.errorPrompt = false;
+    },
+    confirmErrorPrompt(){
+      this.isCreateSameName = true;
+      this.createFolder();
+    }
   },
 };
 </script>

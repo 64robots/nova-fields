@@ -119,11 +119,14 @@ export default {
         let onlyDate = date.getFullYear()+'-'+ ('0' + (date.getMonth()+1)).slice(-2) +'-'+ ('0' + date.getDate()).slice(-2) +" "+('0' + date.getHours()).slice(-2)+":00"+":00";
         this.value = onlyDate;
         this.formattedDate = onlyDate;
+        this.value = onlyDate;
+        this.$refs.dateTimePicker.getUpdatedValue(onlyDate);
       }else{
         let date = new Date(value);
         let onlyDate = date.getFullYear()+'-'+ ('0' + (date.getMonth()+1)).slice(-2) +'-'+ ('0' + date.getDate()).slice(-2) +" "+('0' + date.getHours()).slice(-2)+":"+('0' + date.getMinutes()).slice(-2)+":00";
         this.value = onlyDate;
         this.formattedDate = onlyDate;
+        this.value = value;
       }
     }
   },

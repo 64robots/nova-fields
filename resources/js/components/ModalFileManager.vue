@@ -67,6 +67,13 @@
                         @click="addImages">
                   Add images
                 </button>
+
+                <button title="Paste to this directory" :disabled="isMoveFiles" v-if="movePath.length > 0 && moveType != null" type="button" class="btn btn-default btn-primary mr-3" @click="move">
+                  Paste
+                </button>
+                <button title="Paste to this directory" :disabled="isMoveFiles" v-if="movePath.length > 0 && moveType != null" type="button" class="btn btn-default btn-primary mr-3" @click="clearClipboard">
+                  Clear Clipboard
+                </button>
               </div>
 
               <!-- Search -->
@@ -135,6 +142,7 @@
                 v-on:uploadFiles="uploadFiles"
                 v-on:rename="openRenameModal"
                 v-on:delete="openDeleteModal"
+                v-on:move="setMovePath"
                 v-on:select="select"
             />
 
@@ -241,7 +249,10 @@ export default {
     selectedFiles: [], // { type: 'folder/file', path: '...'' }
     buttons: [],
     multiSelecting: false,
-    selectedData: []
+    selectedData:[],
+    moveType:null,
+    movePath:'',
+    isMoveFiles:false
   }),
 
   computed: {
@@ -257,6 +268,50 @@ export default {
   },
 
   methods: {
+    clearClipboard(){
+      this.moveType = null;
+      this.movePath = '';
+    },
+    setMovePath(type,path){
+      this.moveType = type;
+      this.movePath = path;
+    },
+    async move(){
+      if(this.currentPath.length > 0 && this.movePath.length > 0 && this.moveType != null){
+        await this.moveData(this.moveType,this.movePath,this.currentPath);
+        this.clearClipboard();
+      }
+    },
+    moveData(moveType,oldPath, newPath) {
+      this.isMoveFiles = true;
+      return api
+          .moveFile(moveType,oldPath, newPath)
+          .then(result => {
+            if (result.success == true) {
+              this.refreshCurrent();
+              this.$toasted.show(this.__('File moved successfully'), {
+                type: 'success',
+                duration: 2000,
+              });
+            } else {
+              this.$toasted.show(
+                  this.__('Error opening the file. Check your permissions'),
+                  {
+                    type: 'error',
+                    duration: 3000,
+                  }
+              );
+            }
+            this.isMoveFiles = false;
+          })
+          .catch(error => {
+            this.isMoveFiles = false;
+            this.$toasted.show(error.response.data.message, {
+              type: 'error',
+              duration: 3000,
+            });
+          });
+    },
     getData(folder) {
       this.files = [];
       this.parent = {};

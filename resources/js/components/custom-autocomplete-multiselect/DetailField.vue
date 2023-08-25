@@ -6,18 +6,18 @@
       :label-classes="panelLabelClasses"
       :field-classes="panelFieldClasses"
       :wrapper-classes="panelWrapperClasses"
-  >
+    >
     <template slot="value">
       <router-link
-          v-if="field.belongsToResourceName && field.viewable && field.value"
-          :to="{
+        v-if="field.belongsToResourceName && field.viewable && field.value"
+        :to="{
           name: 'detail',
           params: {
             resourceName: field.belongsToResourceName,
             resourceId: field.value,
           },
         }"
-          class="no-underline font-bold dim text-primary"
+        class="no-underline font-bold dim text-primary"
       >
         {{ field.belongsToDisplayValue }}
       </router-link>
@@ -32,18 +32,23 @@
 <script>
 import HandlesFieldValue from '../../mixins/HandlesFieldValue';
 import R64Field from '../../mixins/R64Field'
+
 export default {
   mixins: [HandlesFieldValue,R64Field],
+
   props: ['resource', 'resourceName', 'resourceId', 'field'],
+
   computed: {
     values() {
       const valuesArray = this.getInitialFieldValuesArray();
       if (!valuesArray || !valuesArray.length) return;
+
       return valuesArray
           .map(this.getValueFromOptions)
           .filter(Boolean)
           .map(val => `${this.isOptionGroups ? `[${val.group}] ` : ''}${val.label}`);
     },
+
     value() {
       return this.getValueFromOptions(this.field.value);
     },

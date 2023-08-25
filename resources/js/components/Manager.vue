@@ -134,7 +134,7 @@
                       :key="parent.id"
                       :file="parent"
                       :view="view"
-                      :multi-blank-space="multiSelecting"
+                      :multi-selecting="multiSelecting"
                       class="folder-item"
                       :class="{'loading': loadingInfo}"
                       v-on:goToFolderEvent="goToFolder"
@@ -149,15 +149,17 @@
                             :data-key="file.id"
                             :file="file"
                             :view="view"
-                            :multi-blank-space="multiSelecting"
+                            :multi-selecting="multiSelecting"
                             :selected-files="selectedFiles"
                             :delete-permission="buttons.delete_folder"
                             :rename-permission="buttons.rename_folder"
+                            :move-permission="buttons.move_folder"
                             class="folder-item"
                             :class="{'loading': loadingInfo}"
                             v-on:goToFolderEvent="goToFolder"
                             v-on:rename="rename"
                             v-on:delete="deleteData"
+                            v-on:move="move"
                             v-on:select="select"
                     />
                   </template>
@@ -171,12 +173,14 @@
                         :selected-files="selectedFiles"
                         :delete-permission="buttons.delete_file"
                         :rename-permission="buttons.rename_file"
+                        :move-permission="buttons.move_file"
                         class="file-item"
                         :class="{'loading': loadingInfo}"
                         @missing="(value) => missing = value"
                         v-on:showInfo="showInfo"
                         v-on:rename="rename"
                         v-on:delete="deleteData"
+                        v-on:move="move"
                         v-on:select="select"
                     />
                   </template>
@@ -312,7 +316,7 @@ export default {
 
     removeDirectory() {
       return api.removeDirectory(this.current).then(result => {
-        if (result == true) {
+        if (result.success == true) {
           Nova.success(this.__('Folder removed successfully'), { type: 'success' })
           this.$emit('goToFolderManager', this.getParentFolder());
         } else {
@@ -588,6 +592,10 @@ export default {
       this.$emit('delete', type, path);
     },
 
+    move(type, path) {
+      this.$emit('move', type, path);
+    },
+
     select(file) {
       this.$emit('select', file);
     },
@@ -649,7 +657,7 @@ export default {
       let filtered = this.files;
 
       if (this.search) {
-        filtered = this.files.filter(m => m.name.toLowerCase().indexOf(this.search) > -1);
+        filtered = this.files.filter(m => m.name.toLowerCase().indexOf(this.search.toLowerCase()) > -1);
       }
 
       if (this.filters.length > 0) {

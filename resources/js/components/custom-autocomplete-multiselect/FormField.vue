@@ -12,6 +12,7 @@
     <template #field>
       <!-- Multi select field -->
       <Multiselect
+          v-if="!reorderMode"
           v-model="selected"
           mode="tags"
           @input="handleChange"
@@ -20,6 +21,7 @@
           :delay="0"
           :object="true"
           :min-chars="1"
+          ref="multiselect"
           :close-on-select="field.max === 1 || !isMultiselect"
           :max="field.max > 0 ? field.max : -1"
           :searchable="true"
@@ -27,16 +29,14 @@
           :options="field.apiUrl ? asyncOptions : computedOptions"
           :disabled="isReadonly"
           :placeholder="field.placeholder || field.name"
-          ref="multiselect"
           :loading="isLoading"
           :clearOnSelect="field.clearOnSelect || false"
-          v-if="!reorderMode"
       >
         <template slot="maxElements">
           {{ __('novaMultiselect.maxElements', { max: String(field.max || '') }) }}
         </template>
 
-        <template slot="noResults">
+        <template slot="noResult">
           {{ __('novaMultiselect.noResult') }}
         </template>
 
@@ -96,8 +96,11 @@ import R64Field from '../../mixins/R64Field'
 import CustomModal from '../CustomModal.vue';
 export default {
   components: { Multiselect, draggable: VueDraggableNext, CustomModal },
+
   mixins: [FormField, HandlesValidationErrors, HandlesFieldValue,R64Field],
+
   props: ['resourceName', 'resourceId', 'field'],
+
   data: () => ({
     value:[],
     reorderMode: false,
@@ -114,23 +117,28 @@ export default {
     openModal:false,
     cloneSelected:[],
   }),
+
   mounted() {
     window.addEventListener('scroll', this.repositionDropdown);
+
     if (this.field.distinct) {
       // Handle distinct callback.
       Nova.$on(`multiselect-${this.field.distinct}-distinct`, callback => {
         return callback(this.value);
       });
     }
+
     // Emit initial value
     this.$nextTick(() => {
       Nova.$emit(`multiselect-${this.field.attribute}-input`, this.value);
     });
   },
+
   destroyed() {
     window.removeEventListener('scroll', this.repositionDropdown);
     if (this.field.distinct) Nova.$off(`multiselect-${this.field.distinct}-distinct`);
   },
+
   created() {
     this.confirmationMessage = this.field.confirmationMessage;
     this.confirmationTitle = this.field.confirmationTitle;
@@ -141,11 +149,13 @@ export default {
     selected() {
       return this.value || [];
     },
+
     flexibleKey() {
       const flexRegex = /^([a-zA-Z0-9]+)(?=__)/;
       const match = this.field.attribute.match(flexRegex);
       if (match && match[0] && match[0].length === 16) return match[0];
     },
+
   },
   methods: {
     setOptions(options){
@@ -216,15 +226,18 @@ export default {
       if (!this.isInitialized) this.isInitialized = true;
       if (this.field.distinct) this.distinctOptions();
     },
+
     /**
      * Creates new array of values that have been used by another multiselect.
      * If an options is used by another multiselect, we disable it.
      */
     distinctOptions() {
       this.distinctValues = [];
+
       // Fetch other select values in current distinct group
       Nova.$emit(`multiselect-${this.field.distinct}-distinct`, values => {
         if (!values) return;
+
         // Validate that current value is not disabled.
         if (values !== this.selected) {
           // Add already used values to distinctValues
@@ -232,6 +245,7 @@ export default {
           else this.distinctValues.push(values.value);
         }
       });
+
       this.options = this.options.map(option => {
         if (this.isOptionGroups) {
           // Support for option groups
@@ -240,12 +254,14 @@ export default {
             values: option.values.map(option => this.newDistinctOption(option)),
           };
         }
+
         return this.newDistinctOption(option);
       });
     },
     newDistinctOption(option) {
       // Only return $disabled option if values match
       if (this.distinctValues.includes(option.value)) return { ...option, $isDisabled: true };
+
       // Force remove $isDisabled
       delete option.$isDisabled;
       return option;
@@ -275,12 +291,15 @@ export default {
       if (onOpen) this.$nextTick(handlePositioning);
       else handlePositioning();
     },
+
     fetchOptions: debounce(async function (search) {
       if(this.parentOptions.length == 0) {
         this.asyncOptions = [];
         return;
       }
+
       const { data } = await Nova.request().get(`${this.field.apiUrl}`, { params: { search } });
+
       // Response is not an array or an object
       if (typeof data !== 'object') throw new Error('Server response was invalid.');
 
@@ -305,7 +324,6 @@ export default {
         this.asyncOptions = newOptions;
         this.options = newOptions;
         this.isLoading = false;
-        console.log(this.asyncOptions);
         return;
       }
       this.asyncOptions = Object.entries(data).map(entry => ({ label: entry[1], value: entry[0] }));
@@ -340,12 +358,14 @@ export default {
     text-overflow: ellipsis;
     transition: all 0.25s ease;
     margin-bottom: 5px;
+
     &:hover {
       cursor: pointer;
       background: #3dab7a;
       transition-duration: 0.05s;
     }
   }
+
   .multiselect__clear {
     position: absolute;
     right: 41px;
@@ -354,6 +374,7 @@ export default {
     display: block;
     cursor: pointer;
     z-index: 2;
+
     &::before,
     &::after {
       content: '';
@@ -365,9 +386,11 @@ export default {
       top: 12px;
       right: 4px;
     }
+
     &::before {
       transform: rotate(45deg);
     }
+
     &::after {
       transform: rotate(-45deg);
     }

@@ -7,15 +7,15 @@
     <span>
       <span v-if="field.viewable && field.value"  :class="[field.indexClasses, applyColor]">
         <router-link
-            :to="{
+          :to="{
             name: 'detail',
             params: {
               resourceName: field.belongsToResourceName,
               resourceId: field.value,
             },
           }"
-            :class="linkClasses"
-            class="no-underline dim text-primary font-bold"
+          :class="linkClasses"
+          class="no-underline dim text-primary font-bold"
         >
           {{ field.belongsToDisplayValue }}
         </router-link>
@@ -33,9 +33,12 @@
 <script>
 import HandlesFieldValue from '../../mixins/HandlesFieldValue';
 import R64Field from '../../mixins/R64Field'
+
 export default {
   mixins: [HandlesFieldValue,R64Field],
+
   props: ['resourceName', 'field'],
+
   computed: {
     linkClasses() {
       return this.field.indexLinkClasses
@@ -44,6 +47,7 @@ export default {
       if (this.isMultiselect) {
         const valuesArray = this.getInitialFieldValuesArray();
         if (!valuesArray || !valuesArray.length) return '—';
+
         const values = valuesArray
             .map(this.getValueFromOptions)
             .filter(Boolean)
@@ -52,18 +56,22 @@ export default {
         if (this.valueDisplayLimit >= values.length && this.charDisplayLimit >= joinedValues.length) {
           return joinedValues;
         }
+
         return this.__('novaMultiselect.nItemsSelected', { count: String(values.length || '') });
       } else {
         const value = this.field.options.find(opt => String(opt.value) === String(this.field.value));
         return (value && value.label) || '—';
       }
     },
+
     delimiter() {
       return this.field.indexDelimiter ?? ', ';
     },
+
     valueDisplayLimit() {
       return this.field.indexValueDisplayLimit ?? 9999;
     },
+
     charDisplayLimit() {
       // Set char limit to 9999 if we have value limit, but not char limit
       if (!!this.field.indexValueDisplayLimit && !this.field.indexCharDisplayLimit) return 9999;

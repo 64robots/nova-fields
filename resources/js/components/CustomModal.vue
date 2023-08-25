@@ -10,11 +10,11 @@
         @modal-close="handleClose"
     >
       <form
-          class="mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden process-div"
+          class="relative mx-auto bg-white flex justify-center z-20 py-view dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden process-div"
       >
         <slot>
           <ModalHeader>
-            <div class="flex justify-between items-center">
+            <div class="flex justify-between items-center mb-6">
               <h2 class="text-90 font-normal text-xl">{{ confirmationTitle }}</h2>
               <button dusk="cancel-action-button" type="button" class="btn btn-link dim cursor-pointer text-80" @click.prevent="handleClose">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">

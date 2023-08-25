@@ -29,20 +29,22 @@ export default {
             .then(response => response.data);
     },
 
-    moveFile(oldPath, newPath) {
+    moveFile(moveType,oldPath, newPath) {
         return axios
             .post('/nova-r64-api/actions/move', {
+                type: moveType,
                 old: oldPath,
                 path: newPath,
             })
             .then(response => response.data);
     },
 
-    createFolder(folderName, currentFolder) {
+    createFolder(folderName, currentFolder,isCreateSameName) {
         return axios
             .post('/nova-r64-api/actions/create-folder', {
                 folder: folderName,
                 current: currentFolder,
+                isCreateSameName:isCreateSameName
             })
             .then(response => response.data);
     },

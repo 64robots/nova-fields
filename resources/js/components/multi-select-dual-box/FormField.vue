@@ -122,6 +122,7 @@ export default {
                 let options = response.data;
                 this.options.cloneSelected = options || [];
                 this.options.selected = options || [];
+                this.options.cloneSelected = options || [];
                 let vue = this;
                 options.filter(function(val){
                   vue.options.selectedIds.push(val.value);

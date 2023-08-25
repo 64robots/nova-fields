@@ -250,6 +250,8 @@ export default {
      * Update the field's internal value.
      */
     setValue(file) {
+      file.attribute = this.field.attribute;
+      Nova.$emit("filemanage-value-change",file);
       this.value = file.path;
       this.selectImageUrl = file.url;
       this.closeFilemanagerModal();
