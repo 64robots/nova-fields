@@ -1,32 +1,31 @@
 <template>
   <portal to="portal-filemanager" name="Rename Modal" transition="fade-transition">
     <Modal
-        data-testid="confirm-action-modal"
-        tabindex="-1"
-        role="dialog"
-        :closes-via-backdrop="true"
-        @modal-close="handleClose"
-        show="true"
-        size="lg"
-        v-if="active"
-        class="z-100"
+      data-testid="confirm-action-modal"
+      tabindex="-1"
+      role="dialog"
+      :closes-via-backdrop="true"
+      @modal-close="handleClose"
+      show="true"
+      size="lg"
+      v-if="active"
+      class="z-100"
     >
-      <div class="bg-white rounded-lg shadow-lg ">
+      <div class="bg-white dark:bg-gray-700 rounded-lg shadow-lg ">
         <div class="p-8">
 
           <template v-if="type == 'folder'">
             <heading :level="2" class="mb-6">
               {{ __('Rename folder') }}
             </heading>
-            <input type="text" class="w-full h-full form-control form-input form-input-bordered py-3" :placeholder="name" v-model="name" autofocus required v-on:keyup.enter="renamePath">
+            <input type="text" class="w-full h-full form-control form-input form-input-bordered py-3 dark:bg-gray-800" :placeholder="name" v-model="name" autofocus required v-on:keyup.enter="renamePath">
             <div class="deleteModalPassword">
               <heading :level="2" class="mb-6">
                 Enter Password :
               </heading>
-              <input type="password" class="w-full h-full form-control form-input form-input-bordered py-3" :placeholder="Password" v-model="password" autofocus required>
+              <input type="password" placeholder="Enter Password" class="w-full h-full form-control form-input form-input-bordered py-3 dark:bg-gray-800" :placeholder="Password" v-model="password" autofocus required>
               <i class="bi bi-eye-slash"
                  id="togglePassword"></i>
-              <span class="text-red-500" v-if="passwordMessage.length > 0">{{ passwordMessage }}</span>
             </div>
           </template>
 
@@ -38,17 +37,16 @@
             <div class="flex flex-wrap items-stretch w-full mb-4 relative">
               <input type="text" class="flex-shrink flex-grow flex-auto h-full form-control form-input form-input-bordered-left py-3" :placeholder="nameWithoutExtension" v-model="nameWithoutExtension" autofocus required v-on:keyup.enter="renamePath">
               <div class="flex -mr-px">
-                <span class="flex items-center leading-normal bg-50 rounded rounded-l-none form-input-bordered-right px-3 whitespace-no-wrap text-grey-dark text-sm">{{ extension }}</span>
+                <span class="flex items-center leading-normal bg-50 rounded rounded-l-none form-input-bordered-right px-3 whitespace-no-wrap text-grey-dark text-sm dark:bg-gray-800">{{ extension }}</span>
               </div>
             </div>
             <div class="deleteModalPassword">
               <heading :level="2" class="mb-6">
                 Enter Password :
               </heading>
-              <input type="password" class="w-full h-full form-control form-input form-input-bordered py-3" :placeholder="Password" v-model="password" autofocus required>
+              <input type="password" placeholder="Enter Password" class="w-full h-full form-control form-input form-input-bordered py-3 dark:bg-gray-800" :placeholder="Password" v-model="password" autofocus required>
               <i class="bi bi-eye-slash"
                  id="togglePassword"></i>
-              <span class="text-red-500" v-if="passwordMessage.length > 0">{{ passwordMessage }}</span>
             </div>
 
             <p class="my-2 text-red-500" v-if="error">{{ errorMsg }}</p>
@@ -57,7 +55,7 @@
 
         </div>
 
-        <div class="bg-30 px-6 py-3 flex">
+        <div class="bg-30 dark:bg-gray-700 rounded-lg shadow-lg px-6 py-3 flex">
           <div class="ml-auto">
             <button type="button" data-testid="cancel-button" @click.prevent="cancelRename" class="btn text-80 font-normal h-9 px-3 mr-3 btn-link">{{ __('Cancel') }}</button>
             <button ref="confirmButton" data-testid="confirm-button" :disabled="isSaving" @click.prevent="renamePath" class="shadow relative bg-primary-500 hover:bg-primary-400 text-white dark:text-gray-900 cursor-pointer rounded text-sm font-bold focus:outline-none focus:ring ring-primary-200 dark:ring-gray-600 inline-flex items-center justify-center h-9 px-3 shadow relative bg-primary-500 hover:bg-primary-400 text-white dark:text-gray-900" :class="{ 'cursor-not-allowed': isSaving, 'opacity-50': isSaving }">

@@ -13,8 +13,8 @@
           class="z-100"
       >
 
-        <div class="bg-white rounded-lg shadow-lg">
-          <div class="bg-30 flex flex-wrap border-b border-70">
+        <div class="rounded-lg shadow-lg">
+          <div class="bg-white dark:bg-gray-800 flex flex-wrap border-b border-70">
             <div class="md:w-3/4 px-4 py-3 ">
               {{ __('Preview of') }} <span class="text-primary-70%">{{ info.name }}</span>
             </div>
@@ -24,7 +24,7 @@
             </div>
           </div>
 
-          <div class="flex flex-wrap">
+          <div class="flex flex-wrap bg-white dark:bg-gray-900">
             <div class="w-3/5 box-preview flex justify-center" :class="cssType">
 
               <template v-if="info.type == 'image'">
@@ -78,11 +78,11 @@
 
 
             </div>
-            <div class="w-2/5 bg-30 box-info flex flex-wrap">
+            <div class="w-2/5 dark:bg-gray-700 box-info flex flex-wrap">
 
               <div class="info-data w-full">
                 <div class="info mx-4 my-3 flex flex-wrap items-center">
-                  <span class="title bg-50 px-1 py-1 rounded-l">{{ __('Name') }}:</span>
+                  <span class="title dark:bg-gray-900 px-1 py-1 rounded-l">{{ __('Name') }}:</span>
                   <span class="value bg-white px-1 py-1 rounded-r" v-if="!editingName">{{ info.name }}
                                 </span>
 
@@ -106,22 +106,22 @@
                 </div>
 
                 <div class="info mx-4 my-3 flex flex-wrap" v-if="info.mime">
-                  <span class="title bg-50 px-1 py-1 rounded-l">{{ __('Mime Type') }}:</span>
+                  <span class="title dark:bg-gray-900 px-1 py-1 rounded-l">{{ __('Mime Type') }}:</span>
                   <span class="value bg-white px-1 py-1 rounded-r">{{ info.mime }}</span>
                 </div>
 
                 <div class="info mx-4 my-3 flex flex-wrap" v-if="info.date">
-                  <span class="title bg-50 px-1 py-1 rounded-l">{{ __('Last Modification') }}:</span>
+                  <span class="title dark:bg-gray-900 px-1 py-1 rounded-l">{{ __('Last Modification') }}:</span>
                   <span class="value bg-white px-1 py-1 rounded-r">{{ info.date }}</span>
                 </div>
 
                 <div class="info mx-4 my-3 flex flex-wrap" v-if="info.size">
-                  <span class="title bg-50 px-1 py-1 rounded-l">{{ __('Size') }}:</span>
+                  <span class="title dark:bg-gray-900 px-1 py-1 rounded-l">{{ __('Size') }}:</span>
                   <span class="value bg-white px-1 py-1 rounded-r">{{ info.size }}</span>
                 </div>
 
                 <div class="info mx-4 my-3 flex flex-wrap" v-if="info.dimensions">
-                  <span class="title bg-50 px-1 py-1 rounded-l">{{ __('Dimensions') }}:</span>
+                  <span class="title dark:bg-gray-900 px-1 py-1 rounded-l">{{ __('Dimensions') }}:</span>
                   <span class="value bg-white px-1 py-1 rounded-r">{{ info.dimensions }}</span>
                 </div>
 
@@ -131,9 +131,9 @@
                   </label>
 
                   <div class="flex flex-wrap items-stretch w-full mb-4 relative">
-                    <input type="text" class="flex-shrink flex-grow flex-auto text-xs leading-normal w-px flex-1 border border-70 rounded rounded-r-none px-1 relative" :value="info.url" disabled>
+                    <input type="text" class="dark:bg-gray-800 flex-shrink flex-grow flex-auto text-xs leading-normal w-px flex-1 border border-70 rounded rounded-r-none px-1 relative" :value="info.url" disabled>
                     <div class="flex -mr-px">
-                      <button class="copy flex items-center leading-normal bg-50 rounded rounded-l-none border border-l-0 border-70 px-3 whitespace-no-wrap text-grey-dark text-xs" v-copy="info.url" v-copy:callback="onCopy">{{ __('Copy') }}</button>
+                      <button class="dark:bg-gray-900 copy flex items-center leading-normal rounded rounded-l-none border border-l-0 border-70 px-3 whitespace-no-wrap text-grey-dark text-xs" v-copy="info.url" v-copy:callback="onCopy">{{ __('Copy') }}</button>
                     </div>
                   </div>
                 </div>
@@ -142,7 +142,7 @@
                   <div class="">
                     <a
                         v-if="buttons.download_file"
-                        class="bg-50 py-1 rounded-l text-xs text-grey-500 h-9 px-2 text-90 no-underline"
+                        class="dark:bg-gray-900 py-1 rounded-l text-xs text-grey-500 h-9 px-2 text-90 no-underline"
                         :href="`/nova-r64-api/actions/download-file?file=${this.info.path}`"
                         target="_blank"
                     >

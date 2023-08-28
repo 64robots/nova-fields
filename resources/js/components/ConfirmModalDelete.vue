@@ -1,18 +1,18 @@
 <template>
   <portal to="portal-filemanager" name="Confirm Delete" transition="fade-transition">
     <Modal
-        data-testid="confirm-action-modal"
-        tabindex="-1"
-        role="dialog"
-        :closes-via-backdrop="true"
-        @modal-close="handleClose"
-        show="true"
-        size="lg"
-        v-if="active"
-        class="z-100"
+      data-testid="confirm-action-modal"
+      tabindex="-1"
+      role="dialog"
+      :closes-via-backdrop="true"
+      @modal-close="handleClose"
+      show="true"
+      size="lg"
+      v-if="active"
+      class="z-100"
     >
       <div
-          class="bg-white rounded-lg shadow-lg overflow-hidden"
+        class="bg-white dark:bg-gray-700 rounded-lg shadow-lg overflow-hidden"
       >
         <div class="p-8">
           <heading :level="2" class="mb-6">
@@ -28,8 +28,7 @@
             <p class="text-sm text-80 mt-2">{{ __('Remember: The folder and all his contents will be delete from your storage') }}</p>
             <div class="deleteModalPassword">
               <label for="password">Enter Password : </label>
-              <input type="password" name="password" class="w-full h-full form-control form-input form-input-bordered py-3" id="password" v-model="password">
-              <span class="text-red-500" v-if="passwordMessage.length > 0">{{ passwordMessage }}</span>
+              <input type="password" name="password" class="w-full h-full form-control form-input form-input-bordered py-3 dark:bg-gray-800" placeholder="Enter Password" id="password" v-model="password">
             </div>
           </template>
           <template v-else>
@@ -37,14 +36,13 @@
             <p class="text-sm text-80 mt-2">{{ __('Remember: The file will be delete from your storage') }}</p>
             <div class="deleteModalPassword">
               <label for="password">Enter Password : </label>
-              <input type="password" name="password" class="w-full h-full form-control form-input form-input-bordered py-3" id="password" v-model="password">
-              <span class="text-red-500" v-if="passwordMessage.length > 0">{{ passwordMessage }}</span>
+              <input type="password" name="password" class="w-full h-full form-control form-input form-input-bordered py-3 dark:bg-gray-800" placeholder="Enter Password" id="password" v-model="password">
             </div>
           </template>
 
         </div>
 
-        <div class="bg-30 px-6 py-3 flex">
+        <div class="bg-30 dark:bg-gray-700 rounded-lg shadow-lg px-6 py-3 flex">
           <div class="ml-auto">
             <button dusk="cancel-upload-delete-button" type="button" data-testid="cancel-button" @click.prevent="handleClose" class="btn text-80 font-normal h-9 px-3 mr-3 btn-link">{{__('Cancel')}}</button>
             <button ref="confirmButton" data-testid="confirm-button" :disabled="isDeleting" @click.prevent="deleteData" class="shadow relative bg-red-500 hover:bg-red-400 text-white dark:text-gray-900 cursor-pointer rounded text-sm font-bold focus:outline-none focus:ring ring-red-200 dark:ring-red-600 inline-flex items-center justify-center h-9 px-3 shadow relative bg-red-500 hover:bg-red-400 text-white dark:text-gray-900" :class="{ 'cursor-not-allowed': isDeleting, 'opacity-50': isDeleting }">

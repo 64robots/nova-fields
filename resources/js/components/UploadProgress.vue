@@ -115,7 +115,7 @@ export default {
         },
         onUploadProgress: progressEvent => {
           file.progress = parseInt(
-              Math.round((progressEvent.loaded * 100) / progressEvent.total)
+            Math.round((progressEvent.loaded * 100) / progressEvent.total)
           );
         },
       };
@@ -145,92 +145,80 @@ export default {
 
     uploadFileToServer(file, data, config) {
       axios
-          .post('/nova-r64-api/uploads/add', data, config)
-          .then(response => {
-            if (response.data.success == true) {
-              _.forEach(this.files, fileUpload => {
-                if (fileUpload.name == response.data.name) {
-                  fileUpload.upload = true;
-                }
-              });
-              this.filesUploaded.push(file.id);
-
-              setTimeout(() => {
-                this.$emit('removeFile', file.id);
-              }, 2000);
-            } else {
-              this.$toasted.show(
-                  this.__(
-                      'Error uploading the file. Check your MaxFilesize or permissions'
-                  ),
-                  { type: 'error' }
-              );
-            }
-          })
-          .catch(error => {
-            if (error.response.data.errors) {
-              let errors = error.response.data.errors;
-              let errorsArray = Object.values(errors).flat();
-
-              let errorMessage = errorsArray.join('<br>');
-
-              this.$toasted.show(errorMessage, { type: 'error' });
-            } else {
-              this.$toasted.show(
-                  this.__(
-                      'Error uploading the file. Check your MaxFilesize or permissions'
-                  ),
-                  { type: 'error' }
-              );
-            }
-
-            file.error = true;
+        .post('/nova-r64-api/uploads/add', data, config)
+        .then(response => {
+          if (response.data.success == true) {
+            _.forEach(this.files, fileUpload => {
+              if (fileUpload.name == response.data.name) {
+                fileUpload.upload = true;
+              }
+            });
+            this.filesUploaded.push(file.id);
 
             setTimeout(() => {
               this.$emit('removeFile', file.id);
-            }, 1000);
-          });
+            }, 2000);
+          } else {
+            Nova.error(this.__(
+              'Error uploading the file. Check your MaxFilesize or permissions'
+            ), { type: 'error' });
+          }
+        })
+        .catch(error => {
+          if (error.response.data.errors) {
+            let errors = error.response.data.errors;
+            let errorsArray = Object.values(errors).flat();
+
+            let errorMessage = errorsArray.join('<br>');
+
+            Nova.error(errorMessage, { type: 'error' });
+          } else {
+            Nova.error(this.__(
+              'Error uploading the file. Check your MaxFilesize or permissions'
+            ), { type: 'error' });
+          }
+
+          file.error = true;
+
+          setTimeout(() => {
+            this.$emit('removeFile', file.id);
+          }, 1000);
+        });
     },
 
     uploadFolderToServer(file, data, config) {
       data.append('folder', true);
 
       axios
-          .post('/nova-r64-api/uploads/add', data, config)
-          .then(response => {
-            if (response.data.success == true) {
-              _.forEach(this.files, fileUpload => {
-                if (fileUpload.name == response.data.name) {
-                  fileUpload.upload = true;
-                }
-              });
+        .post('/nova-r64-api/uploads/add', data, config)
+        .then(response => {
+          if (response.data.success == true) {
+            _.forEach(this.files, fileUpload => {
+              if (fileUpload.name == response.data.name) {
+                fileUpload.upload = true;
+              }
+            });
 
-              this.filesUploaded.push(file.id);
+            this.filesUploaded.push(file.id);
 
-              this.totalPercent = (100 * this.filesUploaded.length) / this.files.length;
+            this.totalPercent = (100 * this.filesUploaded.length) / this.files.length;
 
-              setTimeout(() => {
-                this.$emit('removeFile', file.id);
-              }, 2000);
-            } else {
-              this.$toasted.show(
-                  this.__(
-                      'Error uploading the file. Check your MaxFilesize or permissions'
-                  ),
-                  { type: 'error' }
-              );
-            }
-          })
-          .catch(() => {
-            this.error = true;
-            this.$toasted.show(
-                this.__('Error uploading the file. Check your MaxFilesize or permissions'),
-                { type: 'error' }
-            );
             setTimeout(() => {
               this.$emit('removeFile', file.id);
-            }, 1000);
-          });
+            }, 2000);
+          } else {
+            Nova.error(this.__(
+              'Error uploading the file. Check your MaxFilesize or permissions'
+            ), { type: 'error' });
+          }
+        })
+        .catch(() => {
+          this.error = true;
+          Nova.error(this.__('Error uploading the file. Check your MaxFilesize or permissions'), { type: 'error' });
+          setTimeout(() => {
+            this.$emit('removeFile', file.id);
+          }, 1000);
+        });
     },
     fileName(file) {
       if(file != undefined){

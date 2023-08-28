@@ -45,7 +45,7 @@
           <template v-else-if="!files.length">
             <div class="w-full text-lg text-center my-4">
               {{ __(`No ${filter || 'files or folders'} in current directory`) }}<br><br>
-              <button v-if="buttons.delete_folder && !filter" class="btn btn-default btn-danger" @click="removeDirectory">
+              <button v-if="buttons.delete_folder && !filter" class="btn btn-default btn-danger text-red-500" @click="removeDirectory">
                 {{ __('Remove directory') }}
               </button>
             </div>
@@ -715,7 +715,6 @@ export default {
     position: sticky;
     top: 0;
     z-index: 10;
-    background-color: #f4f7fa;
     font-weight: 800;
     font-size: .75rem;
     color: #7c858e;

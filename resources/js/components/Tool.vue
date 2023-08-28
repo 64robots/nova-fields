@@ -214,27 +214,15 @@ export default {
         .then(result => {
           if (result.success == true) {
             this.refreshCurrent();
-            this.$toasted.show(this.__('File moved successfully'), {
-              type: 'success',
-              duration: 2000,
-            });
+            Nova.success(this.__('File moved successfully'), { type: 'success' });
           } else {
-            this.$toasted.show(
-              this.__('Error opening the file. Check your permissions'),
-              {
-                type: 'error',
-                duration: 3000,
-              }
-            );
+            Nova.error(this.__('Error opening the file. Check your permissions'), { type: 'error' });
           }
           this.isMoveFiles = false;
         })
         .catch(error => {
           this.isMoveFiles = false;
-          this.$toasted.show(error.response.data.message, {
-            type: 'error',
-            duration: 3000,
-          });
+          Nova.error(error.response.data.message, { type: 'error' });
         });
     },
     getData(pathToList) {

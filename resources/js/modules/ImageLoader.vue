@@ -21,7 +21,7 @@
 
         </div>
 
-        <div class="actions-grid absolute pin-t pin-r pr-2 pt-2 pb-1 pl-2 "
+        <div class="actions-grid absolute pr-2 pt-2 pb-1 pl-2 dark:bg-gray-700"
              :class="{ 'hidden': !multiSelecting , 'bg-gray-500' : shouldShowHover}"
         >
           <div v-if="multiSelecting">
@@ -45,7 +45,7 @@
         </div>
 
         <div class="h-1/6 w-full text-center text-xs  border-t border-30 bg-gray-500 text-white flex items-center justify-center">
-          {{ file.name | truncate(25) }}
+          {{ truncateStr(file.name,25) }}
         </div>
       </div>
     </template>
@@ -71,7 +71,7 @@
 
             </div>
 
-            <div  v-if="file.mime == 'image'" ref="image" class="image-block block w-full h-full">
+            <div  v-if="file.mime == 'image'" ref="image" class="image-block flex justify-center items-center w-full h-full">
 
             </div>
           </div>
@@ -179,7 +179,7 @@ export default {
     },
     selected() {
       return (
-          findIndex(this.selectedFiles, { type: this.file.type, path: this.file.path }) >= 0
+        findIndex(this.selectedFiles, { type: this.file.type, path: this.file.path }) >= 0
       );
     },
 
@@ -205,29 +205,29 @@ export default {
       axios.get(this.file.thumb, {
         responseType: 'blob',
       })
-          .then(({ headers, data }) => {
-            const blob = new Blob([data], { type: headers['content-type'] });
-            let imageDiv = document.createElement('img');
-            let imageBlog = null;
+        .then(({ headers, data }) => {
+          const blob = new Blob([data], { type: headers['content-type'] });
+          let imageDiv = document.createElement('img');
+          let imageBlog = null;
 
-            imageBlog = window.URL.createObjectURL(blob);
-            imageDiv.src = imageBlog;
+          imageBlog = window.URL.createObjectURL(blob);
+          imageDiv.src = imageBlog;
+          imageDiv.className = this.getClassContainer();
+          imageDiv.draggable = false;
+          this.$refs.image.appendChild(imageDiv);
+          this.loading = false;
+        })
+        .catch(error => {
+          if (error && this.$refs.image) {
+            //defaulImage
+            let imageDiv = document.createElement('img');
+            imageDiv.src = this.file.thumb;
             imageDiv.className = this.getClassContainer();
             imageDiv.draggable = false;
             this.$refs.image.appendChild(imageDiv);
             this.loading = false;
-          })
-          .catch(error => {
-            if (error && this.$refs.image) {
-              //defaulImage
-              let imageDiv = document.createElement('img');
-              imageDiv.src = this.file.thumb;
-              imageDiv.className = this.getClassContainer();
-              imageDiv.draggable = false;
-              this.$refs.image.appendChild(imageDiv);
-              this.loading = false;
-            }
-          });
+          }
+        });
     } else {
       this.loading = false;
     }
@@ -275,10 +275,8 @@ export default {
       e.preventDefault();
       e.stopPropagation();
     },
-  },
-  filters: {
-    truncate: function(text, stop, clamp) {
-      return text.slice(0, stop) + (stop < text.length ? clamp || '...' : '');
+    truncateStr: function(text, stop) {
+      return text.slice(0, stop) + (stop < text.length ? '...' : '');
     },
   },
   watch: {
@@ -326,7 +324,6 @@ export default {
   padding-right: 0.5rem;
   padding-top: 0.5rem;
   padding-bottom: 0.25rem;
-  background-color: #e3e7eb;
   border-bottom-left-radius: 0.5rem;
 }
 </style>

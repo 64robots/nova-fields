@@ -1,22 +1,22 @@
 <template>
   <portal to="modals" name="Modal FileManager" transition="fade-transition">
     <Modal
-        data-testid="confirm-action-modal"
-        tabindex="-1"
-        role="dialog"
-        :closes-via-backdrop="true"
-        @modal-close="handleClose"
-        show="true"
-        size="5xl"
-        v-if="active"
-        class="z-100"
+      data-testid="confirm-action-modal"
+      tabindex="-1"
+      role="dialog"
+      :closes-via-backdrop="true"
+      @modal-close="handleClose"
+      show="true"
+      size="5xl"
+      v-if="active"
+      class="z-100"
     >
       <portal-target name="portal-filemanager">
 
       </portal-target>
 
-      <div class="bg-white rounded-lg shadow-lg">
-        <div class="bg-30 flex flex-wrap border-b border-70">
+      <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg">
+        <div class="flex flex-wrap border-b border-70">
           <div class="md:w-3/4 px-4 py-3 ">
             {{ __('FileManager') }}
           </div>
@@ -58,7 +58,7 @@
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
                        width="20" height="20">
                     <path
-                        d="M1 4h2v2H1V4zm4 0h14v2H5V4zM1 9h2v2H1V9zm4 0h14v2H5V9zm-4 5h2v2H1v-2zm4 0h14v2H5v-2z"/>
+                      d="M1 4h2v2H1V4zm4 0h14v2H5V4zM1 9h2v2H1V9zm4 0h14v2H5V9zm-4 5h2v2H1v-2zm4 0h14v2H5v-2z"/>
                   </svg>
                 </button>
 
@@ -68,10 +68,10 @@
                   Add images
                 </button>
 
-                <button title="Paste to this directory" :disabled="isMoveFiles" v-if="movePath.length > 0 && moveType != null" type="button" class="btn btn-default btn-primary mr-3" @click="move">
+                <button title="Paste to this directory" :disabled="isMoveFiles" v-if="movePath.length > 0 && moveType != null" type="button" class="shadow relative bg-primary-500 hover:bg-primary-400 text-white dark:text-gray-900 cursor-pointer rounded text-sm font-bold focus:outline-none focus:ring ring-primary-200 dark:ring-gray-600 inline-flex items-center justify-center h-9 px-3 shadow relative bg-primary-500 hover:bg-primary-400 text-white dark:text-gray-900 mr-3" @click="move">
                   Paste
                 </button>
-                <button title="Paste to this directory" :disabled="isMoveFiles" v-if="movePath.length > 0 && moveType != null" type="button" class="btn btn-default btn-primary mr-3" @click="clearClipboard">
+                <button title="Clear Clipboard" :disabled="isMoveFiles" v-if="movePath.length > 0 && moveType != null" type="button" class="shadow relative bg-primary-500 hover:bg-primary-400 text-white dark:text-gray-900 cursor-pointer rounded text-sm font-bold focus:outline-none focus:ring ring-primary-200 dark:ring-gray-600 inline-flex items-center justify-center h-9 px-3 shadow relative bg-primary-500 hover:bg-primary-400 text-white dark:text-gray-900 mr-3" @click="clearClipboard">
                   Clear Clipboard
                 </button>
               </div>
@@ -83,8 +83,8 @@
                     <div class="relative">
                       <template v-if="showFilters">
                         <select
-                            class="pl-search form-control form-input form-input-bordered w-full"
-                            v-model="filterBy">
+                          class="pl-search form-control form-input form-input-bordered w-full"
+                          v-model="filterBy">
                           <option value>{{ __('Filter by ...') }}</option>
                           <option v-for="(filter, key) in filters"
                                   :key="'filter_' + key" :value="key">{{
@@ -118,32 +118,32 @@
             </div>
 
             <manager
-                ref="manager"
-                :home="home"
-                :files="files"
-                :path="path"
-                :current="currentPath"
-                :parent="parent"
-                :view="view"
-                :selector="value"
-                :popupLoaded="true"
-                :loading="loadingfiles"
-                :search="search"
-                :filter="filter"
-                :multi-selecting="selectMultiple"
-                :selected-files="selectedFiles"
-                :filters="filteredExtensions"
-                :buttons="buttons"
-                v-on:goToFolderManager="goToFolder"
-                v-on:goToFolderManagerNav="goToFolderNav"
-                v-on:refresh="refreshCurrent"
-                v-on:selectFile="setFileValue"
-                v-on:showInfoItem="showInfoItem"
-                v-on:uploadFiles="uploadFiles"
-                v-on:rename="openRenameModal"
-                v-on:delete="openDeleteModal"
-                v-on:move="setMovePath"
-                v-on:select="select"
+              ref="manager"
+              :home="home"
+              :files="files"
+              :path="path"
+              :current="currentPath"
+              :parent="parent"
+              :view="view"
+              :selector="value"
+              :popupLoaded="true"
+              :loading="loadingfiles"
+              :search="search"
+              :filter="filter"
+              :multi-selecting="selectMultiple"
+              :selected-files="selectedFiles"
+              :filters="filteredExtensions"
+              :buttons="buttons"
+              v-on:goToFolderManager="goToFolder"
+              v-on:goToFolderManagerNav="goToFolderNav"
+              v-on:refresh="refreshCurrent"
+              v-on:selectFile="setFileValue"
+              v-on:showInfoItem="showInfoItem"
+              v-on:uploadFiles="uploadFiles"
+              v-on:rename="openRenameModal"
+              v-on:delete="openDeleteModal"
+              v-on:move="setMovePath"
+              v-on:select="select"
             />
 
             <rename-modal ref="renameModal" v-on:refresh="refreshCurrent"/>
@@ -285,32 +285,20 @@ export default {
     moveData(moveType,oldPath, newPath) {
       this.isMoveFiles = true;
       return api
-          .moveFile(moveType,oldPath, newPath)
-          .then(result => {
-            if (result.success == true) {
-              this.refreshCurrent();
-              this.$toasted.show(this.__('File moved successfully'), {
-                type: 'success',
-                duration: 2000,
-              });
-            } else {
-              this.$toasted.show(
-                  this.__('Error opening the file. Check your permissions'),
-                  {
-                    type: 'error',
-                    duration: 3000,
-                  }
-              );
-            }
-            this.isMoveFiles = false;
-          })
-          .catch(error => {
-            this.isMoveFiles = false;
-            this.$toasted.show(error.response.data.message, {
-              type: 'error',
-              duration: 3000,
-            });
-          });
+        .moveFile(moveType,oldPath, newPath)
+        .then(result => {
+          if (result.success == true) {
+            this.refreshCurrent();
+            Nova.success(this.__('File moved successfully'), { type: 'success' });
+          } else {
+            Nova.error(this.__('Error opening the file. Check your permissions'), { type: 'error' });
+          }
+          this.isMoveFiles = false;
+        })
+        .catch(error => {
+          this.isMoveFiles = false;
+          Nova.error(this.__(error.response.data.message, { type: 'error' }));
+        });
     },
     getData(folder) {
       this.files = [];
@@ -319,25 +307,25 @@ export default {
       this.loadingfiles = true;
 
       api.getDataField(this.resource, this.name, folder, this.filter,this.selectMultiple)
-          .then(result => {
-            this.files = result.files;
-            this.path = result.path;
-            this.filters = result.filters;
+        .then(result => {
+          this.files = result.files;
+          this.path = result.path;
+          this.filters = result.filters;
 
-            if (folder != this.defaultFolder) {
-              this.parent = result.parent;
-            }
+          if (folder != this.defaultFolder) {
+            this.parent = result.parent;
+          }
 
-            this.loadingfiles = false;
-          })
-          .catch(() => {
-            this.loadingfiles = false;
-            this.filters = [];
-            Nova.error(
-                this.__('Error reading the folder. Please check your logs'),
-                {type: 'error'}
-            );
-          });
+          this.loadingfiles = false;
+        })
+        .catch(() => {
+          this.loadingfiles = false;
+          this.filters = [];
+          Nova.error(
+            this.__('Error reading the folder. Please check your logs'),
+            {type: 'error'}
+          );
+        });
     },
 
     showModalCreateFolder() {
