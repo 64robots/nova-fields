@@ -21,6 +21,9 @@
           @open="handleOpen"
       >
       </Multiselect>
+      <p v-if="hasError" class="my-2 text-red-600">
+        {{ firstError }}
+      </p>
     </template>
   </r64-default-field>
 </template>
@@ -32,7 +35,7 @@ import R64Field from '../../mixins/R64Field'
 
 export default {
   mixins: [FormField, HandlesValidationErrors,R64Field],
-  props: ['resourceName', 'resourceId', 'field'],
+  props: ['resourceName', 'resourceId', 'field','Errors'],
   components: { Multiselect },
   data() {
     return {
