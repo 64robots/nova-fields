@@ -1,7 +1,7 @@
 {
   "novaMultiselect.maxElements": "Max of :max selected.",
   "novaMultiselect.noResult": "No results found.",
-  "novaMultiselect.noOptions": "List is empty.",
+  "novaMultiselect.noOptions": "Start typing to see options",
   "novaMultiselect.limitText": "and :count more",
   "novaMultiselect.placeholder": "Select option(s)",
   "novaMultiselect.nItemsSelected": ":count items selected",
