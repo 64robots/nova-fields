@@ -1,16 +1,6 @@
 <template>
   <portal to="modals" name="Modal FileManager" transition="fade-transition">
-    <Modal
-      data-testid="confirm-action-modal"
-      tabindex="-1"
-      role="dialog"
-      :closes-via-backdrop="true"
-      @modal-close="handleClose"
-      show="true"
-      size="5xl"
-      v-if="active"
-      class="z-100"
-    >
+    <Modal data-testid="confirm-action-modal" tabindex="-1" role="dialog" :closes-via-backdrop="true" @modal-close="handleClose" show="true" size="5xl" v-if="active" class="z-100">
       <portal-target name="portal-filemanager">
 
       </portal-target>
@@ -117,8 +107,7 @@
               </div>
             </div>
 
-            <manager
-              ref="manager"
+            <manager ref="manager"
               :home="home"
               :files="files"
               :path="path"
