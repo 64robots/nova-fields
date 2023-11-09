@@ -30,7 +30,7 @@
             <path fill="#B3C1D1"  d="M20 6a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6c0-1.1.9-2 2-2h7.41l2 2H20zM4 6v12h16V8h-7.41l-2-2H4z"/>
           </svg>
 
-          <div class="actions-grid absolute pr-2 pt-2 hidden bg-gray-500 dark:bg-gray-700"
+          <div class="actions-grid absolute pr-2 pt-2 dark:bg-gray-700"
                :class="{ 'hidden': !multiSelecting }"
           >
             <div v-if="multiSelecting">
