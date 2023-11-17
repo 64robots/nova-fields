@@ -34,7 +34,7 @@
 
         <a
             v-if="field.nullable && !isReadonly"
-            @click.prevent="$refs.dateTimePicker.clear()"
+            @click.prevent="localizedValue = value = ''"
             href="#"
             :title="__('Clear value')"
             tabindex="-1"
@@ -149,6 +149,14 @@ export default {
     defaultMinute() {
       return this.field.defaultMinute || 0
     },
-  }
+  },
+  watch: {
+    localizedValue(newValue) {
+      this.localizedValue = newValue
+    },
+    value(newValue) {
+      this.value = newValue
+    }
+  }  
 }
 </script>
