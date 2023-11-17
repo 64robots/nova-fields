@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import moment from 'moment';
 import flatpickr from 'flatpickr'
 import 'flatpickr/dist/themes/airbnb.css'
 
@@ -120,9 +121,7 @@ export default {
     },
 
     getUpdatedValue(value) {
-      if (this.flatpickr) {
-        this.flatpickr.setDate(value);
-      }
+        this.$refs.datePicker.value = value;
     },
 
     clear() {
