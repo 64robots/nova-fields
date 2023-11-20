@@ -34,7 +34,7 @@
 
         <a
             v-if="field.nullable && !isReadonly"
-            @click.prevent="localizedValue = value = ''"
+            @click.prevent="$refs.dateTimePicker.clear()"
             href="#"
             :title="__('Clear value')"
             tabindex="-1"
@@ -68,7 +68,7 @@ import DateTimePicker from "./DateTimePicker";
 export default {
   mixins: [HandlesValidationErrors, DependentFormField,R64Field],
 
-  data: () => ({ localizedValue: '', isReadonly: false }),
+  data: () => ({ localizedValue: ''}),
 
   components: { DateTimePicker },
 
@@ -150,13 +150,6 @@ export default {
       return this.field.defaultMinute || 0
     },
   },
-  watch: {
-    localizedValue(newValue) {
-      this.localizedValue = newValue
-    },
-    value(newValue) {
-      this.value = newValue
-    }
-  }  
+
 }
 </script>
