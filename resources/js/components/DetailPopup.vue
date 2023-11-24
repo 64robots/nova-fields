@@ -374,7 +374,7 @@ export default {
         this.$nextTick(function() {
           setTimeout(() => {
             // this.cssType = 'items-center';
-            new Plyr(this.$refs.video);
+            // new Plyr(this.$refs.video);
           });
         });
       }
