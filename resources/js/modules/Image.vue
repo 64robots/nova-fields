@@ -22,7 +22,10 @@
                     v-if="preview"
                     @keydown.esc="closePreview"
             >
-                <template slot-scope="scope">
+                <!-- <template slot-scope="scope">
+                    <img :src="file.image" :key="file.id">
+                </template> -->
+                <template #default="scope">
                     <img :src="file.image" :key="file.id">
                 </template>
             </viewer>
@@ -88,7 +91,7 @@ export default {
             toggleOnDblclick: true,
             url: 'data-source',
         },
-        $viewer: null,
+        // $viewer: null,
         images: [],
     }),
 
