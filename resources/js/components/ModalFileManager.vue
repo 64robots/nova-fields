@@ -350,6 +350,7 @@ export default {
 
     closeModal() {
       this.$emit('close-modal');
+      document.body.style.overflow = 'auto';
     },
 
     viewAs(type) {

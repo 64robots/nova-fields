@@ -45,7 +45,9 @@ export default {
   },
   methods: {
     openModalFilemanager() {
+      document.body.style.overflow = 'hidden';
       this.$emit('open-modal');
+      
     },
   },
 };
