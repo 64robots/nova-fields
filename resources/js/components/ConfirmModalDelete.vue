@@ -28,7 +28,7 @@
             <p class="text-sm text-80 mt-2">{{ __('Remember: The folder and all his contents will be delete from your storage') }}</p>
             <div class="deleteModalPassword">
               <label for="password">Enter Password : </label>
-              <input type="password" name="password" class="w-full h-full form-control form-input form-input-bordered py-3 dark:bg-gray-800" placeholder="Enter Password" id="password" v-model="password">
+              <input type="password" autocomplete="off" name="password" class="w-full h-full form-control form-input form-input-bordered py-3 dark:bg-gray-800" placeholder="Enter Password" id="password" v-model="password">
             </div>
           </template>
           <template v-else>

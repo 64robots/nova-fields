@@ -22,7 +22,7 @@
         </div>
 
         <div class="actions-grid absolute pr-2 pt-2 pb-1 pl-2 dark:bg-gray-700"
-             :class="{ 'hidden': !multiSelecting , 'bg-gray-500' : shouldShowHover}"
+             :class="{ 'hidden': !multiSelecting , '' : shouldShowHover}"
         >
           <div v-if="multiSelecting">
             <input :checked="selected" type="checkbox">
