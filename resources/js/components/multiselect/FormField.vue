@@ -12,14 +12,16 @@
       <!-- Multi select field -->
       <Multiselect
           v-model="value"
+          mode="tags"
+          :filter-results="false"
+          :resolve-on-load="false"
           :mode="field.mode"
           @input="handleChange"
           @open="handleOpen"
           @search-change="tryToFetchOptions"
-          :delay="0"
           :object="true"
           :min-chars="1"
-          :close-on-select="field.max === 1 || !isMultiselect"
+          :close-on-select="field.max === 1 && !isMultiselect"
           :max="field.max > 0 ? field.max : -1"
           :searchable="true"
           :create-option="field.createOption"
