@@ -314,6 +314,7 @@ export default {
     selectFile() {
       this.closePreview();
       this.$emit('selectFile', this.info);
+      document.body.style.overflow = 'auto';
     },
 
     handleClose() {
