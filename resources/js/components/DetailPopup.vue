@@ -133,7 +133,8 @@
                   <div class="flex flex-wrap items-stretch w-full mb-4 relative">
                     <input type="text" class="dark:bg-gray-800 flex-shrink flex-grow flex-auto text-xs leading-normal w-px flex-1 border border-70 rounded rounded-r-none px-1 relative" :value="info.url" disabled>
                     <div class="flex -mr-px">
-                      <button class="dark:bg-gray-900 copy flex items-center leading-normal rounded rounded-l-none border border-l-0 border-70 px-3 whitespace-no-wrap text-grey-dark text-xs" v-copy="info.url" v-copy:callback="onCopy">{{ __('Copy') }}</button>
+                      <!-- <button class="dark:bg-gray-900 copy flex items-center leading-normal rounded rounded-l-none border border-l-0 border-70 px-3 whitespace-no-wrap text-grey-dark text-xs" v-copy="info.url" v-copy:callback="onCopy">{{ __('Copy') }}</button> -->
+                      <button class="dark:bg-gray-900 copy flex items-center leading-normal rounded rounded-l-none border border-l-0 border-70 px-3 whitespace-no-wrap text-grey-dark text-xs" @click="doCopy">{{ __('Copy') }}</button>
                     </div>
                   </div>
                 </div>
@@ -190,6 +191,7 @@ import ImageInfo from '../modules/Image';
 import ConfirmationButton from './ConfirmationButton';
 import Tree from "vue3-treeview";
 import Copy from "vue3-copy";
+import { copyText } from 'vue3-clipboard';
 import Plyr from 'plyr';
 // import 'vue-plyr/dist/vue-plyr.css'
 import { Codemirror } from 'vue-codemirror'
@@ -283,7 +285,15 @@ export default {
     onCopy() {
       Nova.success(this.__('Text copied to clipboard'), { type: 'success' });
     },
-
+    doCopy() {
+      copyText(this.info.url, undefined, (error, event) => {
+        if (error) {
+          console.log(error)
+        } else {
+          Nova.success(this.__('Text copied to clipboard'), { type: 'success' });
+        }
+      })
+    },
     removeFilePopup() {
       this.closePreview();
       this.$refs.confirmDelete.openModal(this.info.type, this.info.path);

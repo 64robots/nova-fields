@@ -48,6 +48,7 @@
     "vue-multiselect": "^2.1.7",
     "vue2-dropzone": "^3.6.0",
     "vue3-click-away": "^1.2.4",
+    "vue3-clipboard": "^1.0.0",
     "vue3-copy": "^1.0.1",
     "vue3-treeview": "^0.4.0",
     "vuex": "^4.1.0"
