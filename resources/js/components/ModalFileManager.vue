@@ -395,6 +395,7 @@ export default {
       this.selectedFiles.push(file);
     },
     addImages: function () {
+      document.body.style.overflow = 'auto';
       let selectedImages = this.selectedFiles;
       this.selectedFiles = [];
       this.multiSelecting = false
