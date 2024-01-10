@@ -42,7 +42,7 @@
       >
         {{ __('Customize') }}
       </button>
-      <p v-if="hasError" class="my-2 text-danger">
+      <p v-if="hasError" class="my-2 help-text help-text-error">
         {{ firstError }}
       </p>
     </template>
