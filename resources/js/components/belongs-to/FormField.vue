@@ -118,7 +118,7 @@
 
       <p
         v-if="hasError"
-        class="my-2 text-danger"
+        class="my-2 text-red-500"
       >{{ firstError }}</p>
     </template>
   </r64-default-field>

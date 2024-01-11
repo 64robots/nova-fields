@@ -20,7 +20,7 @@
         @input="$emit('input', $event.target.value)"
       />
 
-      <p v-if="hasError" class="my-2 text-danger">
+      <p v-if="hasError" class="my-2 text-red-500">
         {{ firstError }}
       </p>
     </template>

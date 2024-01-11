@@ -15,7 +15,7 @@
         v-bind="extraAttributes"
         :disabled="field.readonly"
       />
-      <p v-if="hasError" class="my-2 text-danger">
+      <p v-if="hasError" class="my-2 text-red-500">
         {{ firstError }}
       </p>
     </template>

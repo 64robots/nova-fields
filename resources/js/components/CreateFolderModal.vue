@@ -17,7 +17,7 @@
                  class="w-full h-full form-control form-input form-input-bordered py-3 dark:bg-gray-800"
                  :placeholder="__('Write a folder name')" v-model="folderName" autofocus
                  required v-on:keyup.enter="createFolder">
-          <p class="my-2 text-danger" v-if="error">{{ errorMsg }}</p>
+          <p class="my-2 text-red-500" v-if="error">{{ errorMsg }}</p>
         </div>
 
         <div class="bg-30 dark:bg-gray-700 px-6 py-3 flex rounded-lg shadow-lg">

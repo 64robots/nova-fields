@@ -17,7 +17,7 @@
         :disabled="field.readonly"
       />
 
-      <p v-if="hasError" class="my-2 text-danger" v-html="firstError" />
+      <p v-if="hasError" class="my-2 text-red-500" v-html="firstError" />
     </template>
   </r64-default-field>
 </template>
