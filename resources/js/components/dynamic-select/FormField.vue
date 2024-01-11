@@ -21,7 +21,7 @@
           @open="handleOpen"
       >
       </Multiselect>
-      <p v-if="hasError" class="my-2 text-red-600">
+      <p v-if="hasError" class="my-2 text-red-500">
         {{ firstError }}
       </p>
     </template>

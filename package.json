@@ -43,6 +43,7 @@
     "urijs": "^1.19.11",
     "util": "^0.12.5",
     "v-viewer": "^3.0.11",
+    "viewerjs": "^1.11.6",
     "vue-codemirror": "^5.1.0",
     "vue-draggable-next": "^2.1.1",
     "vue-multiselect": "^2.1.7",

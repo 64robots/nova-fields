@@ -24,7 +24,7 @@
         @input="handleChange"
       />
 
-      <p v-if="hasError" class="my-2 help-text help-text-error">
+      <p v-if="hasError" class="my-2 text-red-500">
         {{ firstError }}
       </p>
     </template>
