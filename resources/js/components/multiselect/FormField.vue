@@ -31,6 +31,7 @@
           ref="multiselect"
           :loading="isLoading"
           :clearOnSelect="field.clearOnSelect || false"
+          :class="[errorClasses, inputClasses, { 'form-input-border-error': hasError }]"
       >
         <template slot="noResults">
           {{ __('novaMultiselect.noResult') }}

@@ -20,7 +20,7 @@
           :pattern="inputPattern"
           :disabled="readOnly"
           v-model="value"
-          :class="[errorClasses, inputClasses]"
+          :class="[errorClasses, inputClasses, { 'form-input-border-error': hasError }]"
           :placeholder="placeholder"
 
       />

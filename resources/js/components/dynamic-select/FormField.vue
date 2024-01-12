@@ -19,6 +19,7 @@
           placeholder="Choose an option"
           @input="onChange"
           @open="handleOpen"
+          :class="[errorClasses, inputClasses, { 'form-input-border-error': hasError }]"
       >
       </Multiselect>
       <p v-if="hasError" class="my-2 text-red-500">
