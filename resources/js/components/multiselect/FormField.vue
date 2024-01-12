@@ -12,7 +12,6 @@
       <!-- Multi select field -->
       <Multiselect
           v-model="value"
-          mode="tags"
           :filter-results="false"
           :resolve-on-load="false"
           :mode="field.mode"
