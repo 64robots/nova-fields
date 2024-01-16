@@ -1,4 +1,11 @@
 /*!
+   * clipboard.js v2.0.6
+   * https://clipboardjs.com/
+   * 
+   * Licensed MIT © Zeno Rocha
+   */
+
+/*!
   * vue-draggable-next v2.2.0
   * (c) 2023 Anish George
   * @license MIT
@@ -75,7 +82,7 @@
 * Surmon <https://github.com/surmon-china>
 */
 
-/*! Element Plus Icons Vue v2.1.0 */
+/*! Element Plus Icons Vue v2.3.1 */
 
 /*! https://mths.be/punycode v1.4.0 by @mathias */
 
