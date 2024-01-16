@@ -386,4 +386,14 @@ class Multiselect extends NovaField implements RelatableField
     {
         return $this->withMeta(['asHtml' => true]);
     }
+
+    /**
+     * Display clear all selection icon
+     *
+     * @return void
+     */
+    public function canClear($bool = true)
+    {
+        return $this->withMeta(['canClear' => $bool]);
+    }
 }
