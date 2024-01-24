@@ -53,7 +53,8 @@
 
       <template v-if="!files.error">
         <template v-if="view == 'grid'">
-          <div v-if="parent.id" :class="filemanagerClass" :key="parent.id">
+          <div class="w-full flex flex-wrap " :class="uploadingFiles ? 'file-hidden' : ''" >
+            <div v-if="parent.id" :class="filemanagerClass" :key="parent.id">
             <Folder v-drag-and-drop:folder :ref="'folder_' + parent.id" :file="parent" :data-key="parent.id"
               :class="{ 'loading': loadingInfo }" @goToFolderEvent="goToFolder" />
           </div>
@@ -73,6 +74,8 @@
                 @rename="rename" @delete="deleteData" @select="select" />
             </template>
           </div>
+          </div>
+          
         </template>
 
         <div class="p-2 w-full"  :class="uploadingFiles ? 'file-hidden' : ''" v-else-if="view == 'list'">

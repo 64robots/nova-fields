@@ -25,7 +25,7 @@
                 v-if="file.mime == 'image'"
                 :src="file.thumb"
                 class="block w-full flex-grow"
-                style="object-fit: contain; height: 160px"
+                style="object-fit: contain; height: 126px"
                 @load="imageOnLoad"
                 @error="imageOnError"
             />
