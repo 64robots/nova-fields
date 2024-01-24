@@ -1,24 +1,128 @@
 <template>
-  <div ref="fileManagerContainer" id="filemanager-manager-container" class="p-3"  :class="cssFilemenagerContainer" v-cloak>
+  <div ref="fileManagerContainer" id="filemanager-manager-container" class="p-3" :class="cssFilemenagerContainer" v-cloak>
     <nav class="bg-grey-light rounded font-sans w-full m-4">
-      <ol class="list-reset flex text-grey-dark" >
+      <ol class="list-reset flex text-grey-dark">
         <li><span class="text-blue font-bold cursor-pointer" @click="goToFolderNav(home)">{{ __('Home') }}</span></li>
         <li v-if="pathsLength > 0"><span class="mx-2">/</span></li>
 
-        <template v-for="(folder ,index) in path">
+        <template v-for="(folder, index) in path">
           <template v-if="checkIsLastItem(index)">
-            <li  v-bind:key="index"><span href="#" class="text-blue">{{ folder.name }}</span></li>
+            <li v-bind:key="index"><span href="#" class="text-blue">{{ folder.name }}</span></li>
           </template>
           <template v-else>
-            <li  v-bind:key="index"><span href="#" class="text-blue cursor-pointer font-bold" @click="goToFolder(folder.path)">{{ folder.name }}</span></li>
-            <li  v-bind:key="index+'_separator'"><span class="mx-2">/</span></li>
+            <li v-bind:key="index"><span href="#" class="text-blue cursor-pointer font-bold"
+                @click="goToFolder(folder.path)">{{ folder.name }}</span></li>
+            <li v-bind:key="index + '_separator'"><span class="mx-2">/</span></li>
           </template>
         </template>
       </ol>
     </nav>
+    <div class="p-2 overflow-y-auto flex flex-wrap relative min-h-40" style="height: 55vh">
+      <Heading v-if="files.error" level="3" class="w-full text-center py-4 px-2">
+        {{ __('You don\'t have permissions to view this folder') }}
+      </Heading>
 
-    <transition name="fade">
-      <template v-if="uploadingFiles">
+      <div v-if="loading" class="flex items-center justify-center flex-grow py-4 px-2">
+        <Loader/>
+      </div>
+
+      <div v-else>
+        <div v-if="uploadingFiles" class="overflow-y-auto p-4 absolute top-0 left-0 h-full w-full min-h-40] z-[100]">
+          <div class="
+                          bg-white dark:bg-gray-800 dark:color-white
+                          flex flex-wrap items-center rounded-lg border-2 border-gray-200 dark:border-gray-900 border-dashed h-full
+                      ">
+            <!-- <Upload :currentPath="current" @refreshFiles="$emit('refresh')" /> -->
+
+            <div class="w-full text-lg text-center my-4">
+              {{ __('Drop your files here!') }}
+            </div>
+          </div>
+        </div>
+
+        <div v-else-if="!files.length" class="w-full h-full flex flex-col items-center justify-center py-4">
+          <Heading level="3" class="w-full text-center mb-4">
+            {{ __(`No ${filter || 'files or folders'} in current directory`) }}
+          </Heading>
+
+          <DangerButton v-if="buttons.delete_folder && !filter" @click="removeDirectory">
+            {{ __('Remove directory') }}
+          </DangerButton>
+        </div>
+      </div>
+
+      <template v-if="!files.error">
+        <template v-if="view == 'grid'">
+          <div v-if="parent.id" :class="filemanagerClass" :key="parent.id">
+            <Folder v-drag-and-drop:folder :ref="'folder_' + parent.id" :file="parent" :data-key="parent.id"
+              :class="{ 'loading': loadingInfo }" @goToFolderEvent="goToFolder" />
+          </div>
+
+          <div v-for="file in filteredFiles" :key="file.id" :class="filemanagerClass">
+            <template v-if="file.type == 'file'">
+              <ImageLoader :ref="'file_' + file.id" :file="file" :key="file.id" :data-key="file.id" :view="view"
+                :multiSelecting="multiSelecting" :selectedFiles="selectedFiles" :deletePermission="buttons.delete_file"
+                :renamePermission="buttons.rename_file" :class="{ 'loading': loadingInfo }"
+                @missing="(value) => missing = value" @showInfo="showInfo" @rename="rename" @delete="deleteData"
+                @select="select" />
+            </template>
+            <template v-if="file.type == 'dir'">
+              <Folder :ref="'folder_' + file.id" :file="file" :key="file.id" :data-key="file.id" :view="view"
+                :multiSelecting="multiSelecting" :selectedFiles="selectedFiles" :deletePermission="buttons.delete_folder"
+                :renamePermission="buttons.rename_folder" :class="{ 'loading': loadingInfo }" @goToFolderEvent="goToFolder"
+                @rename="rename" @delete="deleteData" @select="select" />
+            </template>
+          </div>
+        </template>
+
+        <div class="p-2 w-full"  :class="uploadingFiles ? 'file-hidden' : ''" v-else-if="view == 'list'">
+          <table class="w-full table-default" v-if="files.length > 0">
+            <thead>
+              <tr>
+                <th width="30" v-if="multiSelecting"
+                  class="text-center p-2 whitespace-nowrap uppercase text-gray-500 text-xs tracking-wide"></th>
+                <th width="50" class="text-center p-2 whitespace-nowrap uppercase text-gray-500 text-xs tracking-wide">
+                </th>
+                <th class="p-2 whitespace-nowrap uppercase text-gray-500 text-xs tracking-wide">
+                  {{ __('Name') }}
+                </th>
+                <th class="text-center p-2 whitespace-nowrap uppercase text-gray-500 text-xs tracking-wide">
+                  {{ __('Size') }}
+                </th>
+                <th class="text-center p-2 whitespace-nowrap uppercase text-gray-500 text-xs tracking-wide">
+                  {{ __('Last Modification') }}
+                </th>
+                <th class="text-center p-2 whitespace-nowrap uppercase text-gray-500 text-xs tracking-wide"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <template v-if="parent.id">
+                <Folder :ref="'folder_' + parent.id" :key="parent.id" :data-key="parent.id" :file="parent" :view="view"
+                  :multiSelecting="multiSelecting" :class="{ 'loading': loadingInfo }" @goToFolderEvent="goToFolder" />
+              </template>
+
+              <template v-for="file in filteredFiles">
+                <template v-if="file.type == 'dir'">
+                  <Folder :ref="'folder_' + file.id" :file="file" :key="file.id" :data-key="file.id" :view="view"
+                    :multiSelecting="multiSelecting" :selectedFiles="selectedFiles"
+                    :deletePermission="buttons.delete_folder" :renamePermission="buttons.rename_folder"
+                    :class="{ 'loading': loadingInfo }" @goToFolderEvent="goToFolder" @rename="rename" @delete="deleteData"
+                    @select="select" />
+                </template>
+                <template v-if="file.type == 'file'">
+                  <ImageLoader :ref="'file_' + file.id" :file="file" :key="file.id" :data-key="file.id" :view="view"
+                    :multiSelecting="multiSelecting" :selectedFiles="selectedFiles"
+                    :deletePermission="buttons.delete_file" :renamePermission="buttons.rename_file"
+                    :class="{ 'loading': loadingInfo }" @missing="(value) => missing = value" @showInfo="showInfo"
+                    @rename="rename" @delete="deleteData" @select="select" />
+                </template>
+              </template>
+            </tbody>
+          </table>
+        </div>
+      </template>
+    </div>
+    <!-- <template v-if="uploadingFiles">
         <div class="px-2 overflow-y-auto files">
           <div class="drop-files flex flex-wrap items-center border-2 border-primary border-dashed -mx-2">
             <div class="w-full text-lg text-center my-4">
@@ -26,9 +130,9 @@
             </div>
           </div>
         </div>
-      </template>
+      </template> -->
 
-      <div v-else class="px-2 overflow-y-auto files">
+    <!-- <div v-else class="px-2 overflow-y-auto files">
         <div class="flex flex-wrap -mx-2">
           <template v-if="files.error">
             <div class="w-full text-lg text-center my-4">
@@ -190,8 +294,7 @@
             </template>
           </template>
         </div>
-      </div>
-    </transition>
+      </div> -->
   </div>
 </template>
 
@@ -204,11 +307,14 @@ import ImageLoader from '../modules/ImageLoader';
 import Folder from '../modules/Folder';
 import Loading from './Loading';
 import { DragAndDrop } from '../tools/DragAndDrop';
+import Upload from "./Upload";
+
 
 export default {
   name: 'Manager',
 
   components: {
+    Upload,
     ImageLoader,
     Folder,
     Loading,
@@ -295,6 +401,8 @@ export default {
     currentDraggedFile: null,
     uploadingFiles: false,
     firstUploadFolder: null,
+    dragCounter: 0,
+
   }),
 
   directives: {
@@ -321,8 +429,8 @@ export default {
           this.$emit('goToFolderManager', this.getParentFolder());
         } else {
           Nova.error(
-              this.__('Error removing the folder. Please check permissions'),
-              { type: 'error' }
+            this.__('Error removing the folder. Please check permissions'),
+            { type: 'error' }
           )
         }
       });
@@ -331,22 +439,22 @@ export default {
     showInfo(file) {
       file.loading = true;
       return api
-          .getInfo(file.path)
-          .then(result => {
-            this.$emit('showInfoItem', result);
-            file.loading = false;
-          })
-          .catch(error => {
-            file.loading = false;
-            let errorMessage = this.__('Error opening the file. Check your logs');
-            if (error.response.data) {
-              errorMessage = error.response.data.message;
-            }
+        .getInfo(file.path)
+        .then(result => {
+          this.$emit('showInfoItem', result);
+          file.loading = false;
+        })
+        .catch(error => {
+          file.loading = false;
+          let errorMessage = this.__('Error opening the file. Check your logs');
+          if (error.response.data) {
+            errorMessage = error.response.data.message;
+          }
 
-            Nova.error(errorMessage, {
-              type: 'error',
-            })
-          });
+          Nova.error(errorMessage, {
+            type: 'error',
+          })
+        });
     },
 
     closePreview() {
@@ -369,32 +477,59 @@ export default {
 
       let filemanagerContainer = document.querySelector('#filemanager-manager-container');
 
+      // filemanagerContainer.addEventListener('dragenter', e => {
+      //   e.preventDefault();
+      //   if (this.currentDraggedFile === null) {
+      //     this.uploadingFiles = true;
+      //     this.cssDragAndDrop = 'inside';
+
+      //     let dropperContainer = document.querySelector('.drop-files');
+      //     this.droppedListener(dropperContainer);
+      //   }
+      // });
+
+      // filemanagerContainer.addEventListener('dragleave', e => {
+      //   e.preventDefault();
+      //   this.uploadingFiles = false;
+      //   this.cssDragAndDrop = 'outside';
+      // });
+
+      // filemanagerContainer.addEventListener('dragover', e => {
+      //   e.preventDefault();
+      //   if (this.currentDraggedFile === null) {
+      //     this.uploadingFiles = true;
+      //     this.cssDragAndDrop = 'inside';
+      //     let dropperContainer = document.querySelector('.drop-files');
+      //     this.droppedListener(dropperContainer);
+      //   }
+      // });
       filemanagerContainer.addEventListener('dragenter', e => {
         e.preventDefault();
+        this.dragCounter++;
         if (this.currentDraggedFile === null) {
           this.uploadingFiles = true;
           this.cssDragAndDrop = 'inside';
-
-          let dropperContainer = document.querySelector('.drop-files');
-          this.droppedListener(dropperContainer);
+          this.droppedListener(filemanagerContainer);
         }
       });
-
       filemanagerContainer.addEventListener('dragleave', e => {
-        e.preventDefault();
-        this.uploadingFiles = false;
-        this.cssDragAndDrop = 'outside';
+        this.dragCounter--;
+        if (this.dragCounter <= 0) {
+          e.preventDefault();
+          this.uploadingFiles = false;
+          this.cssDragAndDrop = 'outside';
+          this.currentDraggedFile = null;
+        }
       });
-
       filemanagerContainer.addEventListener('dragover', e => {
         e.preventDefault();
         if (this.currentDraggedFile === null) {
           this.uploadingFiles = true;
           this.cssDragAndDrop = 'inside';
-          let dropperContainer = document.querySelector('.drop-files');
-          this.droppedListener(dropperContainer);
+          this.droppedListener(filemanagerContainer);
         }
       });
+
     },
 
     droppedListener(element) {
@@ -412,6 +547,11 @@ export default {
       let files = await this.getFilesAsync(e.dataTransfer);
 
       this.uploadFiles(files);
+      this.uploadingFiles = false;
+      this.cssDragAndDrop = 'outside';
+      this.currentDraggedFile = null;
+      this.dragCounter = 0;
+
     },
 
     async getFilesAsync(dataTransfer) {
@@ -471,7 +611,7 @@ export default {
         }
         function readReaderContent(reader) {
           reading++;
-          reader.readEntries(function(entries) {
+          reader.readEntries(function (entries) {
             reading--;
             for (const entry of entries) {
               readEntry(entry);
@@ -539,30 +679,30 @@ export default {
 
     moveFile(oldPath, newPath) {
       return api
-          .moveFile(oldPath, newPath)
-          .then(result => {
-            if (result.success == true) {
-              this.refresh();
-              Nova.success(this.__('File moved successfully'), {
-                type: 'success',
-                duration: 2000,
-              });
-            } else {
-              Nova.error(
-                  this.__('Error opening the file. Check your permissions'),
-                  {
-                    type: 'error',
-                    duration: 3000,
-                  }
-              );
-            }
-          })
-          .catch(error => {
-            Nova.error(error.response.data.message, {
-              type: 'error',
-              duration: 3000,
+        .moveFile(oldPath, newPath)
+        .then(result => {
+          if (result.success == true) {
+            this.refresh();
+            Nova.success(this.__('File moved successfully'), {
+              type: 'success',
+              duration: 2000,
             });
+          } else {
+            Nova.error(
+              this.__('Error opening the file. Check your permissions'),
+              {
+                type: 'error',
+                duration: 3000,
+              }
+            );
+          }
+        })
+        .catch(error => {
+          Nova.error(error.response.data.message, {
+            type: 'error',
+            duration: 3000,
           });
+        });
     },
 
     getFileById(type, id) {
@@ -601,13 +741,13 @@ export default {
     },
   },
 
-  updated: function() {
+  updated: function () {
     //
   },
 
   mounted() {
     if (!this.eventsLoaded) {
-      this.$nextTick(function() {
+      this.$nextTick(function () {
         setTimeout(() => {
           this.setDragAndDropEvents();
           // this.dragFilesEvents();
@@ -737,14 +877,20 @@ export default {
     }
   }
 }
-.my-4{
+
+.my-4 {
   margin-top: 1rem;
   margin-bottom: 1rem;
 }
-.w-1\/6{
+
+.w-1\/6 {
   width: 16.66667%;
 }
-.w-16{
+
+.w-16 {
   width: 4rem;
+}
+.file-hidden{
+  display: none;;
 }
 </style>
