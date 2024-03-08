@@ -260,6 +260,7 @@ export default {
 
   created() {
     this.setCurrentPath();
+    window.storeageDisk = this.field.storageDisk
   },
 };
 </script>

@@ -18,9 +18,10 @@ class FilemanagerToolController extends Controller
     /**
      * @param FileManagerService $filemanagerService
      */
-    public function __construct(FileManagerService $filemanagerService)
+    public function __construct()
     {
-        $this->service = $filemanagerService;
+        $this->service = app()->make(FileManagerService::class);
+        $this->service->setDisk(request()->get('storage_disk',config('filemanager.cdn_file', 'public')));
     }
 
     /**

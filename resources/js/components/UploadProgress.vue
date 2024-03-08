@@ -134,6 +134,8 @@ export default {
       data.append('file', file.file);
       data.append('current', this.current + '/' + filePath);
       data.append('visibility', this.visibility);
+      data.append('storage_disk', window.storeageDisk);
+
 
       if (this.type == 'files') {
         data.append('rules', JSON.stringify(this.rules));
