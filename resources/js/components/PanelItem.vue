@@ -43,17 +43,17 @@ export default {
 
     labelClasses: {
       type: String,
-      default: 'w-1/4 py-4'
+      default: 'md:w-1/4 md:py-3'
     },
 
     fieldClasses: {
       type: String,
-      default: 'w-3/4 py-4'
+      default: 'md:w-3/4 md:py-3 break-all lg:break-words'
     },
 
     wrapperClasses: {
       type: String,
-      default: 'flex border-b border-40'
+      default: 'flex'
     },
 
     hideLabel: {

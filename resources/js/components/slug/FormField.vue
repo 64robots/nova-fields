@@ -1,0 +1,149 @@
+<template>
+  <r64-default-field
+      :field="field"
+      :hide-label="hideLabelInForms"
+      :field-classes="fieldClasses"
+      :wrapper-classes="wrapperClasses"
+      :label-classes="labelClasses"
+  >
+    <template #field>
+      <input
+          ref="theInput"
+          v-bind="extraAttributes"
+
+          :id="field.name"
+          :dusk="field.attribute"
+          :type="inputType"
+          :min="inputMin"
+          :max="inputMax"
+          :step="inputStep"
+          :pattern="inputPattern"
+          :disabled="readOnly"
+          v-model="value"
+          :class="[errorClasses, inputClasses, { 'form-input-border-error': hasError }]"
+          :placeholder="placeholder"
+
+      />
+
+      <button
+          class="
+            btn btn-link
+            rounded
+            px-1
+            py-1
+            inline-flex
+            text-sm text-primary
+            ml-1
+            mt-2
+          "
+          v-if="field.showCustomizeButton && field.showCustomize"
+          type="button"
+          @click="toggleCustomizeClick"
+      >
+        {{ __('Customize') }}
+      </button>
+      <p v-if="hasError" class="my-2 text-red-500">
+        {{ firstError }}
+      </p>
+    </template>
+  </r64-default-field>
+</template>
+
+<script>
+import { FormField, HandlesValidationErrors } from 'laravel-nova'
+import R64Field from '../../mixins/R64Field'
+import slugify from '../../util/slugify'
+import mitt from 'mitt'
+export default {
+  mixins: [HandlesValidationErrors, FormField,R64Field],
+
+  data: () => ({
+    isListeningToChanges: false,
+  }),
+
+  mounted() {
+    const listenToCreateModalClosed = () => {
+      if (this.isListeningToChanges === true) {
+        this.registerChangeListener()
+      }
+    }
+
+    Nova.$on('create-relation-modal-opened', this.removeChangeListener)
+    Nova.$on('create-relation-modal-closed', listenToCreateModalClosed)
+
+    if (this.shouldRegisterInitialListener) {
+      this.registerChangeListener()
+    }else if(!this.field.showCustomize){
+      this.registerChangeListener()
+      this.isListeningToChanges = false
+      this.field.readonly = false
+      this.field.extraAttributes.readonly = false
+    }
+    const emitter = mitt()
+    emitter.on('hook:beforeDestroy', () => {
+      Nova.$off('create-relation-modal-opened', this.removeChangeListener)
+      Nova.$off('create-relation-modal-closed', listenToCreateModalClosed)
+      this.removeChangeListener()
+    })
+  },
+
+  methods: {
+    changeListener(value) {
+      return value => {
+        this.value = slugify(value, this.field.separator)
+      }
+    },
+
+    registerChangeListener() {
+      Nova.$on(this.eventName, this.handleChange)
+
+      this.isListeningToChanges = true
+    },
+
+    removeChangeListener() {
+      if (this.isListeningToChanges === true) {
+        Nova.$off(this.eventName)
+      }
+    },
+
+    handleChange(value) {
+      //this.value = slugify(value, this.field.separator);
+      this.value = this.slugify(value);
+    },
+    slugify:function(value){
+      return value.toLowerCase().replace(/&#8482;/g, '').trim().replace(/[^\w ]+/g, '').replace(/ +/g, '-').replace(/\_/g, '');
+    },
+
+    toggleCustomizeClick() {
+      if (this.field.readonly) {
+        this.removeChangeListener()
+        this.isListeningToChanges = false
+        this.field.readonly = false
+        this.field.extraAttributes.readonly = false
+        this.field.showCustomizeButton = false
+        this.registerChangeListener()
+        this.$refs.theInput.focus()
+        return
+      }
+
+      this.registerChangeListener()
+      this.field.readonly = true
+      this.field.extraAttributes.readonly = true
+    },
+  },
+
+  computed: {
+    shouldRegisterInitialListener() {
+      return !this.field.updating;
+    },
+
+    eventName() {
+      return `${this.field.from}-change`
+    },
+
+    extraAttributes() {
+      return this.field.extraAttributes || {}
+    },
+  },
+}
+</script>

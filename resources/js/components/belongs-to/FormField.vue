@@ -1,13 +1,13 @@
 <template>
   <r64-default-field
-    :hide-field="hideField"
+
     :field="field"
     :hide-label="hideLabelInForms"
     :field-classes="fieldClasses"
     :wrapper-classes="wrapperClasses"
     :label-classes="labelClasses"
   >
-    <template slot="field">
+    <template #field>
       <loading-view :loading="loading">
         <div class="flex items-center">
           <search-input
@@ -118,7 +118,7 @@
 
       <p
         v-if="hasError"
-        class="my-2 text-danger"
+        class="my-2 text-red-500"
       >{{ firstError }}</p>
     </template>
   </r64-default-field>
@@ -126,9 +126,9 @@
 
 <script>
 import storage from '../../storage/BelongsToFieldStorage'
+import TogglesTrashed from '../../../../../../laravel/nova/resources/js/mixins/TogglesTrashed';
+import PerformsSearches from '../../../../../../laravel/nova/resources/js/mixins/PerformsSearches';
 import {
-  TogglesTrashed,
-  PerformsSearches,
   HandlesValidationErrors
 } from 'laravel-nova'
 import ModalCreate from '../../modals/ModalCreate'

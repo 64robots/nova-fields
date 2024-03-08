@@ -13,7 +13,7 @@ class Select extends NovaSelect
      *
      * @var string
      */
-    public $inputClasses = 'w-full form-control form-select';
+    public $inputClasses = 'w-full form-control form-select form-select-bordered';
 
     /**
      * The base index classes of the field.
@@ -37,7 +37,7 @@ class Select extends NovaSelect
     public function displayUsingLabels()
     {
         $this->displayUsing(function ($value) {
-            return collect($this->meta['options'])
+            return collect($this->serializeOptions(false))
                     ->where('value', $value)
                     ->first()['label'] ?? $value;
         });

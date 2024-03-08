@@ -28,4 +28,12 @@ class Date extends NovaDate
      * @var string
      */
     public $component = 'nova-fields-date';
+
+    public function format($value){
+        return $this->withMeta([__FUNCTION__ => $value]);
+    }
+
+    public function pickerDisplayFormat($value){
+        return $this->withMeta([__FUNCTION__ => $value]);
+    }
 }

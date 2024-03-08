@@ -24,35 +24,26 @@ export default {
 
   computed: {
     hideField() {
-      if (this.onCreate) {
-        return this.field.hideWhenCreating
-      }
-      if (this.onUpdate) {
-        return this.field.hideWhenUpdating
-      }
-      if (this.onDetail) {
-        return this.field.hideFromDetail
-      }
     },
 
     wrapperClasses() {
-      return this.baseClasses.wrapperClasses || this.field.wrapperClasses
+      return this.field.wrapperClasses || this.baseClasses.wrapperClasses
     },
 
     inputClasses() {
-      return this.baseClasses.inputClasses || this.field.inputClasses
+      return this.field.inputClasses || this.baseClasses.inputClasses
     },
 
     fieldClasses() {
-      return this.baseClasses.fieldClasses || this.field.fieldClasses
+      return this.field.fieldClasses || this.baseClasses.fieldClasses
     },
 
     labelClasses() {
-      return this.baseClasses.labelClasses || this.field.labelClasses
+      return this.field.labelClasses || this.baseClasses.labelClasses
     },
 
     panelLabelClasses() {
-      return this.baseClasses.panelLabelClasses || this.field.panelLabelClasses
+      return  this.field.panelLabelClasses || this.baseClasses.panelLabelClasses
     },
 
     panelFieldClasses() {
@@ -85,16 +76,6 @@ export default {
 
     readOnly() {
       const readOnly = this.field.readOnly || this.baseClasses.readOnly
-
-      if (readOnly) {
-        return true
-      }
-      if (this.onUpdate) {
-        return this.field.readOnlyOnUpdate || this.baseClasses.readOnlyOnUpdate
-      }
-      if (this.onCreate) {
-        return this.field.readOnlyOnCreate || this.baseClasses.readOnlyOnCreate
-      }
     },
 
     showContentLabel() {
@@ -104,34 +85,11 @@ export default {
     hideContentLabel() {
       return this.field.hideContentLabel || this.baseClasses.hideContentLabel
     },
-
-    onCreate() {
-      return this.$route.name === 'create'
-    },
-
-    onUpdate() {
-      return this.$route.name === 'edit'
-    },
-
-    onDetail() {
-      return this.$route.name === 'detail'
-    }
   },
 
   methods: {
     shouldShowField(f) {
       const field = f ? f : this.field
-
-      if (this.onCreate) {
-        return !field.hideWhenCreating
-      }
-      if (this.onUpdate) {
-        return !field.hideWhenUpdating
-      }
-      if (this.onDetail) {
-        return !field.hideFromDetail
-      }
-
       return true
     }
   }

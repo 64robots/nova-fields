@@ -33,14 +33,14 @@ trait Configurable
      *
      * @var string
      */
-    public $panelLabelClasses = 'w-1/4 py-4';
+    public $panelLabelClasses = 'md:w-1/4 md:py-3';
 
     /**
      * The base field classes for the detail view.
      *
      * @var string
      */
-    public $panelFieldClasses = 'w-3/4 py-4';
+    public $panelFieldClasses = 'md:w-3/4 md:py-3';
 
     /**
      * The base wrapper classes for the detail view.

@@ -1,30 +1,29 @@
 <template>
   <r64-default-field
-    :hide-field="hideField"
+
     :field="field"
     :hide-label="hideLabelInForms"
     :field-classes="fieldClasses"
     :wrapper-classes="wrapperClasses"
     :label-classes="labelClasses"
   >
-    <template slot="field">
+    <template #field>
       <checkbox
-        :class="[inputClasses, {'opacity-50 pointer-events-none': readOnly }]"
+        :class="[inputClasses]"
         @input="toggle"
         :id="field.name"
         :name="field.name"
         :checked="checked"
-        :disabled="readOnly"
+        :disabled="field.readonly"
       />
 
-      <p v-if="hasError" class="my-2 text-danger" v-html="firstError" />
+      <p v-if="hasError" class="my-2 text-red-500" v-html="firstError" />
     </template>
   </r64-default-field>
 </template>
 
 <script>
-import FormField from 'laravel-nova/src/mixins/FormField'
-import HandlesValidationErrors from 'laravel-nova/src/mixins/HandlesValidationErrors'
+import {FormField, HandlesValidationErrors} from 'laravel-nova';
 import R64Field from '../../mixins/R64Field'
 
 export default {

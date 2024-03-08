@@ -59,7 +59,8 @@
 </template>
 
 <script>
-import { Errors, Minimum, InteractsWithResourceInformation } from 'laravel-nova'
+import {InteractsWithResourceInformation} from '../../../../../laravel/nova/resources/js/mixins';
+import { Errors } from 'laravel-nova'
 
 export default {
   mixins: [InteractsWithResourceInformation],
@@ -131,7 +132,7 @@ export default {
       try {
         const response = await this.createRequest()
 
-        this.$toasted.show(
+        Nova.success(
           this.__('The :resource was created!', {
             resource: this.resourceInformation.singularLabel.toLowerCase()
           }),
@@ -154,7 +155,7 @@ export default {
       try {
         const response = await this.createRequest()
 
-        this.$toasted.show(
+        Nova.success(
           this.__('The :resource was created!', {
             resource: this.resourceInformation.singularLabel.toLowerCase()
           }),

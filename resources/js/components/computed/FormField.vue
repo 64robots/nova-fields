@@ -1,13 +1,13 @@
 <template>
   <r64-default-field
-    :hide-field="hideField"
+
     :field="field"
     :hide-label="hideLabelInForms"
     :field-classes="fieldClasses"
     :wrapper-classes="wrapperClasses"
     :label-classes="labelClasses"
   >
-    <template slot="field">
+    <template #field>
       <input
         :id="field.name"
         :dusk="field.attribute"
@@ -24,7 +24,7 @@
 
       <p
         v-if="hasError"
-        class="my-2 text-danger"
+        class="my-2 text-red-500"
       >
         {{ firstError }}
       </p>

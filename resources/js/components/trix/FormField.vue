@@ -1,6 +1,6 @@
 <template>
   <r64-default-field
-    :hide-field="hideField"
+
     :field="field"
     :hide-label="hideLabelInForms"
     :field-classes="fieldClasses"
@@ -8,7 +8,7 @@
     :label-classes="labelClasses"
     :show-help-text="false"
   >
-    <template slot="field">
+    <template #field>
       <trix
         name="trixman"
         :value="field.value"
@@ -20,7 +20,7 @@
         :with-files="field.withFiles"
       />
 
-      <p v-if="hasError" class="my-2 text-danger">
+      <p v-if="hasError" class="my-2 text-red-500">
         {{ firstError }}
       </p>
     </template>

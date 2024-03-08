@@ -8,28 +8,50 @@
       :wrapper-classes="wrapperClasses"
       :label-classes="labelClasses"
   >
-    <template slot="field">
+    <template #field>
       <div class="flex items-center">
         <DateTimePicker
+            class="w-full form-control form-input form-input-bordered"
+            ref="dateTimePicker"
             :dusk="field.attribute"
             :name="field.name"
-            :value="localizedValue"
-            dateFormat="Y-m-d H:i:S"
             :placeholder="placeholder"
-            :enable-time="true"
-            :enable-seconds="true"
+            :dateFormat="pickerFormat"  
+            :alt-format="pickerDisplayFormat"
+            :hour-increment="pickerHourIncrement"
+            :minute-increment="pickerMinuteIncrement"
+            :value="localizedValue"
+            :twelve-hour-time="usesTwelveHourTime"
             :first-day-of-week="firstDayOfWeek"
-            :class="[errorClasses, inputClasses]"
+            :class="errorClasses"
             @change="handleChange"
+            :default-hour="defaultHour"
+            :default-minute="defaultMinute"
+            :enable-seconds="enableSeconds"
+            :enable-time="enableTime"
             :disabled="isReadonly"
         />
 
+        <a
+            v-if="field.nullable && !isReadonly"
+            @click.prevent="$refs.dateTimePicker.clear()"
+            href="#"
+            :title="__('Clear value')"
+            tabindex="-1"
+            class="p-1 px-2 cursor-pointer leading-none focus:outline-none"
+            :class="{
+            'text-50': !value.length,
+            'text-black hover:text-danger': value.length,
+          }"
+        >
+          <icon type="x-circle" width="22" height="22" viewBox="0 0 22 22" />
+        </a>
         <span v-if="!field.hideTimezone" class="text-80 text-sm ml-2">({{ userTimezone }})</span>
       </div>
 
       <p
           v-if="hasError"
-          class="my-2 text-danger"
+          class="my-2 text-red-500"
       >
         {{ firstError }}
       </p>
@@ -38,20 +60,17 @@
 </template>
 
 <script>
-import {
-  FormField,
-  HandlesValidationErrors,
-  InteractsWithDates,
-} from 'laravel-nova'
-import DateTimePicker from '../date/DateTimePicker'
+import moment from 'moment';
+import { DependentFormField, HandlesValidationErrors } from '@/mixins'
 import R64Field from "../../mixins/R64Field";
+import DateTimePicker from "./DateTimePicker";
 
 export default {
+  mixins: [HandlesValidationErrors, DependentFormField,R64Field],
+
+  data: () => ({ localizedValue: ''}),
+
   components: { DateTimePicker },
-
-  mixins: [HandlesValidationErrors, FormField, InteractsWithDates,  R64Field],
-
-  data: () => ({ localizedValue: '' }),
 
   methods: {
     /*
@@ -59,12 +78,12 @@ export default {
      */
     setInitialValue() {
       // Set the initial value of the field
-      this.value = this.field.value || ''
+      this.value = this.field.value || '';
 
       // If the field has a value let's convert it from the app's timezone
       // into the user's local time to display in the field
       if (this.value !== '') {
-        this.localizedValue = this.fromAppTimezone(this.value)
+        this.localizedValue = this.value;
       }
     },
 
@@ -79,7 +98,18 @@ export default {
      * Update the field's internal value when it's value changes
      */
     handleChange(value) {
-      this.value = this.toAppTimezone(value)
+     if(this.field.setDefaultMinuteZero == true && value !== ''){
+       let date = new Date(value);
+       if (!isNaN(date) && date instanceof Date) {
+         let onlyDate = date.getFullYear()+'-'+ ('0' + (date.getMonth()+1)).slice(-2) +'-'+ ('0' + date.getDate()).slice(-2) +" "+('0' + date.getHours()).slice(-2)+":00"+":00";
+         this.value = onlyDate;
+         this.$refs.dateTimePicker.getUpdatedValue(onlyDate);
+       } else {
+         this.value = '';
+       }
+     }else{
+       this.value = value;
+     }
     },
   },
 
@@ -103,6 +133,27 @@ export default {
     pickerDisplayFormat() {
       return this.field.pickerDisplayFormat || 'Y-m-d H:i:S'
     },
+
+    pickerHourIncrement() {
+      return this.field.pickerHourIncrement || 1
+    },
+
+    pickerMinuteIncrement() {
+      return this.field.pickerMinuteIncrement || 5
+    },
+    enableSeconds() {
+      return this.field.enableSeconds === false ? false : true
+    },
+    enableTime() {
+      return this.field.enableTime === false ? false : true
+    },
+    defaultHour() {
+      return this.field.defaultHour || 12
+    },
+    defaultMinute() {
+      return this.field.defaultMinute || 0
+    },
   },
+
 }
 </script>

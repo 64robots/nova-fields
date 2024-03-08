@@ -1,30 +1,45 @@
 <template>
   <r64-default-field
-    :hide-field="hideField"
-    :field="field"
-    :hide-label="hideLabelInForms"
-    :field-classes="fieldClasses"
-    :wrapper-classes="wrapperClasses"
-    :label-classes="labelClasses"
-  >
-    <template slot="field">
-      <DateTimePicker
-        :dusk="field.attribute"
-        :name="field.name"
-        :value="value"
-        dateFormat="Y-m-d"
-        :placeholder="placeholder"
-        :enable-time="false"
-        :enable-seconds="false"
-        :first-day-of-week="firstDayOfWeek"
-        :class="[errorClasses, inputClasses]"
-        @change="handleChange"
-        :disabled="isReadonly"
-      />
 
+      :field="field"
+      :show-help-text="showHelpText"
+      :hide-label="hideLabelInForms"
+      :field-classes="fieldClasses"
+      :wrapper-classes="wrapperClasses"
+      :label-classes="labelClasses"
+  >
+    <template #field>
+      <div class="flex items-center">
+        <input
+            type="date"
+            class="w-full form-control form-input form-input-bordered"
+            ref="dateTimePicker"
+            :id="currentField.uniqueKey"
+            :dusk="field.attribute"
+            :name="field.name"
+            :value="formattedDate"
+            :class="errorClasses"
+            :disabled="currentlyIsReadonly"
+            @change="handleChange"
+            :min="currentField.min"
+            :max="currentField.max"
+            :step="currentField.step"
+        />
+
+        <a
+            v-if="field.nullable && !isReadonly"
+            @click.prevent="formattedDate = value = ''"
+            href="#"
+            :title="__('Clear value')"
+            tabindex="-1"
+            class="p-1 px-2 cursor-pointer leading-none focus:outline-none"
+        >
+          <icon type="x-circle" width="22" height="22" viewBox="0 0 22 22" />
+        </a>
+      </div>
       <p
-        v-if="hasError"
-        class="my-2 text-danger"
+          v-if="hasError"
+          class="my-2 text-red-500"
       >
         {{ firstError }}
       </p>
@@ -33,52 +48,62 @@
 </template>
 
 <script>
-import {
-  FormField,
-  HandlesValidationErrors,
-  InteractsWithDates
-} from 'laravel-nova'
-import DateTimePicker from './DateTimePicker'
-import R64Field from '../../mixins/R64Field'
+import isNil from 'lodash/isNil'
+import { DateTime } from 'luxon'
+import { DependentFormField, HandlesValidationErrors } from '@/mixins'
+import filled from '@/util/filled'
+import R64Field from "../../mixins/R64Field";
 
 export default {
-  components: { DateTimePicker },
-
-  mixins: [HandlesValidationErrors, FormField, InteractsWithDates, R64Field],
-
+  mixins: [HandlesValidationErrors, DependentFormField,R64Field],
+  data: () => ({
+    formattedDate: '',
+  }),
   methods: {
     /*
-     * Set the initial value for the field
-     */
+      * Set the initial value for the field
+      */
     setInitialValue() {
-      // Set the initial value of the field
-      this.value = this.field.value || ''
+      let onlyDate = this.currentField.value;
+      if (!isNil(this.currentField.value)) {
+        let date = new Date(this.currentField.value);
+        onlyDate = date.getFullYear()+'-'+ ('0' + (date.getMonth()+1)).slice(-2) +'-'+ ('0' + date.getDate()).slice(-2);
+      }
+      this.value = onlyDate;
+      this.formattedDate = onlyDate
     },
 
     /**
      * On save, populate our form data
      */
     fill(formData) {
-      formData.append(this.field.attribute, this.value || '')
+      this.fillIfVisible(formData, this.field.attribute, this.value || '')
+
+      if (this.currentlyIsVisible && filled(this.value)) {
+        this.formattedDate = this.value
+      }
     },
 
     /**
-     * Update the field's internal value when it's value changes
+     * Update the field's internal value
      */
-    handleChange(value) {
-      this.value = value
+    handleChange(event) {
+      let value = event?.target?.value ?? event
+
+      this.value = DateTime.fromISO(value, {
+        setZone: Nova.config('userTimezone') || Nova.config('timezone'),
+      }).toISODate()
+
+      if (this.field) {
+        this.emitFieldValueChange(this.field.attribute, this.value)
+      }
     },
   },
 
   computed: {
-    firstDayOfWeek() {
-      return this.field.firstDayOfWeek || 0
+    timezone() {
+      return Nova.config('userTimezone') || Nova.config('timezone')
     },
-
-    placeholder() {
-      const format = this.field.format ? this.field.format : 'YYYY-MM-DD'
-      return this.field.placeholder || moment().format(format)
-    }
-  }
+  },
 }
 </script>

@@ -1,13 +1,13 @@
 <template>
   <r64-default-field
-    :hide-field="hideField"
+
     :field="field"
     :hide-label="hideLabelInForms"
     :field-classes="fieldClasses"
     :wrapper-classes="wrapperClasses"
     :label-classes="labelClasses"
   >
-    <template slot="field">
+    <template #field>
       <input
         :id="field.name"
         :dusk="field.attribute"
@@ -16,15 +16,15 @@
         :max="inputMax"
         :step="inputStep"
         :pattern="inputPattern"
-        :disabled="readOnly"
+        :disabled="field.readonly"
         v-model="value"
-        :class="[errorClasses, inputClasses]"
+        :class="[errorClasses, inputClasses, { 'form-input-border-error': hasError }]"
         :placeholder="placeholder"
 
-        @input="$emit('input', $event.target.value)"
+        @input="handleChange"
       />
 
-      <p v-if="hasError" class="my-2 text-danger">
+      <p v-if="hasError" class="my-2 text-red-500">
         {{ firstError }}
       </p>
     </template>

@@ -6,7 +6,7 @@
     :wrapper-classes="wrapperClasses"
     :label-classes="labelClasses"
   >
-    <template slot="field">
+    <template #field>
       <RowHeading
         v-if="shouldShowHeading"
         :fields="fields"
@@ -82,7 +82,7 @@
       </transition>
       <p
         v-if="hasError"
-        class="my-2 text-danger"
+        class="my-2 text-red-500"
       >{{ firstError }}</p>
     </template>
   </r64-default-field>
@@ -217,7 +217,7 @@ export default {
         row => row.row_id === this.rowToRemove
       )
       this.rowToRemove = false
-      this.$nextTick(() => this.$delete(this.values, index))
+      this.$nextTick(() => this.values.splice(index,1))
     },
 
     /*

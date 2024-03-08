@@ -1,14 +1,14 @@
 <template>
   <r64-panel-item
-    :hide-field="hideField"
+
     :field="field"
     :hide-label="hideLabelInDetail"
     :label-classes="panelLabelClasses"
     :field-classes="panelFieldClasses"
     :wrapper-classes="panelWrapperClasses"
   >
-  <p
-    slot="value"
+  <template
+    #value
     class="text-90"
     v-html="maskLabel"
   />

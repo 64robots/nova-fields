@@ -1,13 +1,13 @@
 <template>
   <r64-panel-item
-    :hide-field="hideField"
+
     :field="field"
     :hide-label="hideLabelInDetail"
     :label-classes="panelLabelClasses"
     :field-classes="panelFieldClasses"
     :wrapper-classes="panelWrapperClasses"
   >
-    <template slot="value">
+    <template #value>
       <router-link
         v-if="field.viewable && field.value"
         :to="{
