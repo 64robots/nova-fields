@@ -162,7 +162,7 @@
   
             <td class="text-center py-1 pl-2 border-t border-gray-100 dark:border-gray-700 whitespace-nowrap cursor-pointer dark:bg-gray-800 group-hover:bg-gray-50 dark:group-hover:bg-gray-900">
                 <div class="flex items-center justify-end" v-if="file.id != 'folder_back'">
-                    <Icon
+                    <!-- <Icon
                         type="pencil-alt"
                         width="20"
                         height="20"
@@ -179,6 +179,24 @@
                         v-if="deletePermission"
                         @click.prevent="deleteFile($event)"
                     />
+                    <Icon
+                        type="document-duplicate"
+                        width="20"
+                        height="20"
+                        class="inline-block inline-block cursor-pointer hover:opacity-50 mr-2 ml-2"
+                        v-if="movePermission"
+                        @click.prevent="moveFile($event)"
+                    /> -->
+                    <div aria-label="Rename"  @click.prevent="renameFile($event)"  v-if="renamePermission" class="toolbar-button hover:text-primary-500 v-popper--has-tooltip" title="Rename" >
+                        <svg data-v-4c9b71d8="" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="20" height="20" class="inline-block tooltip inline-block cursor-pointer hover:opacity-50 mr-2" role="presentation"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                    </div>
+                    <div aria-label="Delete"  @click.prevent="deleteFile($event)"  v-if="deletePermission" class="toolbar-button hover:text-primary-500 v-popper--has-tooltip" title="Delete" >
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="20" height="20" class="inline-block text-red-500" role="presentation" data-v-5a3b7268=""><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                    </div>
+
+                    <div aria-label="Move"  @click.prevent="moveFile($event)"  v-if="movePermission" class="toolbar-button hover:text-primary-500 v-popper--has-tooltip" title="Move" >
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="20" height="20" class="inline-block inline-block inline-block cursor-pointer hover:opacity-50 mr-2 ml-2" role="presentation" data-v-5a3b7268=""><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"></path></svg>
+                    </div>
                 </div>
             </td>
         </tr>
@@ -221,6 +239,11 @@
             default: true,
         },
         renamePermission: {
+            type: Boolean,
+            required: false,
+            default: true,
+        },
+        movePermission: {
             type: Boolean,
             required: false,
             default: true,
@@ -286,6 +309,10 @@
         renameFile(e) {
             this.stopDefaultActions(e);
             this.$emit('rename', 'file', this.file.path);
+        },
+        moveFile(e) {
+            this.stopDefaultActions(e);
+            this.$emit('move', 'file', this.file.path);
         },
         stopDefaultActions(e) {
             e.preventDefault();

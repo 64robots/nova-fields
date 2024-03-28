@@ -1,8 +1,6 @@
 <template>
     <button
-        :class="[ css, stepsComplete? 'confirmation__button--complete' : '' ]"
-        :disabled='stepsComplete'
-        v-on:click='incrementStep()'>
+        :class="[ css,  'confirmation__button--complete' ]" @click="confirmDelete">
         {{ currentMessage }}
     </button>
 </template>
@@ -56,6 +54,9 @@ export default {
         reset() {
             this.currentStep = 0;
             this.$emit('confirmation-reset');
+        },
+        confirmDelete() {
+            this.$emit('confirmation-success');
         },
     },
 };

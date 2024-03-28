@@ -14,28 +14,28 @@
 
     <div class="card relative" id="filemanager-manager">
 
-      <div class="p-3 flex items-center justify-between border-b border-50">
+      <div class="flex items-center justify-between">
         <div class="w-full flex flex-wrap">
-          <div class="w-2/3 flex flex-wrap justify-start">
-            <button @click="refreshCurrent" class="btn btn-default btn-small btn-primary text-white mr-3" :class="{'rotate': loadingfiles}">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path class="heroicon-ui" d="M6 18.7V21a1 1 0 0 1-2 0v-5a1 1 0 0 1 1-1h5a1 1 0 1 1 0 2H7.1A7 7 0 0 0 19 12a1 1 0 1 1 2 0 9 9 0 0 1-15 6.7zM18 5.3V3a1 1 0 0 1 2 0v5a1 1 0 0 1-1 1h-5a1 1 0 0 1 0-2h2.9A7 7 0 0 0 5 12a1 1 0 1 1-2 0 9 9 0 0 1 15-6.7z"/></svg>
+          <div class="w-auto flex flex-wrap justify-start">
+            <button @click="refreshCurrent" class="btn-small shadow relative bg-primary-500 hover:bg-primary-400 text-white dark:text-gray-900 cursor-pointer rounded text-sm font-bold focus:outline-none focus:ring ring-primary-200 dark:ring-gray-600 inline-flex items-center justify-center h-9 px-3 shadow relative bg-primary-500 hover:bg-primary-400 text-white dark:text-gray-900 mr-3" :class="{'rotate': loadingfiles}">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path class="" d="M6 18.7V21a1 1 0 0 1-2 0v-5a1 1 0 0 1 1-1h5a1 1 0 1 1 0 2H7.1A7 7 0 0 0 19 12a1 1 0 1 1 2 0 9 9 0 0 1-15 6.7zM18 5.3V3a1 1 0 0 1 2 0v5a1 1 0 0 1-1 1h-5a1 1 0 0 1 0-2h2.9A7 7 0 0 0 5 12a1 1 0 1 1-2 0 9 9 0 0 1 15-6.7z"/></svg>
             </button>
 
             <label v-if="buttons.upload_button" class="manual_upload cursor-pointer">
-              <div @click="showUpload = !showUpload" class="btn btn-default btn-primary mr-3">
+              <div @click="showUpload = !showUpload" class="shadow relative bg-primary-500 hover:bg-primary-400 text-white dark:text-gray-900 cursor-pointer rounded text-sm font-bold focus:outline-none focus:ring ring-primary-200 dark:ring-gray-600 inline-flex items-center justify-center h-9 px-3 shadow relative bg-primary-500 hover:bg-primary-400 text-white dark:text-gray-900 mr-3">
                 {{ __('Upload') }}
               </div>
               <input type="file" multiple="true" @change="uploadFilesByButton"/>
             </label>
 
-            <button v-if="buttons.create_folder" @click="showModalCreateFolder" class="btn btn-default btn-primary mr-3">
+            <button v-if="buttons.create_folder" @click="showModalCreateFolder" class="shadow relative bg-primary-500 hover:bg-primary-400 text-white dark:text-gray-900 cursor-pointer rounded text-sm font-bold focus:outline-none focus:ring ring-primary-200 dark:ring-gray-600 inline-flex items-center justify-center h-9 px-3 shadow relative bg-primary-500 hover:bg-primary-400 text-white dark:text-gray-900 mr-3">
               {{ __('Create folder') }}
             </button>
 
-            <button v-if="view == 'list'" @click="viewAs('grid')" class="btn btn-default btn-small btn-primary text-white mr-3">
+            <button v-if="view == 'list'" @click="viewAs('grid')" class="btn-small shadow relative bg-primary-500 hover:bg-primary-400 text-white dark:text-gray-900 cursor-pointer rounded text-sm font-bold focus:outline-none focus:ring ring-primary-200 dark:ring-gray-600 inline-flex items-center justify-center h-9 px-3 shadow relative bg-primary-500 hover:bg-primary-400 text-white dark:text-gray-900 mr-3">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path class="heroicon-ui" d="M5 3h4a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5c0-1.1.9-2 2-2zm0 2v4h4V5H5zm10-2h4a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2V5c0-1.1.9-2 2-2zm0 2v4h4V5h-4zM5 13h4a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4c0-1.1.9-2 2-2zm0 2v4h4v-4H5zm10-2h4a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2v-4c0-1.1.9-2 2-2zm0 2v4h4v-4h-4z"/></svg>
             </button>
-            <button v-if="view == 'grid'" @click="viewAs('list')" class="btn btn-default btn-small btn-primary text-white mr-3">
+            <button v-if="view == 'grid'" @click="viewAs('list')" class="btn-small shadow relative bg-primary-500 hover:bg-primary-400 text-white dark:text-gray-900 cursor-pointer rounded text-sm font-bold focus:outline-none focus:ring ring-primary-200 dark:ring-gray-600 inline-flex items-center justify-center h-9 px-3 shadow relative bg-primary-500 hover:bg-primary-400 text-white dark:text-gray-900 mr-3">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width="20" height="20"><path d="M1 4h2v2H1V4zm4 0h14v2H5V4zM1 9h2v2H1V9zm4 0h14v2H5V9zm-4 5h2v2H1v-2zm4 0h14v2H5v-2z"/></svg>
             </button>
 
@@ -47,33 +47,43 @@
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" aria-labelledby="delete" role="presentation"><path fill-rule="nonzero" d="M6 4V2a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2h5a1 1 0 0 1 0 2h-1v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6H1a1 1 0 1 1 0-2h5zM4 6v12h12V6H4zm8-2V2H8v2h4zM8 8a1 1 0 0 1 1 1v6a1 1 0 0 1-2 0V9a1 1 0 0 1 1-1zm4 0a1 1 0 0 1 1 1v6a1 1 0 0 1-2 0V9a1 1 0 0 1 1-1z"></path></svg>
             </button>
 
-            <button title="Paste to this directory" :disabled="isMoveFiles" v-if="movePath.length > 0 && moveType != null" type="button" class="btn btn-default btn-primary mr-3" @click="move">
+            <button title="Paste to this directory" :disabled="isMoveFiles" v-if="movePath.length > 0 && moveType != null" type="button" class="btn-small shadow relative bg-primary-500 hover:bg-primary-400 text-white dark:text-gray-900 cursor-pointer rounded text-sm font-bold focus:outline-none focus:ring ring-primary-200 dark:ring-gray-600 inline-flex items-center justify-center h-9 px-3 shadow relative bg-primary-500 hover:bg-primary-400 text-white dark:text-gray-900 mr-3" @click="move">
                 Paste
             </button>
-            <button title="Paste to this directory" :disabled="isMoveFiles" v-if="movePath.length > 0 && moveType != null" type="button" class="btn btn-default btn-primary mr-3" @click="clearClipboard">
+            <button title="Paste to this directory" :disabled="isMoveFiles" v-if="movePath.length > 0 && moveType != null" type="button" class="btn-small shadow relative bg-primary-500 hover:bg-primary-400 text-white dark:text-gray-900 cursor-pointer rounded text-sm font-bold focus:outline-none focus:ring ring-primary-200 dark:ring-gray-600 inline-flex items-center justify-center h-9 px-3 shadow relative bg-primary-500 hover:bg-primary-400 text-white dark:text-gray-900 mr-3" @click="clearClipboard">
                 Clear Clipboard
             </button>
-        </div>
+          </div>
 
           <!-- Search -->
-          <div class="w-1/3 flex flex-wrap justify-end">
-            <div class="relative w-1/2 max-w-xs pr-3">
-              <template v-if="showFilters">
-                <select class="pl-search form-control form-input form-input-bordered w-full" v-model="filterBy" @change="filterFiles">
-                  <option value="">{{ __('Filter by ...') }}</option>
-                  <option v-for="(filter, key) in filters" :key="'filter_' + key" :value="key">{{ key }}</option>
-                </select>
-              </template>
+          <div class="w-auto flex flex-1 flex-wrap justify-end">
+            <div class="relative md:w-1/3 max-w-xs mr-3">
+              <div class="relative">
+                  <div class="relative">
+                    <template v-if="showFilters">
+                      <select class="pl-search form-control form-input form-input-bordered w-full" v-model="filterBy">
+                        <option value="">{{ __('Filter by ...') }}</option>
+                        <option v-for="(filter, key) in filters" :key="'filter_' + key" :value="key">{{ key }}</option>
+                      </select>
+                    </template>
+                </div>
+              </div>
             </div>
 
-            <div class="relative w-1/2 max-w-xs">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" aria-labelledby="search" role="presentation" class="fill-current absolute search-icon-center ml-3 text-70"><path fill-rule="nonzero" d="M14.32 12.906l5.387 5.387a1 1 0 0 1-1.414 1.414l-5.387-5.387a8 8 0 1 1 1.414-1.414zM8 14A6 6 0 1 0 8 2a6 6 0 0 0 0 12z"></path></svg>
-              <input v-on:input="searchItems" v-model="search" dusk="filemanager-search" type="search" :placeholder="this.__('Search')" class="pl-search form-control form-input form-input-bordered w-full">
+            <div class="relative md:w-1/2 max-w-xs">
+              <div class="relative">
+                  <div class="relative">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" aria-labelledby="search" role="presentation" class="fill-current absolute search-icon-center ml-3 text-70 mt-2"><path fill-rule="nonzero" d="M14.32 12.906l5.387 5.387a1 1 0 0 1-1.414 1.414l-5.387-5.387a8 8 0 1 1 1.414-1.414zM8 14A6 6 0 1 0 8 2a6 6 0 0 0 0 12z"></path></svg>
+                    <input v-on:input="searchItems" v-model="search" dusk="filemanager-search" type="search" :placeholder="this.__('Search')" class="pl-search form-control form-input form-input-bordered w-full pl-10" autocomplete="off">
+                  </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
+      <div class="bg-white dark:bg-gray-800 rounded-lg shadow mt-3 py-2 px-3">
 
+      
       <manager
           ref="manager"
           :files="files"
@@ -97,7 +107,7 @@
           v-on:move="setMovePath"
           v-on:select="select"
       />
-
+      </div>
       <DetailPopup
           ref="detailPopup"
           :info="info"
@@ -160,7 +170,6 @@ export default {
     search: '',
     filters: [],
     filterBy: '',
-    filteredExtensions: [],
     showFilters: false,
     multiSelecting: false,
     selectedFiles: [], // { type: 'folder/file', path: '...'' }
@@ -361,18 +370,6 @@ export default {
       api.eventFolderUploaded(this.currentPath + '/' + path);
     },
 
-    filterFiles() {
-      let extensions = _.get(this.filters, this.filterBy);
-
-      if (extensions == null) {
-        this.filteredExtensions = [];
-      }
-
-      if (extensions != null && extensions.length > 0) {
-        this.filteredExtensions = extensions;
-      }
-    },
-
     searchItems: _.debounce(function(e) {
       this.search = e.target.value;
     }, 300),
@@ -398,6 +395,15 @@ export default {
         return '';
       }
       return '';
+    },
+    filteredExtensions() {
+      const filter = _.get(this.filters, this.filterBy);
+
+      if (filter) {
+        return filter;
+      }
+
+      return [];
     },
   },
 

@@ -42,23 +42,21 @@
             v-if="shouldShowRemoveButton"
             @click="confirmRemoval"
           >
-            <span class="class ml-2 mt-1">
+            <span class="shadow relative bg-red-500 hover:bg-red-400 text-white dark:text-gray-900 cursor-pointer rounded text-sm font-bold focus:outline-none focus:ring ring-red-200 dark:ring-red-600 inline-flex items-center justify-center h-9 px-3 shadow relative bg-red-500 hover:bg-red-400 text-white dark:text-gray-900">
               {{__('Delete')}}
             </span>
           </DeleteButton>
         </p>
-
-        <portal to="modals">
             <confirm-upload-removal-modal
-              v-if="removeModalOpen"
+              :show="removeModalOpen"
               @confirm="removeFile"
               @close="closeRemoveModal"
             />
-        </portal>
+        
       </div>
 
       <span
-        class="form-file mr-4"
+        class="form-file"
         v-if="!isFilledRowSubfield"
       >
         <el-upload
@@ -111,7 +109,7 @@
           />
           <label
             :for="labelFor"
-            class="form-file-btn btn btn-default btn-primary"
+            class="shadow relative bg-primary-500 hover:bg-primary-400 text-white dark:text-gray-900 cursor-pointer rounded text-sm font-bold focus:outline-none focus:ring ring-primary-200 dark:ring-gray-600 inline-flex items-center justify-center h-9 px-3 shadow relative bg-primary-500 hover:bg-primary-400 text-white dark:text-gray-900 mr-3 form-file-btn "
           >
             {{__('Choose File')}}
           </label>
@@ -123,11 +121,17 @@
         class="text-gray-50"
       >
         {{ currentLabel }}
+        <button v-if="shouldShowClearButton"
+          class="shadow relative bg-red-500 hover:bg-red-400 text-white dark:text-gray-900 cursor-pointer rounded text-sm font-bold focus:outline-none focus:ring ring-red-200 dark:ring-red-600 inline-flex items-center justify-center h-9 px-3 shadow relative bg-red-500 hover:bg-red-400 text-white dark:text-gray-900"
+          @click="clearFile"
+        >
+          Clear
+        </button>
       </span>
 
       <p
         v-if="hasError"
-        class="text-xs mt-2 text-danger"
+        class="help-text mt-2 help-text-error"
       >
         {{ firstError }}
       </p>
@@ -152,11 +156,11 @@ import { ElUpload } from 'element-plus'
 import ImageLoader from '../../nova/ImageLoader'
 import DeleteButton from '../../nova/DeleteButton'
 import R64Field from '../../mixins/R64Field'
-
+import ConfirmUploadRemovalModalVue from './ConfirmUploadRemovalModal.vue'
 export default {
   mixins: [HandlesValidationErrors, FormField, R64Field],
 
-  components: { DeleteButton, ImageLoader, 'el-upload': ElUpload },
+  components: { DeleteButton, ImageLoader, 'el-upload': ElUpload,'confirm-upload-removal-modal': ConfirmUploadRemovalModalVue},
 
   data: () => ({
     file: null,
@@ -254,12 +258,12 @@ export default {
       const uri = this.viaRelationship
         ? `/nova-api/${resourceName}/${resourceId}/${relatedResourceName}/${relatedResourceId}/field/${attribute}?viaRelationship=${viaRelationship}`
         : `/nova-api/${resourceName}/${resourceId}/field/${attribute}`
-
       try {
         await Nova.request().delete(uri)
         this.closeRemoveModal()
         this.deleted = true
         this.$emit('file-deleted')
+        Nova.success(this.__('The file was deleted!'))
       } catch (error) {
         this.closeRemoveModal()
 
@@ -267,7 +271,14 @@ export default {
           this.uploadErrors = new Errors(error.response.data.errors)
         }
       }
-    }
+    },
+    
+    clearFile() {
+      this.fileName = '';
+      this.file = null;
+      this.previewFile = null;
+      this.emitInputEvent();
+    },
   },
 
   computed: {
@@ -295,15 +306,15 @@ export default {
       return false
     },
 
-    hasError() {
-      return this.uploadErrors.has(this.fieldAttribute)
-    },
+    // hasError() {
+    //   return this.uploadErrors.has(this.fieldAttribute)
+    // },
 
-    firstError() {
-      if (this.hasError) {
-        return this.uploadErrors.first(this.fieldAttribute)
-      }
-    },
+    // firstError() {
+    //   if (this.hasError) {
+    //     return this.uploadErrors.first(this.fieldAttribute)
+    //   }
+    // },
 
     /**
      * The current label of the file field
@@ -353,7 +364,11 @@ export default {
      */
     shouldShowRemoveButton() {
       return Boolean(this.field.deletable) && !this.isRowSubfield
-    }
+    },
+
+    shouldShowClearButton() {
+      return !!this.file && !this.isFilledRowSubfield;
+    },
   }
 }
 </script>

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Tool as BaseTool;
+use Laravel\Nova\Menu\MenuSection;
 
 class FilemanagerTool extends BaseTool
 {
@@ -31,6 +32,7 @@ class FilemanagerTool extends BaseTool
 
     public function menu(Request $request)
     {
-        // TODO: Implement menu() method.
+        return MenuSection::make(__(config('nova-filemanager.navigation_label', 'FileManager')))
+            ->path('/' . config('nova-filemanager.path', 'nova-filemanager'));
     }
 }

@@ -196,7 +196,8 @@ Nova.booting((app, store) => {
     // app.component('detail-nova-fields-belongs-to', BelongsToDetailField)
     // app.component('form-nova-fields-belongs-to', BelongsToFormField)
 
-    app.component('nova-filemanager',Tool);
+    // app.component('nova-filemanager',Tool);
+    Nova.inertia('Filemanager', Tool)
 
     /* simple repeatable */
     app.component('detail-nova-fields-simple-repeatable', SimpleRepeatableDetailField)

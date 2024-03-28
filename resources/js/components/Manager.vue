@@ -84,8 +84,7 @@
               <tr>
                 <th width="30" v-if="multiSelecting"
                   class="text-center p-2 whitespace-nowrap uppercase text-gray-500 text-xs tracking-wide"></th>
-                <th width="50" class="text-center p-2 whitespace-nowrap uppercase text-gray-500 text-xs tracking-wide">
-                </th>
+                <th width="50" class="text-center p-2 whitespace-nowrap uppercase text-gray-500 text-xs tracking-wide">{{ __('Type') }}</th>
                 <th class="p-2 whitespace-nowrap uppercase text-gray-500 text-xs tracking-wide">
                   {{ __('Name') }}
                 </th>
@@ -95,7 +94,7 @@
                 <th class="text-center p-2 whitespace-nowrap uppercase text-gray-500 text-xs tracking-wide">
                   {{ __('Last Modification') }}
                 </th>
-                <th class="text-center p-2 whitespace-nowrap uppercase text-gray-500 text-xs tracking-wide"></th>
+                <th class="text-center p-2 whitespace-nowrap uppercase text-gray-500 text-xs tracking-wide">{{ __('Options') }}</th>
               </tr>
             </thead>
             <tbody>
@@ -108,16 +107,16 @@
                 <template v-if="file.type == 'dir'">
                   <Folder :ref="'folder_' + file.id" :file="file" :key="file.id" :data-key="file.id" :view="view"
                     :multiSelecting="multiSelecting" :selectedFiles="selectedFiles"
-                    :deletePermission="buttons.delete_folder" :renamePermission="buttons.rename_folder"
+                    :deletePermission="buttons.delete_folder" :renamePermission="buttons.rename_folder" :movePermission="buttons.move_file"
                     :class="{ 'loading': loadingInfo }" @goToFolderEvent="goToFolder" @rename="rename" @delete="deleteData"
-                    @select="select" />
+                    @select="select" @move="move"/>
                 </template>
                 <template v-if="file.type == 'file'">
                   <ImageLoader :ref="'file_' + file.id" :file="file" :key="file.id" :data-key="file.id" :view="view"
                     :multiSelecting="multiSelecting" :selectedFiles="selectedFiles"
-                    :deletePermission="buttons.delete_file" :renamePermission="buttons.rename_file"
+                    :deletePermission="buttons.delete_file" :renamePermission="buttons.rename_file" :movePermission="buttons.move_file"
                     :class="{ 'loading': loadingInfo }" @missing="(value) => missing = value" @showInfo="showInfo"
-                    @rename="rename" @delete="deleteData" @select="select" />
+                    @rename="rename" @delete="deleteData" @select="select" @move="move"/>
                 </template>
               </template>
             </tbody>
@@ -771,7 +770,7 @@ export default {
 
     filemanagerClass() {
       if (this.view == 'grid') {
-        return 'w-1/6 h-40  px-2 mb-3';
+        return 'w-40 h-40  px-2 mb-3';
       } else {
         return 'w-full h-16  px-2 mb-3';
       }
