@@ -35,7 +35,7 @@ class Currency extends NovaCurrency
      *
      * @return $this
      */
-    public function colors()
+    public function colors(): Currency
     {
         return $this->withMeta(['colors' => true]);
     }

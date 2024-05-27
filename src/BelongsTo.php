@@ -54,7 +54,7 @@ class BelongsTo extends NovaBelongsTo
      * @param  mixed  $resource
      * @return array
      */
-    public function formatAssociatableResource(NovaRequest $request, $resource)
+    public function formatAssociatableResource(NovaRequest $request, $resource): array
     {
         $relation = explode(".", $this->groupedBy);
 
@@ -76,7 +76,7 @@ class BelongsTo extends NovaBelongsTo
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
      * @return array
      */
-    public function getRules(NovaRequest $request)
+    public function getRules(NovaRequest $request): array
     {
         $rules = parent::getRules($request);
 
@@ -96,7 +96,7 @@ class BelongsTo extends NovaBelongsTo
      * @param  string  $field
      * @return $this
      */
-    public function groupedBy($field)
+    public function groupedBy($field): BelongsTo
     {
         $this->groupedBy = $field;
 
@@ -109,7 +109,7 @@ class BelongsTo extends NovaBelongsTo
      * @param  string  $name
      * @return $this
      */
-    public function displayName($name)
+    public function displayName($name): BelongsTo
     {
         $this->displayName = $name;
 
@@ -121,7 +121,7 @@ class BelongsTo extends NovaBelongsTo
      *
      * @return $this
      */
-    public function disableRelatableRule()
+    public function disableRelatableRule(): BelongsTo
     {
         $this->disableRelatableRule = true;
 
@@ -133,7 +133,7 @@ class BelongsTo extends NovaBelongsTo
      *
      * @return $this
      */
-    public function quickCreate($fillValues = [])
+    public function quickCreate($fillValues = []): BelongsTo
     {
         $this->withMeta(['quickCreate' => true, 'fillValues' => $fillValues]);
 
@@ -145,7 +145,7 @@ class BelongsTo extends NovaBelongsTo
      *
      * @return $this
      */
-    public function disableTrashed()
+    public function disableTrashed(): BelongsTo
     {
         $this->withMeta(['disableTrashed' => true]);
 
@@ -157,7 +157,7 @@ class BelongsTo extends NovaBelongsTo
      *
      * @return array
      */
-    public function meta()
+    public function meta(): array
     {
         return array_merge([
             'wrapperClasses' => $this->wrapperClasses,

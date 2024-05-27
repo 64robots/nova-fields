@@ -87,7 +87,7 @@ class JSON extends Field
      * @param  string  $classes
      * @return $this
      */
-    public function panelTitleClasses($classes)
+    public function panelTitleClasses($classes): JSON
     {
         $this->panelTitleClasses = $classes;
 
@@ -101,7 +101,7 @@ class JSON extends Field
      *
      * @return $this
      */
-    public function flatten($value = true)
+    public function flatten($value = true): JSON
     {
         return $this->withMeta([
             'flatten' => $value
@@ -115,7 +115,7 @@ class JSON extends Field
      * @param  string|null  $attribute
      * @return void
      */
-    public function resolve($resource, $attribute = null)
+    public function resolve($resource, $attribute = null): void
     {
         $attribute = $attribute ?? $this->attribute;
 
@@ -151,7 +151,7 @@ class JSON extends Field
      * @param  string  $attribute
      * @return void
      */
-    protected function fillAttributeFromRequest(NovaRequest $request, $requestAttribute, $model, $attribute)
+    protected function fillAttributeFromRequest(NovaRequest $request, $requestAttribute, $model, $attribute): void
     {
         $this->fields->each(function ($field) use ($request, $model, $attribute) {
             $field->fillInto($request, $model, $attribute . '->' . $field->attribute, $attribute . '.' . $field->attribute);
@@ -164,7 +164,7 @@ class JSON extends Field
      * @param  array  $rules
      * @return array
      */
-    protected function generateRules($rules)
+    protected function generateRules($rules): array
     {
         return collect($rules)->mapWithKeys(function ($rules, $key) {
             return [$this->attribute . ($key ? '.' . $key : '') => $rules];
@@ -178,7 +178,7 @@ class JSON extends Field
      * @param  string|null  $attribute
      * @return void
      */
-    public function resolveForDisplay($resource, $attribute = null)
+    public function resolveForDisplay($resource, $attribute = null): void
     {
         $attribute = $attribute ?? $this->attribute;
 
@@ -196,7 +196,7 @@ class JSON extends Field
      *
      * @return array
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         return array_merge(parent::jsonSerialize(), [
             'panelTitleClasses' => $this->panelTitleClasses,

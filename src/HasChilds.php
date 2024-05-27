@@ -23,7 +23,7 @@ trait HasChilds
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
      * @return array
      */
-    public function getRules(NovaRequest $request)
+    public function getRules(NovaRequest $request): array
     {
         $result = [];
 
@@ -46,7 +46,7 @@ trait HasChilds
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
      * @return array|string
      */
-    public function getCreationRules(NovaRequest $request)
+    public function getCreationRules(NovaRequest $request): array
     {
         $result = [];
 
@@ -69,7 +69,7 @@ trait HasChilds
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
      * @return array
      */
-    public function getUpdateRules(NovaRequest $request)
+    public function getUpdateRules(NovaRequest $request): array
     {
         $result = [];
 

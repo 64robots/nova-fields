@@ -58,7 +58,7 @@ class File extends NovaFile
      *
      * @return $this
      */
-    public function draggable()
+    public function draggable(): File
     {
         return $this->withMeta(['draggable' => true]);
     }
@@ -68,7 +68,7 @@ class File extends NovaFile
      *
      * @return $this
      */
-    public function previewBeforeUpload()
+    public function previewBeforeUpload(): File
     {
         return $this->withMeta(['previewBeforeUpload' => true]);
     }
@@ -78,7 +78,7 @@ class File extends NovaFile
      *
      * @return array
      */
-    public function meta()
+    public function meta(): array
     {
         return array_merge([
             'wrapperClasses' => $this->wrapperClasses,
