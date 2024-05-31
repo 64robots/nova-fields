@@ -35,7 +35,7 @@ class Boolean extends NovaBoolean
      * @param  string  $classes
      * @return $this
      */
-    public function dotClasses($classes)
+    public function dotClasses($classes): Boolean
     {
         return $this->withMeta(['dotClasses' => $classes]);
     }
@@ -46,7 +46,7 @@ class Boolean extends NovaBoolean
      * @param  string  $class
      * @return $this
      */
-    public function successClass($class)
+    public function successClass($class): Boolean
     {
         return $this->withMeta(['successClass' => $class]);
     }
@@ -57,7 +57,7 @@ class Boolean extends NovaBoolean
      * @param  string  $class
      * @return $this
      */
-    public function dangerClass($class)
+    public function dangerClass($class): Boolean
     {
         return $this->withMeta(['dangerClass' => $class]);
     }
@@ -68,7 +68,7 @@ class Boolean extends NovaBoolean
      * @param  string  $label
      * @return $this
      */
-    public function yesLabel($label)
+    public function yesLabel($label): Boolean
     {
         return $this->withMeta(['yesLabel' => $label]);
     }
@@ -79,7 +79,7 @@ class Boolean extends NovaBoolean
      * @param  string  $label
      * @return $this
      */
-    public function noLabel($label)
+    public function noLabel($label): Boolean
     {
         return $this->withMeta(['noLabel' => $label]);
     }
@@ -89,7 +89,7 @@ class Boolean extends NovaBoolean
      *
      * @return $this
      */
-    public function hideBooleanLabel()
+    public function hideBooleanLabel(): Boolean
     {
         return $this->withMeta(['hideBooleanLabel' => true]);
     }

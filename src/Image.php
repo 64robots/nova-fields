@@ -34,7 +34,7 @@ class Image extends NovaImage
      *
      * @return array
      */
-    public function meta()
+    public function meta(): array
     {
         return array_merge([
             'wrapperClasses' => $this->wrapperClasses,

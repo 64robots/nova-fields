@@ -10,10 +10,10 @@ class ComputedController
     /**
      * Compute the value.
      *
-     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
+     * @param  Laravel\Nova\Http\Requests\NovaRequest  $request
      * @return mixed
      */
-    public function index(NovaRequest $request)
+    public function index(NovaRequest $request): mixed
     {
         $resourceId = $request->input('resourceId');
         $resourceClass = Nova::resourceForKey($request->resource);

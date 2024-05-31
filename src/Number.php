@@ -35,7 +35,7 @@ class Number extends NovaNumber
      *
      * @return $this
      */
-    public function colors()
+    public function colors(): Number
     {
         return $this->withMeta(['colors' => true]);
     }

@@ -36,7 +36,7 @@ class Password extends NovaPassword
      * @param  string  $placeholder
      * @return $this
      */
-    public function maskLabel($label)
+    public function maskLabel($label): Password
     {
         return $this->withMeta(['maskLabel' => $label]);
     }

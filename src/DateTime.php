@@ -34,7 +34,7 @@ class DateTime extends NovaDateTime
      *
      * @return $this
      */
-    public function hideTimezone()
+    public function hideTimezone(): DateTime
     {
         return $this->withMeta(['hideTimezone' => true]);
     }

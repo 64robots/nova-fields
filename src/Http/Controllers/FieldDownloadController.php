@@ -2,8 +2,9 @@
 
 namespace R64\NovaFields\Http\Controllers;
 
-use Laravel\Nova\Fields\File;
+use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Laravel\Nova\Fields\File;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class FieldDownloadController extends Controller
@@ -11,10 +12,10 @@ class FieldDownloadController extends Controller
     /**
      * Download the given field's contents.
      *
-     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
-     * @return \Illuminate\Http\Response
+     * @param  Laravel\Nova\Http\Requests\NovaRequest  $request
+     * @return  Illuminate\Http\Response
      */
-    public function show(NovaRequest $request)
+    public function show(NovaRequest $request): Response
     {
         $resource = $request->findResourceOrFail();
 

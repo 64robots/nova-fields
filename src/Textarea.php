@@ -35,7 +35,7 @@ class Textarea extends NovaTextarea
      * @param  string  $label
      * @return $this
      */
-    public function showContentLabel($label)
+    public function showContentLabel($label): Textarea
     {
         return $this->withMeta(['showContentLabel' => $label]);
     }
@@ -46,7 +46,7 @@ class Textarea extends NovaTextarea
      * @param  string  $label
      * @return $this
      */
-    public function hideContentLabel($label)
+    public function hideContentLabel($label): Textarea
     {
         return $this->withMeta(['hideContentLabel' => $label]);
     }

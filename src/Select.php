@@ -34,7 +34,7 @@ class Select extends NovaSelect
      *
      * @return $this
      */
-    public function displayUsingLabels()
+    public function displayUsingLabels(): Select
     {
         $this->displayUsing(function ($value) {
             return collect($this->meta['options'])
