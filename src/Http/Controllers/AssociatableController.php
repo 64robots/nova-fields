@@ -2,7 +2,6 @@
 
 namespace R64\NovaFields\Http\Controllers;
 
-use Illuminate\Http\Response;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Http\Controllers\AssociatableController as Controller;
 
@@ -12,9 +11,9 @@ class AssociatableController extends Controller
      * List the available related resources for a given resource.
      *
      * @param  Laravel\Nova\Http\Requests\NovaRequest  $request
-     * @return Illuminate\Http\Response
+     * @return array
      */
-    public function index(NovaRequest $request): Response
+    public function index(NovaRequest $request): array
     {
         $fields = $request->newResource()
                         ->availableFields($request);
