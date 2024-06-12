@@ -12,7 +12,7 @@ trait Configurable
      *
      * @var string
      */
-    public $wrapperClasses = 'flex border-b border-40';
+    public $wrapperClasses = 'fuckumofo flex border-b border-40';
 
     /**
      * The base field classes of the field.
