@@ -1,6 +1,6 @@
 # Getting Started
 
-[Documentation](https://nova-fields.netlify.com/)
+[Documentation](https://nova-fields.netlify.app/)
 
 Nova Fields is a collection of rewriten "native" fields that comes with Nova. We are also adding new fields and utilities as we find the need.
 
