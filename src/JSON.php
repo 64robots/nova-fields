@@ -153,8 +153,8 @@ class JSON extends Field
      */
     protected function fillAttributeFromRequest(NovaRequest $request, $requestAttribute, $model, $attribute): void
     {
-        $this->fields->each(function ($field) use ($request, $model, $attribute) {
-            $field->fillInto($request, $model, $attribute . '->' . $field->attribute, $attribute . '.' . $field->attribute);
+        $this->fields->each(function ($field) use ($request, $model, $attribute, $requestAttribute) {
+            $field->fillInto($request, $model, $attribute . '->' . $field->attribute, $requestAttribute . '.' . $field->attribute);
         });
     }
 
